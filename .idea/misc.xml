@@ -7,6 +7,10 @@
         <option value="$PROJECT_DIR$/pom.xml" />
       </list>
     </option>
+<<<<<<< HEAD
+=======
+    <option name="workspaceImportForciblyTurnedOn" value="true" />
+>>>>>>> 9e28ab9ad1c0fa9e6dd6cf49cbe821c413cc3d37
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_21" default="true" project-jdk-name="21" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
