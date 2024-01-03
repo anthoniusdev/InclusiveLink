@@ -7,6 +7,14 @@ public abstract  class Pessoa {
     private String email;
     private String senha;
 
+    public Pessoa(int idPessoa, String nome, String dataNascimento, String email, String senha) {
+        this.idPessoa = idPessoa;
+        this.nome = nome;
+        this.dataNascimento = dataNascimento;
+        this.email = email;
+        this.senha = senha;
+    }
+
     public boolean fazerLogin(){
         //verificar se o login informado existe
         return true;
