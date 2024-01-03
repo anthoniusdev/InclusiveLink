@@ -2,6 +2,7 @@ package model;
 import java.util.ArrayList;
 
 public class Membro extends Pessoa{
+    //123456
     private boolean perfilVisivel;
     private String fotoPerfiil;
     private String fotoFundo;
@@ -14,6 +15,7 @@ public class Membro extends Pessoa{
     private ArrayList<Publicacao> listaPublicacoes = new ArrayList<>();
     private ArrayList<Publicacao> listaCurtidas = new ArrayList<>();
     private ArrayList<Comentario> listaComentarios = new ArrayList<>();
+
 
 
     //public void criarComunidade(){}? -N DEVERIA ESTAR NA CLASSE COMUNIDADE?
