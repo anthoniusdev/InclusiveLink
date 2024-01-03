@@ -53,31 +53,17 @@ public class Membro extends Pessoa{
         this.fotoFundo = fotoFundo;
     }
 
-    public String getNome() {
-        return nome;
-    }
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public int getNumeroSeguindo() {
-        return numeroSeguindo;
-    }
-    public void setNumeroSeguindo(int numeroSeguindo) {
-        this.numeroSeguindo = numeroSeguindo;
-    }
-
-    public int getNumeroSeguidores() {
-        return numeroSeguidores;
-    }
-    public void setNumeroSeguidores(int numeroSeguidores) {
-        this.numeroSeguidores = numeroSeguidores;
-    }
-
     public String getDescricao() {
         return descricao;
     }
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public int numeroSeguidores(){
+        return listaSeguidores.size();
+    }
+    public int numeroSeguindo(){
+        return listaSeguindo.size();
     }
 }
