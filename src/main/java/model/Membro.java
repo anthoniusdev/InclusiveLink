@@ -1,7 +1,7 @@
 package model;
 import java.util.ArrayList;
 
-public class Membro {
+public class Membro extends Pessoa{
     private boolean perfilVisivel;
     private String fotoPerfiil;
     private String fotoFundo;
@@ -11,25 +11,26 @@ public class Membro {
     private String descricao;
     private ArrayList<Membro> listaSeguidores = new ArrayList<>();
     private ArrayList<Membro> listaSeguindo = new ArrayList<>();
-    //private ArrayList<Publicacao> listaPublicacoes = new ArrayList<>();
-    //private ArrayList<Publicacao> listaCurtidas = new ArrayList<>();
-    //private ArrayList<Comentario> listaComentarios = new ArrayList<>();
+    private ArrayList<Publicacao> listaPublicacoes = new ArrayList<>();
+    private ArrayList<Publicacao> listaCurtidas = new ArrayList<>();
+    private ArrayList<Comentario> listaComentarios = new ArrayList<>();
 
-    //public void criarComunidade(){}?
-    public boolean realizarCadastro(){return true;}
-    public boolean seguirMembro(){return true;}
-    public boolean seguirComunidade(){return true;}
+
+    //public void criarComunidade(){}? -N DEVERIA ESTAR NA CLASSE COMUNIDADE?
+    public boolean realizarCadastro(String email, String senha){return true;}
+    public boolean seguirMembro(Membro membroSeguido){return true;}
+    public boolean seguirComunidade(Comunidade comunidadeSeguida){return true;}
     public boolean aceitarSolicitacao(){return true;}
-    public boolean criarPublicacao(){return true;}
-    public boolean excluirPublicacao(){return true;}
-    public void curtir(){}
-    public void excluirSeguidor(){}
+    //public boolean criarPublicacao(){return true;} -N DEVERIA ESTAR NA CLASSE PUBLICACAO?
+    public boolean excluirPublicacao(Publicacao publicacaoParaExcluir){return true;}
+    public void curtir(Publicacao publicacaoCurtida){}
+    public void excluirSeguidor(Membro seguidorExcluido){}
     public void pesquisarComunidade(){}
     public void pesquisarMembro(){}
     public void mudarVisibilidade(){}
     public void editarPerfil(){}
-    public void comentarPublicao(){}
-    public void excluirComentario(){}
+    //public void comentarPublicao(){} -N DEVERIA ESTAR NA CLASSE COMENTARIO?
+    public void excluirComentario(Comentario comentarioParaExcluir){}
 
     public boolean isPerfilVisivel() {
         return perfilVisivel;
