@@ -9,12 +9,18 @@
     </option>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     <option name="workspaceImportForciblyTurnedOn" value="true" />
 >>>>>>> 9e28ab9ad1c0fa9e6dd6cf49cbe821c413cc3d37
 =======
     <option name="workspaceImportForciblyTurnedOn" value="true" />
 >>>>>>> 9e28ab9ad1c0fa9e6dd6cf49cbe821c413cc3d37
+=======
+=======
+    <option name="workspaceImportForciblyTurnedOn" value="true" />
+>>>>>>> 9e28ab9ad1c0fa9e6dd6cf49cbe821c413cc3d37
+>>>>>>> a21290a41f8990204067f2290b86e01a8a68750d
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_21" default="true" project-jdk-name="21" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
