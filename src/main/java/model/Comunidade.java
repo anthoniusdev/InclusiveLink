@@ -1,25 +1,35 @@
 package model;
+
 import java.util.*;
+
 public class Comunidade {
     private String nome;
-    private Membro criador;
+    private ModeradorComunidade criador; // -> Por ser criador, dá para passar o criador logo como ModeradorComunidade
     private String fotoPerfil;
     private String fotoFundo;
     private String descricao;
     private ArrayList<Publicacao> publicacoes = new ArrayList<>();
-    private  ArrayList<ModeradorComunidade> moderadores = new ArrayList<>();
+    private ArrayList<ModeradorComunidade> moderadores = new ArrayList<ModeradorComunidade>();
     private int numeroParticipantes;
-    private ArrayList<ParticipanteComunidade> participantes = new ArrayList<>();
+    private ArrayList<ParticipanteComunidade> participantes = new ArrayList<ParticipanteComunidade>();
     private int numeroSeguidores;
-    private ArrayList<SeguidorComunidade> seguidores = new ArrayList<>();
+    private ArrayList<SeguidorComunidade> seguidores = new ArrayList<SeguidorComunidade>();
     private boolean participanteAceito;
 
 
-
-
-    public Comunidade(String nome, Membro criador, String fotoPerfil, String fotoFundo, String descricao, ArrayList<Publicacao> publicacoes, ArrayList<ModeradorComunidade> moderadores, int numeroParticipantes, ArrayList<ParticipanteComunidade> participantes, int numeroSeguidores, ArrayList<SeguidorComunidade> seguidor){
+    public Comunidade(String nome, Membro criador, String fotoPerfil, String fotoFundo, String descricao) {
         this.nome = nome;
-        this.criador = criador;
+        this.criador = definirModerador(participarComunidade(criador)); // -> Define o criador como moderador, o transformando em participante primeiro e depois em moderador.
+        this.fotoPerfil = fotoPerfil;
+        this.fotoFundo = fotoFundo;
+        this.descricao = descricao;
+        this.numeroParticipantes = 1;
+
+    }
+
+    public Comunidade(String nome, Membro criador, String fotoPerfil, String fotoFundo, String descricao, ArrayList<Publicacao> publicacoes, ArrayList<ModeradorComunidade> moderadores, int numeroParticipantes, ArrayList<ParticipanteComunidade> participantes, int numeroSeguidores, ArrayList<SeguidorComunidade> seguidor) {
+        this.nome = nome;
+        this.criador = criador; // -> Se aceitar minhas sugestões esse código dará erro
         this.fotoPerfil = fotoPerfil;
         this.fotoFundo = fotoFundo;
         this.descricao = descricao;
@@ -120,46 +130,74 @@ public class Comunidade {
         this.seguidores = seguidor;
     }
 
-    public boolean seguirComunidade(){
+    public boolean seguirComunidade() {
         return true;
     }
-    public void participarComunidade(SeguidorComunidade seguidor){
 
+    //     Sugestão de Alteração
+    //              |
+    //              |
+    //              V
+    public ParticipanteComunidade participarComunidade(Membro membro) {
+        // Na minha opinião esta á lógica mais correta
+        if (membro.isSeguidor(this)) {
+            ParticipanteComunidade novoParticipante = new ParticipanteComunidade(membro);
+            participantes.add(novoParticipante);
+            return novoParticipante;
+        } else {
+            return null;
+        }
         //ParticipanteComunidade participante = new participante(seguidor);//puxar do seguidor as informações
 
         //participantes.add(participante);//adicionar seguidor em participantes
 
-        System.out.println(seguidor + " É o novo participante da comunidade");
-
+        /*System.out.println(seguidor + " É o novo participante da comunidade");*/ // ->> Sysout faz a classe perder a autonomia
 
     }
+    //     Sugestão de Alteração
+    //              |
+    //              |
+    //              V
 
-    public void definirModerador(ParticipanteComunidade participante){
+    public ModeradorComunidade definirModerador(ParticipanteComunidade participanteComunidade) {
         //ModeradorComunidade moderador = new moderador(participante)//Instanciar participante
-
         //moderadores.add(moderador);//adicionar participante em moderadores
 
-        System.out.println(seguidores + " É o novo moderador da comunidade");
+        // Na minha opinião, o seguinte código está com a lógica mais correta |
+        //                                                                    |
+        //                                                                    V
+        ModeradorComunidade novoModerador = null;
+        try {
+            novoModerador = new ModeradorComunidade(participanteComunidade);
+            moderadores.add(novoModerador); // adiciona o novo moderador no ArrayList de moderadores
+        } catch (Exception e) {
+            System.out.println(e);
+            novoModerador = null;
+        }
+
+        return novoModerador;
+
+        /*System.out.println(seguidores + " É o novo moderador da comunidade");*/ // ->> Sysout faz a classe perder a autonomia
     }
 
-    public void excluirComunidade(Comunidade comunidade){
+    public void excluirComunidade(Comunidade comunidade) {
         comunidade = null;
-        System.out.println("A comunidade foi apagada!");
+        System.out.println("A comunidade foi apagada!");// ->> Sysout faz a classe perder a autonomia
     }
 
-    public void removerParticipanteComunidade(ParticipanteComunidade participante){
+    public void removerParticipanteComunidade(ParticipanteComunidade participante) {
         participantes.remove(participante);
     }
 
-    public void excluirPublicacao(Publicacao publicacao){
+    public void excluirPublicacao(Publicacao publicacao) {
         publicacoes.remove(publicacao);
     }
 
-    public void criarPublicacao(){
+    public void criarPublicacao() {
         //Criar construtor Publicacao e instanciar o objeto para ser adicionado em publicacoes
     }
 
-    public void removerSeguidorComunidade(SeguidorComunidade seguidor){
+    public void removerSeguidorComunidade(SeguidorComunidade seguidor) {
         seguidores.remove(seguidor);
     }
 
