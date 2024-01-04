@@ -39,7 +39,7 @@ public class Membro extends Pessoa{
     public boolean seguirComunidade(Comunidade comunidadeSeguida){
         boolean verificacaoSeguindo=true;
         for(Comunidade comunidadeSeguidoExiste : listaSeguindo2){
-            if(comunidadeSeguidoExiste.getId() == comunidadeSeguida.getId()){
+            if(comunidadeSeguidoExiste.getIdComunidade() == comunidadeSeguida.getIdComunidade()){
                 verificacaoSeguindo=false;
             }
         }
@@ -133,6 +133,6 @@ public class Membro extends Pessoa{
         return listaSeguidores.size();
     }
     public int numeroSeguindo(){
-        return listaSeguindo.size();
+        return listaSeguindo1.size()+listaSeguindo2.size();
     }
 }

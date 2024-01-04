@@ -7,7 +7,7 @@ public class Comunidade {
     private String nome;
     private Membro membro;
     private ModeradorComunidade criador; // -> Por ser criador, dá para passar o criador logo como ModeradorComunidade
-   private ModeradorComunidade moderador;
+    private ModeradorComunidade moderador;
     private String fotoPerfil;
     private String fotoFundo;
     private String descricao;
