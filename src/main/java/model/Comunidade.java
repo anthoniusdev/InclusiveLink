@@ -3,10 +3,11 @@ package model;
 import java.util.*;
 
 public class Comunidade {
+    private int id;
     private String nome;
     private Membro membro;
     private ModeradorComunidade criador; // -> Por ser criador, dá para passar o criador logo como ModeradorComunidade
-   private ModeradorComunidade moderador;
+    private ModeradorComunidade moderador;
     private String fotoPerfil;
     private String fotoFundo;
     private String descricao;
@@ -124,7 +125,18 @@ public class Comunidade {
         this.seguidores = seguidor;
     }
 
+<<<<<<< HEAD
     public boolean seguirComunidade(Membro membro) {
+=======
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public boolean seguirComunidade(){
+>>>>>>> Abimael
         return true;
     }
 
