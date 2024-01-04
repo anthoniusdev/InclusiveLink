@@ -2,7 +2,7 @@ package model;
 import java.util.ArrayList;
 
 public class Membro extends Pessoa{
-    private boolean perfilVisivel;
+    private boolean perfilVisivel=true;
     private String fotoPerfiil;
     private String fotoFundo;
     private String descricao;
@@ -58,20 +58,45 @@ public class Membro extends Pessoa{
         listaPublicacoes.remove(publicacaoParaExcluir);
         return true;
     }
-    public void curtir(Publicacao publicacaoCurtida){
+    public boolean curtir(Publicacao publicacaoCurtida){
         boolean verificacaoCurtida=true;
-        for(){
-
+        for(Publicacao publicCurtidaExiste : listaCurtidas){
+            if(publicacaoCurtida.getIdPublicacao() == publicCurtidaExiste.getIdPublicacao()){
+                verificacaoCurtida=false;
+            }
         }
-
-        listaCurtidas.add(publicacaoCurtida);
+        if(verificacaoCurtida){
+            listaCurtidas.add(publicacaoCurtida);
+            return true;
+        }else{
+            return false;
+        }
     }
-    public void excluirSeguidor(Membro seguidorExcluido){}
-    public void pesquisarComunidade(){}
-    public void pesquisarMembro(){}
-    public void mudarVisibilidade(){}
-    public void editarPerfil(){}
-    public void excluirComentario(Comentario comentarioParaExcluir){}
+    public void excluirSeguidor(Membro seguidorExcluido){
+        listaSeguidores.remove(seguidorExcluido);
+    }
+    public void pesquisarComunidade(){
+        //NÃO SEI COMO FUNCIONARIA ESSE MÉTODO - PROVAVELMENTE ENVOLVE O BD
+    }
+    public void pesquisarMembro(){
+        //NÃO SEI COMO FUNCIONARIA ESSE MÉTODO - PROVAVELMENTE ENVOLVE O BD
+    }
+    public void mudarVisibilidade(){
+        if(perfilVisivel){
+            perfilVisivel=false;
+        }else{
+            perfilVisivel=true;
+        }
+    }
+    public void editarPerfil(String nomeEdicao, String fotoPerfiilEdicao, String fotoFundoEdicao, String descricaoEdicao){
+        setNome(nomeEdicao);
+        setFotoPerfiil(fotoPerfiilEdicao);
+        setFotoFundo(fotoFundoEdicao);
+        setDescricao(descricaoEdicao);
+    }
+    public void excluirComentario(Comentario comentarioParaExcluir){
+        listaComentarios.remove(comentarioParaExcluir);
+    }
     public boolean isPaticipante(){return true;}
     public boolean isSeguidor(){return true;}
     public boolean isModerador(){return true;}
@@ -107,5 +132,7 @@ public class Membro extends Pessoa{
     public int numeroSeguidores(){
         return listaSeguidores.size();
     }
-    public int numeroSeguindo(){return listaSeguindo.size();}
+    public int numeroSeguindo(){
+        return listaSeguindo.size();
+    }
 }
