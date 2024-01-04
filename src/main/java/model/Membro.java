@@ -7,7 +7,8 @@ public class Membro extends Pessoa{
     private String fotoFundo;
     private String descricao;
     private ArrayList<Membro> listaSeguidores = new ArrayList<>();
-    private ArrayList<Membro> listaSeguindo = new ArrayList<>();
+    private ArrayList<Membro> listaSeguindo1 = new ArrayList<>();
+    private ArrayList<Comunidade> listaSeguindo2 = new ArrayList<>();
     private ArrayList<Publicacao> listaPublicacoes = new ArrayList<>();
     private ArrayList<Publicacao> listaCurtidas = new ArrayList<>();
     private ArrayList<Comentario> listaComentarios = new ArrayList<>();
@@ -16,12 +17,55 @@ public class Membro extends Pessoa{
         super(idPessoa, nome, dataNascimento, email, senha);
     }
 
-    public boolean realizarCadastro(String email, String senha){return true;}
-    public boolean seguirMembro(Membro membroSeguido){return true;}
-    public boolean seguirComunidade(Comunidade comunidadeSeguida){return true;}
-    public boolean aceitarSolicitacao(){return true;}
-    public boolean excluirPublicacao(Publicacao publicacaoParaExcluir){return true;}
-    public void curtir(Publicacao publicacaoCurtida){}
+    public boolean realizarCadastro(String email, String senha){
+        //VERIFICAR SE AS INFORMAÇÕES JA ESTÃO CADASTRADAS
+        //CASO NÃO MANDAR INFORMAÇÕES PARA O BD
+        return true;
+    }
+    public boolean seguirMembro(Membro membroSeguido){
+        boolean verificacaoSeguindo=true;
+        for(Membro membroSeguidoExiste : listaSeguindo1){
+            if(membroSeguido.getIdPessoa() == membroSeguidoExiste.getIdPessoa()){
+                verificacaoSeguindo=false;
+            }
+        }
+        if(verificacaoSeguindo){
+            listaSeguindo1.add(membroSeguido);
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public boolean seguirComunidade(Comunidade comunidadeSeguida){
+        boolean verificacaoSeguindo=true;
+        for(Comunidade comunidadeSeguidoExiste : listaSeguindo2){
+            if(comunidadeSeguidoExiste.getId() == comunidadeSeguida.getId()){
+                verificacaoSeguindo=false;
+            }
+        }
+        if(verificacaoSeguindo){
+            listaSeguindo2.add(comunidadeSeguida);
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public boolean aceitarSolicitacao(){
+        //NÃO SEI COMO FUNCIONARIA ESSE MÉTODO
+        return true;
+    }
+    public boolean excluirPublicacao(Publicacao publicacaoParaExcluir){
+        listaPublicacoes.remove(publicacaoParaExcluir);
+        return true;
+    }
+    public void curtir(Publicacao publicacaoCurtida){
+        boolean verificacaoCurtida=true;
+        for(){
+
+        }
+
+        listaCurtidas.add(publicacaoCurtida);
+    }
     public void excluirSeguidor(Membro seguidorExcluido){}
     public void pesquisarComunidade(){}
     public void pesquisarMembro(){}
@@ -63,7 +107,5 @@ public class Membro extends Pessoa{
     public int numeroSeguidores(){
         return listaSeguidores.size();
     }
-    public int numeroSeguindo(){
-        return listaSeguindo.size();
-    }
+    public int numeroSeguindo(){return listaSeguindo.size();}
 }

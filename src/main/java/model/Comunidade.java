@@ -1,6 +1,7 @@
 package model;
 import java.util.*;
 public class Comunidade {
+    private int id;
     private String nome;
     private Membro criador;
     private String fotoPerfil;
@@ -118,6 +119,13 @@ public class Comunidade {
 
     public void setSeguidor(ArrayList<SeguidorComunidade> seguidor) {
         this.seguidores = seguidor;
+    }
+
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
     }
 
     public boolean seguirComunidade(){
