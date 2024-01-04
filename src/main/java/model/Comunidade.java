@@ -132,7 +132,7 @@ public class Comunidade {
     public ParticipanteComunidade participarComunidade(Membro membro) {
         // Na minha opinião esta á lógica mais correta
         if (membro.isSeguidor(idComunidade)) {
-            ParticipanteComunidade novoParticipante = new ParticipanteComunidade(membro.getIdPessoa(), membro.getNome(), membro.getDataNascimento(), membro.getEmail(), membro.getSenha());
+            ParticipanteComunidade novoParticipante = new ParticipanteComunidade(membro);
             participantes.add(novoParticipante);
             return novoParticipante;
         } else {
@@ -144,7 +144,7 @@ public class Comunidade {
     public ModeradorComunidade definirModerador(ParticipanteComunidade participanteComunidade) {
         ModeradorComunidade novoModerador = null;
         try {
-            novoModerador = new ModeradorComunidade(moderador.getIdPessoa(), moderador.getNome(), moderador.getDataNascimento(), moderador.getEmail(), moderador.getSenha());
+            novoModerador = new ModeradorComunidade(participanteComunidade);
             moderadores.add(novoModerador); // adiciona o novo moderador no ArrayList de moderadores
         } catch (Exception e) {
             System.out.println(e);
