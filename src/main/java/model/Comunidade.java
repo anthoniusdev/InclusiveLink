@@ -4,41 +4,55 @@ import java.util.*;
 
 public class Comunidade {
     private String nome;
+    private Membro membro;
     private ModeradorComunidade criador; // -> Por ser criador, dá para passar o criador logo como ModeradorComunidade
+   private ModeradorComunidade moderador;
     private String fotoPerfil;
     private String fotoFundo;
     private String descricao;
+    private int idComunidade;
     private ArrayList<Publicacao> publicacoes = new ArrayList<>();
+    private Publicacao publicacao;
     private ArrayList<ModeradorComunidade> moderadores = new ArrayList<ModeradorComunidade>();
-    private int numeroParticipantes;
     private ArrayList<ParticipanteComunidade> participantes = new ArrayList<ParticipanteComunidade>();
-    private int numeroSeguidores;
     private ArrayList<SeguidorComunidade> seguidores = new ArrayList<SeguidorComunidade>();
-    private boolean participanteAceito;
 
 
-    public Comunidade(String nome, Membro criador, String fotoPerfil, String fotoFundo, String descricao) {
+
+    public Comunidade(String nome, Membro criador, String fotoPerfil, String fotoFundo, String descricao, int idComunidade) {
         this.nome = nome;
         this.criador = definirModerador(participarComunidade(criador)); // -> Define o criador como moderador, o transformando em participante primeiro e depois em moderador.
         this.fotoPerfil = fotoPerfil;
         this.fotoFundo = fotoFundo;
         this.descricao = descricao;
-        this.numeroParticipantes = 1;
+        this.participantes.size();
+        this.idComunidade = idComunidade;
 
     }
 
     public Comunidade(String nome, Membro criador, String fotoPerfil, String fotoFundo, String descricao, ArrayList<Publicacao> publicacoes, ArrayList<ModeradorComunidade> moderadores, int numeroParticipantes, ArrayList<ParticipanteComunidade> participantes, int numeroSeguidores, ArrayList<SeguidorComunidade> seguidor) {
         this.nome = nome;
-        this.criador = criador; // -> Se aceitar minhas sugestões esse código dará erro
         this.fotoPerfil = fotoPerfil;
         this.fotoFundo = fotoFundo;
         this.descricao = descricao;
         this.publicacoes = publicacoes;
         this.moderadores = moderadores;
-        this.numeroParticipantes = numeroParticipantes;
+        this.participantes.size();
         this.participantes = participantes;
-        this.numeroSeguidores = numeroSeguidores;
+        this.seguidores.size();
         this.seguidores = seguidor;
+    }
+
+    public void setCriador(ModeradorComunidade criador) {
+        this.criador = criador;
+    }
+
+    public int getIdComunidade() {
+        return idComunidade;
+    }
+
+    public void setIdComunidade(int idComunidade) {
+        this.idComunidade = idComunidade;
     }
 
     public String getNome() {
@@ -69,11 +83,6 @@ public class Comunidade {
         return criador;
     }
 
-    public void setCriador(Membro criador) {
-        this.criador = criador;
-    }
-
-
     public String getFotoFundo() {
         return fotoFundo;
     }
@@ -98,14 +107,6 @@ public class Comunidade {
         this.moderadores = moderadores;
     }
 
-    public int getNumeroParticipantes() {
-        return numeroParticipantes;
-    }
-
-    public void setNumeroParticipantes(int numeroParticipantes) {
-        this.numeroParticipantes = numeroParticipantes;
-    }
-
     public ArrayList<ParticipanteComunidade> getParticipantes() {
         return participantes;
     }
@@ -114,13 +115,6 @@ public class Comunidade {
         this.participantes = participantes;
     }
 
-    public int getNumeroSeguidores() {
-        return numeroSeguidores;
-    }
-
-    public void setNumeroSeguidores(int numeroSeguidores) {
-        this.numeroSeguidores = numeroSeguidores;
-    }
 
     public ArrayList<SeguidorComunidade> getSeguidor() {
         return seguidores;
@@ -130,45 +124,27 @@ public class Comunidade {
         this.seguidores = seguidor;
     }
 
-    public boolean seguirComunidade() {
+    public boolean seguirComunidade(Membro membro) {
         return true;
     }
 
-    //     Sugestão de Alteração
-    //              |
-    //              |
-    //              V
+
     public ParticipanteComunidade participarComunidade(Membro membro) {
         // Na minha opinião esta á lógica mais correta
-        if (membro.isSeguidor(this)) {
-            ParticipanteComunidade novoParticipante = new ParticipanteComunidade(membro);
+        if (membro.isSeguidor(idComunidade)) {
+            ParticipanteComunidade novoParticipante = new ParticipanteComunidade(membro.getIdPessoa(), membro.getNome(), membro.getDataNascimento(), membro.getEmail(), membro.getSenha());
             participantes.add(novoParticipante);
             return novoParticipante;
         } else {
             return null;
         }
-        //ParticipanteComunidade participante = new participante(seguidor);//puxar do seguidor as informações
-
-        //participantes.add(participante);//adicionar seguidor em participantes
-
-        /*System.out.println(seguidor + " É o novo participante da comunidade");*/ // ->> Sysout faz a classe perder a autonomia
 
     }
-    //     Sugestão de Alteração
-    //              |
-    //              |
-    //              V
 
     public ModeradorComunidade definirModerador(ParticipanteComunidade participanteComunidade) {
-        //ModeradorComunidade moderador = new moderador(participante)//Instanciar participante
-        //moderadores.add(moderador);//adicionar participante em moderadores
-
-        // Na minha opinião, o seguinte código está com a lógica mais correta |
-        //                                                                    |
-        //                                                                    V
         ModeradorComunidade novoModerador = null;
         try {
-            novoModerador = new ModeradorComunidade(participanteComunidade);
+            novoModerador = new ModeradorComunidade(moderador.getIdPessoa(), moderador.getNome(), moderador.getDataNascimento(), moderador.getEmail(), moderador.getSenha());
             moderadores.add(novoModerador); // adiciona o novo moderador no ArrayList de moderadores
         } catch (Exception e) {
             System.out.println(e);
@@ -177,12 +153,10 @@ public class Comunidade {
 
         return novoModerador;
 
-        /*System.out.println(seguidores + " É o novo moderador da comunidade");*/ // ->> Sysout faz a classe perder a autonomia
     }
 
     public void excluirComunidade(Comunidade comunidade) {
         comunidade = null;
-        System.out.println("A comunidade foi apagada!");// ->> Sysout faz a classe perder a autonomia
     }
 
     public void removerParticipanteComunidade(ParticipanteComunidade participante) {
@@ -194,7 +168,17 @@ public class Comunidade {
     }
 
     public void criarPublicacao() {
-        //Criar construtor Publicacao e instanciar o objeto para ser adicionado em publicacoes
+        Publicacao novaPublicacao = null;
+
+        try{
+            novaPublicacao = new Publicacao(publicacao.getTexto(), publicacao.getMidia(), publicacao.getAutor());
+            publicacoes.add(novaPublicacao);
+
+        }catch (Exception e){
+            System.out.println(e);
+            novaPublicacao= null;
+        }
+
     }
 
     public void removerSeguidorComunidade(SeguidorComunidade seguidor) {

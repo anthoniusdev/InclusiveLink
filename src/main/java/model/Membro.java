@@ -29,7 +29,7 @@ public class Membro extends Pessoa{
     public void editarPerfil(){}
     public void excluirComentario(Comentario comentarioParaExcluir){}
     public boolean isPaticipante(){return true;}
-    public boolean isSeguidor(){return true;}
+    public boolean isSeguidor(int idComunidade){return true;}
     public boolean isModerador(){return true;}
 
     public boolean isPerfilVisivel() {
