@@ -3,6 +3,7 @@ package model;
 import java.util.*;
 
 public class Comunidade {
+<<<<<<< HEAD
         private String nome;
         private Membro membro;
         private ModeradorComunidade criador; // -> Por ser criador, dá para passar o criador logo como ModeradorComunidade
@@ -16,6 +17,21 @@ public class Comunidade {
         private ArrayList<ModeradorComunidade> moderadores = new ArrayList<ModeradorComunidade>();
         private ArrayList<ParticipanteComunidade> participantes = new ArrayList<ParticipanteComunidade>();
         private ArrayList<SeguidorComunidade> seguidores = new ArrayList<SeguidorComunidade>();
+=======
+    private int idComunidade;
+    private String nome;
+    private Membro membro;
+    private ModeradorComunidade criador; // -> Por ser criador, dá para passar o criador logo como ModeradorComunidade
+    private ModeradorComunidade moderador;
+    private String fotoPerfil;
+    private String fotoFundo;
+    private String descricao;
+    private ArrayList<Publicacao> publicacoes = new ArrayList<>();
+    private Publicacao publicacao;
+    private ArrayList<ModeradorComunidade> moderadores = new ArrayList<ModeradorComunidade>();
+    private ArrayList<ParticipanteComunidade> participantes = new ArrayList<ParticipanteComunidade>();
+    private ArrayList<SeguidorComunidade> seguidores = new ArrayList<SeguidorComunidade>();
+>>>>>>> 55a84b35ab5013b178158265fae3591b37e69f37
 
         public ParticipanteComunidade participarComunidade(Membro membro) {
             if (membro.isSeguidor(idComunidade)) {
@@ -27,7 +43,10 @@ public class Comunidade {
             }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> 55a84b35ab5013b178158265fae3591b37e69f37
     public Comunidade(String nome, Membro criador, String fotoPerfil, String fotoFundo, String descricao, int idComunidade) {
         this.nome = nome;
         this.criador = definirModerador(participarComunidade(criador)); // -> Define o criador como moderador, o transformando em participante primeiro e depois em moderador.
@@ -124,8 +143,7 @@ public class Comunidade {
         this.participantes = participantes;
     }
 
-
-    public ArrayList<SeguidorComunidade> getSeguidor() {
+    public ArrayList<SeguidorComunidade> getSeguidores() {
         return seguidores;
     }
 
@@ -134,14 +152,40 @@ public class Comunidade {
     }
 
     public boolean seguirComunidade(Membro membro) {
+<<<<<<< HEAD
+=======
+        try {
+            SeguidorComunidade novoSeguidor = new SeguidorComunidade(membro);
+            seguidores.add(novoSeguidor);
+        } catch (Exception e) {
+            System.out.println(e);
+
+        }
+    }
+
+    public int getId() {
+        return idComunidade;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public boolean seguirComunidade() {
+>>>>>>> 55a84b35ab5013b178158265fae3591b37e69f37
         return true;
     }
 
 
     public ParticipanteComunidade participarComunidade(Membro membro) {
         // Na minha opinião esta á lógica mais correta
+<<<<<<< HEAD
         if (membro.isSeguidor(idComunidade)) {
             ParticipanteComunidade novoParticipante = new ParticipanteComunidade(membro);
+=======
+        if (membro.isSeguidor(this){
+            ParticipanteComunidade novoParticipante = new ParticipanteComunidade(membro.getIdPessoa(), membro.getNome(), membro.getDataNascimento(), membro.getEmail(), membro.getSenha());
+>>>>>>> 55a84b35ab5013b178158265fae3591b37e69f37
             participantes.add(novoParticipante);
             return novoParticipante;
         } else {
@@ -152,7 +196,13 @@ public class Comunidade {
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     public ModeradorComunidade definirModerador(ParticipanteComunidade participanteComunidade) {
+=======
+    public void ModeradorComunidade
+
+    definirModerador(ParticipanteComunidade participanteComunidade) {
+>>>>>>> 55a84b35ab5013b178158265fae3591b37e69f37
         ModeradorComunidade novoModerador = null;
         try {
             novoModerador = new ModeradorComunidade(participanteComunidade);
@@ -186,6 +236,7 @@ public class Comunidade {
             this.participantes.size();
             this.idComunidade = idComunidade;
 
+<<<<<<< HEAD
         }
 
         public Comunidade(String nome, Membro criador, String fotoPerfil, String fotoFundo, String descricao, ArrayList<Publicacao> publicacoes, ArrayList<ModeradorComunidade> moderadores, int numeroParticipantes, ArrayList<ParticipanteComunidade> participantes, int numeroSeguidores, ArrayList<SeguidorComunidade> seguidor) {
@@ -200,6 +251,27 @@ public class Comunidade {
             this.seguidores.size();
             this.seguidores = seguidor;
         }
+=======
+    public void excluirComunidade(Comunidade comunidade) {
+        comunidade = null;
+    }
+
+    public void removerParticipanteComunidade(ParticipanteComunidade participante) {
+        participantes.remove(participante);
+    }
+
+    public void excluirPublicacao(Publicacao publicacao) {
+        publicacoes.remove(publicacao);
+    }
+
+    public void criarPublicacao(Publicacao publicacao) {
+        try {
+            publicacoes.add(publicacao);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+>>>>>>> 55a84b35ab5013b178158265fae3591b37e69f37
 
         public void setCriador(ModeradorComunidade criador) {
             this.criador = criador;
