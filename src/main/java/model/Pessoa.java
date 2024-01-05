@@ -16,7 +16,7 @@ public abstract  class Pessoa {
     }
 
     public boolean fazerLogin(){
-        //verificar se o login informado existe
+        //VERIFICAR SE O LOGIN INFORMADO EXISTE NO BD
         return true;
     }
 
