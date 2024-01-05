@@ -1,2 +1,4 @@
-package model;public class Comentario {
+package model;
+public class Comentario extends Publicacao{
+
 }
