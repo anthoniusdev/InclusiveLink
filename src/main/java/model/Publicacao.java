@@ -18,6 +18,7 @@ public class Publicacao {
     private String hora;
 
     public Publicacao(String texto, String midia, Membro autor) {
+        Publicacao novaPublicacao;
         setTexto(texto);
         setMidia(midia);
         numeroCurtidas = 0;
@@ -27,13 +28,17 @@ public class Publicacao {
         setAutor(autor);
         try {
             PublicacaoDAO publicacaoDAO = new PublicacaoDAO();
-            this.setIdPublicacao(publicacaoDAO.novaPublicacao(this));
+            novaPublicacao = publicacaoDAO.novaPublicacao(this);
+            this.setIdPublicacao(novaPublicacao.getIdPublicacao());
+            this.setData(novaPublicacao.getData());
+            this.setHora(novaPublicacao.getHora());
         } catch (Exception e) {
             System.out.println(e);
         }
     }
 
     public Publicacao(String texto, String midia, ParticipanteComunidade autor, Comunidade comunidade) {
+        Publicacao novaPublicacao;
         if (autor.isParticipante(comunidade) || autor.isParticipante(comunidade)) {
             try {
                 autor = new ParticipanteComunidade(autor);
@@ -42,7 +47,12 @@ public class Publicacao {
                 setAutor(autor);
                 PublicacaoDAO publicacaoDAO = new PublicacaoDAO();
                 comunidade.criarPublicacao(this);
-                this.setIdPublicacao(publicacaoDAO.novaPublicacao(this));
+                novaPublicacao = publicacaoDAO.novaPublicacao(this);
+                if (novaPublicacao != null) {
+                    this.setIdPublicacao(novaPublicacao.getIdPublicacao());
+                    this.setData(novaPublicacao.getData());
+                    this.setHora(novaPublicacao.getHora());
+                }
             } catch (Exception e) {
                 System.out.println(e);
             }
