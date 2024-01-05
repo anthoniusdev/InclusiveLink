@@ -3,7 +3,7 @@ package model;
 import java.util.*;
 
 public class Comunidade {
-    private int id;
+    private int idComunidade;
     private String nome;
     private Membro membro;
     private ModeradorComunidade criador; // -> Por ser criador, dá para passar o criador logo como ModeradorComunidade
@@ -11,13 +11,11 @@ public class Comunidade {
     private String fotoPerfil;
     private String fotoFundo;
     private String descricao;
-    private int idComunidade;
     private ArrayList<Publicacao> publicacoes = new ArrayList<>();
     private Publicacao publicacao;
     private ArrayList<ModeradorComunidade> moderadores = new ArrayList<ModeradorComunidade>();
     private ArrayList<ParticipanteComunidade> participantes = new ArrayList<ParticipanteComunidade>();
     private ArrayList<SeguidorComunidade> seguidores = new ArrayList<SeguidorComunidade>();
-
 
 
     public Comunidade(String nome, Membro criador, String fotoPerfil, String fotoFundo, String descricao, int idComunidade) {
@@ -116,8 +114,7 @@ public class Comunidade {
         this.participantes = participantes;
     }
 
-
-    public ArrayList<SeguidorComunidade> getSeguidor() {
+    public ArrayList<SeguidorComunidade> getSeguidores() {
         return seguidores;
     }
 
@@ -125,25 +122,32 @@ public class Comunidade {
         this.seguidores = seguidor;
     }
 
-<<<<<<< HEAD
     public boolean seguirComunidade(Membro membro) {
-=======
-    public int getId() {
-        return id;
+        try {
+            SeguidorComunidade novoSeguidor = new SeguidorComunidade(membro);
+            seguidores.add(novoSeguidor);
+        } catch (Exception e) {
+            System.out.println(e);
+
+        }
     }
+
+    public int getId() {
+        return idComunidade;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
 
-    public boolean seguirComunidade(){
->>>>>>> Abimael
+    public boolean seguirComunidade() {
         return true;
     }
 
 
     public ParticipanteComunidade participarComunidade(Membro membro) {
         // Na minha opinião esta á lógica mais correta
-        if (membro.isSeguidor(idComunidade)) {
+        if (membro.isSeguidor(this){
             ParticipanteComunidade novoParticipante = new ParticipanteComunidade(membro.getIdPessoa(), membro.getNome(), membro.getDataNascimento(), membro.getEmail(), membro.getSenha());
             participantes.add(novoParticipante);
             return novoParticipante;
@@ -153,7 +157,9 @@ public class Comunidade {
 
     }
 
-    public ModeradorComunidade definirModerador(ParticipanteComunidade participanteComunidade) {
+    public void ModeradorComunidade
+
+    definirModerador(ParticipanteComunidade participanteComunidade) {
         ModeradorComunidade novoModerador = null;
         try {
             novoModerador = new ModeradorComunidade(moderador.getIdPessoa(), moderador.getNome(), moderador.getDataNascimento(), moderador.getEmail(), moderador.getSenha());
@@ -179,18 +185,12 @@ public class Comunidade {
         publicacoes.remove(publicacao);
     }
 
-    public void criarPublicacao() {
-        Publicacao novaPublicacao = null;
-
-        try{
-            novaPublicacao = new Publicacao(publicacao.getTexto(), publicacao.getMidia(), publicacao.getAutor());
-            publicacoes.add(novaPublicacao);
-
-        }catch (Exception e){
+    public void criarPublicacao(Publicacao publicacao) {
+        try {
+            publicacoes.add(publicacao);
+        } catch (Exception e) {
             System.out.println(e);
-            novaPublicacao= null;
         }
-
     }
 
     public void removerSeguidorComunidade(SeguidorComunidade seguidor) {

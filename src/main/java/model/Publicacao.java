@@ -1,5 +1,7 @@
 package model;
 
+import dao.PublicacaoDAO;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -25,27 +27,35 @@ public class Publicacao {
         setAutor(autor);
         try {
             PublicacaoDAO publicacaoDAO = new PublicacaoDAO();
-            this = publicacaoDAO.novaPublicacao(this);
+            this.setIdPublicacao(publicacaoDAO.novaPublicacao(this));
         } catch (Exception e) {
             System.out.println(e);
         }
     }
 
-    public Publicacao(String texto, String midia, Membro autor, Comunidade comunidade) {
+    public Publicacao(String texto, String midia, ParticipanteComunidade autor, Comunidade comunidade) {
         if (autor.isParticipante(comunidade) || autor.isParticipante(comunidade)) {
             try {
                 autor = new ParticipanteComunidade(autor);
-                criarPublicacao(texto, midia);
+                setTexto(texto);
+                setMidia(midia);
                 setAutor(autor);
                 PublicacaoDAO publicacaoDAO = new PublicacaoDAO();
                 comunidade.criarPublicacao(this);
-                this = publicacaoDAO.novaPublicacao(this);
+                this.setIdPublicacao(publicacaoDAO.novaPublicacao(this));
             } catch (Exception e) {
                 System.out.println(e);
             }
         }
     }
-    public Publicacao(){}
+
+    public Publicacao() {
+    }
+
+    public void setIdPublicacao(int idPublicacao) {
+        this.idPublicacao = idPublicacao;
+    }
+
     public int getIdPublicacao() {
         return idPublicacao;
     }
@@ -95,6 +105,14 @@ public class Publicacao {
         return curtidas;
     }
 
+    public void setNumeroCurtidas(int numeroCurtidas) {
+        this.numeroCurtidas = numeroCurtidas;
+    }
+
+    public void setNumeroComentarios(int numeroComentarios) {
+        this.numeroComentarios = numeroComentarios;
+    }
+
     public ArrayList<Comentario> getComentarios() {
         return comentarios;
     }
@@ -127,8 +145,9 @@ public class Publicacao {
             System.out.println(e);
         }
     }
+
     public void excluirPublicacao(Membro autor, Comunidade comunidade) {
-        if (autor.isParticipante(comunidade) || autor.isModerador(comunidade)){
+        if (autor.isParticipante(comunidade) || autor.isModerador(comunidade)) {
             try {
                 PublicacaoDAO publicacaoDAO = new PublicacaoDAO();
                 publicacaoDAO.excluirPublicacao(this);
@@ -136,13 +155,13 @@ public class Publicacao {
                 this.getCurtidas().clear(); // Excluir curtidas no DAO -> ArrayList
                 this.getComentarios().clear(); // Excluir comentarios no DAO -> ArrayList
                 comunidade.excluirPublicacao(this);
-            }catch (Exception e){
+            } catch (Exception e) {
                 System.out.println(e);
             }
         }
     }
-    // metodos que eu acho que deveria estar na classe comentario:
-    /*public void adicionarComentario(Comentario comentario, Comunidade comunidade){
+    /* metodos que eu acho que deveria estar na classe comentario:
+    public void adicionarComentario(Comentario comentario, Comunidade comunidade){
         if (comentario.getAutor().isParticipante(comunidade) || comentario.getAutor().isModerador(comunidade)){
             try {
                 PublicacaoDAO publicacaoDAO = new PublicacaoDAO();
@@ -162,4 +181,8 @@ public class Publicacao {
             System.out.println(e);
         }
     }*/
+
+    public int getNumeroComentarios() {
+        return numeroComentarios;
+    }
 }
