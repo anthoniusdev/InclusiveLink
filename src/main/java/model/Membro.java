@@ -18,20 +18,35 @@ public class Membro extends Pessoa {
     private ArrayList<Publicacao> curtidas;
     private ArrayList<Comentario> comentarios;
 
-    public Membro(int idPessoa, String nome, String dataNascimento, String nomeUsuario, String email, String senha, String fotoPerfil, String fotoFundo, String descricao) {
+    public Membro(int idPessoa, String nome, String dataNascimento, String nomeUsuario, String email, String senha, String fotoPerfil, String fotoFundo, String descricao, ArrayList<Publicacao> curtidas) {
         super(idPessoa, nome, dataNascimento, email, senha);
         this.fotoPerfil = fotoPerfil;
         this.fotoFundo = fotoFundo;
         this.descricao = descricao;
         this.perfilVisivel = true;
         this.nomeUsuario = nomeUsuario;
+        this.curtidas = curtidas;
         this.publicacoes = null;
         this.membrosSeguindos = null;
         this.membrosSeguidores = null;
         this.comunidadesParticipantes = null;
         this.comunidadesSeguindos = null;
         this.comentarios = null;
-        this.curtidas = null;
+    }
+    public Membro(Membro membro){
+        super(membro.getIdPessoa(), membro.getNome(), membro.getDataNascimento(), membro.getEmail(), membro.getSenha());
+        this.fotoPerfil = membro.getFotoPerfil();
+        this.fotoFundo = membro.getFotoFundo();
+        this.descricao = membro.getDescricao();
+        this.perfilVisivel = membro.isPerfilVisivel();
+        this.nomeUsuario = membro.getNomeUsuario();
+        this.curtidas = membro.getCurtidas();
+        this.publicacoes = membro.getPublicacoes();
+        this.membrosSeguindos = membro.getMembrosSeguindo();
+        this.membrosSeguidores = membro.getMembrosSeguidores();
+        this.comunidadesParticipantes = membro.getComunidadesParticipantes();
+        this.comunidadesSeguindos = membro.getComunidadesSeguindos();
+        this.comentarios = membro.getComentarios();
     }
     public ArrayList<Comunidade> getComunidadesSeguindos() {
         return comunidadesSeguindos;
@@ -119,18 +134,17 @@ public class Membro extends Pessoa {
         return true;
     }
 
-    public boolean curtir(Publicacao publicacaoCurtida) {
-        boolean verificacaoCurtida = true;
+    public void curtirPublicacao(Publicacao publicacao) {
+        boolean publicacaoCurtida = false;
         for (Publicacao publicCurtidaExiste : curtidas) {
-            if (publicacaoCurtida.getIdPublicacao() == publicCurtidaExiste.getIdPublicacao()) {
-                verificacaoCurtida = false;
+            if (publicacao.getIdPublicacao() == publicCurtidaExiste.getIdPublicacao()) {
+                publicacaoCurtida = true;
+                break;
             }
         }
-        if (verificacaoCurtida) {
-            curtidas.add(publicacaoCurtida);
-            return true;
-        } else {
-            return false;
+        if (!publicacaoCurtida) {
+            MembroDAO membroDAO = new MembroDAO();
+            curtidas.add(publicacao);
         }
     }
 
@@ -240,5 +254,25 @@ public class Membro extends Pessoa {
 
     public void setNomeUsuario(String nomeUsuario) {
         this.nomeUsuario = nomeUsuario;
+    }
+
+    public ArrayList<Publicacao> getCurtidas() {
+        return curtidas;
+    }
+
+    public ArrayList<Comentario> getComentarios() {
+        return comentarios;
+    }
+
+    public ArrayList<Membro> getMembrosSeguidores() {
+        return membrosSeguidores;
+    }
+
+    public ArrayList<Membro> getMembrosSeguindos() {
+        return membrosSeguindos;
+    }
+
+    public ArrayList<Publicacao> getPublicacoes() {
+        return publicacoes;
     }
 }

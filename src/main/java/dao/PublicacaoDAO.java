@@ -1,5 +1,6 @@
 package dao;
 
+import model.Comentario;
 import model.Membro;
 import model.Publicacao;
 
@@ -9,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.EnumSet;
 
 public class PublicacaoDAO {
     private Connection conectar() {
@@ -33,7 +35,7 @@ public class PublicacaoDAO {
         } catch (Exception e) {
             System.out.println(e);
         }
-        if (verificaPublicacao(publicacao)) {
+        if (verificaPublicacao(idPublicacao)) {
             return retornaPublicacao(idPublicacao);
         } else {
             return null;
@@ -48,15 +50,22 @@ public class PublicacaoDAO {
             PreparedStatement preparedStatement = con.prepareStatement(read);
             preparedStatement.setInt(1, idPublicacao);
             ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()) {
-                publicacaoRetornada.setIdPublicacao(rs.getInt(1));
-                publicacaoRetornada.setTexto(rs.getString(2));
-                publicacaoRetornada.setMidia(rs.getString(3));
-                publicacaoRetornada.setData(rs.getString(5));
-                publicacaoRetornada.setHora(rs.getString(6));
-                publicacaoRetornada.setNumeroCurtidas(numeroCurtidas(idPublicacao));
-                publicacaoRetornada.setAutor(autorPublicacao(idPublicacao));
-                // publicacaoRetornada.setNumeroComentarios(); --> Depois que criar o ComentarioDAO, modificar.
+            if (rs.next()) {
+                MembroDAO membroDAO = new MembroDAO();
+                ComentarioDAO comentarioDAO = new ComentarioDAO();
+                while (rs.next()) {
+                    publicacaoRetornada.setIdPublicacao(rs.getInt(1));
+                    publicacaoRetornada.setTexto(rs.getString(2));
+                    publicacaoRetornada.setMidia(rs.getString(3));
+                    publicacaoRetornada.setAutor(membroDAO.retornaMembro(rs.getInt(4)));
+                    publicacaoRetornada.setData(rs.getString(5));
+                    publicacaoRetornada.setHora(rs.getString(6));
+                    publicacaoRetornada.setNumeroCurtidas(numeroCurtidas(idPublicacao));
+                    publicacaoRetornada.setCurtidas(curtidas(idPublicacao));
+                    publicacaoRetornada.setComentarios(comentarioDAO.comentarios(idPublicacao));
+                    // publicacaoRetornada.setNumeroComentarios(); --> Verificar depois
+                    // publicacaoRetornada.setNumeroCurtidas(); --> Verificar depois
+                }
             }
             preparedStatement.close();
         } catch (Exception e) {
@@ -66,11 +75,11 @@ public class PublicacaoDAO {
     }
 
     // Verifica se existe a publicação em questão
-    public boolean verificaPublicacao(Publicacao publicacao) {
+    public boolean verificaPublicacao(int idPublicacao) {
         String read = "select * from publicacao where idpublicacao = ?";
         try (Connection con = conectar()) {
             PreparedStatement preparedStatement = con.prepareStatement(read);
-            preparedStatement.setInt(1, publicacao.getIdPublicacao());
+            preparedStatement.setInt(1, idPublicacao);
             ResultSet rs = preparedStatement.executeQuery();
             return rs.next();
         } catch (Exception e) {
@@ -98,22 +107,35 @@ public class PublicacaoDAO {
         }
     }
 
+    // Retorna o número de curtidas de uma publicação específica
     public int numeroCurtidas(int idPublicacao) {
         ArrayList<Membro> curtidas = curtidas(idPublicacao);
         return curtidas.size();
     }
 
-    public Membro autorPublicacao(int idPublicacao) {
-        String read = "select idPessoa from membro inner join publicacao on membro.idPessoa = publicacao.id_autor where idpublicacao = ?";
+    public void curtirPublicacao(int idPublicacao, int idMembro) {
+        String create = "insert into publicacao_curtida values (?, ?)";
         try (Connection con = conectar()) {
-            PreparedStatement preparedStatement = con.prepareStatement(read);
+            PreparedStatement preparedStatement = con.prepareStatement(create);
             preparedStatement.setInt(1, idPublicacao);
-            ResultSet rs = preparedStatement.executeQuery();
-            MembroDAO membroDAO = new MembroDAO();
-            return membroDAO.retornaMembro(rs.getInt(1));
+            preparedStatement.setInt(2, idMembro);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
         } catch (Exception e) {
             System.out.println(e);
-            return null;
+        }
+    }
+    public void excluirPublicacao(int idPublicacao){
+        if (verificaPublicacao(idPublicacao)) {
+            String delete = "delete from publicacao where idpublicacao = ?";
+            try (Connection con = conectar()) {
+                PreparedStatement preparedStatement = con.prepareStatement(delete);
+                preparedStatement.setInt(1, idPublicacao);
+                preparedStatement.executeUpdate();
+                preparedStatement.close();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

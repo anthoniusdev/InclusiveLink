@@ -1,10 +1,12 @@
 package dao;
 
 import model.Membro;
+import model.Publicacao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class MembroDAO {
     private Connection conectar() {
@@ -35,7 +37,7 @@ public class MembroDAO {
             preparedStatementMembro.setString(5, membro.getDescricao());
             preparedStatementMembro.setBoolean(6, membro.isPerfilVisivel());
             preparedStatementMembro.executeUpdate();
-            return new Membro(idPessoa, membro.getNome(), membro.getDataNascimento(), membro.getNomeUsuario(), membro.getEmail(), membro.getSenha(), membro.getFotoPerfil(), membro.getFotoFundo(), membro.getDescricao());
+            return new Membro(idPessoa, membro.getNome(), membro.getDataNascimento(), membro.getNomeUsuario(), membro.getEmail(), membro.getSenha(), membro.getFotoPerfil(), membro.getFotoFundo(), membro.getDescricao(), membro.getCurtidas());
         } catch (Exception e) {
             System.out.println(e);
             return null;
@@ -73,10 +75,29 @@ public class MembroDAO {
             fotoFundo = rs.getString(7);
             nomeUsuario = rs.getString(8);
             descricao = rs.getString(9);
-            return new Membro(idPessoa, nome, dataNascimento, email, senha, fotoPerfil, fotoFundo, nomeUsuario, descricao);
+            return new Membro(idPessoa, nome, dataNascimento, email, senha, fotoPerfil, fotoFundo, nomeUsuario, descricao, publicacoesCurtidas(idPessoa));
         } catch (Exception e) {
             System.out.println(e);
             return null;
+        }
+    }
+
+    public ArrayList<Publicacao> publicacoesCurtidas(int idMembro) {
+        String read = "select idPublicacao from publicacao_curtida where idMembro = ?";
+        ArrayList<Publicacao> publicacoes = new ArrayList<>();
+        try (Connection con = conectar()) {
+            PreparedStatement preparedStatement = con.prepareStatement(read);
+            preparedStatement.setInt(1, idMembro);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                PublicacaoDAO publicacaoDAO = new PublicacaoDAO();
+                while (rs.next()) {
+                    publicacoes.add(publicacaoDAO.retornaPublicacao(rs.getInt(1)));
+                }
+            }
+            return publicacoes;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }

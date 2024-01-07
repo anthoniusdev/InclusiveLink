@@ -3,17 +3,10 @@ package model;
 import java.util.ArrayList;
 
 public class SeguidorComunidade extends Membro{
-<<<<<<< HEAD
-    public SeguidorComunidade(Membro  membroParaSeguidor){
-        super(membroParaSeguidor.getIdPessoa(), membroParaSeguidor.getNome(), membroParaSeguidor.getDataNascimento(), membroParaSeguidor.getEmail(), membroParaSeguidor.getSenha());
-=======
     private ArrayList<Comunidade> seguindoComunidades = new ArrayList<Comunidade>();
-    public SeguidorComunidade(int idPessoa, String nome, String dataNascimento, String email, String senha) {
-        super(idPessoa, nome, dataNascimento, email, senha);
->>>>>>> 55a84b35ab5013b178158265fae3591b37e69f37
-    }
+
     public SeguidorComunidade(Membro membro){
-        super(membro.getIdPessoa(), membro.getNome(), membro.getDataNascimento(), membro.getEmail(), membro.getSenha());
+        super(membro);
     }
 
     public ArrayList<Comunidade> getSeguindoComunidades() {
