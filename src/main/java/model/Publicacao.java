@@ -3,7 +3,6 @@ package model;
 import dao.PublicacaoDAO;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 
 public class Publicacao {
     private int idPublicacao;
@@ -18,6 +17,7 @@ public class Publicacao {
     private String hora;
 
     public Publicacao(String texto, String midia, Membro autor) {
+        Publicacao novaPublicacao;
         setTexto(texto);
         setMidia(midia);
         numeroCurtidas = 0;
@@ -27,13 +27,17 @@ public class Publicacao {
         setAutor(autor);
         try {
             PublicacaoDAO publicacaoDAO = new PublicacaoDAO();
-            this.setIdPublicacao(publicacaoDAO.novaPublicacao(this));
+            novaPublicacao = publicacaoDAO.novaPublicacao(this);
+            this.setIdPublicacao(novaPublicacao.getIdPublicacao());
+            this.setData(novaPublicacao.getData());
+            this.setHora(novaPublicacao.getHora());
         } catch (Exception e) {
             System.out.println(e);
         }
     }
 
     public Publicacao(String texto, String midia, ParticipanteComunidade autor, Comunidade comunidade) {
+        Publicacao novaPublicacao;
         if (autor.isParticipante(comunidade) || autor.isParticipante(comunidade)) {
             try {
                 autor = new ParticipanteComunidade(autor);
@@ -42,7 +46,12 @@ public class Publicacao {
                 setAutor(autor);
                 PublicacaoDAO publicacaoDAO = new PublicacaoDAO();
                 comunidade.criarPublicacao(this);
-                this.setIdPublicacao(publicacaoDAO.novaPublicacao(this));
+                novaPublicacao = publicacaoDAO.novaPublicacao(this);
+                if (novaPublicacao != null) {
+                    this.setIdPublicacao(novaPublicacao.getIdPublicacao());
+                    this.setData(novaPublicacao.getData());
+                    this.setHora(novaPublicacao.getHora());
+                }
             } catch (Exception e) {
                 System.out.println(e);
             }
@@ -91,7 +100,7 @@ public class Publicacao {
     public boolean curtir(Membro membro) {
         try {
             PublicacaoDAO publicacaoDAO = new PublicacaoDAO();
-            publicacaoDAO.curtir(this, membro);
+            publicacaoDAO.curtirPublicacao(getIdPublicacao(), membro.getIdPessoa());
             numeroCurtidas++;
             membro.curtirPublicacao(this);
             return true;
@@ -111,6 +120,14 @@ public class Publicacao {
 
     public void setNumeroComentarios(int numeroComentarios) {
         this.numeroComentarios = numeroComentarios;
+    }
+
+    public void setComentarios(ArrayList<Comentario> comentarios) {
+        this.comentarios = comentarios;
+    }
+
+    public void setCurtidas(ArrayList<Membro> curtidas) {
+        this.curtidas = curtidas;
     }
 
     public ArrayList<Comentario> getComentarios() {
@@ -137,12 +154,10 @@ public class Publicacao {
     public void excluirPublicacao(Membro autor) {
         try {
             PublicacaoDAO publicacaoDAO = new PublicacaoDAO();
-            publicacaoDAO.excluirPublicacao(this);
-            autor.excluirPublicacao(this);
-            this.getCurtidas().clear(); // Excluir curtidas no DAO -> ArrayList
-            this.getComentarios().clear(); // Excluir comentarios no DAO -> ArrayList
+            publicacaoDAO.excluirPublicacao(getIdPublicacao());
+            autor.excluirPublicacao(this); --> metodo tem de estar na classe autor
         } catch (Exception e) {
-            System.out.println(e);
+            throw new RuntimeException(e);
         }
     }
 
@@ -150,13 +165,13 @@ public class Publicacao {
         if (autor.isParticipante(comunidade) || autor.isModerador(comunidade)) {
             try {
                 PublicacaoDAO publicacaoDAO = new PublicacaoDAO();
-                publicacaoDAO.excluirPublicacao(this);
+                publicacaoDAO.excluirPublicacao(getIdPublicacao());
                 autor.excluirPublicacao(this);
                 this.getCurtidas().clear(); // Excluir curtidas no DAO -> ArrayList
                 this.getComentarios().clear(); // Excluir comentarios no DAO -> ArrayList
                 comunidade.excluirPublicacao(this);
             } catch (Exception e) {
-                System.out.println(e);
+                throw new RuntimeException(e);
             }
         }
     }

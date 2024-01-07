@@ -141,7 +141,7 @@ public class Comunidade {
     }
 
 
-    public ArrayList<SeguidorComunidade> getSeguidor() {
+    public ArrayList<SeguidorComunidade> getSeguidores() {
         return seguidores;
     }
 
@@ -180,7 +180,7 @@ public class Comunidade {
         publicacoes.remove(publicacao);
     }
 
-    public void criarPublicacao () {
+    public void criarPublicacao(Publicacao publicacao) {
         Publicacao novaPublicacao = null;
 
         try {

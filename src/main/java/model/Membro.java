@@ -1,29 +1,75 @@
 package model;
 
+import dao.MembroDAO;
+
 import java.util.ArrayList;
 
 public class Membro extends Pessoa {
-    private boolean perfilVisivel = true;
-    private String fotoPerfiil;
+    private boolean perfilVisivel;
+    private String nomeUsuario;
+    private String fotoPerfil;
     private String fotoFundo;
     private String descricao;
-    private ArrayList<Membro> listaSeguidores;
-    private ArrayList<Membro> membrosSeguindo;
+    private ArrayList<Membro> membrosSeguidores;
+    private ArrayList<Membro> membrosSeguindos;
+    private ArrayList<Comunidade> comunidadesSeguindos;
+    private ArrayList<Comunidade> comunidadesParticipantes;
     private ArrayList<Publicacao> publicacoes;
     private ArrayList<Publicacao> curtidas;
     private ArrayList<Comentario> comentarios;
 
-    public Membro(int idPessoa, String nome, String dataNascimento, String email, String senha, String fotoPerfiil, String fotoFundo, String descricao) {
+    public Membro(int idPessoa, String nome, String dataNascimento, String nomeUsuario, String email, String senha, String fotoPerfil, String fotoFundo, String descricao, ArrayList<Publicacao> curtidas) {
         super(idPessoa, nome, dataNascimento, email, senha);
-        this.fotoPerfiil = fotoPerfiil;
+        this.fotoPerfil = fotoPerfil;
         this.fotoFundo = fotoFundo;
         this.descricao = descricao;
+        this.perfilVisivel = true;
+        this.nomeUsuario = nomeUsuario;
+        this.curtidas = curtidas;
+        this.publicacoes = null;
+        this.membrosSeguindos = null;
+        this.membrosSeguidores = null;
+        this.comunidadesParticipantes = null;
+        this.comunidadesSeguindos = null;
+        this.comentarios = null;
+    }
+    public Membro(Membro membro){
+        super(membro.getIdPessoa(), membro.getNome(), membro.getDataNascimento(), membro.getEmail(), membro.getSenha());
+        this.fotoPerfil = membro.getFotoPerfil();
+        this.fotoFundo = membro.getFotoFundo();
+        this.descricao = membro.getDescricao();
+        this.perfilVisivel = membro.isPerfilVisivel();
+        this.nomeUsuario = membro.getNomeUsuario();
+        this.curtidas = membro.getCurtidas();
+        this.publicacoes = membro.getPublicacoes();
+        this.membrosSeguindos = membro.getMembrosSeguindo();
+        this.membrosSeguidores = membro.getMembrosSeguidores();
+        this.comunidadesParticipantes = membro.getComunidadesParticipantes();
+        this.comunidadesSeguindos = membro.getComunidadesSeguindos();
+        this.comentarios = membro.getComentarios();
+    }
+    public ArrayList<Comunidade> getComunidadesSeguindos() {
+        return comunidadesSeguindos;
     }
 
-    public boolean realizarCadastro(String email, String senha) {
-        //VERIFICAR SE AS INFORMAÇÕES JA ESTÃO CADASTRADAS
-        //CASO NÃO MANDAR INFORMAÇÕES PARA O BD
-        return true;
+    public ArrayList<Comunidade> getComunidadesParticipantes() {
+        return comunidadesParticipantes;
+    }
+
+    /* <-- Metodo pronto --> */
+    public boolean realizarCadastro() {
+        Membro novoMembro;
+        try {
+            MembroDAO membroDAO = new MembroDAO();
+            if(!membroDAO.verificaMembro(this)){
+                novoMembro = membroDAO.realizarCadastro(this);
+                this.setIdPessoa(novoMembro.getIdPessoa());
+            }
+            return membroDAO.verificaMembro(this);
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
     }
 
     // --------------------------------------------------------------------------------------------------------
@@ -37,7 +83,7 @@ public class Membro extends Pessoa {
                 }
             }
             if (!membroJaSeguido) {
-                this.membrosSeguindo.add(membroSeguido);
+                this.membrosSeguindos.add(membroSeguido);
                 membroSeguido.getMembrosSeguindo().add(this);
                 return true;
             } else {
@@ -51,7 +97,7 @@ public class Membro extends Pessoa {
 
     // --------------------------------------------------------------------------------------------------------
     public ArrayList<Membro> getMembrosSeguindo() {
-        return membrosSeguindo;
+        return membrosSeguindos;
     }
 
     // --------------------------------------------------------------------------------------------------------
@@ -59,7 +105,7 @@ public class Membro extends Pessoa {
         SeguidorComunidade seguidorComunidade = new SeguidorComunidade(this);
         boolean comunidadeJaSeguida = false;
         try {
-            for (Comunidade comunidade : seguidorComunidade.getSeguindoComunidades()) {
+            for (Comunidade comunidade : seguidorComunidade.getComunidadesSeguindos()) {
                 if (comunidadeSeguida.getIdComunidade() == comunidade.getIdComunidade()) {
                     comunidadeJaSeguida = true;
                     break;
@@ -88,23 +134,22 @@ public class Membro extends Pessoa {
         return true;
     }
 
-    public boolean curtir(Publicacao publicacaoCurtida) {
-        boolean verificacaoCurtida = true;
+    public void curtirPublicacao(Publicacao publicacao) {
+        boolean publicacaoCurtida = false;
         for (Publicacao publicCurtidaExiste : curtidas) {
-            if (publicacaoCurtida.getIdPublicacao() == publicCurtidaExiste.getIdPublicacao()) {
-                verificacaoCurtida = false;
+            if (publicacao.getIdPublicacao() == publicCurtidaExiste.getIdPublicacao()) {
+                publicacaoCurtida = true;
+                break;
             }
         }
-        if (verificacaoCurtida) {
-            curtidas.add(publicacaoCurtida);
-            return true;
-        } else {
-            return false;
+        if (!publicacaoCurtida) {
+            MembroDAO membroDAO = new MembroDAO();
+            curtidas.add(publicacao);
         }
     }
 
     public void excluirSeguidor(Membro seguidorExcluido) {
-        listaSeguidores.remove(seguidorExcluido);
+        membrosSeguidores.remove(seguidorExcluido);
     }
 
     public void pesquisarComunidade() {
@@ -129,6 +174,7 @@ public class Membro extends Pessoa {
     public void excluirComentario(Comentario comentarioParaExcluir) {
         comentarios.remove(comentarioParaExcluir);
     }
+
     public boolean isPerfilVisivel() {
         return perfilVisivel;
     }
@@ -137,12 +183,12 @@ public class Membro extends Pessoa {
         this.perfilVisivel = perfilVisivel;
     }
 
-    public String getFotoPerfiil() {
-        return fotoPerfiil;
+    public String getFotoPerfil() {
+        return fotoPerfil;
     }
 
     public void setFotoPerfiil(String fotoPerfiil) {
-        this.fotoPerfiil = fotoPerfiil;
+        this.fotoPerfil = fotoPerfil;
     }
 
     public String getFotoFundo() {
@@ -161,12 +207,12 @@ public class Membro extends Pessoa {
         this.descricao = descricao;
     }
 
-    public int numeroSeguidores() {
-        return listaSeguidores.size();
+    public int getNumeroSeguidores() {
+        return membrosSeguidores.size() + membrosSeguidores.size();
     }
 
-    public int numeroSeguindo() {
-        return listaSeguindo1.size() + listaSeguindo2.size();
+    public int getNumeroSeguindos() {
+        return membrosSeguindos.size() + comunidadesSeguindos.size();
     }
 
     public boolean isParticipante(Comunidade comunidade) {
@@ -202,4 +248,31 @@ public class Membro extends Pessoa {
         return isModerador;
     }
 
+    public String getNomeUsuario() {
+        return nomeUsuario;
+    }
+
+    public void setNomeUsuario(String nomeUsuario) {
+        this.nomeUsuario = nomeUsuario;
+    }
+
+    public ArrayList<Publicacao> getCurtidas() {
+        return curtidas;
+    }
+
+    public ArrayList<Comentario> getComentarios() {
+        return comentarios;
+    }
+
+    public ArrayList<Membro> getMembrosSeguidores() {
+        return membrosSeguidores;
+    }
+
+    public ArrayList<Membro> getMembrosSeguindos() {
+        return membrosSeguindos;
+    }
+
+    public ArrayList<Publicacao> getPublicacoes() {
+        return publicacoes;
+    }
 }
