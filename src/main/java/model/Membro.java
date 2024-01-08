@@ -162,6 +162,8 @@ public class Membro extends Pessoa {
         }
     }
 
+
+
     // --------------------------------------------------------------------------------------------------------
     public boolean seguirMembro(Membro membroSeguido) {
         boolean membroJaSeguido = false;
@@ -311,4 +313,8 @@ public class Membro extends Pessoa {
         return isModerador;
     }
 
+    @Override
+    public boolean fazerLogin() {
+        return false;
+    }
 }
