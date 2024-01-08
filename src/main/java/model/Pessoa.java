@@ -1,6 +1,6 @@
 package model;
 
-public abstract  class Pessoa {
+public abstract class Pessoa {
     private int idPessoa;
     private String nome;
     private String dataNascimento;
@@ -15,14 +15,10 @@ public abstract  class Pessoa {
         this.senha = senha;
     }
 
-    public boolean fazerLogin(){
-        //VERIFICAR SE O LOGIN INFORMADO EXISTE NO BD
-        return true;
-    }
-
     public int getIdPessoa() {
         return idPessoa;
     }
+
     public void setIdPessoa(int idPessoa) {
         this.idPessoa = idPessoa;
     }
@@ -30,6 +26,7 @@ public abstract  class Pessoa {
     public String getNome() {
         return nome;
     }
+
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -37,6 +34,7 @@ public abstract  class Pessoa {
     public String getDataNascimento() {
         return dataNascimento;
     }
+
     public void setDataNascimento(String dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
@@ -44,6 +42,7 @@ public abstract  class Pessoa {
     public String getEmail() {
         return email;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -51,7 +50,13 @@ public abstract  class Pessoa {
     public String getSenha() {
         return senha;
     }
+
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public boolean fazerLogin() {
+        //VERIFICAR SE O LOGIN INFORMADO EXISTE NO BD
+        return true;
     }
 }

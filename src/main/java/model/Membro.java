@@ -5,17 +5,17 @@ import dao.MembroDAO;
 import java.util.ArrayList;
 
 public class Membro extends Pessoa {
-    private boolean perfilVisivel;
-    private String nomeUsuario;
     private String fotoPerfil;
     private String fotoFundo;
-    private String descricao;
+    private String nomeUsuario;
     private ArrayList<Membro> membrosSeguidores;
     private ArrayList<Membro> membrosSeguindos;
     private ArrayList<Comunidade> comunidadesSeguindos;
     private ArrayList<Comunidade> comunidadesParticipantes;
-    private ArrayList<Publicacao> publicacoes;
+    private String descricao;
     private ArrayList<Publicacao> curtidas;
+    private ArrayList<Publicacao> publicacoes;
+    private boolean perfilVisivel;
     private ArrayList<Comentario> comentarios;
 
     public Membro(int idPessoa, String nome, String dataNascimento, String nomeUsuario, String email, String senha, String fotoPerfil, String fotoFundo, String descricao, ArrayList<Publicacao> curtidas) {
@@ -33,7 +33,8 @@ public class Membro extends Pessoa {
         this.comunidadesSeguindos = null;
         this.comentarios = null;
     }
-    public Membro(Membro membro){
+
+    public Membro(Membro membro) {
         super(membro.getIdPessoa(), membro.getNome(), membro.getDataNascimento(), membro.getEmail(), membro.getSenha());
         this.fotoPerfil = membro.getFotoPerfil();
         this.fotoFundo = membro.getFotoFundo();
@@ -48,12 +49,101 @@ public class Membro extends Pessoa {
         this.comunidadesSeguindos = membro.getComunidadesSeguindos();
         this.comentarios = membro.getComentarios();
     }
+
+    public String getFotoPerfil() {
+        return fotoPerfil;
+    }
+
+    public void setFotoPerfil(String fotoPerfil) {
+        this.fotoPerfil = fotoPerfil;
+    }
+
+    public String getFotoFundo() {
+        return fotoFundo;
+    }
+
+    public void setFotoFundo(String fotoFundo) {
+        this.fotoFundo = fotoFundo;
+    }
+
+    public String getNomeUsuario() {
+        return nomeUsuario;
+    }
+
+    public void setNomeUsuario(String nomeUsuario) {
+        this.nomeUsuario = nomeUsuario;
+    }
+
+    public ArrayList<Membro> getMembrosSeguidores() {
+        return membrosSeguidores;
+    }
+
+    public void setMembrosSeguidores(ArrayList<Membro> membrosSeguidores) {
+        this.membrosSeguidores = membrosSeguidores;
+    }
+
+    public ArrayList<Membro> getMembrosSeguindos() {
+        return membrosSeguindos;
+    }
+
+    public void setMembrosSeguindos(ArrayList<Membro> membrosSeguindos) {
+        this.membrosSeguindos = membrosSeguindos;
+    }
+
     public ArrayList<Comunidade> getComunidadesSeguindos() {
         return comunidadesSeguindos;
     }
 
+    public void setComunidadesSeguindos(ArrayList<Comunidade> comunidadesSeguindos) {
+        this.comunidadesSeguindos = comunidadesSeguindos;
+    }
+
     public ArrayList<Comunidade> getComunidadesParticipantes() {
         return comunidadesParticipantes;
+    }
+
+    public void setComunidadesParticipantes(ArrayList<Comunidade> comunidadesParticipantes) {
+        this.comunidadesParticipantes = comunidadesParticipantes;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public ArrayList<Publicacao> getCurtidas() {
+        return curtidas;
+    }
+
+    public void setCurtidas(ArrayList<Publicacao> curtidas) {
+        this.curtidas = curtidas;
+    }
+
+    public ArrayList<Publicacao> getPublicacoes() {
+        return publicacoes;
+    }
+
+    public void setPublicacoes(ArrayList<Publicacao> publicacoes) {
+        this.publicacoes = publicacoes;
+    }
+
+    public boolean isPerfilVisivel() {
+        return perfilVisivel;
+    }
+
+    public void setPerfilVisivel(boolean perfilVisivel) {
+        this.perfilVisivel = perfilVisivel;
+    }
+
+    public ArrayList<Comentario> getComentarios() {
+        return comentarios;
+    }
+
+    public void setComentarios(ArrayList<Comentario> comentarios) {
+        this.comentarios = comentarios;
     }
 
     /* <-- Metodo pronto --> */
@@ -61,7 +151,7 @@ public class Membro extends Pessoa {
         Membro novoMembro;
         try {
             MembroDAO membroDAO = new MembroDAO();
-            if(!membroDAO.verificaMembro(this)){
+            if (!membroDAO.verificaMembro(this)) {
                 novoMembro = membroDAO.realizarCadastro(this);
                 this.setIdPessoa(novoMembro.getIdPessoa());
             }
@@ -129,9 +219,13 @@ public class Membro extends Pessoa {
         return true;
     }
 
-    public boolean excluirPublicacao(Publicacao publicacaoParaExcluir) {
-        publicacoes.remove(publicacaoParaExcluir);
-        return true;
+    public void excluirPublicacao(Publicacao publicacaoParaExcluir) {
+        try {
+            publicacaoParaExcluir.excluirPublicacao();
+            publicacoes.remove(publicacaoParaExcluir);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void curtirPublicacao(Publicacao publicacao) {
@@ -166,7 +260,7 @@ public class Membro extends Pessoa {
 
     public void editarPerfil(String nomeEdicao, String fotoPerfiilEdicao, String fotoFundoEdicao, String descricaoEdicao) {
         setNome(nomeEdicao);
-        setFotoPerfiil(fotoPerfiilEdicao);
+        setFotoPerfil(fotoPerfiilEdicao);
         setFotoFundo(fotoFundoEdicao);
         setDescricao(descricaoEdicao);
     }
@@ -175,37 +269,6 @@ public class Membro extends Pessoa {
         comentarios.remove(comentarioParaExcluir);
     }
 
-    public boolean isPerfilVisivel() {
-        return perfilVisivel;
-    }
-
-    public void setPerfilVisivel(boolean perfilVisivel) {
-        this.perfilVisivel = perfilVisivel;
-    }
-
-    public String getFotoPerfil() {
-        return fotoPerfil;
-    }
-
-    public void setFotoPerfiil(String fotoPerfiil) {
-        this.fotoPerfil = fotoPerfil;
-    }
-
-    public String getFotoFundo() {
-        return fotoFundo;
-    }
-
-    public void setFotoFundo(String fotoFundo) {
-        this.fotoFundo = fotoFundo;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
 
     public int getNumeroSeguidores() {
         return membrosSeguidores.size() + membrosSeguidores.size();
@@ -248,31 +311,4 @@ public class Membro extends Pessoa {
         return isModerador;
     }
 
-    public String getNomeUsuario() {
-        return nomeUsuario;
-    }
-
-    public void setNomeUsuario(String nomeUsuario) {
-        this.nomeUsuario = nomeUsuario;
-    }
-
-    public ArrayList<Publicacao> getCurtidas() {
-        return curtidas;
-    }
-
-    public ArrayList<Comentario> getComentarios() {
-        return comentarios;
-    }
-
-    public ArrayList<Membro> getMembrosSeguidores() {
-        return membrosSeguidores;
-    }
-
-    public ArrayList<Membro> getMembrosSeguindos() {
-        return membrosSeguindos;
-    }
-
-    public ArrayList<Publicacao> getPublicacoes() {
-        return publicacoes;
-    }
 }

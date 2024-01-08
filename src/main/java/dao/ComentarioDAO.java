@@ -9,18 +9,37 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class ComentarioDAO {
-    private Connection conectar(){
+    private Connection conectar() {
         Conexao conexao = new Conexao();
         return conexao.conectar();
     }
-    public Comentario criarComentario(Comentario comentario){
 
+    // CRUD - - - CREATE - - -
+    // Inserindo um novo registro na tabela publicacao_comentario
+    // <-- Cria um comentario no banco de dados -->
+    public Comentario criarComentario(Comentario comentario) {
+        String create = "insert into publicacao_comentario(idPublicacao, texto, midia, id_autor) values(?, ?, ?, ?)";
+        try (Connection con = conectar()) {
+            PreparedStatement preparedStatement = con.prepareStatement(create);
+            preparedStatement.setInt(1, comentario.getIdPublicacao());
+            preparedStatement.setString(2, comentario.getTexto());
+            preparedStatement.setString(3, comentario.getMidia());
+            preparedStatement.setInt(4, comentario.getAutor().getIdPessoa());
+            preparedStatement.executeUpdate();
+            ResultSet idGerado = preparedStatement.getGeneratedKeys();
+            return retornaComentario(idGerado.getInt(1));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
-    public Comentario retornaComentario(int idComentario){
+
+    // CRUD - - - READ - - -
+    // Lê um registro da tabela publicacao_comentarrio
+    // <-- Retorna um objeto da classe Comentario para utilização de serviço futuro -->
+    public Comentario retornaComentario(int idComentario) {
         String read = "select * from publicacao_comentario where idComentario = ?";
-        Membro autor;
         Comentario comentario = new Comentario();
-        try (Connection con = conectar()){
+        try (Connection con = conectar()) {
             PreparedStatement preparedStatement = con.prepareStatement(read);
             preparedStatement.setInt(1, idComentario);
             ResultSet rs = preparedStatement.executeQuery();
@@ -39,31 +58,38 @@ public class ComentarioDAO {
             // comentario.setNumeroComentarios(); --> Verificar depois
             // comentario.setComentarios(); --> Verificar depois
             return comentario;
-        }catch (Exception e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
-    public ArrayList<Membro> curtidas(int idComentario){
+
+    // CRUD - - - READ - - -
+    // <-- Lê e armaneza na ArrayList registros da tabela comentario_curtida -->
+    public ArrayList<Membro> curtidas(int idComentario) {
         String read = "select idMembro from comentario_curtida where idcomentario = ?";
         ArrayList<Membro> membros = new ArrayList<>();
-        try (Connection con = conectar()){
+        try (Connection con = conectar()) {
             PreparedStatement preparedStatement = con.prepareStatement(read);
             preparedStatement.setInt(1, idComentario);
             ResultSet rs = preparedStatement.executeQuery();
             MembroDAO membroDAO = new MembroDAO();
-            while (rs.next()){
+            while (rs.next()) {
                 membros.add(membroDAO.retornaMembro(rs.getInt(1)));
             }
             return membros;
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
+
+    // CRUD - - - READ - - -
+    // <-- Armazena os comentários de uma publicação específica e retorna a ArrayList -->
     public ArrayList<Comentario> comentarios(int idPublicacao) {
         String read = "select idComentario from publicacao_comentario where idPublicacao = ?";
         ArrayList<Comentario> comentarios = new ArrayList<>();
         try (Connection con = conectar()) {
             PreparedStatement preparedStatement = con.prepareStatement(read);
+            preparedStatement.setInt(1, idPublicacao);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 comentarios.add(retornaComentario(rs.getInt(1)));

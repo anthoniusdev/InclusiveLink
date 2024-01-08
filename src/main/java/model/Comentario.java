@@ -2,7 +2,7 @@ package model;
 
 import dao.ComentarioDAO;
 
-public class Comentario extends Publicacao{
+public class Comentario extends Publicacao {
 
     private int idComentario;
 
@@ -12,22 +12,31 @@ public class Comentario extends Publicacao{
         this.setNumeroCurtidas(this.getCurtidas().size());
         comentarPublicacao(publicacao);
     }
-    public Comentario(){}
 
-    public void setIdComentario(int idComentario) {
-        this.idComentario = idComentario;
+    public Comentario() {
     }
 
     public int getIdComentario() {
         return idComentario;
     }
-    public void comentarPublicacao(Publicacao publicacao){
+
+    public void setIdComentario(int idComentario) {
+        this.idComentario = idComentario;
+    }
+
+    public void comentarPublicacao(Publicacao publicacao) {
         try {
             setIdPublicacao(publicacao.getIdPublicacao());
             ComentarioDAO comentarioDAO = new ComentarioDAO();
-            comentarioDAO.criarComentario(this);
-        }
-        catch (Exception e){
+            Comentario comentario = comentarioDAO.criarComentario(this);
+            this.setIdComentario(comentario.getIdComentario());
+            this.setData(comentario.getData());
+            this.setHora(comentario.getHora());
+            this.setCurtidas(comentario.getCurtidas());
+            this.setComentarios(comentario.getComentarios());
+            this.setNumeroCurtidas(getCurtidas().size());
+            this.setNumeroComentarios(getComentarios().size());
+        } catch (Exception e) {
             System.out.println(e);
         }
     }

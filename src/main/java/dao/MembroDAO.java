@@ -14,6 +14,8 @@ public class MembroDAO {
         return conexao.conectar();
     }
 
+    // CRUD - - - CREATE - - -
+    // <-- Realizando cadastro de uma nova pessoa e membro no banco de dados-->
     public Membro realizarCadastro(Membro membro) {
         String createPessoa = "insert into pessoa(nome, dataNascimento, email, senha) values (?,?,?,?)";
         String createMembro = "insert into membro(idPessoa, fotoPerfil, fotoFundo, nomeUsuario, descricao, perfilVisivel) values (?, ?, ?, ?, ?, ?)";
@@ -44,6 +46,8 @@ public class MembroDAO {
         }
     }
 
+    // CRUD - - - READ - - -
+    // <-- Verificando se um membro existe -->
     public boolean verificaMembro(Membro membro) {
         String read = "select * from membro where idpessoa = ?";
         try (Connection con = conectar()) {
@@ -57,6 +61,8 @@ public class MembroDAO {
         }
     }
 
+    // CRUD - - - READ - - -
+    // <-- Retorna um objeto da classe Membro para utilização de serviço futuro -->
     public Membro retornaMembro(int id) {
         int idPessoa;
         String nome, dataNascimento, email, senha, fotoPerfil, fotoFundo, nomeUsuario, descricao;
@@ -82,6 +88,8 @@ public class MembroDAO {
         }
     }
 
+    // CRUD - - - READ - - -
+    // <-- Armaneza as curtidas de algum membro específico e retorna a ArrayList -->
     public ArrayList<Publicacao> publicacoesCurtidas(int idMembro) {
         String read = "select idPublicacao from publicacao_curtida where idMembro = ?";
         ArrayList<Publicacao> publicacoes = new ArrayList<>();

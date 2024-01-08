@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class Conexao {
+    // Criando uma conexão com o banco de dados
     protected Connection conectar() {
         try {
             String driver = "com.mysql.cj.jdbc.Driver";
