@@ -55,8 +55,5 @@ public abstract class Pessoa {
         this.senha = senha;
     }
 
-    public boolean fazerLogin() {
-        //VERIFICAR SE O LOGIN INFORMADO EXISTE NO BD
-        return true;
-    }
+    public abstract boolean fazerLogin();
 }
