@@ -3,20 +3,38 @@ package model;
 import java.util.*;
 
 public class Comunidade {
+    private int idComunidade;
     private String nome;
-    private Membro membro;
     private ModeradorComunidade criador; // -> Por ser criador, dá para passar o criador logo como ModeradorComunidade
     private ModeradorComunidade moderador;
     private String fotoPerfil;
     private String fotoFundo;
     private String descricao;
-    private int idComunidade;
     private ArrayList<Publicacao> publicacoes = new ArrayList<>();
     private Publicacao publicacao;
     private ArrayList<ModeradorComunidade> moderadores = new ArrayList<ModeradorComunidade>();
     private ArrayList<ParticipanteComunidade> participantes = new ArrayList<ParticipanteComunidade>();
     private ArrayList<SeguidorComunidade> seguidores = new ArrayList<SeguidorComunidade>();
+    public Comunidade(String nome, Membro criador, String fotoPerfil, String fotoFundo, String descricao, ArrayList<Publicacao> publicacoes, ArrayList<ModeradorComunidade> moderadores, int numeroParticipantes, ArrayList<ParticipanteComunidade> participantes, int numeroSeguidores, ArrayList<SeguidorComunidade> seguidor) {
+        this.nome = nome;
+        this.fotoPerfil = fotoPerfil;
+        this.fotoFundo = fotoFundo;
+        this.descricao = descricao;
+        this.publicacoes = publicacoes;
+        this.moderadores = moderadores;
+        this.participantes = participantes;
+        this.seguidores = seguidor;
+    }
+    public Comunidade(String nome, Membro criador, String fotoPerfil, String fotoFundo, String descricao, int idComunidade) {
+        this.nome = nome;
+        this.criador = definirModerador(participarComunidade(criador));
+        this.fotoPerfil = fotoPerfil;
+        this.fotoFundo = fotoFundo;
+        this.descricao = descricao;
+        this.participantes.size();
+        this.idComunidade = idComunidade;
 
+    }
     public ParticipanteComunidade participarComunidade(Membro membro) {
         if (membro.isSeguidor(this)) {
             ParticipanteComunidade novoParticipante = new ParticipanteComunidade((SeguidorComunidade) membro);
@@ -27,7 +45,6 @@ public class Comunidade {
         }
 
     }
-
 
     public ModeradorComunidade definirModerador(ParticipanteComunidade participanteComunidade) {
         ModeradorComunidade novoModerador = null;
@@ -43,30 +60,6 @@ public class Comunidade {
 
     }
 
-
-    public Comunidade(String nome, Membro criador, String fotoPerfil, String fotoFundo, String descricao, int idComunidade) {
-        this.nome = nome;
-        this.criador = definirModerador(participarComunidade(criador));
-        this.fotoPerfil = fotoPerfil;
-        this.fotoFundo = fotoFundo;
-        this.descricao = descricao;
-        this.participantes.size();
-        this.idComunidade = idComunidade;
-
-    }
-
-    public Comunidade(String nome, Membro criador, String fotoPerfil, String fotoFundo, String descricao, ArrayList<Publicacao> publicacoes, ArrayList<ModeradorComunidade> moderadores, int numeroParticipantes, ArrayList<ParticipanteComunidade> participantes, int numeroSeguidores, ArrayList<SeguidorComunidade> seguidor) {
-        this.nome = nome;
-        this.fotoPerfil = fotoPerfil;
-        this.fotoFundo = fotoFundo;
-        this.descricao = descricao;
-        this.publicacoes = publicacoes;
-        this.moderadores = moderadores;
-        this.participantes.size();
-        this.participantes = participantes;
-        this.seguidores.size();
-        this.seguidores = seguidor;
-    }
 
     public void setCriador(ModeradorComunidade criador) {
         this.criador = criador;
@@ -150,33 +143,31 @@ public class Comunidade {
     }
 
 
-
-    public boolean seguirComunidade(Membro membroSeguir){
-        boolean verificacaoSeguindo=true;
-        for(Membro membrosSeguindo : seguidores){
-            if(membrosSeguindo.getIdPessoa() == membroSeguir.getIdPessoa()){
-                verificacaoSeguindo=false;
+    public boolean seguirComunidade(Membro membroSeguir) {
+        boolean verificacaoSeguindo = true;
+        for (Membro membrosSeguindo : seguidores) {
+            if (membrosSeguindo.getIdPessoa() == membroSeguir.getIdPessoa()) {
+                verificacaoSeguindo = false;
             }
         }
-        if(verificacaoSeguindo){
+        if (verificacaoSeguindo) {
             seguidores.add((SeguidorComunidade) membroSeguir);
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
 
-
-    public void excluirComunidade (model.Comunidade comunidade){
+    public void excluirComunidade(model.Comunidade comunidade) {
         comunidade = null;
     }
 
-    public void removerParticipanteComunidade (ParticipanteComunidade  participante){
+    public void removerParticipanteComunidade(ParticipanteComunidade participante) {
         participantes.remove(participante);
     }
 
-    public void excluirPublicacao (Publicacao publicacao) {
+    public void excluirPublicacao(Publicacao publicacao) {
         publicacoes.remove(publicacao);
     }
 
@@ -193,7 +184,7 @@ public class Comunidade {
 
     }
 
-    public void removerSeguidorComunidade (SeguidorComunidade seguidor){
+    public void removerSeguidorComunidade(SeguidorComunidade seguidor) {
         seguidores.remove(seguidor);
     }
 

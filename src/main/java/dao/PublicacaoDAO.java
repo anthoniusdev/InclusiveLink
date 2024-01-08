@@ -18,7 +18,8 @@ public class PublicacaoDAO {
         return conexao.conectar();
     }
 
-    // Criando uma nova publicacao DE PERFIL no banco de dados
+    // CRUD - - - CREATE - - -
+    // <-- Criando uma nova publicacao DE PERFIL no banco de dados -->
     public Publicacao novaPublicacao(Publicacao publicacao) {
         String createPublicacao = "insert into publicacao(texto, midia, id_autor) values (?, ?, ?)";
         int idPublicacao = 0;
@@ -42,7 +43,8 @@ public class PublicacaoDAO {
         }
     }
 
-    // Instanciando uma publicação para retornar
+    // CRUD - - - READ - - -
+    // <-- Retorna um objeto da classe Publicacao para utilização de serviço futuro -->
     public Publicacao retornaPublicacao(int idPublicacao) {
         String read = "select * from publicacao where idpublicacao = ?";
         Publicacao publicacaoRetornada = new Publicacao();
@@ -60,7 +62,6 @@ public class PublicacaoDAO {
                     publicacaoRetornada.setAutor(membroDAO.retornaMembro(rs.getInt(4)));
                     publicacaoRetornada.setData(rs.getString(5));
                     publicacaoRetornada.setHora(rs.getString(6));
-                    publicacaoRetornada.setNumeroCurtidas(numeroCurtidas(idPublicacao));
                     publicacaoRetornada.setCurtidas(curtidas(idPublicacao));
                     publicacaoRetornada.setComentarios(comentarioDAO.comentarios(idPublicacao));
                     // publicacaoRetornada.setNumeroComentarios(); --> Verificar depois
@@ -74,7 +75,8 @@ public class PublicacaoDAO {
         return publicacaoRetornada;
     }
 
-    // Verifica se existe a publicação em questão
+    // CREAD - - - READ - - -
+    // <-- Verifica se existe a específica -->
     public boolean verificaPublicacao(int idPublicacao) {
         String read = "select * from publicacao where idpublicacao = ?";
         try (Connection con = conectar()) {
@@ -88,7 +90,8 @@ public class PublicacaoDAO {
         }
     }
 
-    // Retorna todos os membros que curtiram a publicacao
+    // CRUD - - - READ - - -
+    // <-- Armaneza as curtidas de alguma publicação específica e retorna a ArrayList -->
     public ArrayList<Membro> curtidas(int idPublicacao) {
         String read = "SELECT idMembro FROM publicacao_curtida pc WHERE pc.idPublicacao = ?";
         ArrayList<Membro> membros = new ArrayList<>();
@@ -107,12 +110,8 @@ public class PublicacaoDAO {
         }
     }
 
-    // Retorna o número de curtidas de uma publicação específica
-    public int numeroCurtidas(int idPublicacao) {
-        ArrayList<Membro> curtidas = curtidas(idPublicacao);
-        return curtidas.size();
-    }
-
+    // CRUD - - - CREATE - - -
+    // <-- Insere um registro de uma curtida nova na tabela publicacao_curtida -->
     public void curtirPublicacao(int idPublicacao, int idMembro) {
         String create = "insert into publicacao_curtida values (?, ?)";
         try (Connection con = conectar()) {
@@ -125,7 +124,10 @@ public class PublicacaoDAO {
             System.out.println(e);
         }
     }
-    public void excluirPublicacao(int idPublicacao){
+
+    // CRUD - - - DELETE - - -
+    // <-- Deleta uma publicacao específica -->
+    public void excluirPublicacao(int idPublicacao) {
         if (verificaPublicacao(idPublicacao)) {
             String delete = "delete from publicacao where idpublicacao = ?";
             try (Connection con = conectar()) {

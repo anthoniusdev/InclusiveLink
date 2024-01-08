@@ -16,6 +16,19 @@ public class Publicacao {
     private String data;
     private String hora;
 
+    public Publicacao(int idPublicacao, String texto, String midia, Membro autor, int numeroCurtidas, ArrayList<Membro> curtidas, int numeroComentarios, ArrayList<Comentario> comentarios, String data, String hora) {
+        this.idPublicacao = idPublicacao;
+        this.texto = texto;
+        this.midia = midia;
+        this.autor = autor;
+        this.numeroCurtidas = numeroCurtidas;
+        this.curtidas = curtidas;
+        this.numeroComentarios = numeroComentarios;
+        this.comentarios = comentarios;
+        this.data = data;
+        this.hora = hora;
+    }
+
     public Publicacao(String texto, String midia, Membro autor) {
         Publicacao novaPublicacao;
         setTexto(texto);
@@ -151,11 +164,10 @@ public class Publicacao {
     }
 
 
-    public void excluirPublicacao(Membro autor) {
+    public void excluirPublicacao() {
         try {
             PublicacaoDAO publicacaoDAO = new PublicacaoDAO();
             publicacaoDAO.excluirPublicacao(getIdPublicacao());
-            autor.excluirPublicacao(this); --> metodo tem de estar na classe autor
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

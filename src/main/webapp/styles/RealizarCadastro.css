@@ -1,0 +1,28 @@
+:root{
+    --COR-04: #164863;
+    --COR-03: #427D9D;
+    --COR-02: #9BBEC8;
+    --COR-01: #DDF2FD;
+}
+body{
+    margin: 0;
+    padding: 0;
+    background-color: var(--COR-02);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+body .container{
+    text-align: center;
+}
+body .container .frmCadastro{
+    background-color: var(--COR-03);
+    padding: 20px;
+    border-radius: 8px;
+    color: var(--COR-01);
+}
+form{
+    display: flex;
+    flex-direction: column;
+}
