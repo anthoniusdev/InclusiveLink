@@ -41,8 +41,7 @@ public class MembroDAO {
             preparedStatementMembro.executeUpdate();
             return new Membro(idPessoa, membro.getNome(), membro.getDataNascimento(), membro.getNomeUsuario(), membro.getEmail(), membro.getSenha(), membro.getFotoPerfil(), membro.getFotoFundo(), membro.getDescricao(), membro.getCurtidas());
         } catch (Exception e) {
-            System.out.println(e);
-            return null;
+            throw new RuntimeException(e);
         }
     }
 

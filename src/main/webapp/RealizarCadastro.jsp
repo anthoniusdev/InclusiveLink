@@ -27,7 +27,15 @@
             <label>
                 <input type="text" placeholder="Email">
             </label>
-
+            <label>
+                <input type="text" placeholder="Senha">
+            </label>
+            <label>
+                <input type="date" placeholder="Email">
+            </label>
+            <label>
+                <input type="submit" placeholder="Cadastrar">
+            </label>
         </form>
     </div>
 </div>
