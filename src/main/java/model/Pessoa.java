@@ -22,7 +22,7 @@ public abstract class Pessoa {
         this.email = email;
         this.senha = senha;
     }
-
+    public Pessoa(){}
     public int getIdPessoa() {
         return idPessoa;
     }

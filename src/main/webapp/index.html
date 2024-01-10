@@ -5,7 +5,24 @@
     <title>InclusiveLink</title>
 </head>
 <body>
-    <a href="RealizarCadastro">Cadastrar</a>
-    <button type="submit">Fazer login</button>
+<div class="container">
+    <form action="Login" method="post">
+        <label>
+            <input type="text" placeholder="Email ou Nome de Usuário" name="nomeUsuario">
+        </label>
+        <label>
+            <input type="password" placeholder="Senha" name="senha">
+        </label>
+        <label>
+            <input type="checkbox" name="remember">Manter conectado
+        </label>
+        <label>
+            <input type="submit" value="Fazer login">
+        </label>
+    </form>
+    <label>
+        <a href="RealizarCadastro">Realizar cadastro</a>
+    </label>
+</div>
 </body>
 </html>
