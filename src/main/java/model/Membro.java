@@ -33,7 +33,21 @@ public class Membro extends Pessoa {
         this.comunidadesSeguindos = null;
         this.comentarios = null;
     }
-
+    public Membro(String nome, String dataNascimento, String nomeUsuario, String email, String senha){
+        super(nome, dataNascimento, email, senha);
+        setNomeUsuario(nomeUsuario);
+        setFotoPerfil(null);
+        setFotoFundo(null);
+        setDescricao(null);
+        setPerfilVisivel(true);
+        setCurtidas(null);
+        setPublicacoes(null);
+        setMembrosSeguidores(null);
+        setMembrosSeguindos(null);
+        setComunidadesParticipantes(null);
+        setComunidadesSeguindos(null);
+        setComentarios(null);
+    }
     public Membro(Membro membro) {
         super(membro.getIdPessoa(), membro.getNome(), membro.getDataNascimento(), membro.getEmail(), membro.getSenha());
         this.fotoPerfil = membro.getFotoPerfil();
@@ -49,7 +63,6 @@ public class Membro extends Pessoa {
         this.comunidadesSeguindos = membro.getComunidadesSeguindos();
         this.comentarios = membro.getComentarios();
     }
-
     public String getFotoPerfil() {
         return fotoPerfil;
     }
@@ -152,6 +165,7 @@ public class Membro extends Pessoa {
         try {
             MembroDAO membroDAO = new MembroDAO();
             if (!membroDAO.verificaMembro(this)) {
+
                 novoMembro = membroDAO.realizarCadastro(this);
                 this.setIdPessoa(novoMembro.getIdPessoa());
             }

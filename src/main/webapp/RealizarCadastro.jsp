@@ -14,21 +14,21 @@
 %>
 <div class="container">
     <div class="frmCadastro">
-        <form action="Cadastrar">
+        <form action="Cadastrar" method="post">
             <label>
-                <input type="text" placeholder="Nome" id="nome">
+                <input type="text" placeholder="Nome" name="nome">
             </label>
             <label>
-                <input type="text" placeholder="Sobrenome" id="sobrenome">
+                <input type="text" placeholder="Sobrenome" name="sobrenome">
             </label>
             <label>
-                <input type="text" placeholder="Nome de usuário" id="nome_usuario">
+                <input type="text" placeholder="Nome de usuário" name="nome_usuario">
             </label>
             <label>
-                <input type="text" placeholder="Email" id="email">
+                <input type="text" placeholder="Email" name="email">
             </label>
             <label>
-                <input type="text" placeholder="Senha" id="senha">
+                <input type="text" placeholder="Senha" name="senha">
             </label>
             <label>
                 Data de nascimento
@@ -46,44 +46,30 @@
                     <!-- Adicionando as opções de mês-->
                     <% String mes = null;
                         for (int i = 1; i <= 12; i++) {
-                            switch (i) {
-                                case 1:
-                                    mes = "Janeiro";
-                                    break;
-                                case 2:
-                                    mes = "Fevereiro";
-                                    break;
-                                case 3:
-                                    mes = "Março";
-                                    break;
-                                case 4:
-                                    mes = "Abril";
-                                    break;
-                                case 5:
-                                    mes = "Maio";
-                                    break;
-                                case 6:
-                                    mes = "Junho";
-                                    break;
-                                case 7:
-                                    mes = "Julho";
-                                    break;
-                                case 8:
-                                    mes = "Agosto";
-                                    break;
-                                case 9:
-                                    mes = "Setembro";
-                                    break;
-                                case 10:
-                                    mes = "Outubro";
-                                    break;
-                                case 11:
-                                    mes = "Novembro";
-                                    break;
-                                case 12:
-                                    mes = "Dezembro";
-                                    break;
-
+                            if (i == 1) {
+                                mes = "Janeiro";
+                            } else if (i == 2) {
+                                mes = "Fevereiro";
+                            } else if (i == 3) {
+                                mes = "Março";
+                            } else if (i == 4) {
+                                mes = "Abril";
+                            } else if (i == 5) {
+                                mes = "Maio";
+                            } else if (i == 6) {
+                                mes = "Junho";
+                            } else if (i == 7) {
+                                mes = "Julho";
+                            } else if (i == 8) {
+                                mes = "Agosto";
+                            } else if (i == 9) {
+                                mes = "Setembro";
+                            } else if (i == 10) {
+                                mes = "Outubro";
+                            } else if (i == 11) {
+                                mes = "Novembro";
+                            } else {
+                                mes = "Dezembro";
                             }%>
                     <option value="<%=mes%>"><%=mes%>
                     </option>

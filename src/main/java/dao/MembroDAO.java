@@ -2,13 +2,17 @@ package dao;
 
 import model.Membro;
 import model.Publicacao;
+import util.ServicoAutenticacao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 public class MembroDAO {
+    int idPessoa = 0;
+
     private Connection conectar() {
         Conexao conexao = new Conexao();
         return conexao.conectar();
@@ -17,29 +21,49 @@ public class MembroDAO {
     // CRUD - - - CREATE - - -
     // <-- Realizando cadastro de uma nova pessoa e membro no banco de dados-->
     public Membro realizarCadastro(Membro membro) {
-        String createPessoa = "insert into pessoa(nome, dataNascimento, email, senha) values (?,?,?,?)";
+
+        String dataNascimentoSQL = membro.getDataNascimento();
+        String createPessoa = "insert into pessoa(nome, dataNascimento, email, senha) values (?,STR_TO_DATE(?, '%d-%m-%Y'),?,?)";
         String createMembro = "insert into membro(idPessoa, fotoPerfil, fotoFundo, nomeUsuario, descricao, perfilVisivel) values (?, ?, ?, ?, ?, ?)";
-        int idPessoa = 0;
         try (Connection con = conectar()) {
-            PreparedStatement preparedStatementPessoa = con.prepareStatement(createPessoa);
-            PreparedStatement preparedStatementMembro = con.prepareStatement(createMembro);
-            preparedStatementPessoa.setString(1, membro.getNome());
-            preparedStatementPessoa.setString(2, membro.getDataNascimento());
-            preparedStatementPessoa.setString(3, membro.getEmail());
-            preparedStatementPessoa.setString(4, membro.getSenha());
-            preparedStatementPessoa.executeUpdate();
-            ResultSet idGerado = preparedStatementPessoa.getGeneratedKeys();
-            if (idGerado.next()) {
-                idPessoa = idGerado.getInt(1);
+            con.setAutoCommit(false);  // Desabilita o commit automático para gerenciar transações manualmente
+
+            try (PreparedStatement preparedStatementPessoa = con.prepareStatement(createPessoa, Statement.RETURN_GENERATED_KEYS);
+                 PreparedStatement preparedStatementMembro = con.prepareStatement(createMembro)) {
+
+                preparedStatementPessoa.setString(1, membro.getNome());
+                preparedStatementPessoa.setString(2, membro.getDataNascimento());
+                preparedStatementPessoa.setString(3, membro.getEmail());
+                membro.setSenha(ServicoAutenticacao.hashSenha(membro.getSenha()));
+                preparedStatementPessoa.setString(4, membro.getSenha());
+
+                int linhasAfetadas = preparedStatementPessoa.executeUpdate();
+
+                if (linhasAfetadas > 0) {
+                    try (ResultSet chavesGeradas = preparedStatementPessoa.getGeneratedKeys()) {
+                        if (chavesGeradas.next()) {
+                            idPessoa = chavesGeradas.getInt(1);
+                        }
+                    }
+
+                    preparedStatementMembro.setInt(1, idPessoa);
+                    preparedStatementMembro.setString(2, membro.getFotoPerfil());
+                    preparedStatementMembro.setString(3, membro.getFotoFundo());
+                    preparedStatementMembro.setString(4, membro.getNomeUsuario());
+                    preparedStatementMembro.setString(5, membro.getDescricao());
+                    preparedStatementMembro.setBoolean(6, membro.isPerfilVisivel());
+
+                    preparedStatementMembro.executeUpdate();
+                }
+
+                con.commit();  // Confirma a transação
+                con.setAutoCommit(true);  // Restaura o modo de commit automático
+
+                return new Membro(idPessoa, membro.getNome(), membro.getDataNascimento(), membro.getNomeUsuario(), membro.getEmail(), membro.getSenha(), membro.getFotoPerfil(), membro.getFotoFundo(), membro.getDescricao(), membro.getCurtidas());
+            } catch (Exception e) {
+                con.rollback();  // Desfaz a transação em caso de erro
+                throw new RuntimeException(e);
             }
-            preparedStatementMembro.setInt(1, idPessoa);
-            preparedStatementMembro.setString(2, membro.getFotoPerfil());
-            preparedStatementMembro.setString(3, membro.getFotoFundo());
-            preparedStatementMembro.setString(4, membro.getNomeUsuario());
-            preparedStatementMembro.setString(5, membro.getDescricao());
-            preparedStatementMembro.setBoolean(6, membro.isPerfilVisivel());
-            preparedStatementMembro.executeUpdate();
-            return new Membro(idPessoa, membro.getNome(), membro.getDataNascimento(), membro.getNomeUsuario(), membro.getEmail(), membro.getSenha(), membro.getFotoPerfil(), membro.getFotoFundo(), membro.getDescricao(), membro.getCurtidas());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -80,6 +104,7 @@ public class MembroDAO {
             fotoFundo = rs.getString(7);
             nomeUsuario = rs.getString(8);
             descricao = rs.getString(9);
+            preparedStatement.close();
             return new Membro(idPessoa, nome, dataNascimento, email, senha, fotoPerfil, fotoFundo, nomeUsuario, descricao, publicacoesCurtidas(idPessoa));
         } catch (Exception e) {
             System.out.println(e);
@@ -102,6 +127,7 @@ public class MembroDAO {
                     publicacoes.add(publicacaoDAO.retornaPublicacao(rs.getInt(1)));
                 }
             }
+            preparedStatement.close();
             return publicacoes;
         } catch (Exception e) {
             throw new RuntimeException(e);
