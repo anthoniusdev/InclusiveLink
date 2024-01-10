@@ -4,6 +4,7 @@ import model.Membro;
 import model.Publicacao;
 import util.ServicoAutenticacao;
 
+import java.nio.channels.ScatteringByteChannel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -129,6 +130,44 @@ public class MembroDAO {
             }
             preparedStatement.close();
             return publicacoes;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String retornaHashSenha(String string) {
+        String read = "select pessoa.senha from pessoa inner join membro on pessoa.idpessoa = membro.idpessoa where pessoa.email = ? or membro.nomeUsuario = ?";
+        try (Connection con = conectar()) {
+            try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
+                preparedStatement.setString(1, string);
+                preparedStatement.setString(2, string);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    return resultSet.getString(1);
+                }else {
+                    return null;
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ArrayList<String> nomesUsuario() {
+        ArrayList<String> nomesUsuario = new ArrayList<>();
+        String read = "select nomeUsuario from membro";
+        try (Connection con = conectar()) {
+            try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    nomesUsuario.add(resultSet.getString(1));
+                }
+                return nomesUsuario;
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

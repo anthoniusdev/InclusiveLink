@@ -63,6 +63,7 @@ public class Membro extends Pessoa {
         this.comunidadesSeguindos = membro.getComunidadesSeguindos();
         this.comentarios = membro.getComentarios();
     }
+    public Membro(){}
     public String getFotoPerfil() {
         return fotoPerfil;
     }
