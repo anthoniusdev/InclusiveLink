@@ -6,6 +6,7 @@ public abstract class Pessoa {
     private String dataNascimento;
     private String email;
     private String senha;
+    private String salt;
 
     public Pessoa(int idPessoa, String nome, String dataNascimento, String email, String senha) {
         this.idPessoa = idPessoa;
@@ -15,6 +16,13 @@ public abstract class Pessoa {
         this.senha = senha;
     }
 
+    public Pessoa(String nome, String dataNascimento, String email, String senha) {
+        this.nome = nome;
+        this.dataNascimento = dataNascimento;
+        this.email = email;
+        this.senha = senha;
+    }
+    public Pessoa(){}
     public int getIdPessoa() {
         return idPessoa;
     }
