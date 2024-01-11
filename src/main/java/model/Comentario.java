@@ -1,15 +1,7 @@
 package model;
-<<<<<<< HEAD
-<<<<<<< HEAD
-public class Comentario extends Publicacao{
-
-=======
-=======
-
 import dao.ComentarioDAO;
 
 public class Comentario extends Publicacao {
->>>>>>> 21032bec43c5c09874469b309445397d72670e0e
 
     private int idComentario;
 
@@ -47,8 +39,4 @@ public class Comentario extends Publicacao {
             System.out.println(e);
         }
     }
-<<<<<<< HEAD
->>>>>>> 55a84b35ab5013b178158265fae3591b37e69f37
-=======
->>>>>>> 21032bec43c5c09874469b309445397d72670e0e
 }

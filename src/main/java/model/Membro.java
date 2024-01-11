@@ -1,7 +1,6 @@
 package model;
 
 import dao.MembroDAO;
-
 import java.util.ArrayList;
 
 public class Membro extends Pessoa {

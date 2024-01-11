@@ -188,5 +188,4 @@ public class Comunidade {
         seguidores.remove(seguidor);
     }
 
-
 }
