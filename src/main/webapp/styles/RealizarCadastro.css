@@ -1,10 +1,18 @@
-:root{
+@font-face {
+    font-family: 'Monomaniac One';
+    src: url("../fonts/MonomaniacOne-Regular.ttf") format('truetype');
+}
+
+:root {
     --COR-04: #164863;
     --COR-03: #427D9D;
     --COR-02: #9BBEC8;
     --COR-01: #DDF2FD;
+    --TEXTO-01: rgba(22, 72, 99, 0.3);
+    --TEXTO-02: rgba(22, 72, 99, 0.8);
 }
-body{
+
+body {
     margin: 0;
     padding: 0;
     background-color: var(--COR-02);
@@ -12,17 +20,93 @@ body{
     align-items: center;
     justify-content: center;
     height: 100vh;
+    font-family: 'Monomaniac One', sans-serif;
 }
-body .container{
+
+body .container {
     text-align: center;
 }
-body .container .frmCadastro{
+
+body .container .frmCadastro {
     background-color: var(--COR-03);
     padding: 20px;
     border-radius: 8px;
     color: var(--COR-01);
 }
-form{
+
+form {
     display: flex;
     flex-direction: column;
+    align-items: center;
+}
+
+form label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 8px;
+}
+
+form input {
+    width: 808px;
+    height: 62px;
+    padding-left: 20px;
+    margin: 5px 0;
+    background-color: var(--COR-01);
+    color: var(--TEXTO-01);
+    border: none;
+    border-radius: 20px;
+    font-family: "Monomaniac One", serif;
+    font-size: 35px;
+}
+
+form input::placeholder {
+    color: var(--TEXTO-01);
+}
+
+.data_nascimento label .seletores {
+    display: flex;
+    flex-direction: row;
+    gap: 13px;
+}
+
+.data_nascimento label .seletores option {
+    background-color: var(--COR-01);
+    color: var(--TEXTO-02);
+    width: 10px;
+    height: 10px;
+}
+
+.data_nascimento label .seletores select {
+    width: 260px;
+    height: 63px;
+    font-size: 35px;
+    padding-left: 20px;
+    font-family: "Monomaniac One", serif;
+    background-color: var(--COR-01);
+    border: none;
+    border-radius: 20px;
+    color: var(--TEXTO-02);
+}
+
+.data_nascimento label select {
+    flex-direction: row;
+}
+.data_nascimento small {
+    margin: 0;
+    text-align: left;
+    width: 100%;
+}
+form .lado-a-lado {
+    display: flex;
+    gap: 17px;
+    width: 100%; /*Ocupa todo o espaço disponível no form*/
+}
+
+form .lado-a-lado input {
+    width: 395px;
+}
+form .btnCadastrar input{
+    background-color: var(--COR-04);
+    color: var(--COR-01);
 }
