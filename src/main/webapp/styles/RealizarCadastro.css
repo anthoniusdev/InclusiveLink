@@ -8,36 +8,54 @@
     --COR-03: #427D9D;
     --COR-02: #9BBEC8;
     --COR-01: #DDF2FD;
-    --TEXTO-01: rgba(22, 72, 99, 0.3);
-    --TEXTO-02: rgba(22, 72, 99, 0.8);
+    --COR-TEXTO-01: rgba(22, 72, 99, 0.3);
+    --COR-TEXTO-02: rgba(22, 72, 99, 0.8);
+    --MARGIN-TOP-CONTAINER: 10px;
+    --MARGIN-BOTTOM-CONTAINER: 22px;
+    --TAMANHO-FONTE-INPUT: 29px;
+    --TAMANHO-FONTE-FOOTER-NOMES: 16px;
+    --TAMANHO-FONTE-BTN-CADASTRAR: 37px;
+    --HEIGHT-INPUT: 51px;
+    --WIDTH-INPUT-NORMAL: 670px;
+    --WIDTH-INPUT-DATA: 216px;
+    --WIDTH-INPUT-LAL: 328px;
+    --PADDING-FRM-CADASTRO: 48px 86px 18px 86px;
+    --MARGIN-INPUT-PRO-OUTRO: 21px;
+    --FONTE: "Monomaniac One", sans-serif;
 }
-
+*{
+    box-sizing: border-box;
+}
 body {
+    background-color: var(--COR-02);
+    font-family: var(--FONTE);
+}
+html, body, footer{
     margin: 0;
     padding: 0;
-    background-color: var(--COR-02);
+}
+body .container {
+    text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
-    font-family: 'Monomaniac One', sans-serif;
-}
-
-body .container {
-    text-align: center;
+    margin-top: var(--MARGIN-TOP-CONTAINER);
+    margin-bottom: var(--MARGIN-BOTTOM-CONTAINER);
 }
 
 body .container .frmCadastro {
     background-color: var(--COR-03);
-    padding: 20px;
-    border-radius: 8px;
+    padding: var(--PADDING-FRM-CADASTRO);
+    border-radius: 20px;
     color: var(--COR-01);
+
 }
 
 form {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-block-end: 0;
 }
 
 form label {
@@ -48,20 +66,20 @@ form label {
 }
 
 form input {
-    width: 808px;
-    height: 62px;
+    width: var(--WIDTH-INPUT-NORMAL);
+    height: var(--HEIGHT-INPUT);
     padding-left: 20px;
-    margin: 5px 0;
+    margin-bottom: var(--MARGIN-INPUT-PRO-OUTRO);
     background-color: var(--COR-01);
-    color: var(--TEXTO-01);
+    color: var(--COR-TEXTO-01);
     border: none;
     border-radius: 20px;
-    font-family: "Monomaniac One", serif;
-    font-size: 35px;
+    font-family: var(--FONTE);
+    font-size: var(--TAMANHO-FONTE-INPUT);
 }
 
 form input::placeholder {
-    color: var(--TEXTO-01);
+    color: var(--COR-TEXTO-01);
 }
 
 .data_nascimento label .seletores {
@@ -72,31 +90,33 @@ form input::placeholder {
 
 .data_nascimento label .seletores option {
     background-color: var(--COR-01);
-    color: var(--TEXTO-02);
-    width: 10px;
-    height: 10px;
+    color: var(--COR-TEXTO-02);
 }
 
 .data_nascimento label .seletores select {
-    width: 260px;
-    height: 63px;
-    font-size: 35px;
+    width: var(--WIDTH-INPUT-DATA);
+    height: var(--HEIGHT-INPUT);
+    font-size: var(--TAMANHO-FONTE-INPUT);
     padding-left: 20px;
-    font-family: "Monomaniac One", serif;
+    font-family: var(--FONTE);
     background-color: var(--COR-01);
     border: none;
     border-radius: 20px;
-    color: var(--TEXTO-02);
+    color: var(--COR-TEXTO-02);
 }
 
 .data_nascimento label select {
     flex-direction: row;
 }
+
 .data_nascimento small {
     margin: 0;
     text-align: left;
     width: 100%;
+    font-size: var(--TAMANHO-FONTE-INPUT);
+    padding-left: 15px;
 }
+
 form .lado-a-lado {
     display: flex;
     gap: 17px;
@@ -104,9 +124,64 @@ form .lado-a-lado {
 }
 
 form .lado-a-lado input {
-    width: 395px;
+    width: var(--WIDTH-INPUT-LAL);
 }
-form .btnCadastrar input{
+
+form .btnCadastrar input {
     background-color: var(--COR-04);
     color: var(--COR-01);
+    margin-bottom: 0;
+    margin-top: 26px;
+    font-size: var(--TAMANHO-FONTE-BTN-CADASTRAR);
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding-bottom: 10px;
+}
+footer {
+    background-color: var(--COR-03);
+    color: var(--COR-01);
+    margin-top: 38px;
+}
+footer .LOGO-E-NOMES{
+    display: flex;
+    flex-direction: row;
+}
+footer .bola-azul{
+    margin-top: 13px;
+    margin-bottom: 13px;
+    margin-right: 6px;
+    background-color: var(--COR-04);
+    border-radius: 30px;
+    height: 60px;
+    width: 60px;
+}
+footer .bola-azul img{
+    padding: 7px;
+}
+footer .Logo-Nome-IL{
+    display: flex;
+    flex-direction: row;
+    margin-left: 41px;
+}
+footer .Logo-Nome-IL h1{
+    margin-bottom: 0;
+    font-size: var(--TAMANHO-FONTE-INPUT);
+    font-family: var(--FONTE);
+    font-weight: 400;
+}
+footer .Nomes{
+    margin-top: 6px;
+    margin-left: auto;
+    margin-right: 40px;
+    float: right;
+}
+footer .Nomes h3{
+    margin-block-start: 0;
+    margin-block-end: 2px;
+    font-size: var(--TAMANHO-FONTE-FOOTER-NOMES);
+    font-weight: 400;
+    opacity: 0.7;
 }

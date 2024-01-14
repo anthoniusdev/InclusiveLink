@@ -115,7 +115,8 @@
                     <select id="ano" name="ano" required>
                         <option value="" disabled selected>Ano</option>
                         <!-- Adicionando as opções de ano-->
-                        <% for (int ano = anoAtual; ano >= anoMaximo; ano--) {%>
+                        <%
+                            for (int ano = anoAtual; ano >= anoMaximo; ano--) {%>
                         <option value="<%=ano%>"><%=ano%>
                         </option>
                         <%}%>
@@ -130,6 +131,21 @@
         </div>
     </form>
 </div>
+<footer>
+    <div class="LOGO-E-NOMES">
+        <div class="Logo-Nome-IL">
+            <div class="bola-azul">
+                <img src="images/logo_InclusiveLink-ruim.png" alt="Logo InclusiveLink">
+            </div>
+            <h1>Inclusive Link</h1>
+        </div>
+        <div class="Nomes">
+            <h3>Abimael Lima</h3>
+            <h3>Anthonius Figueiredo</h3>
+            <h3>Igor Souza</h3>
+        </div>
+    </div>
+</footer>
 <script src="scripts/realizarCadastro.js"></script>
 </body>
 </html>
