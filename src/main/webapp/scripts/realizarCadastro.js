@@ -24,18 +24,66 @@ document.addEventListener("DOMContentLoaded", function () {
         const senhaValue = senha.value;
         const senhaRepetidaValue = senhaRepetida.value;
         // Checando se o nome está vazio
-        if (nomeValue.trim() === "") {
-            // Mostrar o erro
-            // adicionar a classe error
-            errorValidation(nome, "Preencha esse campo");
-        } else {
-            // adicionar a classe de sucesso
-            succesValidation(nome);
+        if (!isEmpty(nome)) {
+
+            var nomeCorrigido = corrigirNomeEValidar(nome);
+
+            if (nomeCorrigido !== false) {
+
+                nome.value = nomeCorrigido;
+                succesValidation(nome);
+
+                if (!isEmpty(sobrenome)) {
+
+                    var sobrenomeCorrigido = corrigirNomeEValidar(sobrenome);
+
+                    if (sobrenomeCorrigido !== false) {
+
+                        sobrenome.value = sobrenomeCorrigido;
+                        succesValidation(sobrenome);
+                        if (!isEmpty(nomeUsuario)) {
+
+                            var nomeUsuarioCorrigido = corrigirNomeUsuarioEValidar(nomeUsuario);
+
+                            if (nomeUsuarioCorrigido !== false) {
+
+                                nomeUsuario.value = nomeUsuarioCorrigido;
+                                succesValidation(nomeUsuario);
+
+                                if (!isEmpty(email)) {
+
+                                    var emailCorrigido = corrigirEmailEValidar(email);
+
+                                    if (emailCorrigido !== false) {
+
+                                        email.value = emailCorrigido;
+                                        succesValidation(email);
+
+                                        if (!isEmpty(senha)){
+                                            var senhaCorrigida = corrigirSenhaEValidar(senha);
+
+                                            if (senhaCorrigida !== false){
+
+                                                senha.value = senhaCorrigida;
+                                                succesValidation(senha);
+
+                                            }
+                                        }
+
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
+
         }
     }
 
     function errorValidation(input, message) {
-        const formControl = input.parentElement;
+        var formControl = input.parentElement;
         if (formControl) {
             const small = formControl.parentElement.querySelector('small');
             if (small) {
@@ -57,32 +105,109 @@ document.addEventListener("DOMContentLoaded", function () {
                 } else {
                     console.error("Elemento i não encontrado");
                 }
-            }else {
+            } else {
                 console.log("ELEMENTO SMALL NÃO ENCONTRADO");
             }
-        }else{
+        } else {
             console.log("FORM CONTROL NÃO ENCONTRADO");
         }
     }
-    function succesValidation(input){
+
+    function succesValidation(input) {
         const formControl = input.parentElement;
-        if (formControl){
+        if (formControl) {
             const i = formControl.parentElement.querySelector('i');
-            if (i){
+            if (i) {
                 const img = i.querySelector('img');
-                if (img){
-                    i.style.visibility = "visible";
-                    img.src = "images/success-icon.png";
-                    formControl.className = "form-control success";
-                }else {
+                if (img) {
+                    const small = formControl.parentElement.querySelector('small');
+                    if (small) {
+                        small.style.visibility = "hidden";
+                        i.style.visibility = "visible";
+                        img.src = "images/success-icon.svg";
+                        formControl.className = "form-control success";
+                    }
+                } else {
                     console.log("ELEMENTO IMG NAO ENCONTRADO")
                 }
-            }else {
+            } else {
                 console.log("ELEMENTO I NAO ENCONTRADO LINHA 72");
             }
-        }else {
+        } else {
             console.log("FORM CONTROL NAO ENCONTRADO LINHA 70");
         }
+    }
+
+    function isEmpty(input) {
+        if (input.value.trim() === "") {
+            errorValidation(input, "Preencha esse campo!");
+            return true;
+        }
+        return false;
+    }
+
+    function corrigirNomeEValidar(input) {
+        // Verifica se a string possui apenas letras (maiúsculas e minúsculas) com acentos
+        let regex = /^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:\s[a-zA-ZÀ-ÖØ-öø-ÿ]+)*$/;
+
+        // Remove espaços em branco extras
+        let stringCorrigida = input.value.trim();
+        if (!regex.test(stringCorrigida)) {
+            errorValidation(input, "Insira apenas letras!");
+            return false;
+        }
+        return stringCorrigida;
+    }
+
+    function corrigirEmailEValidar(input) {
+        const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+        let emailCorrigido = input.value.trim();
+        if (!regexEmail.test(emailCorrigido)) {
+            errorValidation(input, "Insira um email válido!");
+            return false;
+        }
+        return emailCorrigido;
+    }
+
+    function corrigirNomeUsuarioEValidar(input) {
+        const nomeUsuarioCorrigido = input.value.trim();
+        const comprimento = nomeUsuarioCorrigido.length;
+        const comprimentoValido = comprimento >= 3 && comprimento <= 20;
+        const regexNomeUsuario = /^[a-zA-Z0-9_]+$/;
+        if (comprimentoValido) {
+            if (regexNomeUsuario.test(nomeUsuarioCorrigido)) {
+                return nomeUsuarioCorrigido;
+            }else{
+                errorValidation(input, "Insira um email válido!");
+            }
+        } else {
+            let mensagem = "";
+            if (comprimento < 3) {
+                mensagem = "Nome de usúario muito pequeno!";
+            } else {
+                mensagem = "Nome de usuário muito grande!";
+            }
+            errorValidation(input, mensagem + " Insira de 3 a 8 caracteres!");
+        }
+        return false;
+    }
+    function corrigirSenhaEValidar(input){
+        const senhaCorrigida = input.value.trim();
+        const comprimentoSenha = senhaCorrigida.length;
+        const comprimentoValido = comprimentoSenha >= 8 && comprimentoSenha <=32;
+        const regexSenha = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).+$/;
+        if (comprimentoValido){
+            if (regexSenha.test(senhaCorrigida)){
+                return senhaCorrigida;
+            }
+            else {
+                errorValidation(input, "A sua senha deve conter pelo menos:\n1 letra minúscula\n1 letra maiúscula\n1 número\n1 caractere especial. Ex.: @#$%");
+            }
+        }else {
+            errorValidation(input, "A senha deve ter entre 8 a 32 caracteres!");
+        }
+        return false;
     }
 });
 /*function realizarCadastro() {
@@ -119,18 +244,4 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 }
-
-function corrigirStringEValidar(str) {
-    if (typeof str !== 'string') {
-        console.error('O argumento não é uma string:', str);
-        return false;
-    }
-    // Verifica se a string possui apenas letras (maiúsculas e minúsculas) com acentos
-    let regex = /^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:\s[a-zA-ZÀ-ÖØ-öø-ÿ]+)*$/;
-
-    // Remove espaços em branco extras e ajusta espaços no meio da string
-    let stringCorrigida = str.trim().replace(/\s+/g, ' ');
-    
-    // Testa se a string corrigida atende ao padrão da expressão regular
-    return regex.test(stringCorrigida) ? stringCorrigida : false;
-}*/
+*/
