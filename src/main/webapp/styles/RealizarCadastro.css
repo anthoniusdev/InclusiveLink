@@ -1,28 +1,262 @@
-:root{
+@font-face {
+    font-family: 'Monomaniac One';
+    src: url("../fonts/MonomaniacOne-Regular.ttf") format('truetype');
+}
+
+:root {
     --COR-04: #164863;
     --COR-03: #427D9D;
     --COR-02: #9BBEC8;
     --COR-01: #DDF2FD;
+    --COR-TEXTO-01: rgba(22, 72, 99, 0.3);
+    --COR-TEXTO-02: rgba(22, 72, 99, 0.8);
+    --MARGIN-TOP-CONTAINER: 10px;
+    --MARGIN-BOTTOM-CONTAINER: 22px;
+    --TAMANHO-FONTE-INPUT: 29px;
+    --TAMANHO-FONTE-FOOTER-NOMES: 16px;
+    --TAMANHO-FONTE-BTN-CADASTRAR: 37px;
+    --HEIGHT-INPUT: 51px;
+    --WIDTH-INPUT-NORMAL: 670px;
+    --WIDTH-INPUT-DATA: 216px;
+    --WIDTH-INPUT-LAL: 328px;
+    --PADDING-FRM-CADASTRO: 48px 86px 18px 86px;
+    --MARGIN-INPUT-PRO-OUTRO: 1.6px;
+    --FONTE: "Monomaniac One", sans-serif;
 }
-body{
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--COR-02);
+    font-family: var(--FONTE);
+}
+
+html, body, footer {
     margin: 0;
     padding: 0;
-    background-color: var(--COR-02);
+}
+
+body .container {
+    text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    margin-top: var(--MARGIN-TOP-CONTAINER);
+    margin-bottom: var(--MARGIN-BOTTOM-CONTAINER);
 }
-body .container{
-    text-align: center;
-}
-body .container .frmCadastro{
+
+body .container #formCadastro {
     background-color: var(--COR-03);
-    padding: 20px;
-    border-radius: 8px;
+    padding: var(--PADDING-FRM-CADASTRO);
+    border-radius: 20px;
     color: var(--COR-01);
+
 }
-form{
+
+form {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    margin-block-end: 0;
+}
+
+form label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 8px;
+}
+
+form input {
+    width: var(--WIDTH-INPUT-NORMAL);
+    height: var(--HEIGHT-INPUT);
+    padding-left: 20px;
+    margin-bottom: var(--MARGIN-INPUT-PRO-OUTRO);
+    background-color: var(--COR-01);
+    color: var(--COR-TEXTO-02);
+    border: none;
+    border-radius: 20px;
+    font-family: var(--FONTE);
+    font-size: var(--TAMANHO-FONTE-INPUT);
+}
+
+.form-control.success input {
+    border: 3px solid #4ECA64;
+}
+
+.form-control.error input {
+    border: 3px solid #782121;
+}
+
+.form-control.success i .img-success {
+    bottom: 20px;
+    visibility: hidden;
+}
+
+.form-control.error i .img-error {
+    bottom: 20px;
+    visibility: hidden;
+}
+
+.form-control {
+    position: relative;
+}
+
+.form-control i {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    padding-bottom: 20px;
+    transform: translateY(-50%);
+    visibility: hidden;
+}
+
+.form-control small {
+    position: relative;
+    visibility: hidden;
+}
+
+form input::placeholder {
+    color: var(--COR-TEXTO-01);
+}
+
+form input:focus {
+    outline: var(--COR-04) 4px solid;
+    color: var(--COR-TEXTO-02);
+
+}
+
+.data_nascimento label .seletores {
+    display: flex;
+    flex-direction: row;
+    gap: 13px;
+}
+
+.data_nascimento label .seletores option {
+    background-color: var(--COR-01);
+    color: var(--COR-TEXTO-02);
+}
+
+.data_nascimento label .seletores select {
+    width: var(--WIDTH-INPUT-DATA);
+    height: var(--HEIGHT-INPUT);
+    font-size: var(--TAMANHO-FONTE-INPUT);
+    padding-left: 20px;
+    font-family: var(--FONTE);
+    background-color: var(--COR-01);
+    border: none;
+    border-radius: 20px;
+    color: var(--COR-TEXTO-02);
+}
+
+.data_nascimento label select {
+    flex-direction: row;
+}
+
+.data_nascimento small {
+    margin: 0;
+    text-align: left;
+    width: 100%;
+    font-size: var(--TAMANHO-FONTE-INPUT);
+    padding-left: 15px;
+}
+
+form .lado-a-lado {
+    display: flex;
+    gap: 17px;
+    width: 100%; /*Ocupa todo o espaço disponível no form*/
+}
+
+form .lado-a-lado input {
+    width: var(--WIDTH-INPUT-LAL);
+}
+
+form .btnCadastrar {
+    margin-top: 26px;
+}
+
+form .btnCadastrar button {
+    border: none;
+    border-radius: 20px;
+    background-color: var(--COR-04);
+    color: var(--COR-01);
+    margin-bottom: 0;
+    width: var(--WIDTH-INPUT-NORMAL);
+    font-family: var(--FONTE);
+    height: var(--HEIGHT-INPUT);
+    font-size: var(--TAMANHO-FONTE-BTN-CADASTRAR);
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding-bottom: 10px;
+    transition: 0.10s;
+}
+
+form .btnCadastrar button:hover {
+    cursor: pointer;
+    outline: var(--COR-01) 4px solid;
+    transition: 0.10s;
+}
+
+form .btnCadastrar button:active {
+    border: var(--COR-01) 8px solid;
+    outline: var(--COR-01) 8px solid;
+    transition: 1s;
+}
+
+footer {
+    background-color: var(--COR-03);
+    color: var(--COR-01);
+    margin-top: 38px;
+}
+
+footer .LOGO-E-NOMES {
+    display: flex;
+    flex-direction: row;
+}
+
+footer .bola-azul {
+    margin-top: 13px;
+    margin-bottom: 13px;
+    margin-right: 6px;
+    background-color: var(--COR-04);
+    border-radius: 30px;
+    height: 60px;
+    width: 60px;
+}
+
+footer .bola-azul img {
+    padding: 7px;
+}
+
+footer .Logo-Nome-IL {
+    display: flex;
+    flex-direction: row;
+    margin-left: 41px;
+}
+
+footer .Logo-Nome-IL h1 {
+    margin-bottom: 0;
+    font-size: var(--TAMANHO-FONTE-INPUT);
+    font-family: var(--FONTE);
+    font-weight: 400;
+}
+
+footer .Nomes {
+    margin-top: 6px;
+    margin-left: auto;
+    margin-right: 40px;
+    float: right;
+}
+
+footer .Nomes h3 {
+    margin-block-start: 0;
+    margin-block-end: 2px;
+    font-size: var(--TAMANHO-FONTE-FOOTER-NOMES);
+    font-weight: 400;
+    opacity: 0.7;
 }

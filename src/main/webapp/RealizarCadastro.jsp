@@ -27,87 +27,133 @@
     int anoAtual = calendar.get(Calendar.YEAR);
 %>
 <div class="container">
-    <div class="frmCadastro">
-        <form action="Cadastrar" method="post">
-            <label>
-                <input type="text" placeholder="Nome" name="nome">
+    <form id="formCadastro" action="Cadastrar" method="post" name="frmCadastro">
+        <div class="lado-a-lado">
+            <div class="form-control">
+                <label for="nome">
+                    <input type="text" placeholder="Nome" name="nome" id="nome">
+                </label>
+                <i><img src="" alt=""></i>
+                <small>Error messager</small>
+            </div>
+            <div class="form-control">
+                <label for="sobrenome">
+                    <input type="text" placeholder="Sobrenome" name="sobrenome" id="sobrenome">
+                </label>
+                <i><img src="" alt=""></i>
+                <small>Error messager</small>
+            </div>
+        </div>
+        <div class="form-control">
+            <label for="nome_usuario">
+                <input type="text" placeholder="Nome de usuário" name="nome_usuario" id="nome_usuario">
             </label>
-            <label>
-                <input type="text" placeholder="Sobrenome" name="sobrenome">
+            <i><img src="" alt=""></i>
+            <small>Error messager</small>
+        </div>
+        <div class="form-control">
+            <label for="email">
+                <input type="email" placeholder="Email" name="email" id="email">
             </label>
-            <label>
-                <input type="text" placeholder="Nome de usuário" name="nome_usuario">
+            <i><img src="" alt=""></i>
+            <small>Error messager</small>
+        </div>
+        <div class="form-control">
+            <label for="senha">
+                <input type="password" placeholder="Senha" name="senha" id="senha">
             </label>
-            <label>
-                <input type="text" placeholder="Email" name="email">
+            <i><img src="" alt=""></i>
+            <small>Error messager</small>
+        </div>
+        <div class="form-control">
+            <label for="senha_repetida">
+                <input type="password" placeholder="Repetir Senha" name="senha_repetida" id="senha_repetida">
             </label>
+            <i><img src="" alt=""></i>
+            <small>Error messager</small>
+        </div>
+        <div class="data_nascimento">
             <label>
-                <input type="text" placeholder="Senha" name="senha">
-            </label>
-            <label>
-                Data de nascimento
-                <select id="dia" name="dia" required>
-                    <option value="" disabled selected>Dia</option>
-                    <!-- Adicionando as opções de 1 a 31 -->
-                    <% int dia = 0, anoMaximo = anoAtual - 100;
-                        for (dia = 1; dia <= 31; dia++) { %>
-                    <option value="<%=dia%>"><%=dia%>
-                    </option>
-                    <% }%>
-                </select>
-                <select id="mes" name="mes" required>
-                    <option value="" disabled selected>Mês</option>
-                    <!-- Adicionando as opções de mês-->
-                    <% String mes = null;
-                        for (int i = 1; i <= 12; i++) {
-                            if (i == 1) {
-                                mes = "Janeiro";
-                            } else if (i == 2) {
-                                mes = "Fevereiro";
-                            } else if (i == 3) {
-                                mes = "Março";
-                            } else if (i == 4) {
-                                mes = "Abril";
-                            } else if (i == 5) {
-                                mes = "Maio";
-                            } else if (i == 6) {
-                                mes = "Junho";
-                            } else if (i == 7) {
-                                mes = "Julho";
-                            } else if (i == 8) {
-                                mes = "Agosto";
-                            } else if (i == 9) {
-                                mes = "Setembro";
-                            } else if (i == 10) {
-                                mes = "Outubro";
-                            } else if (i == 11) {
-                                mes = "Novembro";
-                            } else {
-                                mes = "Dezembro";
-                            }%>
-                    <option value="<%=mes%>"><%=mes%>
-                    </option>
-                    <%}%>
-                </select>
+                <small>Data de nascimento</small>
+                <div class="seletores">
+                    <select id="dia" name="dia">
+                        <option value="" disabled selected>Dia</option>
+                        <!-- Adicionando as opções de 1 a 31 -->
+                        <% int dia = 0, anoMaximo = anoAtual - 100;
+                            for (dia = 1; dia <= 31; dia++) { %>
+                        <option value="<%=dia%>"><%=dia%>
+                        </option>
+                        <% }%>
+                    </select>
+                    <select id="mes" name="mes">
+                        <option value="" disabled selected>Mês</option>
+                        <!-- Adicionando as opções de mês-->
+                        <% String mes = null;
+                            for (int i = 1; i <= 12; i++) {
+                                if (i == 1) {
+                                    mes = "Janeiro";
+                                } else if (i == 2) {
+                                    mes = "Fevereiro";
+                                } else if (i == 3) {
+                                    mes = "Março";
+                                } else if (i == 4) {
+                                    mes = "Abril";
+                                } else if (i == 5) {
+                                    mes = "Maio";
+                                } else if (i == 6) {
+                                    mes = "Junho";
+                                } else if (i == 7) {
+                                    mes = "Julho";
+                                } else if (i == 8) {
+                                    mes = "Agosto";
+                                } else if (i == 9) {
+                                    mes = "Setembro";
+                                } else if (i == 10) {
+                                    mes = "Outubro";
+                                } else if (i == 11) {
+                                    mes = "Novembro";
+                                } else {
+                                    mes = "Dezembro";
+                                }%>
+                        <option value="<%=mes%>"><%=mes%>
+                        </option>
+                        <%}%>
+                    </select>
 
-                <select id="ano" name="ano" required>
-                    <option value="" disabled selected>Ano</option>
-                    <!-- Adicionando as opções de ano-->
-                    <% for (int ano = anoAtual; ano >= anoMaximo; ano--) {%>
-                    <option value="<%=ano%>"><%=ano%>
-                    </option>
-                    <%}%>
-                </select>
+                    <select id="ano" name="ano">
+                        <option value="" disabled selected>Ano</option>
+                        <!-- Adicionando as opções de ano-->
+                        <%
+                            for (int ano = anoAtual; ano >= anoMaximo; ano--) {%>
+                        <option value="<%=ano%>"><%=ano%>
+                        </option>
+                        <%}%>
+                    </select>
+                </div>
             </label>
+        </div>
+        <div class="btnCadastrar">
             <label>
-
+                <button type="submit">Cadastrar</button>
             </label>
-            <label>
-                <input type="submit" placeholder="Cadastrar">
-            </label>
-        </form>
-    </div>
+        </div>
+    </form>
 </div>
-
+<footer>
+    <div class="LOGO-E-NOMES">
+        <div class="Logo-Nome-IL">
+            <div class="bola-azul">
+                <img src="images/logo_InclusiveLink-ruim.png" alt="Logo InclusiveLink">
+            </div>
+            <h1>Inclusive Link</h1>
+        </div>
+        <div class="Nomes">
+            <h3>Abimael Lima</h3>
+            <h3>Anthonius Figueiredo</h3>
+            <h3>Igor Souza</h3>
+        </div>
+    </div>
+</footer>
+<script src="scripts/realizarCadastro.js"></script>
 </body>
 </html>
