@@ -6,18 +6,13 @@ import util.ServicoAutenticacao;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 import java.io.IOException;
-import java.io.Writer;
 import java.util.UUID;
 
 @WebServlet(urlPatterns = {"/RealizarCadastro", "/Cadastrar", "/Login"})
 public class LoginController extends HttpServlet {
-    private Membro membro = new Membro();
-    private MembroDAO membroDAO = new MembroDAO();
+    private final MembroDAO membroDAO = new MembroDAO();
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -63,14 +58,21 @@ public class LoginController extends HttpServlet {
         if (senhaArmazenada != null) {
             if (ServicoAutenticacao.autentica(senha, membroDAO.retornaHashSenha(nomeUsuario))) {
                 boolean remember = request.getParameter("remember") != null;
+
                 String sessionID = gerarTokenSessao();
+
                 int maxAge = 24 * 60 * 60;
-                if (remember){
+                if (remember) {
                     maxAge *= 30;
                 }
+
                 Cookie cookie = new Cookie("sessionID", sessionID);
                 cookie.setMaxAge(maxAge);
                 response.addCookie(cookie);
+
+                HttpSession session = request.getSession();
+                session.setAttribute("authenticated", true);
+
                 response.sendRedirect("PaginaInicial.jsp");
             } else {
                 response.sendRedirect("index.html");
@@ -92,7 +94,7 @@ public class LoginController extends HttpServlet {
         String mes = request.getParameter("mes");
         String ano = request.getParameter("ano");
         String dataNascimento = dataNascimentoToString(mes, dia, ano);
-        membro = new Membro(nome, dataNascimento, nomeUsuario, email, senha);
+        Membro membro = new Membro(nome, dataNascimento, nomeUsuario, email, senha);
         if (membro.realizarCadastro()) {
             response.sendRedirect("index.html");
         }
