@@ -73,6 +73,7 @@ input {
     width: 80%;
     align-self: center;
     box-sizing: border-box;
+    border: none;
 }
 
 .linha {
