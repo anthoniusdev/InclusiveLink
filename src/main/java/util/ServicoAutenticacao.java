@@ -2,7 +2,6 @@ package util;
 
 import org.mindrot.jbcrypt.BCrypt;
 
-
 public class ServicoAutenticacao {
     // Gera um hash BCrypt para a senha indicada
     public static String hashSenha(String senha){
