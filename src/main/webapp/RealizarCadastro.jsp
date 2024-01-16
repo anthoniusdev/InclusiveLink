@@ -13,62 +13,56 @@
     int anoAtual = calendar.get(Calendar.YEAR);
 %>
 <div class="container">
-    <form class="frmCadastro" action="Cadastrar" method="post" name="frmCadastro">
+    <form id="formCadastro" action="Cadastrar" method="post" name="frmCadastro">
         <div class="lado-a-lado">
-            <div class="nome">
+            <div class="form-control">
                 <label for="nome">
-                    <input type="text" placeholder="Nome" name="nome" id="nome" required>
-                    <!--<img src="images/success-icon.svg" alt="Imagem de sucesso!">
-                    <img src="images/error-icon.svg" alt="Imagem de erro!">
-                    <small>Insira um nome válido!</small>-->
+                    <input type="text" placeholder="Nome" name="nome" id="nome">
                 </label>
+                <i><img src="" alt=""></i>
+                <small>Error messager</small>
             </div>
-            <div class="sobrenome">
+            <div class="form-control">
                 <label for="sobrenome">
-                    <input type="text" placeholder="Sobrenome" name="sobrenome" id="sobrenome" required>
-                    <!--<img src="images/success-icon.svg" alt="Imagem de erro!">
-                     <img src="images/error-icon.svg" alt="Imagem de erro!">
-                     <small>Insira um sobrenome válido!</small>-->
+                    <input type="text" placeholder="Sobrenome" name="sobrenome" id="sobrenome">
                 </label>
+                <i><img src="" alt=""></i>
+                <small>Error messager</small>
             </div>
         </div>
-        <div class="nome_usuario">
+        <div class="form-control">
             <label for="nome_usuario">
-                <input type="text" placeholder="Nome de usuário" name="nome_usuario" id="nome_usuario" required>
-                <!--<img src="images/success-icon.svg" alt="Imagem de erro!">
-                <img src="images/error-icon.svg" alt="Imagem de erro!">
-                <small>Insira um nome de usuário válido!</small>-->
+                <input type="text" placeholder="Nome de usuário" name="nome_usuario" id="nome_usuario">
             </label>
+            <i><img src="" alt=""></i>
+            <small>Error messager</small>
         </div>
-        <div class="email">
+        <div class="form-control">
             <label for="email">
-                <input type="text" placeholder="Email" name="email" id="email" required>
-                <!--<img src="images/success-icon.svg" alt="Imagem de erro!">
-                <img src="images/error-icon.svg" alt="Imagem de erro!">
-                <small>Insira um email válido!</small>-->
+                <input type="email" placeholder="Email" name="email" id="email">
             </label>
+            <i><img src="" alt=""></i>
+            <small>Error messager</small>
         </div>
-        <div class="senha">
+        <div class="form-control">
             <label for="senha">
-                <input type="password" placeholder="Senha" name="senha" id="senha" required>
-                <!--<img src="images/success-icon.svg" alt="Imagem de erro!">
-                <img src="images/error-icon.svg" alt="Imagem de erro!">
-                <small>Insira uma senha válido!</small>-->
+                <input type="password" placeholder="Senha" name="senha" id="senha">
             </label>
+            <i><img src="" alt=""></i>
+            <small>Error messager</small>
         </div>
-        <div class="senha_repetida">
+        <div class="form-control">
             <label for="senha_repetida">
-                <input type="password" placeholder="Repetir Senha" name="senha_repetida" id="senha_repetida" required>
-                <!--<img src="images/success-icon.svg" alt="Imagem de erro!">
-                <img src="images/error-icon.svg" alt="Imagem de erro!">
-                <small>As senhas diferem, insira senhas que sejam iguais!</small>-->
+                <input type="password" placeholder="Repetir Senha" name="senha_repetida" id="senha_repetida">
             </label>
+            <i><img src="" alt=""></i>
+            <small>Error messager</small>
         </div>
         <div class="data_nascimento">
             <label>
                 <small>Data de nascimento</small>
                 <div class="seletores">
-                    <select id="dia" name="dia" required>
+                    <select id="dia" name="dia">
                         <option value="" disabled selected>Dia</option>
                         <!-- Adicionando as opções de 1 a 31 -->
                         <% int dia = 0, anoMaximo = anoAtual - 100;
@@ -77,7 +71,7 @@
                         </option>
                         <% }%>
                     </select>
-                    <select id="mes" name="mes" required>
+                    <select id="mes" name="mes">
                         <option value="" disabled selected>Mês</option>
                         <!-- Adicionando as opções de mês-->
                         <% String mes = null;
@@ -112,7 +106,7 @@
                         <%}%>
                     </select>
 
-                    <select id="ano" name="ano" required>
+                    <select id="ano" name="ano">
                         <option value="" disabled selected>Ano</option>
                         <!-- Adicionando as opções de ano-->
                         <%
@@ -126,7 +120,7 @@
         </div>
         <div class="btnCadastrar">
             <label>
-                <input type="button" value="Cadastrar" onclick="realizarCadastro()">
+                <button type="submit">Cadastrar</button>
             </label>
         </div>
     </form>
