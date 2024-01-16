@@ -1,7 +1,21 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: antho
+  Date: 08/01/2024
+  Time: 12:03
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ page import="java.util.Calendar" %>
+<<<<<<< HEAD
+
+<html>
+=======
 <html lang="pt-BR">
+>>>>>>> f8ac4e5a76177b7c39ed2d3e7db4febd3fe2a028
 <head>
     <title>Inclusive Link</title>
     <link rel="stylesheet" href="styles/RealizarCadastro.css">
