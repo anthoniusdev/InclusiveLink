@@ -1,28 +1,30 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/Login.css">
+    <script src="src/main/webapp/scripts/realizarCadastro.js"></script>
     <title>InclusiveLink</title>
 </head>
 <body>
-<div class="container">
-    <form action="Login" method="post">
-        <label>
-            <input type="text" placeholder="Email ou Nome de Usuário" name="nomeUsuario" required>
-        </label>
-        <label>
-            <input type="password" placeholder="Senha" name="senha" required>
-        </label>
-        <label>
-            <input type="checkbox" name="remember">Manter conectado
-        </label>
-        <label>
-            <input type="submit" value="Fazer login">
-        </label>
-    </form>
-    <label>
-        <a href="RealizarCadastro">Realizar cadastro</a>
-    </label>
-</div>
+<main>
+    <section class="create-account">
+        <h1 class="titulo">InclusiveLink</h1>
+        <p>InclusiveLink conectando pessoas e compartilhando experiências de forma inclusiva.</p>
+    </section>
+    <section class="form">
+        <form>
+                <input type="text" id="username" name="username" placeholder="Email ou Nome de Usuário" required>
+                <input type="password" id="password" name="password" placeholder="Senha" required>
+                <button type="submit">Entrar</button>
+                <span class="linha"></span>
+            <button type="submit">Criar nova conta</button>
+        </form>
+    </section>
+</main>
+<footer>
+    <p></p>
+</footer>
 </body>
 </html>

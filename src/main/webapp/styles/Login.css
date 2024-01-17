@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'Monomaniac One';
-    src: url("MonomaniacOne-Regular.ttf") format('truetype');
+    src: url("../fonts/MonomaniacOne-Regular.ttf") format('truetype');
 }
 
 body {
@@ -59,10 +59,6 @@ form {
     justify-content: center;
 }
 
-label {
-    margin-bottom: 0.5rem;
-}
-
 input {
     margin-bottom: 1rem;
     padding: 1rem;
@@ -101,7 +97,8 @@ button {
 
 button:hover {
     background-color: #164863;
-    transform: scale(1);
+    transform: scale(1.03);
+    transition: 0.10s;
 }
 
 footer {
