@@ -19,20 +19,24 @@ body {
 
 }
 img {
-    width: 10%;
+    width: 50%;
     height: auto;
 }
+img.logo{
+
+}
 h1 {
-    font-size: 2rem;
+    font-size: 1rem;
     margin-bottom: 0.5rem;
 }
 h1.titulo {
-    font-size: 3rem;
+    font-size: 4rem;
+    color: #DDF2FD;
+    letter-spacing: 4px;
 }
-
-h2 {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
+p.desc{
+    font-size: 2.3rem;
+    color: #DDF2FD;
 }
 
 main {
@@ -55,7 +59,7 @@ form {
     border-radius: 20px;
     display: flex;
     flex-direction: column;
-    height: 400px;
+    height: 430px;
     justify-content: center;
 }
 
@@ -69,7 +73,10 @@ input {
     align-self: center;
     box-sizing: border-box;
     border: none;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
+}
+::placeholder {
+    color: rgba(22, 72, 99, 0.30);
 }
 
 .linha {
@@ -82,7 +89,7 @@ input {
 
 button {
     background-color: #164863;
-    color: white;
+    color: #DDF2FD;
     padding: 1rem 5rem;
     border: none;
     cursor: pointer;
@@ -91,10 +98,9 @@ button {
     width: 85%;
     align-self: center;
     box-sizing: border-box;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     transition: color 0.3s ease;
 }
-
 button:hover {
     background-color: #164863;
     transform: scale(1.03);
@@ -103,9 +109,8 @@ button:hover {
 
 footer {
     background-color: #427D9D;
-    color: white;
     text-align: center;
     padding: 1rem 0;
-    margin-top: 4.7rem;
-    min-height: 50px;
+    margin-top: 2.6rem;
+    min-height: 70px;
 }
