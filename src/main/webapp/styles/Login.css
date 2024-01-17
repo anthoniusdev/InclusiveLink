@@ -55,7 +55,7 @@ form {
     border-radius: 20px;
     display: flex;
     flex-direction: column;
-    height: 450px;
+    height: 400px;
     justify-content: center;
 }
 
@@ -66,18 +66,19 @@ label {
 input {
     margin-bottom: 1rem;
     padding: 1rem;
-    border-radius: 10px;
+    border-radius: 20px;
     text-align: center;
     font-family: 'Monomaniac One', sans-serif;
-    width: 90%;
+    width: 85%;
     align-self: center;
     box-sizing: border-box;
     border: none;
+    font-size: 1.2rem;
 }
 
 .linha {
     background-color: #164863;
-    width: 90%;
+    width: 85%;
     margin: 1.5rem 0;
     height: 2px;
     align-self: center;
@@ -89,16 +90,18 @@ button {
     padding: 1rem 5rem;
     border: none;
     cursor: pointer;
-    border-radius: 10px;
+    border-radius: 20px;
     font-family: 'Monomaniac One', sans-serif;
-    width: 90%;
+    width: 85%;
     align-self: center;
     box-sizing: border-box;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
 }
 
 button:hover {
     background-color: #164863;
-    transform: scale(1.1);
+    transform: scale(1);
 }
 
 footer {
