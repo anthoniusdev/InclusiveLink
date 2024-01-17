@@ -14,11 +14,15 @@
         <p>InclusiveLink conectando pessoas e compartilhando experiências de forma inclusiva.</p>
     </section>
     <section class="form">
-        <form>
-                <input type="text" id="username" name="username" placeholder="Email ou Nome de Usuário" required>
-                <input type="password" id="password" name="password" placeholder="Senha" required>
-                <button type="submit">Entrar</button>
-                <span class="linha"></span>
+        <form action="Login" method="post">
+            <label>
+                <input type="text" id="username" name="nomeUsuario" placeholder="Email ou Nome de Usuário">
+            </label>
+            <label>
+                <input type="password" id="password" name="senha" placeholder="Senha">
+            </label>
+            <button type="submit">Entrar</button>
+            <span class="linha"></span>
             <button type="submit">Criar nova conta</button>
         </form>
     </section>

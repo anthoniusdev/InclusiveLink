@@ -2,17 +2,35 @@
     font-family: 'Monomaniac One';
     src: url("../fonts/MonomaniacOne-Regular.ttf") format('truetype');
 }
-
+:root {
+    --COR-04: #164863;
+    --COR-03: #427D9D;
+    --COR-02: #9BBEC8;
+    --COR-01: #DDF2FD;
+    --COR-TEXTO-01: rgba(22, 72, 99, 0.3);
+    --COR-TEXTO-02: rgba(22, 72, 99, 0.8);
+    --MARGIN-TOP-CONTAINER: 10px;
+    --MARGIN-BOTTOM-CONTAINER: 22px;
+    --TAMANHO-FONTE-INPUT: 29px;
+    --TAMANHO-FONTE-FOOTER-NOMES: 16px;
+    --TAMANHO-FONTE-BTN-CADASTRAR: 37px;
+    --HEIGHT-INPUT: 51px;
+    --WIDTH-INPUT-NORMAL: 670px;
+    --WIDTH-INPUT-DATA: 216px;
+    --WIDTH-INPUT-LAL: 328px;
+    --PADDING-FRM-CADASTRO: 48px 86px 18px 86px;
+    --MARGIN-INPUT-PRO-OUTRO: 1.6px;
+    --FONTE: "Monomaniac One", sans-serif;
+}
 body {
     background-color: #9BBEC8;
-    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     font-family: 'Monomaniac One', sans-serif;
 }
 
 .container{
-    background-color:  #427D9D;
+    background-color:  var(--COR-03);
     border-radius: 20px;
     width: 500px;
     height: 800px;
@@ -59,8 +77,9 @@ form {
     justify-content: center;
 }
 
-input {
+form label input {
     margin-bottom: 1rem;
+    margin-left: 2.1rem;
     padding: 1rem;
     border-radius: 20px;
     text-align: center;
@@ -70,8 +89,15 @@ input {
     box-sizing: border-box;
     border: none;
     font-size: 1.2rem;
+    color: var(--COR-TEXTO-02);
 }
-
+form label input:focus{
+    outline: var(--COR-04) 4px solid;
+    color: var(--COR-TEXTO-02);
+}
+form label input::placeholder {
+    color: var(--COR-TEXTO-01);
+}
 .linha {
     background-color: #164863;
     width: 85%;
