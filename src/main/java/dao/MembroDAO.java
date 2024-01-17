@@ -4,7 +4,6 @@ import model.Membro;
 import model.Publicacao;
 import util.ServicoAutenticacao;
 
-import java.nio.channels.ScatteringByteChannel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -171,5 +170,8 @@ public class MembroDAO {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+    public boolean isNomeUsuarioUnique(String nomeUsuario){
+        return !nomesUsuario().contains(nomeUsuario);
     }
 }

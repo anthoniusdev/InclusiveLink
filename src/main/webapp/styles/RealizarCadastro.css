@@ -82,11 +82,11 @@ form input {
     font-size: var(--TAMANHO-FONTE-INPUT);
 }
 
-.form-control.success input {
+.form-control.success input, .form-control.success select {
     border: 3px solid #4ECA64;
 }
 
-.form-control.error input {
+.form-control.error input, .form-control.error select {
     border: 3px solid #782121;
 }
 
@@ -122,7 +122,7 @@ form input::placeholder {
     color: var(--COR-TEXTO-01);
 }
 
-form input:focus {
+form input:focus, form select:focus {
     outline: var(--COR-04) 4px solid;
     color: var(--COR-TEXTO-02);
 
