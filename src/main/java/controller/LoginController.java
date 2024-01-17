@@ -82,9 +82,6 @@ public class LoginController extends HttpServlet {
         }
     }
 
-    /*private void realizarLogout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }*/
     private void realizarCadastro(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String nome = request.getParameter("nome") + " " + request.getParameter("sobrenome");
         String nomeUsuario = request.getParameter("nome_usuario");
