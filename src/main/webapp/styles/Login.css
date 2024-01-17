@@ -45,9 +45,9 @@ main {
 
 .form, .create-account {
     width: 100%;
-    max-width: 400px;
+    max-width: 450px;
     color: white;
-    font-size: 25px;
+    font-size: 35px;
 }
 
 form {
@@ -55,9 +55,8 @@ form {
     border-radius: 20px;
     display: flex;
     flex-direction: column;
-    height: 350px;
+    height: 450px;
     justify-content: center;
-
 }
 
 label {
@@ -66,7 +65,7 @@ label {
 
 input {
     margin-bottom: 1rem;
-    padding: 0.5rem;
+    padding: 1rem;
     border-radius: 10px;
     text-align: center;
     font-family: 'Monomaniac One', sans-serif;
@@ -87,7 +86,7 @@ input {
 button {
     background-color: #164863;
     color: white;
-    padding: 0.5rem 1.0rem;
+    padding: 1rem 1.0rem;
     border: none;
     cursor: pointer;
     border-radius: 10px;
