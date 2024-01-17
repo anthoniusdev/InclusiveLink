@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'Monomaniac One';
-    src: url("MonomaniacOne-Regular.ttf") format('truetype');
+    src: url("../fonts/MonomaniacOne-Regular.ttf") format('truetype');
 }
 
 body {
