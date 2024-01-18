@@ -98,6 +98,17 @@ form label input:focus{
 form label input::placeholder {
     color: var(--COR-TEXTO-01);
 }
+.form-control small {
+    display: none;
+    position: relative;
+    visibility: hidden;
+}
+.form-control {
+    position: relative;
+}
+.form-control.error input{
+    border: 6px solid #782121;
+}
 .linha {
     background-color: #164863;
     width: 85%;
