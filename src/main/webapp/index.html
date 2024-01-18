@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/Login.css">
-    <script src="src/main/webapp/scripts/realizarCadastro.js"></script>
     <title>InclusiveLink</title>
 </head>
 <body>
@@ -13,22 +12,27 @@
         <h1 class="titulo">InclusiveLink</h1>
         <p>InclusiveLink conectando pessoas e compartilhando experiências de forma inclusiva.</p>
     </section>
-    <section class="form">
-        <form action="Login" method="post">
+    <section class="form" id="form">
+        <form action="Login" method="post" id="formLogin">
+            <div class="form-control" id="form-control">
             <label>
-                <input type="text" id="username" name="nomeUsuario" placeholder="Email ou Nome de Usuário">
+                    <input type="text" id="username" name="nomeUsuario" placeholder="Email ou Nome de Usuário">
             </label>
             <label>
-                <input type="password" id="password" name="senha" placeholder="Senha">
+                    <input type="password" id="password" name="senha" placeholder="Senha">
+                    <small>Error message</small>
             </label>
-            <button type="submit">Entrar</button>
-            <span class="linha"></span>
-            <button type="submit">Criar nova conta</button>
+            </div>
+
+            <button type="submit" id="entrar">Entrar</button>
+            <span class="linha" id="linha"></span>
+            <button id="cadastrar">Criar nova conta</button>
         </form>
     </section>
 </main>
 <footer>
     <p></p>
 </footer>
+<script src="scripts/realizarLogin.js"></script>
 </body>
 </html>
