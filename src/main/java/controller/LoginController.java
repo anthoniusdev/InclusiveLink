@@ -75,10 +75,10 @@ public class LoginController extends HttpServlet {
 
                 response.sendRedirect("PaginaInicial.jsp");
             } else {
-                response.sendRedirect("index.html");
+                response.sendRedirect("index.html?erro=1");
             }
         } else {
-            response.sendRedirect("index.html");
+            response.sendRedirect("index.html?erro=1");
         }
     }
 

@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-        console.log("Script carregado com sucesso.");
         preencherSelectData();
         const form = document.getElementById("formCadastro");
         const nome = document.getElementById("nome");
@@ -373,23 +372,4 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
     }
-<<<<<<< HEAD
 )
-=======
-}
-
-function corrigirStringEValidar(str) {
-    if (typeof str !== 'string') {
-        console.error('O argumento não é uma string:', str);
-        return false;
-    }
-    // Verifica se a string possui apenas letras (maiúsculas e minúsculas) com acentos
-    let regex = /^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:\s[a-zA-ZÀ-ÖØ-öø-ÿ]+)*$/;
-
-    // Remove espaços em branco extras e ajusta espaços no meio da string
-    let stringCorrigida = str.trim().replace(/\s+/g, ' ');
-    
-    // Testa se a string corrigida atende ao padrão da expressão regular
-    return regex.test(stringCorrigida) ? stringCorrigida : false;
-}*/
->>>>>>> 8356736e332ecca35c56d2a8b36037b997168230
