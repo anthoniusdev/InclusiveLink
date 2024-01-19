@@ -75,16 +75,13 @@ public class LoginController extends HttpServlet {
 
                 response.sendRedirect("PaginaInicial.jsp");
             } else {
-                response.sendRedirect("index.html");
+                response.sendRedirect("index.html?erro=1");
             }
         } else {
-            response.sendRedirect("index.html");
+            response.sendRedirect("index.html?erro=1");
         }
     }
 
-    /*private void realizarLogout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }*/
     private void realizarCadastro(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String nome = request.getParameter("nome") + " " + request.getParameter("sobrenome");
         String nomeUsuario = request.getParameter("nome_usuario");

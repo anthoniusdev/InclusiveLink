@@ -1,5 +1,4 @@
 package model;
-
 import dao.ComentarioDAO;
 
 public class Comentario extends Publicacao {

@@ -1,7 +1,6 @@
 package model;
 
 import dao.MembroDAO;
-
 import java.util.ArrayList;
 
 public class Membro extends Pessoa {
@@ -229,7 +228,7 @@ public class Membro extends Pessoa {
             return false;
         }
     }
-// --------------------------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------------------------
 
     public boolean aceitarSolicitacao() {
         //NÃO SEI COMO FUNCIONARIA ESSE MÉTODO
