@@ -4,10 +4,7 @@ import model.Membro;
 import model.Publicacao;
 import util.ServicoAutenticacao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class MembroDAO {
@@ -90,22 +87,26 @@ public class MembroDAO {
         int idPessoa;
         String nome, dataNascimento, email, senha, fotoPerfil, fotoFundo, nomeUsuario, descricao;
         boolean perfilVisivel;
-        String read = "select p.iDPessoa, p.nome, p.dataNascimento, p.email, p.senha, m.fotoPerfil, m.fotoFundo, m.nomeUsuario, m.descricao, m.perfilVisivel FROM pessoa p INNER JOIN membro m ON p.idPessoa = m.idPessoa WHERE p.idPessoa = ?";
+        String read = "select * FROM pessoa p INNER JOIN membro m ON p.idPessoa = m.idPessoa WHERE p.idPessoa = ?";
         try (Connection con = conectar()) {
-            PreparedStatement preparedStatement = con.prepareStatement(read);
-            preparedStatement.setInt(1, id);
-            ResultSet rs = preparedStatement.executeQuery();
-            idPessoa = rs.getInt(1);
-            nome = rs.getString(2);
-            dataNascimento = rs.getString(3);
-            email = rs.getString(4);
-            senha = rs.getString(5);
-            fotoPerfil = rs.getString(6);
-            fotoFundo = rs.getString(7);
-            nomeUsuario = rs.getString(8);
-            descricao = rs.getString(9);
-            preparedStatement.close();
-            return new Membro(idPessoa, nome, dataNascimento, email, senha, fotoPerfil, fotoFundo, nomeUsuario, descricao, publicacoesCurtidas(idPessoa));
+            try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
+                preparedStatement.setInt(1, id);
+                ResultSet rs = preparedStatement.executeQuery();
+                if (rs.next()) {
+                    idPessoa = rs.getInt(1);
+                    nome = rs.getString(2);
+                    dataNascimento = rs.getString(3);
+                    email = rs.getString(4);
+                    senha = rs.getString(5);
+                    fotoPerfil = rs.getString(8);
+                    fotoFundo = rs.getString(9);
+                    nomeUsuario = rs.getString(10);
+                    descricao = rs.getString(11);
+                    return new Membro(idPessoa, nome, dataNascimento, nomeUsuario, email, senha, fotoPerfil, fotoFundo, descricao, publicacoesCurtidas(idPessoa));
+                } else {
+                    return null;
+                }
+            }
         } catch (Exception e) {
             System.out.println(e);
             return null;
@@ -143,7 +144,7 @@ public class MembroDAO {
                 ResultSet resultSet = preparedStatement.executeQuery();
                 if (resultSet.next()) {
                     return resultSet.getString(1);
-                }else {
+                } else {
                     return null;
                 }
             } catch (Exception e) {
@@ -152,6 +153,22 @@ public class MembroDAO {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public int verificaId(String nomeUsuario) {
+        String read = "select pessoa.idPessoa from pessoa inner join membro on pessoa.idPessoa = membro.idPessoa where membro.nomeUsuario = ?";
+        try (Connection con = conectar()) {
+            try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
+                preparedStatement.setString(1, nomeUsuario);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    return resultSet.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return 0;
     }
 
     public ArrayList<String> nomesUsuario() {
@@ -171,7 +188,8 @@ public class MembroDAO {
             throw new RuntimeException(e);
         }
     }
-    public boolean isNomeUsuarioUnique(String nomeUsuario){
+
+    public boolean isNomeUsuarioUnique(String nomeUsuario) {
         return !nomesUsuario().contains(nomeUsuario);
     }
 }

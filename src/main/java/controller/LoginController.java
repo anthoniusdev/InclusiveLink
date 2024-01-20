@@ -25,17 +25,6 @@ public class LoginController extends HttpServlet {
 
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getServletPath();
-        System.out.println("Servedt at: " + action);
-        if (action.equals("/RealizarCadastro")) {
-            response.sendRedirect("RealizarCadastro.jsp");
-        } else {
-            response.sendRedirect("index.html");
-        }
-    }
-
-    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("Served at: " + request.getContextPath() + request.getServletPath());
         String action = request.getServletPath();
@@ -55,30 +44,39 @@ public class LoginController extends HttpServlet {
         String nomeUsuario = request.getParameter("nomeUsuario");
         String senha = request.getParameter("senha");
         String senhaArmazenada = membroDAO.retornaHashSenha(nomeUsuario);
-        if (senhaArmazenada != null) {
-            if (ServicoAutenticacao.autentica(senha, membroDAO.retornaHashSenha(nomeUsuario))) {
-                boolean remember = request.getParameter("remember") != null;
+        int id = membroDAO.verificaId(nomeUsuario);
+        if (id != 0) {
+            System.out.println(id);
+            Membro membro = membroDAO.retornaMembro(id);
+            System.out.println("Nome: " + membro.getNome());
+            System.out.println("Nome de usuário: " + membro.getNomeUsuario());
+            System.out.println("Email: " + membro.getEmail());
+            if (senhaArmazenada != null) {
+                if (ServicoAutenticacao.autentica(senha, membroDAO.retornaHashSenha(nomeUsuario))) {
+                    boolean remember = request.getParameter("remember") != null;
 
-                String sessionID = gerarTokenSessao();
+                    String sessionID = gerarTokenSessao();
 
-                int maxAge = 24 * 60 * 60;
-                if (remember) {
-                    maxAge *= 30;
+                    int maxAge = 24 * 60 * 60;
+                    if (remember) {
+                        maxAge *= 30;
+                    }
+
+                    Cookie cookie = new Cookie("sessionID", sessionID);
+                    cookie.setMaxAge(maxAge);
+                    response.addCookie(cookie);
+
+                    HttpSession session = request.getSession();
+                    session.setAttribute("authenticated", true);
+                    session.setAttribute("usuario", membro);
+
+                    response.sendRedirect("PaginaInicial.jsp");
+                } else {
+                    response.sendRedirect("index.html?erro=1");
                 }
-
-                Cookie cookie = new Cookie("sessionID", sessionID);
-                cookie.setMaxAge(maxAge);
-                response.addCookie(cookie);
-
-                HttpSession session = request.getSession();
-                session.setAttribute("authenticated", true);
-
-                response.sendRedirect("PaginaInicial.jsp");
             } else {
                 response.sendRedirect("index.html?erro=1");
             }
-        } else {
-            response.sendRedirect("index.html?erro=1");
         }
     }
 

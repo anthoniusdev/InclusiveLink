@@ -23,7 +23,7 @@
     --FONTE: "Monomaniac One", sans-serif;
 }
 body {
-    background-color: #9BBEC8;
+    background-color: var(--COR-02);
     margin: 0;
     padding: 0;
     font-family: 'Monomaniac One', sans-serif;

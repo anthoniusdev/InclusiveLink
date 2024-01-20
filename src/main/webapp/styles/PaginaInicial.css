@@ -1,0 +1,126 @@
+@font-face {
+    font-family: 'Monomaniac One';
+    src: url("../fonts/MonomaniacOne-Regular.ttf") format('truetype');
+}
+
+:root {
+    --COR-04: #164863;
+    --COR-03: #427D9D;
+    --COR-02: #9BBEC8;
+    --COR-01: #DDF2FD;
+    --COR-TEXTO-01: rgba(22, 72, 99, 0.3);
+    --COR-TEXTO-02: rgba(22, 72, 99, 0.8);
+    --COR-TEXTO-03: rgba(221, 242, 253, 0.50);
+    --COR-TEXTO-04: #DDF2FD;
+    --COR-TEXTO-05: rgba(221, 242, 253, 0.70);
+    --FONTE: "Monomaniac One", sans-serif;
+}
+body {
+    background-color: var(--COR-02);
+    font-family: var(--FONTE);
+}
+html, body, footer {
+    margin: 0;
+    padding: 0;
+}
+.principal{
+    background-color: var(--COR-03);
+    display: flex;
+    flex-direction: column;
+    width: 960px;
+    margin-left: 35px;
+    margin-top: 20px;
+    border-radius: 20px;
+    margin-right: 30px;
+}
+.cabecalho{
+    display: flex;
+    flex-direction: row;
+    height: 50px;
+    align-items: center;
+    padding-left: 50px;
+    border-bottom: 3px solid var(--COR-04);
+}
+.selecionado{
+    margin-right: 70px;
+    color: var(--COR-TEXTO-04);
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+.cabecalho a{
+    color: var(--COR-TEXTO-03);
+    text-decoration: none;
+}
+#linhaSelecionado{
+    height: 6px;
+    background-color: var(--COR-01);
+    display: flex;
+    border-radius: 20px;
+}
+.criarPublicacao form{
+    display: flex;
+    flex-direction: row;
+    padding-top: 20px;
+}
+.criarPublicacao textarea{
+    border: none;
+    background-color: var(--COR-03);
+    width: 100%;
+    color: var(--COR-TEXTO-05);
+    font-size: 25px;
+    font-family: var(--FONTE);
+    resize: none;
+    overflow-y: hidden;
+}
+.criarPublicacao textarea:focus{
+    outline: none;
+
+}
+.criarPublicacao .foto-perfil{
+    padding-left: 35px;
+    padding-right: 35px;
+}
+.criarPublicacao .areaInput{
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    width: 580px;
+}
+#textoNovaPublicacao::placeholder{
+    font-family: var(--FONTE);
+    color: var(--COR-TEXTO-05);
+    font-size: 25px;
+}
+#linhaAreaInput{
+    height: 2px;
+    background-color: var(--COR-TEXTO-05);
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+#imagemPublicacao{
+    width: 30px;
+}
+.btnPostar{
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 25px;
+    margin-left: 40px;
+}
+.btnPostar button{
+    background-color: #0c202a1f;
+    color: var(--COR-01);
+    border-radius: 20px;
+    height: 75px;
+    width: 160px;
+    border: none;
+    font-family: var(--FONTE);
+    font-size: 25px;
+    box-sizing: border-box;
+}
+#contagemCaracteres{
+    display: none;
+    flex-direction: row-reverse;
+    color: var(--COR-TEXTO-05);
+}
