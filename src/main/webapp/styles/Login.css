@@ -36,7 +36,8 @@ body {
     height: 800px;
 
 }
-img{
+img.logo{
+    margin-top: 4.5rem;
     width: 150px;
     height: 150px
 }
@@ -74,7 +75,7 @@ form {
     border-radius: 20px;
     display: flex;
     flex-direction: column;
-    height: 430px;
+    height: 460px;
     justify-content: center;
 }
 
@@ -144,24 +145,90 @@ button:hover {
     transition: 0.10s;
 }
 
-footer {
-    background-color: #427D9D;
-    text-align: center;
-    padding: 1rem 0;
-    margin-top: 2.6rem;
-    min-height: 70px;
+label.MantConect {
+    display: flex;
+    margin-left: 5rem;
+    color: #DDF2FD;
+    font-size: 1.5rem;
+    white-space: nowrap;
 }
 
-label.MantConect{
+#manterConectado {
+    margin-top: 9px;
+    width: 20px;
+    height: 20px;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+}
+
+label.MantConect::before {
+    content: '\00a0';
+    height: 100%;
+    display: inline-block;
+}
+
+.create-account .logo-and-title {
     display: flex;
     align-items: center;
-    font-size: 1.5rem;
-    color: #DDF2FD;
-    font-family: 'Monomaniac One', sans-serif;
-    margin-right: 13rem;
-    white-space: nowrap;
-
+    margin-bottom: 20px; /* Você pode ajustar a margem conforme necessário */
+    margin-left: -2rem;
 }
-label input[name="remember"] {
-    margin-right: 0.5rem;
+
+.create-account .logo {
+    margin-right: 5px; /* Ajuste a margem entre o logo e o título conforme necessário */
+}
+
+footer {
+    background-color: var(--COR-03);
+    color: var(--COR-01);
+    margin-top: 58px;
+}
+
+footer .LOGO-E-NOMES {
+    display: flex;
+    flex-direction: row;
+}
+
+footer .bola-azul {
+    margin-top: 13px;
+    margin-bottom: 13px;
+    margin-right: 6px;
+    background-color: var(--COR-04);
+    border-radius: 30px;
+    height: 60px;
+    width: 60px;
+}
+
+footer .bola-azul img {
+    padding: 7px;
+    width: 53px;
+    height: 50px;
+}
+
+footer .Logo-Nome-IL {
+    display: flex;
+    flex-direction: row;
+    margin-left: 41px;
+}
+
+footer .Logo-Nome-IL h1 {
+    margin-bottom: 0;
+    font-size: var(--TAMANHO-FONTE-INPUT);
+    font-family: var(--FONTE);
+    font-weight: 400;
+}
+
+footer .Nomes {
+    margin-top: 6px;
+    margin-left: auto;
+    margin-right: 40px;
+    float: right;
+}
+
+footer .Nomes h3 {
+    margin-block-start: 0;
+    margin-block-end: 2px;
+    font-size: var(--TAMANHO-FONTE-FOOTER-NOMES);
+    font-weight: 400;
+    opacity: 0.7;
 }
