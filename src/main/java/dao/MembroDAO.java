@@ -325,10 +325,11 @@ public class MembroDAO {
     }
     public ArrayList<Membro> listarMembros(int quantidade, int idPessoa) {
         try (Connection con = conectar()) {
-            String read = "select idPessoa from membro where idPessoa <> ? order by dataCriacao desc limit ?";
+            String read = "select idPessoa from membro where idPessoa <> ? and idPessoa not in (SELECT idMembro from membro_seguidor where idSeguidor = ?) order by dataCriacao desc limit ?";
             try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
                 preparedStatement.setInt(1, idPessoa);
-                preparedStatement.setInt(2, quantidade);
+                preparedStatement.setInt(2, idPessoa);
+                preparedStatement.setInt(3, quantidade);
                 ResultSet rs = preparedStatement.executeQuery();
                 ArrayList<Membro> membros = new ArrayList<>();
                 while (rs.next()) {
@@ -349,8 +350,8 @@ public class MembroDAO {
                 preparedStatement.executeUpdate();
                 String create1 = "INSERT INTO membro_seguidor(idMembro, idSeguidor) VALUES (?,?)";
                 try (PreparedStatement preparedStatement1 = con.prepareStatement(create1)){
-                    preparedStatement.setInt(1, idSeguindo);
-                    preparedStatement.setInt(2, idMembro);
+                    preparedStatement1.setInt(1, idSeguindo);
+                    preparedStatement1.setInt(2, idMembro);
                     preparedStatement1.executeUpdate();
                     return true;
                 }

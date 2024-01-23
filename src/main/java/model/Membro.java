@@ -1,9 +1,11 @@
 package model;
 
 import dao.MembroDAO;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Membro extends Pessoa {
+public class Membro extends Pessoa implements Serializable {
     private String fotoPerfil;
     private String fotoFundo;
     private String nomeUsuario;
@@ -49,7 +51,7 @@ public class Membro extends Pessoa {
         this.idComentarios = idComentarios;
     }
 
-    public Membro(String nome, String dataNascimento, String nomeUsuario, String email, String senha){
+    public Membro(String nome, String dataNascimento, String nomeUsuario, String email, String senha) {
         super(nome, dataNascimento, email, senha);
         setNomeUsuario(nomeUsuario);
         setFotoPerfil(null);
@@ -64,6 +66,7 @@ public class Membro extends Pessoa {
         setComunidadesSeguindos(null);
         setComentarios(null);
     }
+
     public Membro(Membro membro) {
         super(membro.getIdPessoa(), membro.getNome(), membro.getDataNascimento(), membro.getEmail(), membro.getSenha());
         this.fotoPerfil = membro.getFotoPerfil();
@@ -80,7 +83,6 @@ public class Membro extends Pessoa {
         this.idComentarios = null;
     }
 
-    public Membro(){}
     public String getFotoPerfil() {
         return fotoPerfil;
     }
@@ -193,7 +195,6 @@ public class Membro extends Pessoa {
             return false;
         }
     }
-
 
 
     // --------------------------------------------------------------------------------------------------------
@@ -343,6 +344,28 @@ public class Membro extends Pessoa {
             }
         }
         return isModerador;
+    }
+
+    public void atualizarDados() {
+        MembroDAO membroDAO = new MembroDAO();
+        Membro membroAtualizado = membroDAO.retornaMembro(this.getIdPessoa());
+        this.setIdPessoa(membroAtualizado.getIdPessoa());
+        this.setNome(membroAtualizado.getNome());
+        this.setDataNascimento(membroAtualizado.getDataNascimento());
+        this.setEmail(membroAtualizado.getEmail());
+        this.setSenha(membroAtualizado.getSenha());
+        this.fotoPerfil = membroAtualizado.getFotoPerfil();
+        this.fotoFundo = membroAtualizado.getFotoFundo();
+        this.descricao = membroAtualizado.getDescricao();
+        this.perfilVisivel = membroAtualizado.isPerfilVisivel();
+        this.nomeUsuario = membroAtualizado.getNomeUsuario();
+        this.idPublicacaoCurtidas = membroAtualizado.getCurtidas();
+        this.idPublicacoes = membroAtualizado.getPublicacoes();
+        this.idMembrosSeguindos = membroAtualizado.getMembrosSeguindos();
+        this.idMembrosSeguidores = membroAtualizado.getMembrosSeguidores();
+        this.idComunidadesParticipantes = membroAtualizado.getComunidadesParticipantes();
+        this.idComunidadesSeguindos = membroAtualizado.getComunidadesSeguindos();
+        this.idComentarios = membroAtualizado.getComentarios();
     }
 
     @Override

@@ -47,34 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         console.log('Arquivo selecionado:', this.files[0]);
     });
-    botaoSeguir1.addEventListener('click', function () {
-        let id = this.id.charAt(this.id.length - 1);
-        alert(id);
-    });
-    botaoSeguir2.addEventListener('click', function () {
-        let id = this.id.charAt(this.id.length - 1);
-        alert(id);
-    });
-    botaoSeguir3.addEventListener('click', function () {
-        let id = this.id.charAt(this.id.length - 1);
-        alert(id);
-    });
-    function seguirUsuario(idMembro, idSeguindo){
-        $.ajax({
-            type: "POST",
-            url: "seguirMembro",
-            data:{
-                idMembro: idMembro,
-                idSeguindo: idSeguindo
-            },
-            success: function (response){
-                console.log("Usuário seguido com sucesso");
-            },
-            error: function (error){
-                console.log("Erro ao seguir usuário: " + error.responseText);
-            }
-        })
-    };
+
     function submeterFormulario() {
         let dados = {
             inputTexto: textoPublicacao.value,
@@ -107,3 +80,27 @@ document.addEventListener("DOMContentLoaded", function () {
         inputImagem.click();
     }
 });
+
+function seguirUsuario(idMembro, idSeguindo, i) {
+    let botaoSeguir = document.getElementById('botaoSeguir' + i);
+    botaoSeguir.style.outline = "4px solid #FFF";
+    botaoSeguir.style.transition = "0.25s";
+    $.ajax({
+        type: "POST",
+        url: "seguirMembro",
+        data: {
+            idMembro: idMembro,
+            idSeguindo: idSeguindo
+        },
+        success: function (response) {
+            console.log("Usuário seguido com sucesso");
+            botaoSeguir.innerText = 'SEGUINDO';
+            botaoSeguir.style.fontSize = '20px';
+            botaoSeguir.style.backgroundColor = 'var(--COR-03)';
+            botaoSeguir.style.outline = '3px solid var(--COR-04)';
+        },
+        error: function (error) {
+            console.log("Erro ao seguir usuário: " + error.responseText);
+        }
+    })
+}

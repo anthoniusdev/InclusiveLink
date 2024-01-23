@@ -5,7 +5,7 @@
   Time: 16:10
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="javax.servlet.http.HttpSession" %>
 <%@page import="model.Membro" %>
 <%@ page import="java.util.ArrayList" %>
@@ -28,7 +28,7 @@
 <head>
     <title>Inclusive link</title>
     <link rel="stylesheet" href="styles/PaginaInicial.css">
-    <script src="WEB-INF/lib/js/jquery-3.7.1.js"></script>
+    <script src="scripts/js/jquery-3.7.1.js"></script>
     <script src="scripts/paginaInicial.js"></script>
 </head>
 <body>
@@ -85,6 +85,7 @@
         <div class="lista-pesquisa-amigo">
             <%
                 for (Membro membroSeguir : membrosRede) {
+                    if (!membroSeguir.getMembrosSeguidores().contains(membro.getIdPessoa())) {
             %>
             <div class="caixa-usuario" id="caixa-usuario">
                 <%
@@ -95,11 +96,15 @@
                 <img src="<%=membroSeguir.getFotoPerfil()%>" alt="Foto de perfil de <%=membroSeguir.getNome()%>">
                 <p class="nomeUsuario"><%=membroSeguir.getNome()%>
                 </p>
-                    <button onclick="seguirUsuario(<%=membro.getIdPessoa()%>, <%=membroSeguir.getIdPessoa()%>)" class="botaoSeguir" id="botaoSeguir">
-                        SEGUIR
-                    </button>
+                <button onclick="seguirUsuario(<%=membro.getIdPessoa()%>, <%=membroSeguir.getIdPessoa()%>, <%=membrosRede.indexOf(membroSeguir)%>)"
+                        class="botaoSeguir" id="botaoSeguir<%=membrosRede.indexOf(membroSeguir)%>">
+                    SEGUIR
+                </button>
             </div>
-            <%}%>
+            <%
+                    }
+                }
+            %>
         </div>
     </div>
 </main>

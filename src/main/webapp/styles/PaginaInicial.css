@@ -129,6 +129,7 @@ html, body, footer {
     display: flex;
     align-items: center;
     cursor: pointer;
+    width: 30px;
 }
 #icone-escolher-imagem svg{
     width: 24px;

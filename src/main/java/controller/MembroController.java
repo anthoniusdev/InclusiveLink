@@ -29,12 +29,11 @@ public class MembroController extends HttpServlet {
         System.out.println("Served at: " + request.getContextPath() + request.getServletPath());
         String action = request.getServletPath();
         System.out.println(action);
-        if (action.equals("/Cadastrar")) {
-            realizarCadastro(request, response);
-        } else if (action.equals("/Login")) {
-            realizarLogin(request, response);
+        switch (action) {
+            case "/Cadastrar" -> realizarCadastro(request, response);
+            case "/Login" -> realizarLogin(request, response);
+            case "/seguirMembro" -> seguirMembro(request, response);
         }
-//        else if(action.equals(""))
     }
 
     private String gerarTokenSessao() {
@@ -98,8 +97,11 @@ public class MembroController extends HttpServlet {
     private void seguirMembro(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int idMembro = Integer.parseInt(request.getParameter("idMembro"));
         int idSeguindo = Integer.parseInt(request.getParameter("idSeguindo"));
+
         if (membroDAO.seguirMembro(idMembro, idSeguindo)) {
             response.getWriter().write("Usuário seguido com sucesso");
+            System.out.println(membroDAO.retornaMembro(idMembro).getMembrosSeguindo().size());
+            atualizarDadosMembro(request, idMembro);
         } else {
             response.getWriter().write("Usuário não foi seguido");
         }
@@ -148,4 +150,12 @@ public class MembroController extends HttpServlet {
         return dia + "-" + numeroMes + "-" + ano;
     }
 
+    private void atualizarDadosMembro(HttpServletRequest request, int idMembro) throws IOException {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            Membro membroAtualizado = membroDAO.retornaMembro(idMembro);
+            session.setAttribute("usuario", membroAtualizado);
+            session.setAttribute("perfis", membroDAO.listarMembros(3, membroAtualizado.getIdPessoa()));
+        }
+    }
 }
