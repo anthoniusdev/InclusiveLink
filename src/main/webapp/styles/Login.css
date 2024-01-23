@@ -2,6 +2,7 @@
     font-family: 'Monomaniac One';
     src: url("../fonts/MonomaniacOne-Regular.ttf") format('truetype');
 }
+
 :root {
     --COR-04: #164863;
     --COR-03: #427D9D;
@@ -22,6 +23,7 @@
     --MARGIN-INPUT-PRO-OUTRO: 1.6px;
     --FONTE: "Monomaniac One", sans-serif;
 }
+
 body {
     background-color: #9BBEC8;
     margin: 0;
@@ -29,28 +31,34 @@ body {
     font-family: 'Monomaniac One', sans-serif;
 }
 
-.container{
-    background-color:  var(--COR-03);
+.container {
+    background-color: var(--COR-03);
     border-radius: 20px;
     width: 500px;
     height: 800px;
 
 }
-img {
-    width: 10%;
-    height: auto;
-}
-h1 {
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
-}
-h1.titulo {
-    font-size: 3rem;
+
+img.logo {
+    margin-top: 4.5rem;
+    width: 150px;
+    height: 150px
 }
 
-h2 {
-    font-size: 1.5rem;
+h1 {
+    font-size: 1rem;
     margin-bottom: 0.5rem;
+}
+
+h1.titulo {
+    font-size: 4rem;
+    color: #DDF2FD;
+    letter-spacing: 4px;
+}
+
+p.desc {
+    font-size: 2.3rem;
+    color: #DDF2FD;
 }
 
 main {
@@ -73,7 +81,7 @@ form {
     border-radius: 20px;
     display: flex;
     flex-direction: column;
-    height: 400px;
+    height: 460px;
     justify-content: center;
 }
 
@@ -88,27 +96,39 @@ form label input {
     align-self: center;
     box-sizing: border-box;
     border: none;
+    font-size: 1.5rem;
+    color: var(--COR-TEXTO-02);
+}
+
+::placeholder {
     font-size: 1.2rem;
     color: var(--COR-TEXTO-02);
 }
-form label input:focus{
+
+form label input:focus {
     outline: var(--COR-04) 4px solid;
     color: var(--COR-TEXTO-02);
 }
+
 form label input::placeholder {
     color: var(--COR-TEXTO-01);
+    font-size: 1.5rem;
 }
+
 .form-control small {
     display: none;
     position: relative;
     visibility: hidden;
 }
+
 .form-control {
     position: relative;
 }
-.form-control.error input{
+
+.form-control.error input {
     border: 6px solid #782121;
 }
+
 .linha {
     background-color: #164863;
     width: 85%;
@@ -119,7 +139,7 @@ form label input::placeholder {
 
 button {
     background-color: #164863;
-    color: white;
+    color: #DDF2FD;
     padding: 1rem 5rem;
     border: none;
     cursor: pointer;
@@ -128,7 +148,7 @@ button {
     width: 85%;
     align-self: center;
     box-sizing: border-box;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     transition: color 0.3s ease;
 }
 
@@ -138,11 +158,98 @@ button:hover {
     transition: 0.10s;
 }
 
+label.MantConect {
+    display: flex;
+    margin-left: 5rem;
+    color: #DDF2FD;
+    font-size: 1.5rem;
+    white-space: nowrap;
+}
+
+#manterConectado {
+    margin-top: 9px;
+    width: 20px;
+    height: 20px;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+}
+
+label.MantConect::before {
+    content: '\00a0';
+    height: 100%;
+    display: inline-block;
+}
+
+.create-account .logo-and-title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px; /* Você pode ajustar a margem conforme necessário */
+    margin-left: -2rem;
+}
+
+.create-account .logo {
+    margin-right: 5px; /* Ajuste a margem entre o logo e o título conforme necessário */
+}
+
 footer {
-    background-color: #427D9D;
-    color: white;
-    text-align: center;
-    padding: 1rem 0;
-    margin-top: 4.7rem;
-    min-height: 50px;
+    background-color: var(--COR-03);
+    color: var(--COR-01);
+    margin-top: 58px;
+}
+
+footer .LOGO-E-NOMES {
+    display: flex;
+    flex-direction: row;
+}
+
+footer .bola-azul {
+    margin-top: 13px;
+    margin-bottom: 13px;
+    margin-right: 6px;
+    background-color: var(--COR-04);
+    border-radius: 30px;
+    height: 60px;
+    width: 60px;
+}
+
+footer .bola-azul img {
+    padding: 7px;
+    width: 53px;
+    height: 50px;
+}
+
+footer .Logo-Nome-IL {
+    display: flex;
+    flex-direction: row;
+    margin-left: 41px;
+}
+
+#manterConectado:focus {
+    outline: none;
+}
+
+#manterConectado:active {
+    color: var(--COR-03);
+}
+
+footer .Logo-Nome-IL h1 {
+    margin-bottom: 0;
+    font-size: var(--TAMANHO-FONTE-INPUT);
+    font-family: var(--FONTE);
+    font-weight: 400;
+}
+
+footer .Nomes {
+    margin-top: 6px;
+    margin-left: auto;
+    margin-right: 40px;
+    float: right;
+}
+
+footer .Nomes h3 {
+    margin-block-start: 0;
+    margin-block-end: 2px;
+    font-size: var(--TAMANHO-FONTE-FOOTER-NOMES);
+    font-weight: 400;
+    opacity: 0.7;
 }

@@ -1,0 +1,227 @@
+@font-face {
+    font-family: 'Monomaniac One';
+    src: url("../fonts/MonomaniacOne-Regular.ttf") format('truetype');
+}
+
+:root {
+    --COR-04: #164863;
+    --COR-03: #427D9D;
+    --COR-02: #9BBEC8;
+    --COR-01: #DDF2FD;
+    --COR-TEXTO-01: rgba(22, 72, 99, 0.3);
+    --COR-TEXTO-02: rgba(22, 72, 99, 0.8);
+    --COR-TEXTO-03: rgba(221, 242, 253, 0.50);
+    --COR-TEXTO-04: #DDF2FD;
+    --COR-TEXTO-05: rgba(221, 242, 253, 0.70);
+    --FONTE: "Monomaniac One", sans-serif;
+    --TAMANHO-FONTE: 25px;
+}
+body {
+    background-color: var(--COR-02);
+    font-family: var(--FONTE);
+}
+html, body, footer {
+    margin: 0;
+    padding: 0;
+}
+.principal{
+    background-color: var(--COR-03);
+    display: flex;
+    flex-direction: column;
+    width: 960px;
+    margin-left: 35px;
+    margin-top: 20px;
+    border-radius: 20px;
+    margin-right: 30px;
+}
+.cabecalho{
+    display: flex;
+    flex-direction: row;
+    height: 50px;
+    align-items: center;
+    padding-left: 50px;
+    border-bottom: 3px solid var(--COR-04);
+}
+.selecionado{
+    margin-right: 70px;
+    color: var(--COR-TEXTO-04);
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+.cabecalho a{
+    color: var(--COR-TEXTO-03);
+    text-decoration: none;
+}
+#linhaSelecionado{
+    height: 6px;
+    background-color: var(--COR-01);
+    display: flex;
+    border-radius: 20px;
+}
+.criarPublicacao form{
+    display: flex;
+    flex-direction: row;
+    padding-top: 20px;
+}
+.criarPublicacao textarea{
+    border: none;
+    background-color: var(--COR-03);
+    width: 100%;
+    color: var(--COR-TEXTO-04);
+    font-size: 25px;
+    font-family: var(--FONTE);
+    resize: none;
+    overflow-y: hidden;
+}
+.criarPublicacao textarea:focus{
+    outline: none;
+
+}
+.criarPublicacao .foto-perfil{
+    padding-left: 35px;
+    padding-right: 35px;
+}
+.criarPublicacao .areaInput{
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    width: 580px;
+}
+#textoNovaPublicacao::placeholder{
+    font-family: var(--FONTE);
+    color: var(--COR-TEXTO-05);
+    font-size: 25px;
+}
+#linhaAreaInput{
+    height: 2px;
+    background-color: var(--COR-TEXTO-05);
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+#imagemPublicacao{
+    width: 30px;
+}
+.btnPostar{
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 25px;
+    margin-left: 40px;
+}
+.btnPostar button{
+    background-color: #0c202a1f;
+    color: var(--COR-01);
+    border-radius: 20px;
+    height: 75px;
+    width: 160px;
+    border: none;
+    font-family: var(--FONTE);
+    font-size: 25px;
+    box-sizing: border-box;
+}
+#contagemCaracteres{
+    display: none;
+    flex-direction: row-reverse;
+    color: var(--COR-TEXTO-05);
+}
+#icone-escolher-imagem{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    width: 30px;
+}
+#icone-escolher-imagem svg{
+    width: 24px;
+    height: 24px;
+}
+#input-imagem{
+    display: none;
+}
+#imagem-preview{
+    max-width: 300px;
+    max-height: 300px;
+    margin-left: 150px;
+    margin-bottom: 30px;
+    border-radius: 20px;
+}
+.pesquisar-amigo{
+    position: fixed;
+    right: 45px;
+    top: 20px;
+    width: 450px;
+    height: 50px;
+}
+.pesquisar-amigo input{
+    background-color: var(--COR-03);
+    color: var(--COR-TEXTO-04);
+    border: none;
+    width: 100%;
+    height: 50px;
+    border-radius: 20px;
+    font-family: var(--FONTE);
+    padding-left: 80px;
+    font-size: var(--TAMANHO-FONTE);
+}
+.pesquisar-amigo label{
+    display: flex;
+    align-items: center;
+}
+.pesquisar-amigo input:focus{
+    outline: var(--COR-04) 4px solid;
+}
+.pesquisar-amigo input::placeholder{
+    color: var(--COR-TEXTO-03);
+    margin-left: 10px;
+}
+.pesquisar-amigo img{
+    position: absolute;
+    height: 40px;
+    width: 30px;
+    padding-left: 25px;
+}
+.lista-pesquisa-amigo{
+    background-color: var(--COR-03);
+    width: 450px;
+    height: auto;
+    position: fixed;
+    right: 45px;
+    top: 75px;
+    border-radius: 20px;
+}
+.lista-pesquisa-amigo .caixa-usuario{
+    display: flex;
+}
+.lista-pesquisa-amigo img{
+    width: 50px;
+    height: 50px;
+    margin-left: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.lista-pesquisa-amigo .caixa-usuario p{
+    color: var(--COR-TEXTO-04);
+    margin-left: 35px;
+    font-size: 20px;
+    align-self: center;
+}
+.botaoSeguir{
+    position: absolute;
+    right: 30px;
+    margin-top: 10px;
+    border: none;
+    width: 110px;
+    height: 45px;
+    border-radius: 20px;
+    background-color: var(--COR-04);
+    color: var(--COR-TEXTO-04);
+    font-family: var(--FONTE);
+    font-size: 25px;
+    text-align: center;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    cursor: pointer;
+}
