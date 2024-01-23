@@ -2,6 +2,7 @@
     font-family: 'Monomaniac One';
     src: url("../fonts/MonomaniacOne-Regular.ttf") format('truetype');
 }
+
 :root {
     --COR-04: #164863;
     --COR-03: #427D9D;
@@ -22,34 +23,40 @@
     --MARGIN-INPUT-PRO-OUTRO: 1.6px;
     --FONTE: "Monomaniac One", sans-serif;
 }
+
 body {
-    background-color: var(--COR-02);
+    background-color: #9BBEC8;
     margin: 0;
     padding: 0;
     font-family: 'Monomaniac One', sans-serif;
 }
 
-.container{
-    background-color:  var(--COR-03);
+.container {
+    background-color: var(--COR-03);
     border-radius: 20px;
     width: 500px;
     height: 800px;
 
 }
-img{
+
+img.logo {
+    margin-top: 4.5rem;
     width: 150px;
     height: 150px
 }
+
 h1 {
     font-size: 1rem;
     margin-bottom: 0.5rem;
 }
+
 h1.titulo {
     font-size: 4rem;
     color: #DDF2FD;
     letter-spacing: 4px;
 }
-p.desc{
+
+p.desc {
     font-size: 2.3rem;
     color: #DDF2FD;
 }
@@ -74,7 +81,7 @@ form {
     border-radius: 20px;
     display: flex;
     flex-direction: column;
-    height: 430px;
+    height: 460px;
     justify-content: center;
 }
 
@@ -90,29 +97,38 @@ form label input {
     box-sizing: border-box;
     border: none;
     font-size: 1.5rem;
+    color: var(--COR-TEXTO-02);
 }
-form label input::placeholder {
+
+::placeholder {
     font-size: 1.2rem;
     color: var(--COR-TEXTO-02);
 }
-form label input:focus{
+
+form label input:focus {
     outline: var(--COR-04) 4px solid;
     color: var(--COR-TEXTO-02);
 }
+
 form label input::placeholder {
     color: var(--COR-TEXTO-01);
+    font-size: 1.5rem;
 }
+
 .form-control small {
     display: none;
     position: relative;
     visibility: hidden;
 }
+
 .form-control {
     position: relative;
 }
-.form-control.error input{
+
+.form-control.error input {
     border: 6px solid #782121;
 }
+
 .linha {
     background-color: #164863;
     width: 85%;
@@ -135,29 +151,105 @@ button {
     font-size: 1.5rem;
     transition: color 0.3s ease;
 }
+
 button:hover {
     background-color: #164863;
     transform: scale(1.03);
     transition: 0.10s;
 }
 
-footer {
-    background-color: #427D9D;
-    text-align: center;
-    padding: 1rem 0;
-    margin-top: 2.6rem;
-    min-height: 70px;
-}
-
-label.MantConect{
+label.MantConect {
     display: flex;
-    align-items: center;
-    font-size: 1.5rem;
+    margin-left: 5rem;
     color: #DDF2FD;
-    font-family: 'Monomaniac One', sans-serif;
-    margin-right: 13rem;
+    font-size: 1.5rem;
     white-space: nowrap;
 }
-label input[name="remember"] {
+
+#manterConectado {
+    margin-top: 9px;
+    width: 20px;
+    height: 20px;
     margin-right: 0.5rem;
+    vertical-align: middle;
+}
+
+label.MantConect::before {
+    content: '\00a0';
+    height: 100%;
+    display: inline-block;
+}
+
+.create-account .logo-and-title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px; /* Você pode ajustar a margem conforme necessário */
+    margin-left: -2rem;
+}
+
+.create-account .logo {
+    margin-right: 5px; /* Ajuste a margem entre o logo e o título conforme necessário */
+}
+
+footer {
+    background-color: var(--COR-03);
+    color: var(--COR-01);
+    margin-top: 58px;
+}
+
+footer .LOGO-E-NOMES {
+    display: flex;
+    flex-direction: row;
+}
+
+footer .bola-azul {
+    margin-top: 13px;
+    margin-bottom: 13px;
+    margin-right: 6px;
+    background-color: var(--COR-04);
+    border-radius: 30px;
+    height: 60px;
+    width: 60px;
+}
+
+footer .bola-azul img {
+    padding: 7px;
+    width: 53px;
+    height: 50px;
+}
+
+footer .Logo-Nome-IL {
+    display: flex;
+    flex-direction: row;
+    margin-left: 41px;
+}
+
+#manterConectado:focus {
+    outline: none;
+}
+
+#manterConectado:active {
+    color: var(--COR-03);
+}
+
+footer .Logo-Nome-IL h1 {
+    margin-bottom: 0;
+    font-size: var(--TAMANHO-FONTE-INPUT);
+    font-family: var(--FONTE);
+    font-weight: 400;
+}
+
+footer .Nomes {
+    margin-top: 6px;
+    margin-left: auto;
+    margin-right: 40px;
+    float: right;
+}
+
+footer .Nomes h3 {
+    margin-block-start: 0;
+    margin-block-end: 2px;
+    font-size: var(--TAMANHO-FONTE-FOOTER-NOMES);
+    font-weight: 400;
+    opacity: 0.7;
 }

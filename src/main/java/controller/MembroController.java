@@ -10,8 +10,8 @@ import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.UUID;
 
-@WebServlet(urlPatterns = {"/RealizarCadastro", "/Cadastrar", "/Login"})
-public class LoginController extends HttpServlet {
+@WebServlet(urlPatterns = {"/RealizarCadastro", "/Cadastrar", "/Login", "/seguirMembro"})
+public class MembroController extends HttpServlet {
     private final MembroDAO membroDAO = new MembroDAO();
 
     @Override
@@ -19,7 +19,7 @@ public class LoginController extends HttpServlet {
         super.service(request, response);
     }
 
-    public LoginController() {
+    public MembroController() {
         super();
     }
 
@@ -34,6 +34,7 @@ public class LoginController extends HttpServlet {
         } else if (action.equals("/Login")) {
             realizarLogin(request, response);
         }
+//        else if(action.equals(""))
     }
 
     private String gerarTokenSessao() {
@@ -65,11 +66,10 @@ public class LoginController extends HttpServlet {
                     Cookie cookie = new Cookie("sessionID", sessionID);
                     cookie.setMaxAge(maxAge);
                     response.addCookie(cookie);
-
                     HttpSession session = request.getSession();
                     session.setAttribute("authenticated", true);
                     session.setAttribute("usuario", membro);
-
+                    session.setAttribute("perfis", membroDAO.listarMembros(3, membro.getIdPessoa()));
                     response.sendRedirect("PaginaInicial.jsp");
                 } else {
                     response.sendRedirect("index.html?erro=1");
@@ -92,6 +92,16 @@ public class LoginController extends HttpServlet {
         Membro membro = new Membro(nome, dataNascimento, nomeUsuario, email, senha);
         if (membro.realizarCadastro()) {
             response.sendRedirect("index.html");
+        }
+    }
+
+    private void seguirMembro(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int idMembro = Integer.parseInt(request.getParameter("idMembro"));
+        int idSeguindo = Integer.parseInt(request.getParameter("idSeguindo"));
+        if (membroDAO.seguirMembro(idMembro, idSeguindo)) {
+            response.getWriter().write("Usuário seguido com sucesso");
+        } else {
+            response.getWriter().write("Usuário não foi seguido");
         }
     }
 

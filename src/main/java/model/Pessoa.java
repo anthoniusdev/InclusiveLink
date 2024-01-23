@@ -22,6 +22,14 @@ public abstract class Pessoa {
         this.email = email;
         this.senha = senha;
     }
+
+    public Pessoa(int idPessoa, String nome, String dataNascimento, String email) {
+        this.idPessoa = idPessoa;
+        this.nome = nome;
+        this.dataNascimento = dataNascimento;
+        this.email = email;
+    }
+
     public Pessoa(){}
     public int getIdPessoa() {
         return idPessoa;

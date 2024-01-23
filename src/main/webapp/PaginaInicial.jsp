@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="javax.servlet.http.HttpSession" %>
 <%@page import="model.Membro" %>
+<%@ page import="java.util.ArrayList" %>
 <%
     HttpSession httpSession = request.getSession(false);
     if (httpSession == null || httpSession.getAttribute("authenticated") == null) {
@@ -17,14 +18,18 @@
         if (httpSession.getAttribute("usuario") != null) {
             Membro membro = (Membro) httpSession.getAttribute("usuario");
             String fotoPerfil = membro.getFotoPerfil();
-            if (fotoPerfil == null){
+            if (fotoPerfil == null) {
                 fotoPerfil = "images/person_foto.svg";
             }
+            @SuppressWarnings("unchecked")
+            ArrayList<Membro> membrosRede = (ArrayList<Membro>) httpSession.getAttribute("perfis");
 %>
 <html lang="pt-BR">
 <head>
     <title>Inclusive link</title>
     <link rel="stylesheet" href="styles/PaginaInicial.css">
+    <script src="WEB-INF/lib/js/jquery-3.7.1.js"></script>
+    <script src="scripts/paginaInicial.js"></script>
 </head>
 <body>
 <main>
@@ -43,28 +48,62 @@
                     </div>
                     <div class="areaInput">
                         <label for="textoNovaPublicacao">
-                            <textarea name="inputTexto" id="textoNovaPublicacao" placeholder="O que está acontecendo?" rows="1" maxlength="200"></textarea>
+                            <textarea name="inputTexto" id="textoNovaPublicacao" placeholder="O que está acontecendo?"
+                                      rows="1" maxlength="200"></textarea>
                         </label>
                         <div id="contagemCaracteres">200</div>
                         <span id="linhaAreaInput"></span>
-                        <input name="inputMidia" id="imagemPublicacao" type="image" alt="" src="images/gallery_img.svg">
+                        <label id="icone-escolher-imagem">
+                            <img src="images/gallery_img.svg" alt="">
+                        </label>
+                        <input type="file" id="input-imagem" name="imagem" accept="image/*">
                         <%=membro.getNome()%>
                         <%=membro.getNomeUsuario()%>
                         <%=membro.getEmail()%>
+                        <%=membro.getMembrosSeguindo().size()%>
+                        <%=membro.getMembrosSeguidores().size()%>
                     </div>
+                    <div class="im"></div>
                     <div class="btnPostar">
                         <button type="submit" id="btnPostar">POSTAR</button>
                     </div>
                 </form>
+                <div class="imgPreview">
+                    <img id="imagem-preview" alt="" src="">
+                </div>
             </div>
             <div class="postagens">
 
             </div>
         </div>
+        <div class="pesquisar-amigo">
+            <label>
+                <img src="images/search.svg" alt="search">
+                <input type="search" placeholder="PESQUISAR PERFIL">
+            </label>
+        </div>
+        <div class="lista-pesquisa-amigo">
+            <%
+                for (Membro membroSeguir : membrosRede) {
+            %>
+            <div class="caixa-usuario" id="caixa-usuario">
+                <%
+                    if (membroSeguir.getFotoPerfil() == null) {
+                        membroSeguir.setFotoPerfil("images/person_foto.svg");
+                    }
+                %>
+                <img src="<%=membroSeguir.getFotoPerfil()%>" alt="Foto de perfil de <%=membroSeguir.getNome()%>">
+                <p class="nomeUsuario"><%=membroSeguir.getNome()%>
+                </p>
+                    <button onclick="seguirUsuario(<%=membro.getIdPessoa()%>, <%=membroSeguir.getIdPessoa()%>)" class="botaoSeguir" id="botaoSeguir">
+                        SEGUIR
+                    </button>
+            </div>
+            <%}%>
+        </div>
     </div>
 </main>
 <h1>Página Inicial</h1>
-<script src="scripts/paginaInicial.js"></script>
 </body>
 </html>
 <%
