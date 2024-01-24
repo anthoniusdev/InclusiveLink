@@ -1,0 +1,79 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #DDF2FD;
+}
+
+.retanguloPerfil {
+    width: 63%;
+    height: 150vh;
+    border-radius: 20px;
+    background-color: #427D9D;
+    position: absolute;
+    left: 2%;
+    top: 3.5%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: hidden;
+}
+.fundoPerfil {
+    width: 100%;
+    height: 36vh;
+    display: block;
+    top: -20rem;
+    position: relative;
+    object-fit: cover;
+    object-position: center;
+    border-top: 3px solid #164863;
+}
+
+.pesquisaPerfis {
+    width: 30%;
+    height: 8vh;
+    border-radius: 20px;
+    background-color: #427D9D;
+    position: absolute;
+    right: 2%;
+    top: 3.5%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.Perfis {
+    width: 30%;
+    height: 50vh;
+    border-radius: 20px;
+    background-color: #427D9D;
+    position: absolute;
+    right: 2%;
+    top: 14%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.pesquisaComunidades {
+    width: 30%;
+    height: 8vh;
+    border-radius: 20px;
+    background-color: #427D9D;
+    position: absolute;
+    right: 2%;
+    top: 68%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.Comunidades {
+    width: 30%;
+    height: 50vh;
+    border-radius: 20px;
+    background-color: #427D9D;
+    position: absolute;
+    right: 2%;
+    top: 78.5%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
