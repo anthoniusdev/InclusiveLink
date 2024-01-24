@@ -2,6 +2,7 @@
     font-family: 'Monomaniac One';
     src: url("../fonts/MonomaniacOne-Regular.ttf") format('truetype');
 }
+
 :root {
     --COR-04: #164863;
     --COR-03: #427D9D;
@@ -22,6 +23,7 @@
     --MARGIN-INPUT-PRO-OUTRO: 1.6px;
     --FONTE: "Monomaniac One", sans-serif;
 }
+
 body {
     background-color: #9BBEC8;
     margin: 0;
@@ -29,28 +31,32 @@ body {
     font-family: 'Monomaniac One', sans-serif;
 }
 
-.container{
-    background-color:  var(--COR-03);
+.container {
+    background-color: var(--COR-03);
     border-radius: 20px;
     width: 500px;
     height: 800px;
 
 }
-img.logo{
+
+img.logo {
     margin-top: 4.5rem;
     width: 150px;
     height: 150px
 }
+
 h1 {
     font-size: 1rem;
     margin-bottom: 0.5rem;
 }
+
 h1.titulo {
     font-size: 4rem;
     color: #DDF2FD;
     letter-spacing: 4px;
 }
-p.desc{
+
+p.desc {
     font-size: 2.3rem;
     color: #DDF2FD;
 }
@@ -75,7 +81,7 @@ form {
     border-radius: 20px;
     display: flex;
     flex-direction: column;
-    height: 460px;
+    height: 480px;
     justify-content: center;
 }
 
@@ -90,33 +96,39 @@ form label input {
     align-self: center;
     box-sizing: border-box;
     border: none;
-<<<<<<< HEAD
     font-size: 1.5rem;
+    color: var(--COR-TEXTO-02);
 }
+
 ::placeholder {
-    color: rgba(22, 72, 99, 0.30);
-=======
     font-size: 1.2rem;
     color: var(--COR-TEXTO-02);
 }
-form label input:focus{
+
+form label input:focus {
     outline: var(--COR-04) 4px solid;
     color: var(--COR-TEXTO-02);
 }
+
 form label input::placeholder {
     color: var(--COR-TEXTO-01);
+    font-size: 1.5rem;
 }
+
 .form-control small {
     display: none;
     position: relative;
     visibility: hidden;
 }
+
 .form-control {
     position: relative;
 }
-.form-control.error input{
+
+.form-control.error input {
     border: 6px solid #782121;
 }
+
 .linha {
     background-color: #164863;
     width: 85%;
@@ -139,6 +151,7 @@ button {
     font-size: 1.5rem;
     transition: color 0.3s ease;
 }
+
 button:hover {
     background-color: #164863;
     transform: scale(1.03);
@@ -209,6 +222,15 @@ footer .Logo-Nome-IL {
     display: flex;
     flex-direction: row;
     margin-left: 41px;
+}
+
+
+#manterConectado:focus {
+    outline: none;
+}
+
+#manterConectado:active {
+    color: var(--COR-03);
 }
 
 footer .Logo-Nome-IL h1 {

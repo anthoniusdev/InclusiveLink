@@ -1,13 +1,9 @@
 package dao;
 
 import model.Membro;
-import model.Publicacao;
 import util.ServicoAutenticacao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class MembroDAO {
@@ -22,7 +18,6 @@ public class MembroDAO {
     // <-- Realizando cadastro de uma nova pessoa e membro no banco de dados-->
     public Membro realizarCadastro(Membro membro) {
 
-        String dataNascimentoSQL = membro.getDataNascimento();
         String createPessoa = "insert into pessoa(nome, dataNascimento, email, senha) values (?,STR_TO_DATE(?, '%d-%m-%Y'),?,?)";
         String createMembro = "insert into membro(idPessoa, fotoPerfil, fotoFundo, nomeUsuario, descricao, perfilVisivel) values (?, ?, ?, ?, ?, ?)";
         try (Connection con = conectar()) {
@@ -78,9 +73,8 @@ public class MembroDAO {
             preparedStatement.setInt(1, membro.getIdPessoa());
             ResultSet rs = preparedStatement.executeQuery();
             return rs.next();
-        } catch (Exception e) {
-            System.out.println(e);
-            return false;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -89,47 +83,47 @@ public class MembroDAO {
     public Membro retornaMembro(int id) {
         int idPessoa;
         String nome, dataNascimento, email, senha, fotoPerfil, fotoFundo, nomeUsuario, descricao;
-        boolean perfilVisivel;
-        String read = "select p.iDPessoa, p.nome, p.dataNascimento, p.email, p.senha, m.fotoPerfil, m.fotoFundo, m.nomeUsuario, m.descricao, m.perfilVisivel FROM pessoa p INNER JOIN membro m ON p.idPessoa = m.idPessoa WHERE p.idPessoa = ?";
+        boolean perfilVisivel = false;
+        String read = "select * FROM pessoa p INNER JOIN membro m ON p.idPessoa = m.idPessoa WHERE p.idPessoa = ?";
         try (Connection con = conectar()) {
-            PreparedStatement preparedStatement = con.prepareStatement(read);
-            preparedStatement.setInt(1, id);
-            ResultSet rs = preparedStatement.executeQuery();
-            idPessoa = rs.getInt(1);
-            nome = rs.getString(2);
-            dataNascimento = rs.getString(3);
-            email = rs.getString(4);
-            senha = rs.getString(5);
-            fotoPerfil = rs.getString(6);
-            fotoFundo = rs.getString(7);
-            nomeUsuario = rs.getString(8);
-            descricao = rs.getString(9);
-            preparedStatement.close();
-            return new Membro(idPessoa, nome, dataNascimento, email, senha, fotoPerfil, fotoFundo, nomeUsuario, descricao, publicacoesCurtidas(idPessoa));
-        } catch (Exception e) {
-            System.out.println(e);
-            return null;
+            try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
+                preparedStatement.setInt(1, id);
+                ResultSet rs = preparedStatement.executeQuery();
+                if (rs.next()) {
+                    idPessoa = rs.getInt(1);
+                    nome = rs.getString(2);
+                    dataNascimento = rs.getString(3);
+                    email = rs.getString(4);
+                    senha = rs.getString(5);
+                    fotoPerfil = rs.getString(8);
+                    fotoFundo = rs.getString(9);
+                    nomeUsuario = rs.getString(10);
+                    descricao = rs.getString(11);
+                    return new Membro(idPessoa, nome, dataNascimento, email, senha, fotoPerfil, fotoFundo, nomeUsuario, membrosSeguidores(idPessoa), membrosSeguindos(idPessoa), comunidadeSeguindos(idPessoa), comunidadesParticipantes(idPessoa), descricao, publicacoesCurtidas(idPessoa), publicacoes(idPessoa), perfilVisivel, comentarios(idPessoa));
+                } else {
+                    return null;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
     // CRUD - - - READ - - -
     // <-- Armaneza as curtidas de algum membro específico e retorna a ArrayList -->
-    public ArrayList<Publicacao> publicacoesCurtidas(int idMembro) {
-        String read = "select idPublicacao from publicacao_curtida where idMembro = ?";
-        ArrayList<Publicacao> publicacoes = new ArrayList<>();
+    public ArrayList<Integer> publicacoesCurtidas(int idPessoa) {
         try (Connection con = conectar()) {
-            PreparedStatement preparedStatement = con.prepareStatement(read);
-            preparedStatement.setInt(1, idMembro);
-            ResultSet rs = preparedStatement.executeQuery();
-            if (rs.next()) {
-                PublicacaoDAO publicacaoDAO = new PublicacaoDAO();
-                while (rs.next()) {
-                    publicacoes.add(publicacaoDAO.retornaPublicacao(rs.getInt(1)));
-                }
+            String read = "select idPublicacao from publicacao_curtida where idMembro = ?";
+            try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
+                preparedStatement.setInt(1, idPessoa);
+                ResultSet rs = preparedStatement.executeQuery();
+                    ArrayList<Integer> publicacoesCurtidas = new ArrayList<>();
+                    while (rs.next()) {
+                        publicacoesCurtidas.add(rs.getInt(1));
+                    }
+                    return publicacoesCurtidas;
             }
-            preparedStatement.close();
-            return publicacoes;
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -143,7 +137,7 @@ public class MembroDAO {
                 ResultSet resultSet = preparedStatement.executeQuery();
                 if (resultSet.next()) {
                     return resultSet.getString(1);
-                }else {
+                } else {
                     return null;
                 }
             } catch (Exception e) {
@@ -152,6 +146,128 @@ public class MembroDAO {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public ArrayList<Integer> membrosSeguidores(int idPessoa) {
+        try (Connection con = conectar()) {
+            String read = "select membro_seguidor.idSeguidor from membro_seguidor inner join membro m on membro_seguidor.idMembro = m.idPessoa where m.idPessoa = ?";
+            try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
+                preparedStatement.setInt(1, idPessoa);
+                ResultSet rs = preparedStatement.executeQuery();
+                    ArrayList<Integer> membrosSeguidores = new ArrayList<>();
+                    while (rs.next()) {
+                        membrosSeguidores.add(rs.getInt(1));
+                    }
+                    return membrosSeguidores;
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ArrayList<Integer> membrosSeguindos(int idPessoa) {
+        try (Connection con = conectar()) {
+            String read = "select membro_seguindo.idSeguindo from membro_seguindo inner join membro m on membro_seguindo.idMembro = m.idPessoa where m.idPessoa = ?";
+            try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
+                preparedStatement.setInt(1, idPessoa);
+                ResultSet rs = preparedStatement.executeQuery();
+                    ArrayList<Integer> membrosSeguindos = new ArrayList<>();
+                    while (rs.next()) {
+                        membrosSeguindos.add(rs.getInt(1));
+                    }
+                    return membrosSeguindos;
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ArrayList<Integer> comunidadeSeguindos(int idPessoa) {
+        try (Connection con = conectar()) {
+            String read = "select seguidor_comunidade.idComunidade from seguidor_comunidade inner join membro m on seguidor_comunidade.idSeguidor = m.idPessoa where m.idPessoa = ?";
+            try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
+                preparedStatement.setInt(1, idPessoa);
+                ResultSet rs = preparedStatement.executeQuery();
+                    ArrayList<Integer> comunidadesSeguindos = new ArrayList<>();
+                    while (rs.next()) {
+                        comunidadesSeguindos.add(rs.getInt(1));
+                    }
+                    return comunidadesSeguindos;
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ArrayList<Integer> comunidadesParticipantes(int idPessoa) {
+        try (Connection con = conectar()) {
+            String read = "select participante_comunidade.idComunidade from participante_comunidade inner join membro m on participante_comunidade.idParticipante = m.idPessoa where m.idPessoa = ?";
+            try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
+                preparedStatement.setInt(1, idPessoa);
+                ResultSet rs = preparedStatement.executeQuery();
+                    ArrayList<Integer> comunidadesParticipantes = new ArrayList<>();
+                    while (rs.next()) {
+                        comunidadesParticipantes.add(rs.getInt(1));
+                    }
+                    return comunidadesParticipantes;
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ArrayList<Integer> publicacoes(int idPessoa) {
+        try (Connection con = conectar()) {
+            String read = "select idPublicacao from publicacao where id_autor = ?";
+            try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
+                preparedStatement.setInt(1, idPessoa);
+                ResultSet rs = preparedStatement.executeQuery();
+                ArrayList<Integer> publicacoes = new ArrayList<>();
+                while (rs.next()) {
+                    publicacoes.add(rs.getInt(1));
+                }
+                return publicacoes;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ArrayList<Integer> comentarios(int idPessoa) {
+        try (Connection con = conectar()) {
+            String read = "select idComentario from publicacao_comentario where id_autor = ?";
+            try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
+                preparedStatement.setInt(1, idPessoa);
+                ResultSet rs = preparedStatement.executeQuery();
+                ArrayList<Integer> comentarios = new ArrayList<>();
+                while (rs.next()) {
+                    comentarios.add(rs.getInt(1));
+                }
+                return comentarios;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int verificaId(String nomeUsuario) {
+        try (Connection con = conectar()) {
+            String read = "select pessoa.idPessoa from pessoa inner join membro on pessoa.idPessoa = membro.idPessoa where membro.nomeUsuario = ?";
+            try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
+                preparedStatement.setString(1, nomeUsuario);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                if (resultSet.next()) {
+                    return resultSet.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return 0;
     }
 
     public ArrayList<String> nomesUsuario() {
@@ -171,7 +287,77 @@ public class MembroDAO {
             throw new RuntimeException(e);
         }
     }
-    public boolean isNomeUsuarioUnique(String nomeUsuario){
+
+    public boolean isNomeUsuarioUnique(String nomeUsuario) {
         return !nomesUsuario().contains(nomeUsuario);
+    }
+
+    public ArrayList<Membro> listarMembros() {
+        try (Connection con = conectar()) {
+            String read = "select idPessoa from membro order by dataCriacao desc";
+            try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
+                ResultSet rs = preparedStatement.executeQuery();
+                ArrayList<Membro> membros = new ArrayList<>();
+                while (rs.next()) {
+                    membros.add(retornaMembro(rs.getInt(1)));
+                }
+                return membros;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public ArrayList<Membro> listarMembros(int quantidade) {
+        try (Connection con = conectar()) {
+            String read = "select idPessoa from membro order by dataCriacao desc limit ?";
+            try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
+                preparedStatement.setInt(1, quantidade);
+                ResultSet rs = preparedStatement.executeQuery();
+                ArrayList<Membro> membros = new ArrayList<>();
+                while (rs.next()) {
+                    membros.add(retornaMembro(rs.getInt(1)));
+                }
+                return membros;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public ArrayList<Membro> listarMembros(int quantidade, int idPessoa) {
+        try (Connection con = conectar()) {
+            String read = "select idPessoa from membro where idPessoa <> ? and idPessoa not in (SELECT idMembro from membro_seguidor where idSeguidor = ?) order by dataCriacao desc limit ?";
+            try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
+                preparedStatement.setInt(1, idPessoa);
+                preparedStatement.setInt(2, idPessoa);
+                preparedStatement.setInt(3, quantidade);
+                ResultSet rs = preparedStatement.executeQuery();
+                ArrayList<Membro> membros = new ArrayList<>();
+                while (rs.next()) {
+                    membros.add(retornaMembro(rs.getInt(1)));
+                }
+                return membros;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public boolean seguirMembro(int idMembro, int idSeguindo){
+        try (Connection con = conectar()){
+            String create = "INSERT INTO membro_seguindo(idMembro, idSeguindo) VALUES (?,?)";
+            try (PreparedStatement preparedStatement = con.prepareStatement(create)){
+                preparedStatement.setInt(1, idMembro);
+                preparedStatement.setInt(2, idSeguindo);
+                preparedStatement.executeUpdate();
+                String create1 = "INSERT INTO membro_seguidor(idMembro, idSeguidor) VALUES (?,?)";
+                try (PreparedStatement preparedStatement1 = con.prepareStatement(create1)){
+                    preparedStatement1.setInt(1, idSeguindo);
+                    preparedStatement1.setInt(2, idMembro);
+                    preparedStatement1.executeUpdate();
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
