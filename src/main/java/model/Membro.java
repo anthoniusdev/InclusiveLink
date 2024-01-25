@@ -1,38 +1,57 @@
 package model;
 
 import dao.MembroDAO;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Membro extends Pessoa {
+public class Membro extends Pessoa implements Serializable {
     private String fotoPerfil;
     private String fotoFundo;
     private String nomeUsuario;
-    private ArrayList<Membro> membrosSeguidores;
-    private ArrayList<Membro> membrosSeguindos;
-    private ArrayList<Comunidade> comunidadesSeguindos;
-    private ArrayList<Comunidade> comunidadesParticipantes;
+    private ArrayList<Integer> idMembrosSeguidores;
+    private ArrayList<Integer> idMembrosSeguindos;
+    private ArrayList<Integer> idComunidadesSeguindos;
+    private ArrayList<Integer> idComunidadesParticipantes;
     private String descricao;
-    private ArrayList<Publicacao> curtidas;
-    private ArrayList<Publicacao> publicacoes;
+    private ArrayList<Integer> idPublicacaoCurtidas;
+    private ArrayList<Integer> idPublicacoes;
     private boolean perfilVisivel;
-    private ArrayList<Comentario> comentarios;
+    private ArrayList<Integer> idComentarios;
 
-    public Membro(int idPessoa, String nome, String dataNascimento, String nomeUsuario, String email, String senha, String fotoPerfil, String fotoFundo, String descricao, ArrayList<Publicacao> curtidas) {
+    public Membro(int idPessoa, String nome, String dataNascimento, String nomeUsuario, String email, String senha, String fotoPerfil, String fotoFundo, String descricao, ArrayList<Integer> curtidas) {
         super(idPessoa, nome, dataNascimento, email, senha);
         this.fotoPerfil = fotoPerfil;
         this.fotoFundo = fotoFundo;
         this.descricao = descricao;
         this.perfilVisivel = true;
         this.nomeUsuario = nomeUsuario;
-        this.curtidas = curtidas;
-        this.publicacoes = null;
-        this.membrosSeguindos = null;
-        this.membrosSeguidores = null;
-        this.comunidadesParticipantes = null;
-        this.comunidadesSeguindos = null;
-        this.comentarios = null;
+        this.idPublicacaoCurtidas = curtidas;
+        this.idPublicacoes = null;
+        this.idMembrosSeguindos = null;
+        this.idMembrosSeguidores = null;
+        this.idComunidadesParticipantes = null;
+        this.idComunidadesSeguindos = null;
+        this.idComentarios = null;
     }
-    public Membro(String nome, String dataNascimento, String nomeUsuario, String email, String senha){
+
+    public Membro(int idPessoa, String nome, String dataNascimento, String email, String senha, String fotoPerfil, String fotoFundo, String nomeUsuario, ArrayList<Integer> idMembrosSeguidores, ArrayList<Integer> idMembrosSeguindos, ArrayList<Integer> idComunidadesSeguindos, ArrayList<Integer> idComunidadesParticipantes, String descricao, ArrayList<Integer> idPublicacaoCurtidas, ArrayList<Integer> idPublicacoes, boolean perfilVisivel, ArrayList<Integer> idComentarios) {
+        super(idPessoa, nome, dataNascimento, email, senha);
+        this.fotoPerfil = fotoPerfil;
+        this.fotoFundo = fotoFundo;
+        this.nomeUsuario = nomeUsuario;
+        this.idMembrosSeguidores = idMembrosSeguidores;
+        this.idMembrosSeguindos = idMembrosSeguindos;
+        this.idComunidadesSeguindos = idComunidadesSeguindos;
+        this.idComunidadesParticipantes = idComunidadesParticipantes;
+        this.descricao = descricao;
+        this.idPublicacaoCurtidas = idPublicacaoCurtidas;
+        this.idPublicacoes = idPublicacoes;
+        this.perfilVisivel = perfilVisivel;
+        this.idComentarios = idComentarios;
+    }
+
+    public Membro(String nome, String dataNascimento, String nomeUsuario, String email, String senha) {
         super(nome, dataNascimento, email, senha);
         setNomeUsuario(nomeUsuario);
         setFotoPerfil(null);
@@ -47,6 +66,7 @@ public class Membro extends Pessoa {
         setComunidadesSeguindos(null);
         setComentarios(null);
     }
+
     public Membro(Membro membro) {
         super(membro.getIdPessoa(), membro.getNome(), membro.getDataNascimento(), membro.getEmail(), membro.getSenha());
         this.fotoPerfil = membro.getFotoPerfil();
@@ -54,15 +74,15 @@ public class Membro extends Pessoa {
         this.descricao = membro.getDescricao();
         this.perfilVisivel = membro.isPerfilVisivel();
         this.nomeUsuario = membro.getNomeUsuario();
-        this.curtidas = membro.getCurtidas();
-        this.publicacoes = membro.getPublicacoes();
-        this.membrosSeguindos = membro.getMembrosSeguindo();
-        this.membrosSeguidores = membro.getMembrosSeguidores();
-        this.comunidadesParticipantes = membro.getComunidadesParticipantes();
-        this.comunidadesSeguindos = membro.getComunidadesSeguindos();
-        this.comentarios = membro.getComentarios();
+        this.idPublicacaoCurtidas = membro.getCurtidas();
+        this.idPublicacoes = null;
+        this.idMembrosSeguindos = null;
+        this.idMembrosSeguidores = null;
+        this.idComunidadesParticipantes = null;
+        this.idComunidadesSeguindos = null;
+        this.idComentarios = null;
     }
-    public Membro(){}
+
     public String getFotoPerfil() {
         return fotoPerfil;
     }
@@ -87,36 +107,36 @@ public class Membro extends Pessoa {
         this.nomeUsuario = nomeUsuario;
     }
 
-    public ArrayList<Membro> getMembrosSeguidores() {
-        return membrosSeguidores;
+    public ArrayList<Integer> getMembrosSeguidores() {
+        return idMembrosSeguidores;
     }
 
-    public void setMembrosSeguidores(ArrayList<Membro> membrosSeguidores) {
-        this.membrosSeguidores = membrosSeguidores;
+    public void setMembrosSeguidores(ArrayList<Integer> membrosSeguidores) {
+        this.idMembrosSeguidores = membrosSeguidores;
     }
 
-    public ArrayList<Membro> getMembrosSeguindos() {
-        return membrosSeguindos;
+    public ArrayList<Integer> getMembrosSeguindos() {
+        return idMembrosSeguindos;
     }
 
-    public void setMembrosSeguindos(ArrayList<Membro> membrosSeguindos) {
-        this.membrosSeguindos = membrosSeguindos;
+    public void setMembrosSeguindos(ArrayList<Integer> membrosSeguindos) {
+        this.idMembrosSeguindos = membrosSeguindos;
     }
 
-    public ArrayList<Comunidade> getComunidadesSeguindos() {
-        return comunidadesSeguindos;
+    public ArrayList<Integer> getComunidadesSeguindos() {
+        return idComunidadesSeguindos;
     }
 
-    public void setComunidadesSeguindos(ArrayList<Comunidade> comunidadesSeguindos) {
-        this.comunidadesSeguindos = comunidadesSeguindos;
+    public void setComunidadesSeguindos(ArrayList<Integer> comunidadesSeguindos) {
+        this.idComunidadesSeguindos = comunidadesSeguindos;
     }
 
-    public ArrayList<Comunidade> getComunidadesParticipantes() {
-        return comunidadesParticipantes;
+    public ArrayList<Integer> getComunidadesParticipantes() {
+        return idComunidadesParticipantes;
     }
 
-    public void setComunidadesParticipantes(ArrayList<Comunidade> comunidadesParticipantes) {
-        this.comunidadesParticipantes = comunidadesParticipantes;
+    public void setComunidadesParticipantes(ArrayList<Integer> comunidadesParticipantes) {
+        this.idComunidadesParticipantes = comunidadesParticipantes;
     }
 
     public String getDescricao() {
@@ -127,20 +147,20 @@ public class Membro extends Pessoa {
         this.descricao = descricao;
     }
 
-    public ArrayList<Publicacao> getCurtidas() {
-        return curtidas;
+    public ArrayList<Integer> getCurtidas() {
+        return idPublicacaoCurtidas;
     }
 
-    public void setCurtidas(ArrayList<Publicacao> curtidas) {
-        this.curtidas = curtidas;
+    public void setCurtidas(ArrayList<Integer> curtidas) {
+        this.idPublicacaoCurtidas = curtidas;
     }
 
-    public ArrayList<Publicacao> getPublicacoes() {
-        return publicacoes;
+    public ArrayList<Integer> getPublicacoes() {
+        return idPublicacoes;
     }
 
-    public void setPublicacoes(ArrayList<Publicacao> publicacoes) {
-        this.publicacoes = publicacoes;
+    public void setPublicacoes(ArrayList<Integer> publicacoes) {
+        this.idPublicacoes = publicacoes;
     }
 
     public boolean isPerfilVisivel() {
@@ -151,12 +171,12 @@ public class Membro extends Pessoa {
         this.perfilVisivel = perfilVisivel;
     }
 
-    public ArrayList<Comentario> getComentarios() {
-        return comentarios;
+    public ArrayList<Integer> getComentarios() {
+        return idComentarios;
     }
 
-    public void setComentarios(ArrayList<Comentario> comentarios) {
-        this.comentarios = comentarios;
+    public void setComentarios(ArrayList<Integer> comentarios) {
+        this.idComentarios = comentarios;
     }
 
     /* <-- Metodo pronto --> */
@@ -177,20 +197,19 @@ public class Membro extends Pessoa {
     }
 
 
-
     // --------------------------------------------------------------------------------------------------------
     public boolean seguirMembro(Membro membroSeguido) {
         boolean membroJaSeguido = false;
         try {
-            for (Membro membro : getMembrosSeguindo()) {
-                if (membroSeguido.getIdPessoa() == membro.getIdPessoa()) {
+            for (int id : getMembrosSeguindo()) {
+                if (membroSeguido.getIdPessoa() == id) {
                     membroJaSeguido = true;
                     break;
                 }
             }
             if (!membroJaSeguido) {
-                this.membrosSeguindos.add(membroSeguido);
-                membroSeguido.getMembrosSeguindo().add(this);
+                this.idMembrosSeguindos.add(membroSeguido.getIdPessoa());
+                membroSeguido.getMembrosSeguindo().add(this.getIdPessoa());
                 return true;
             } else {
                 return false;
@@ -202,8 +221,8 @@ public class Membro extends Pessoa {
     }
 
     // --------------------------------------------------------------------------------------------------------
-    public ArrayList<Membro> getMembrosSeguindo() {
-        return membrosSeguindos;
+    public ArrayList<Integer> getMembrosSeguindo() {
+        return idMembrosSeguindos;
     }
 
     // --------------------------------------------------------------------------------------------------------
@@ -211,8 +230,8 @@ public class Membro extends Pessoa {
         SeguidorComunidade seguidorComunidade = new SeguidorComunidade(this);
         boolean comunidadeJaSeguida = false;
         try {
-            for (Comunidade comunidade : seguidorComunidade.getComunidadesSeguindos()) {
-                if (comunidadeSeguida.getIdComunidade() == comunidade.getIdComunidade()) {
+            for (Integer idComunidade : seguidorComunidade.getComunidadesSeguindos()) {
+                if (comunidadeSeguida.getIdComunidade() == idComunidade) {
                     comunidadeJaSeguida = true;
                     break;
                 }
@@ -238,7 +257,7 @@ public class Membro extends Pessoa {
     public void excluirPublicacao(Publicacao publicacaoParaExcluir) {
         try {
             publicacaoParaExcluir.excluirPublicacao();
-            publicacoes.remove(publicacaoParaExcluir);
+            idPublicacoes.remove(publicacaoParaExcluir);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -246,20 +265,20 @@ public class Membro extends Pessoa {
 
     public void curtirPublicacao(Publicacao publicacao) {
         boolean publicacaoCurtida = false;
-        for (Publicacao publicCurtidaExiste : curtidas) {
-            if (publicacao.getIdPublicacao() == publicCurtidaExiste.getIdPublicacao()) {
+        for (int idPublicCurtidaExiste : idPublicacaoCurtidas) {
+            if (publicacao.getIdPublicacao() == idPublicCurtidaExiste) {
                 publicacaoCurtida = true;
                 break;
             }
         }
         if (!publicacaoCurtida) {
             MembroDAO membroDAO = new MembroDAO();
-            curtidas.add(publicacao);
+            idPublicacaoCurtidas.add(publicacao.getIdPublicacao());
         }
     }
 
     public void excluirSeguidor(Membro seguidorExcluido) {
-        membrosSeguidores.remove(seguidorExcluido);
+        idMembrosSeguidores.remove(seguidorExcluido);
     }
 
     public void pesquisarComunidade() {
@@ -282,16 +301,16 @@ public class Membro extends Pessoa {
     }
 
     public void excluirComentario(Comentario comentarioParaExcluir) {
-        comentarios.remove(comentarioParaExcluir);
+        idComentarios.remove(comentarioParaExcluir.getIdComentario());
     }
 
 
     public int getNumeroSeguidores() {
-        return membrosSeguidores.size() + membrosSeguidores.size();
+        return idMembrosSeguidores.size() + idMembrosSeguidores.size();
     }
 
     public int getNumeroSeguindos() {
-        return membrosSeguindos.size() + comunidadesSeguindos.size();
+        return idMembrosSeguindos.size() + idComunidadesSeguindos.size();
     }
 
     public boolean isParticipante(Comunidade comunidade) {
@@ -325,6 +344,28 @@ public class Membro extends Pessoa {
             }
         }
         return isModerador;
+    }
+
+    public void atualizarDados() {
+        MembroDAO membroDAO = new MembroDAO();
+        Membro membroAtualizado = membroDAO.retornaMembro(this.getIdPessoa());
+        this.setIdPessoa(membroAtualizado.getIdPessoa());
+        this.setNome(membroAtualizado.getNome());
+        this.setDataNascimento(membroAtualizado.getDataNascimento());
+        this.setEmail(membroAtualizado.getEmail());
+        this.setSenha(membroAtualizado.getSenha());
+        this.fotoPerfil = membroAtualizado.getFotoPerfil();
+        this.fotoFundo = membroAtualizado.getFotoFundo();
+        this.descricao = membroAtualizado.getDescricao();
+        this.perfilVisivel = membroAtualizado.isPerfilVisivel();
+        this.nomeUsuario = membroAtualizado.getNomeUsuario();
+        this.idPublicacaoCurtidas = membroAtualizado.getCurtidas();
+        this.idPublicacoes = membroAtualizado.getPublicacoes();
+        this.idMembrosSeguindos = membroAtualizado.getMembrosSeguindos();
+        this.idMembrosSeguidores = membroAtualizado.getMembrosSeguidores();
+        this.idComunidadesParticipantes = membroAtualizado.getComunidadesParticipantes();
+        this.idComunidadesSeguindos = membroAtualizado.getComunidadesSeguindos();
+        this.idComentarios = membroAtualizado.getComentarios();
     }
 
     @Override

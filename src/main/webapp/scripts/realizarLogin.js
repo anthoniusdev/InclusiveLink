@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     const senha = document.getElementById("password");
     const buttonLogin = document.querySelector("button[id='entrar']");
     const buttonCadastrar = document.querySelector("button[id='cadastrar']");
-    const span = document.querySelector("span");
+    const spanLinha = document.getElementById("linha");
 
     await verificarLogin();
 
@@ -72,8 +72,8 @@ document.addEventListener("DOMContentLoaded", async function () {
                 formControl.className = "form-control error";
                 formControl.style.marginTop = "25px";
                 form.style.paddingBottom = "20px";
-                span.style.marginTop = "11px";
-                span.style.position = "relative";
+                spanLinha.style.marginTop = "11px";
+                spanLinha.style.position = "relative";
             } else {
                 console.log("ERRO NO SMALL")
             }

@@ -1,16 +1,13 @@
 package dao;
 
-import model.Comentario;
 import model.Membro;
 import model.Publicacao;
 
-import javax.xml.transform.Result;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.EnumSet;
 
 public class PublicacaoDAO {
     private Connection conectar() {
@@ -21,17 +18,21 @@ public class PublicacaoDAO {
     // CRUD - - - CREATE - - -
     // <-- Criando uma nova publicacao DE PERFIL no banco de dados -->
     public Publicacao novaPublicacao(Publicacao publicacao) {
-        String createPublicacao = "insert into publicacao(texto, midia, id_autor) values (?, ?, ?)";
         int idPublicacao = 0;
         try (Connection con = conectar()) {
-            PreparedStatement preparedStatementPublicacao = con.prepareStatement(createPublicacao);
-            preparedStatementPublicacao.setString(1, publicacao.getTexto());
-            preparedStatementPublicacao.setString(2, publicacao.getMidia());
-            preparedStatementPublicacao.setInt(3, publicacao.getAutor().getIdPessoa());
-            preparedStatementPublicacao.executeUpdate();
-            ResultSet idGerado = preparedStatementPublicacao.getGeneratedKeys();
-            if (idGerado.next()) {
-                idPublicacao = idGerado.getInt(1);
+            String createPublicacao = "insert into publicacao(texto, midia, id_autor) values (?, ?, ?)";
+            try (PreparedStatement preparedStatementPublicacao = con.prepareStatement(createPublicacao, Statement.RETURN_GENERATED_KEYS)) {
+                preparedStatementPublicacao.setString(1, publicacao.getTexto());
+                preparedStatementPublicacao.setString(2, publicacao.getMidia());
+                preparedStatementPublicacao.setInt(3, publicacao.getAutor().getIdPessoa());
+                int linhasAfetadas = preparedStatementPublicacao.executeUpdate();
+                if (linhasAfetadas > 0) {
+                    try (ResultSet idGerado = preparedStatementPublicacao.getGeneratedKeys()){
+                        if (idGerado.next()) {
+                            idPublicacao = idGerado.getInt(1);
+                        }
+                    }
+                }
             }
         } catch (Exception e) {
             System.out.println(e);

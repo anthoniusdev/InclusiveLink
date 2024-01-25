@@ -9,24 +9,27 @@
 <body>
 <main>
     <section class="create-account">
-        <img src="images/LOGO-QUALIDADE-MELHOR.png" class="logo" alt="">
-        <h1 class="titulo">InclusiveLink</h1>
+        <div class="logo-and-title">
+            <img src="images/LOGO-QUALIDADE-MELHOR.png" class="logo" alt="">
+            <h1 class="titulo">InclusiveLink</h1>
+        </div>
         <p class="desc">InclusiveLink conectando pessoas e compartilhando experiências de forma inclusiva.</p>
     </section>
     <section class="form" id="form">
         <form action="Login" method="post" id="formLogin">
             <div class="form-control" id="form-control">
-            <label>
+                <label>
                     <input type="text" id="username" name="nomeUsuario" placeholder="Email ou Nome de Usuário">
-            </label>
-            <label>
+                </label>
+                <label>
                     <input type="password" id="password" name="senha" placeholder="Senha">
                     <small>Error message</small>
-            </label>
+                </label>
             </div>
 
             <label class="MantConect">
-                <input type="checkbox" name="remember">Manter conectado
+                <input type="checkbox" id="manterConectado" class="manterConectado">
+                <span>Manter conectado</span>
             </label>
 
             <button type="submit" id="entrar">Entrar</button>
@@ -36,7 +39,19 @@
     </section>
 </main>
 <footer>
-    <p></p>
+    <div class="LOGO-E-NOMES">
+        <div class="Logo-Nome-IL">
+            <div class="bola-azul">
+                <img src="images/LOGO-QUALIDADE-MELHOR.png" alt="Logo InclusiveLink">
+            </div>
+            <h1>Inclusive Link</h1>
+        </div>
+        <div class="Nomes">
+            <h3>Abimael Lima</h3>
+            <h3>Anthonius Figueiredo</h3>
+            <h3>Igor Souza</h3>
+        </div>
+    </div>
 </footer>
 <script src="scripts/realizarLogin.js"></script>
 </body>
