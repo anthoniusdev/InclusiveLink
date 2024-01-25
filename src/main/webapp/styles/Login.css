@@ -38,8 +38,12 @@ body {
     height: 800px;
 
 }
+<<<<<<< HEAD
 
 img.logo {
+=======
+img.logo{
+>>>>>>> 93f4ac381c88392b046b8f69435ec8643d7b327d
     margin-top: 4.5rem;
     width: 150px;
     height: 150px
@@ -224,6 +228,7 @@ footer .Logo-Nome-IL {
     margin-left: 41px;
 }
 
+<<<<<<< HEAD
 #manterConectado:focus {
     outline: none;
 }
@@ -232,6 +237,8 @@ footer .Logo-Nome-IL {
     color: var(--COR-03);
 }
 
+=======
+>>>>>>> 93f4ac381c88392b046b8f69435ec8643d7b327d
 footer .Logo-Nome-IL h1 {
     margin-bottom: 0;
     font-size: var(--TAMANHO-FONTE-INPUT);
