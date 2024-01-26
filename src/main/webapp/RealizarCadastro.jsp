@@ -89,7 +89,7 @@
     <div class="LOGO-E-NOMES">
         <div class="Logo-Nome-IL">
             <div class="bola-azul">
-                <img src="images/LOGO-QUALIDADE-MELHOR.png" alt="Logo InclusiveLink">
+                <img src="images/LOGO-InclusiveLink.png" alt="Logo InclusiveLink">
             </div>
             <h1>Inclusive Link</h1>
         </div>

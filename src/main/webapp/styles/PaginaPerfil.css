@@ -6,7 +6,7 @@ body {
 
 .retanguloPerfil {
     width: 63%;
-    height: 150vh;
+    height: 250vh;
     border-radius: 20px;
     background-color: #427D9D;
     position: absolute;
@@ -21,11 +21,23 @@ body {
     width: 100%;
     height: 36vh;
     display: block;
-    top: -20rem;
-    position: relative;
+    top: 4rem;
+    position: absolute;
     object-fit: cover;
     object-position: center;
-    border-top: 3px solid #164863;
+    border-top: 4px solid #164863;
+}
+.fotoPerfil{
+    border-radius: 50%;
+    width: 15%;
+    height: 18vh;
+    top: 16rem;
+    left: 3%;
+    display: block;
+    position: absolute;
+    object-fit: cover;
+    object-position: center;
+    border: 8px solid #427D9D;
 }
 
 .pesquisaPerfis {
