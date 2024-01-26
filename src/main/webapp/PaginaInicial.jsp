@@ -9,6 +9,7 @@
 <%@ page import="javax.servlet.http.HttpSession" %>
 <%@page import="model.Membro" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="model.Comunidade" %>
 <%
     HttpSession httpSession = request.getSession(false);
     if (httpSession == null || httpSession.getAttribute("authenticated") == null) {
@@ -23,6 +24,7 @@
             }
             @SuppressWarnings("unchecked")
             ArrayList<Membro> membrosRede = (ArrayList<Membro>) httpSession.getAttribute("perfis");
+            String dadosJson = request.getParameter("dados");
 %>
 <html lang="pt-BR">
 <head>
@@ -51,7 +53,7 @@
                             <textarea name="inputTexto" id="textoNovaPublicacao" placeholder="O que está acontecendo?"
                                       rows="1" maxlength="200"></textarea>
                         </label>
-                        <div id="contagemCaracteres">200</div>
+                        <div id="contagemCaracteresPublicacao">200</div>
                         <span id="linhaAreaInput"></span>
                         <label id="icone-escolher-imagem">
                             <img src="images/gallery_img.svg" alt="">
@@ -79,25 +81,26 @@
         <div class="pesquisar-amigo">
             <label>
                 <img src="images/search.svg" alt="search">
-                <input type="search" placeholder="PESQUISAR PERFIL">
+                <input type="search" placeholder="PESQUISAR PERFIL" id="pesquisarPerfil">
             </label>
+            <div class="lista-pesquisa-perfil" id="listaPesquisaPerfil"></div>
         </div>
-        <div class="lista-pesquisa-amigo">
+        <div class="perfis-sugeridos" id="perfisSugeridos">
             <%
-                for (Membro membroSeguir : membrosRede) {
-                    if (!membroSeguir.getMembrosSeguidores().contains(membro.getIdPessoa())) {
+                for (Membro membroSugerido : membrosRede) {
+                    if (!membroSugerido.getMembrosSeguidores().contains(membro.getIdPessoa())) {
             %>
             <div class="caixa-usuario" id="caixa-usuario">
                 <%
-                    if (membroSeguir.getFotoPerfil() == null) {
-                        membroSeguir.setFotoPerfil("images/person_foto.svg");
+                    if (membroSugerido.getFotoPerfil() == null) {
+                        membroSugerido.setFotoPerfil("images/person_foto.svg");
                     }
                 %>
-                <img src="<%=membroSeguir.getFotoPerfil()%>" alt="Foto de perfil de <%=membroSeguir.getNome()%>">
-                <p class="nomeUsuario"><%=membroSeguir.getNome()%>
+                <img src="<%=membroSugerido.getFotoPerfil()%>" alt="Foto de perfil de <%=membroSugerido.getNome()%>">
+                <p class="nomeUsuario"><%=membroSugerido.getNome()%>
                 </p>
-                <button onclick="seguirUsuario(<%=membro.getIdPessoa()%>, <%=membroSeguir.getIdPessoa()%>, <%=membrosRede.indexOf(membroSeguir)%>)"
-                        class="botaoSeguir" id="botaoSeguir<%=membrosRede.indexOf(membroSeguir)%>">
+                <button onclick="seguirUsuario(<%=membro.getIdPessoa()%>, <%=membroSugerido.getIdPessoa()%>, <%=membrosRede.indexOf(membroSugerido)%>)"
+                        class="botaoSeguir" id="botaoSeguir<%=membrosRede.indexOf(membroSugerido)%>">
                     SEGUIR
                 </button>
             </div>
@@ -105,6 +108,62 @@
                     }
                 }
             %>
+        </div>
+        <div class="pesquisar-comunidade">
+            <label>
+                <img src="images/search.svg" alt="search">
+                <input type="search" placeholder="PESQUISAR COMUNIDADE" id="pesquisarComunidade">
+            </label>
+        </div>
+        <div class="comunidades-sugeridas" id="comunidades-sugeridas">
+            <div class="criar-comunidade" id="criar-comunidade">
+                <button id="botaoCriarNovaComunidade">
+                    <div class="imagem"><img src="images/gravity-ui_circle-plus-fill.svg" alt=""></div>
+                    CRIAR NOVA COMUNIDADE
+                </button>
+            </div>
+            <span id="linhaCriarComunidade"></span>
+            <div class="lista-comunidades-sugeridas"></div>
+        </div>
+    </div>
+    <div id="fundo-escuro">
+        <div id="popup-nova-comunidade" class="popup-nova-comunidade">
+            <div class="popup-content">
+                <div class="cabecalho">
+                    <span class="close" id="close"><img src="images/octicon_x-12.svg" alt=""></span>
+                    <p>NOVA COMUNIDADE</p>
+                    <button onclick="criarComunidade(<%=membro.getIdPessoa()%>)" id="botaoCriarComunidade">CRIAR
+                    </button>
+                </div>
+                <div class="foto-fundo" id="foto-fundo">
+                    <img id="img-foto-fundo" src="images/img-foto-fundo.png" alt="foto fundo da comunidade">
+                    <div class="icone-editar-foto" id="icone-editar-foto-fundo">
+                        <img src="images/ri_edit-fill.svg" id="img-icone-editar-foto-fundo"
+                             alt="Ícone de alterar foto-fundo">
+                    </div>
+                    <input type="file" id="editarFotoFundo" name="fotoFundo" accept="image/*">
+                </div>
+                <div class="foto-perfil-comunidade">
+                    <img src="" id="img-foto-perfil-comunidade" alt="foto de perfil da comunidade">
+                    <div class="icone-editar-foto" id="icone-editar-foto-perfil">
+                        <img src="images/ri_edit-fill.svg" id="img-icone-editar-foto-perfil"
+                             alt="Ícone de alterar foto-perfil">
+                    </div>
+                    <input type="file" id="editarFotoPerfil" name="fotoPerfil" accept="image/*">
+                </div>
+                <div class="inputs">
+                    <label for="nomeComunidade" id="labelNomeComunidade">
+                        <small>Nome da comunidade</small>
+                        <input type="text" id="nomeComunidade" name="nomeComunidade">
+                    </label>
+                    <label for="descricaoComunidade" id="labelDescricaoComunidade">
+                        <small>Descrição da comunidade</small>
+                        <textarea id="descricaoComunidade" name="descricaoComunidade" rows="1"
+                                  maxlength="200"></textarea>
+                        <div id="contagem-caracteres-comunidade">200</div>
+                    </label>
+                </div>
+            </div>
         </div>
     </div>
 </main>
