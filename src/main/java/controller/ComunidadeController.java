@@ -6,6 +6,7 @@ import model.Comunidade;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import util.ObterData;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -79,29 +80,44 @@ public class ComunidadeController extends HttpServlet {
             comunidade.setIdCriador(idAutor);
             comunidade.setNome(nomeComunidade);
             comunidade.setDescricao(descricaoComunidade);
-            String diretorioCompleto = request.getServletContext().getRealPath("/users_images/");
+            ObterData obterData = new ObterData();
+            int anoAtual = obterData.getAnoAtual();
+            int mesAtual = obterData.getMesAtual();
+            int diaAtual = obterData.getDiaAtual();
+            String diretorioFotoPerfil = request.getServletContext().getRealPath("/arquivosEstaticos/fotoPerfilComunidade/" + anoAtual + "/" + mesAtual + "/" + diaAtual + "/");
+            String diretorioFotoFundo = request.getServletContext().getRealPath("/arquivosEstaticos/fotoFundoComunidade/" + anoAtual + "/" + mesAtual + "/" + diaAtual + "/");
             System.out.println(fotoPerfil);
             System.out.println(fotoFundo);
-            File diretorioFile = new File(diretorioCompleto);
-            if (diretorioFile.exists()) {
+            File diretorioFileFotoPerfil = new File(diretorioFotoPerfil);
+            if (diretorioFileFotoPerfil.exists()) {
                 UUID randomName = UUID.randomUUID();
                 if (fotoPerfil != null) {
-                    fotoPerfil.write(new File(diretorioCompleto, ("img-fotoperfil" + nomeComunidade + randomName + "." + obterExtensaoArquivo(fotoPerfil.getName()))));
-                    comunidade.setFotoPerfil(diretorioCompleto + "img-fotoperfil" + nomeComunidade + randomName + "." + obterExtensaoArquivo(fotoPerfil.getName()));
+                    fotoPerfil.write(new File(diretorioFotoPerfil, ("img-fotoperfil" + nomeComunidade + randomName + "." + obterExtensaoArquivo(fotoPerfil.getName()))));
+                    comunidade.setFotoPerfil(diretorioFotoPerfil + "img-fotoperfil" + nomeComunidade + randomName + "." + obterExtensaoArquivo(fotoPerfil.getName()));
                 }
+            } else {
+                if (diretorioFileFotoPerfil.mkdirs()) {
+                    UUID randomName = UUID.randomUUID();
+                    if (fotoPerfil != null) {
+                        fotoPerfil.write(new File(diretorioFotoPerfil, ("img-fotoperfil" + nomeComunidade + randomName + "." + obterExtensaoArquivo(fotoPerfil.getName()))));
+                        comunidade.setFotoPerfil(diretorioFotoPerfil + "img-fotoperfil" + nomeComunidade + randomName + "." + obterExtensaoArquivo(fotoPerfil.getName()));
+                    }
+                }
+            }
+            File diretorioFileFotoFundo = new File(diretorioFotoFundo);
+            if (diretorioFileFotoFundo.exists()) {
+                UUID randomName = UUID.randomUUID();
                 if (fotoFundo != null) {
-                    fotoFundo.write(new File(diretorioCompleto, ("img-fotofundo"  + nomeComunidade + randomName + "." + obterExtensaoArquivo(fotoFundo.getName()))));
-                    comunidade.setFotoFundo(diretorioCompleto + "img-fotofundo"  + nomeComunidade + randomName + "." + obterExtensaoArquivo(fotoFundo.getName()));
+                    fotoFundo.write(new File(diretorioFotoFundo, ("img-fotofundo" + nomeComunidade + randomName + "." + obterExtensaoArquivo(fotoFundo.getName()))));
+                    comunidade.setFotoFundo(diretorioFotoFundo + "img-fotofundo" + nomeComunidade + randomName + "." + obterExtensaoArquivo(fotoFundo.getName()));
                 }
-            }else{
-                diretorioFile.mkdirs();
-                if (fotoPerfil != null) {
-                    fotoPerfil.write(new File(diretorioCompleto, ("img-fotoperfil" + idAutor)));
-                    comunidade.setFotoPerfil(diretorioCompleto + "img-fotoperfil" + idAutor);
-                }
-                if (fotoFundo != null) {
-                    fotoFundo.write(new File(diretorioCompleto, ("img-fotofundo" + idAutor)));
-                    comunidade.setFotoFundo(diretorioCompleto + "img-fotofundo" + idAutor);
+            } else {
+                if (diretorioFileFotoFundo.mkdirs()) {
+                    UUID randomName = UUID.randomUUID();
+                    if (fotoFundo != null) {
+                        fotoFundo.write(new File(diretorioFotoFundo, ("img-fotofundo" + nomeComunidade + randomName + "." + obterExtensaoArquivo(fotoFundo.getName()))));
+                        comunidade.setFotoFundo(diretorioFotoFundo + "img-fotofundo" + nomeComunidade + randomName + "." + obterExtensaoArquivo(fotoFundo.getName()));
+                    }
                 }
             }
         } catch (Exception e) {
@@ -126,9 +142,10 @@ public class ComunidadeController extends HttpServlet {
     private void redNovaComunidade(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.sendRedirect("");
     }
-    private String obterExtensaoArquivo(String nomeArquivo){
+
+    private String obterExtensaoArquivo(String nomeArquivo) {
         int pontofinal = nomeArquivo.lastIndexOf(".");
-        if (pontofinal != -1){
+        if (pontofinal != -1) {
             return nomeArquivo.substring(pontofinal + 1);
         }
         return null;
