@@ -123,7 +123,6 @@
                 </button>
             </div>
             <span id="linhaCriarComunidade"></span>
-            <div class="lista-comunidades-sugeridas"></div>
         </div>
     </div>
     <div id="fundo-escuro">

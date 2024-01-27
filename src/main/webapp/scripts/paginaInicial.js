@@ -205,7 +205,6 @@ document.addEventListener("DOMContentLoaded", function () {
             type: "GET",
             dataType: "json",
             success: function (results) {
-                // mostrarResultadoPesquisa(results)
                 // Manipular os dados do resultado
                 console.log("Sucesso: " + results);
             },

@@ -7,6 +7,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import util.ObterData;
+import util.ObterURL;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -84,11 +85,18 @@ public class ComunidadeController extends HttpServlet {
             int anoAtual = obterData.getAnoAtual();
             int mesAtual = obterData.getMesAtual();
             int diaAtual = obterData.getDiaAtual();
-            String diretorioFotoPerfil = request.getServletContext().getRealPath("/arquivosEstaticos/fotoPerfilComunidade/" + anoAtual + "/" + mesAtual + "/" + diaAtual + "/");
-            String diretorioFotoFundo = request.getServletContext().getRealPath("/arquivosEstaticos/fotoFundoComunidade/" + anoAtual + "/" + mesAtual + "/" + diaAtual + "/");
+            // Cria o caminho completo para o diretório de fotos de perfil
+            String urlCaminho = new ObterURL().getUrl();
+            String diretorioFotoPerfil = urlCaminho + File.separator + "arquivosEstaticos" + File.separator + "fotoPerfilComunidade" + File.separator + anoAtual + File.separator + mesAtual + File.separator + diaAtual + File.separator;
+            String diretorioFotoFundo = urlCaminho +  File.separator + "arquivosEstaticos" + File.separator + "fotoFundoComunidade"+ File.separator + anoAtual + File.separator + mesAtual + File.separator + diaAtual + File.separator;
             System.out.println(fotoPerfil);
             System.out.println(fotoFundo);
             File diretorioFileFotoPerfil = new File(diretorioFotoPerfil);
+            if (!diretorioFileFotoPerfil.exists()) {
+                if (diretorioFileFotoPerfil.mkdirs()) {
+                    System.out.println("criou diretorio ftper");
+                }
+            }
             if (diretorioFileFotoPerfil.exists()) {
                 UUID randomName = UUID.randomUUID();
                 if (fotoPerfil != null) {
@@ -96,15 +104,14 @@ public class ComunidadeController extends HttpServlet {
                     comunidade.setFotoPerfil(diretorioFotoPerfil + "img-fotoperfil" + nomeComunidade + randomName + "." + obterExtensaoArquivo(fotoPerfil.getName()));
                 }
             } else {
-                if (diretorioFileFotoPerfil.mkdirs()) {
-                    UUID randomName = UUID.randomUUID();
-                    if (fotoPerfil != null) {
-                        fotoPerfil.write(new File(diretorioFotoPerfil, ("img-fotoperfil" + nomeComunidade + randomName + "." + obterExtensaoArquivo(fotoPerfil.getName()))));
-                        comunidade.setFotoPerfil(diretorioFotoPerfil + "img-fotoperfil" + nomeComunidade + randomName + "." + obterExtensaoArquivo(fotoPerfil.getName()));
-                    }
-                }
+                System.out.println("DIRETORIO NAO ENCONTRADO");
             }
             File diretorioFileFotoFundo = new File(diretorioFotoFundo);
+            if (!diretorioFileFotoFundo.exists()) {
+                if (diretorioFileFotoFundo.mkdirs()) {
+                    System.out.println("criou diretorio ftfun");
+                }
+            }
             if (diretorioFileFotoFundo.exists()) {
                 UUID randomName = UUID.randomUUID();
                 if (fotoFundo != null) {
@@ -112,13 +119,7 @@ public class ComunidadeController extends HttpServlet {
                     comunidade.setFotoFundo(diretorioFotoFundo + "img-fotofundo" + nomeComunidade + randomName + "." + obterExtensaoArquivo(fotoFundo.getName()));
                 }
             } else {
-                if (diretorioFileFotoFundo.mkdirs()) {
-                    UUID randomName = UUID.randomUUID();
-                    if (fotoFundo != null) {
-                        fotoFundo.write(new File(diretorioFotoFundo, ("img-fotofundo" + nomeComunidade + randomName + "." + obterExtensaoArquivo(fotoFundo.getName()))));
-                        comunidade.setFotoFundo(diretorioFotoFundo + "img-fotofundo" + nomeComunidade + randomName + "." + obterExtensaoArquivo(fotoFundo.getName()));
-                    }
-                }
+                System.out.println("DIRETORIO NAO ENCONTRADO");
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -128,6 +129,10 @@ public class ComunidadeController extends HttpServlet {
         if (comunidade.criarComunidade()) {
             System.out.println("retornou");
             response.getWriter().write("sucesso");
+            String urlFotoPerfil = request.getContextPath() + comunidade.getFotoPerfil();
+            String urlFotoFundo = request.getContextPath() + comunidade.getFotoFundo();
+            response.getWriter().write(urlFotoPerfil);
+            response.getWriter().write(urlFotoFundo);
         }
     }
 

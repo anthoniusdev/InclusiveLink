@@ -14,6 +14,7 @@ target/
 *.ipr
 usersImages
 src/main/java/dao/Conexao.java
+src/main/java/util/ObterURL.java
 ### Eclipse ###
 .apt_generated
 .classpath
