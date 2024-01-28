@@ -82,7 +82,7 @@ public class Membro extends Pessoa implements Serializable {
         this.idComunidadesSeguindos = null;
         this.idComentarios = null;
     }
-
+    public Membro(){}
     public String getFotoPerfil() {
         return fotoPerfil;
     }
@@ -315,8 +315,8 @@ public class Membro extends Pessoa implements Serializable {
 
     public boolean isParticipante(Comunidade comunidade) {
         boolean isParticipante = false;
-        for (ParticipanteComunidade participanteComunidade : comunidade.getParticipantes()) {
-            if (participanteComunidade.getIdPessoa() == this.getIdPessoa()) {
+        for (int idParticipanteComunidade : comunidade.getIdParticipantes()) {
+            if (idParticipanteComunidade == this.getIdPessoa()) {
                 isParticipante = true;
                 break;
             }
@@ -326,8 +326,8 @@ public class Membro extends Pessoa implements Serializable {
 
     public boolean isSeguidor(Comunidade comunidade) {
         boolean isSeguidor = false;
-        for (SeguidorComunidade seguidorComunidade : comunidade.getSeguidores()) {
-            if (seguidorComunidade.getIdPessoa() == this.getIdPessoa()) {
+        for (int idSeguidorComunidade : comunidade.getIdSeguidores()) {
+            if (idSeguidorComunidade == this.getIdPessoa()) {
                 isSeguidor = true;
                 break;
             }
@@ -337,8 +337,8 @@ public class Membro extends Pessoa implements Serializable {
 
     public boolean isModerador(Comunidade comunidade) {
         boolean isModerador = false;
-        for (ModeradorComunidade moderadorComunidade : comunidade.getModeradores()) {
-            if (moderadorComunidade.getIdPessoa() == this.getIdPessoa()) {
+        for (int idModeradorComunidade : comunidade.getIdModeradores()) {
+            if (idModeradorComunidade == this.getIdPessoa()) {
                 isModerador = true;
                 break;
             }
@@ -367,7 +367,14 @@ public class Membro extends Pessoa implements Serializable {
         this.idComunidadesSeguindos = membroAtualizado.getComunidadesSeguindos();
         this.idComentarios = membroAtualizado.getComentarios();
     }
-
+    public boolean seguirMembro(int idSeguindo){
+        try {
+            MembroDAO membroDAO = new MembroDAO();
+            return membroDAO.seguirMembro(this.getIdPessoa(), idSeguindo);
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+    }
     @Override
     public boolean fazerLogin() {
         return false;

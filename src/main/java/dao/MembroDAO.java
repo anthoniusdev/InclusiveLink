@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class MembroDAO {
-    int idPessoa = 0;
+    private int idPessoa = 0;
 
     private Connection conectar() {
         Conexao conexao = new Conexao();
@@ -117,11 +117,11 @@ public class MembroDAO {
             try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
                 preparedStatement.setInt(1, idPessoa);
                 ResultSet rs = preparedStatement.executeQuery();
-                    ArrayList<Integer> publicacoesCurtidas = new ArrayList<>();
-                    while (rs.next()) {
-                        publicacoesCurtidas.add(rs.getInt(1));
-                    }
-                    return publicacoesCurtidas;
+                ArrayList<Integer> publicacoesCurtidas = new ArrayList<>();
+                while (rs.next()) {
+                    publicacoesCurtidas.add(rs.getInt(1));
+                }
+                return publicacoesCurtidas;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -154,11 +154,11 @@ public class MembroDAO {
             try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
                 preparedStatement.setInt(1, idPessoa);
                 ResultSet rs = preparedStatement.executeQuery();
-                    ArrayList<Integer> membrosSeguidores = new ArrayList<>();
-                    while (rs.next()) {
-                        membrosSeguidores.add(rs.getInt(1));
-                    }
-                    return membrosSeguidores;
+                ArrayList<Integer> membrosSeguidores = new ArrayList<>();
+                while (rs.next()) {
+                    membrosSeguidores.add(rs.getInt(1));
+                }
+                return membrosSeguidores;
 
             }
         } catch (SQLException e) {
@@ -172,11 +172,11 @@ public class MembroDAO {
             try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
                 preparedStatement.setInt(1, idPessoa);
                 ResultSet rs = preparedStatement.executeQuery();
-                    ArrayList<Integer> membrosSeguindos = new ArrayList<>();
-                    while (rs.next()) {
-                        membrosSeguindos.add(rs.getInt(1));
-                    }
-                    return membrosSeguindos;
+                ArrayList<Integer> membrosSeguindos = new ArrayList<>();
+                while (rs.next()) {
+                    membrosSeguindos.add(rs.getInt(1));
+                }
+                return membrosSeguindos;
 
             }
         } catch (SQLException e) {
@@ -190,11 +190,11 @@ public class MembroDAO {
             try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
                 preparedStatement.setInt(1, idPessoa);
                 ResultSet rs = preparedStatement.executeQuery();
-                    ArrayList<Integer> comunidadesSeguindos = new ArrayList<>();
-                    while (rs.next()) {
-                        comunidadesSeguindos.add(rs.getInt(1));
-                    }
-                    return comunidadesSeguindos;
+                ArrayList<Integer> comunidadesSeguindos = new ArrayList<>();
+                while (rs.next()) {
+                    comunidadesSeguindos.add(rs.getInt(1));
+                }
+                return comunidadesSeguindos;
 
             }
         } catch (SQLException e) {
@@ -208,11 +208,11 @@ public class MembroDAO {
             try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
                 preparedStatement.setInt(1, idPessoa);
                 ResultSet rs = preparedStatement.executeQuery();
-                    ArrayList<Integer> comunidadesParticipantes = new ArrayList<>();
-                    while (rs.next()) {
-                        comunidadesParticipantes.add(rs.getInt(1));
-                    }
-                    return comunidadesParticipantes;
+                ArrayList<Integer> comunidadesParticipantes = new ArrayList<>();
+                while (rs.next()) {
+                    comunidadesParticipantes.add(rs.getInt(1));
+                }
+                return comunidadesParticipantes;
 
             }
         } catch (SQLException e) {
@@ -307,6 +307,7 @@ public class MembroDAO {
             throw new RuntimeException(e);
         }
     }
+
     public ArrayList<Membro> listarMembros(int quantidade) {
         try (Connection con = conectar()) {
             String read = "select idPessoa from membro order by dataCriacao desc limit ?";
@@ -323,6 +324,7 @@ public class MembroDAO {
             throw new RuntimeException(e);
         }
     }
+
     public ArrayList<Membro> listarMembros(int quantidade, int idPessoa) {
         try (Connection con = conectar()) {
             String read = "select idPessoa from membro where idPessoa <> ? and idPessoa not in (SELECT idMembro from membro_seguidor where idSeguidor = ?) order by dataCriacao desc limit ?";
@@ -341,19 +343,39 @@ public class MembroDAO {
             throw new RuntimeException(e);
         }
     }
-    public boolean seguirMembro(int idMembro, int idSeguindo){
-        try (Connection con = conectar()){
+
+    public boolean seguirMembro(int idMembro, int idSeguindo) {
+        try (Connection con = conectar()) {
             String create = "INSERT INTO membro_seguindo(idMembro, idSeguindo) VALUES (?,?)";
-            try (PreparedStatement preparedStatement = con.prepareStatement(create)){
+            try (PreparedStatement preparedStatement = con.prepareStatement(create)) {
                 preparedStatement.setInt(1, idMembro);
                 preparedStatement.setInt(2, idSeguindo);
                 preparedStatement.executeUpdate();
                 String create1 = "INSERT INTO membro_seguidor(idMembro, idSeguidor) VALUES (?,?)";
-                try (PreparedStatement preparedStatement1 = con.prepareStatement(create1)){
+                try (PreparedStatement preparedStatement1 = con.prepareStatement(create1)) {
                     preparedStatement1.setInt(1, idSeguindo);
                     preparedStatement1.setInt(2, idMembro);
                     preparedStatement1.executeUpdate();
                     return true;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ArrayList<Membro> pesquisarPerfil(String query, int id) {
+        try (Connection con = conectar()) {
+            String read = "SELECT idPessoa FROM pessoa WHERE nome LIKE ? AND idPessoa <> ?";
+            try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
+                preparedStatement.setString(1, "%" + query + "%");
+                preparedStatement.setInt(2, id);
+                try (ResultSet rs = preparedStatement.executeQuery()) {
+                    ArrayList<Membro> membros = new ArrayList<>();
+                    while (rs.next()) {
+                        membros.add(retornaMembro(rs.getInt(1)));
+                    }
+                    return membros;
                 }
             }
         } catch (SQLException e) {
