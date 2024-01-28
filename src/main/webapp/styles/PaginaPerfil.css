@@ -26,8 +26,8 @@ body {
 }
 
 .header {
-    margin-right: 33rem;
-    width: 30%;
+    margin-right: 38rem;
+    width: 250px;
     display: flex;
 }
 
@@ -77,38 +77,47 @@ body {
 }
 
 .nomeUsuario{
-    margin-right: 40rem;
-    margin-top: 19rem;
+    margin-right: 45rem;
+    margin-top: 20rem;
     font-size: 1.7rem;
     color: #DDF2FD;
 }
+
+.profile-description {
+    margin-right: 9.5rem;
+    min-width: 700px;
+    max-width: 700px;
+    text-align: justify;
+    text-justify: distribute-all-lines;
+    line-height: 1.5;
+    background: rgba(120, 33, 33, 0);
+}
 .descricao{
-    margin-left: 0rem;
-    margin-right: 42rem;
     font-size: 1.4rem;
     color: #DDF2FD;
 }
 
+.seguindoSeguidores{
+    margin-right: 34.5rem;
+    width: 300px;
+    display: flex;
+    align-items: center;
+}
+
 .numSeguindo{
-    margin-right: 47.5rem;
     font-size: 1.4rem;
     color: #DDF2FD;
 }
 .seguindo{
-    margin-top: -3.3rem;
-    margin-right: 41.5rem;
     font-size: 1.4rem;
     color: rgba(221, 242, 253, 0.60);
 }
 .numSeguidores{
-    margin-top: -3.3rem;
-    margin-right: 30rem;
+    margin-left: 30px;
     font-size: 1.4rem;
     color: #DDF2FD;
 }
 .seguidores{
-    margin-top: -3.4rem;
-    margin-right: 23rem;
     font-size: 1.4rem;
     color: rgba(221, 242, 253, 0.60);
 }
