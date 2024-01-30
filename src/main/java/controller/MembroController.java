@@ -1,5 +1,6 @@
 package controller;
 
+import com.google.gson.Gson;
 import dao.MembroDAO;
 import model.Membro;
 import util.ServicoAutenticacao;
@@ -8,11 +9,13 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.UUID;
 
-@WebServlet(urlPatterns = {"/RealizarCadastro", "/Cadastrar", "/Login", "/seguirMembro"})
+@WebServlet(urlPatterns = {"/RealizarCadastro", "/Cadastrar", "/Login", "/seguirMembro", "/pesquisarPerfil", "/paginaInicial"})
 public class MembroController extends HttpServlet {
     private final MembroDAO membroDAO = new MembroDAO();
+    private Membro membro = new Membro();
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -36,6 +39,17 @@ public class MembroController extends HttpServlet {
         }
     }
 
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("Served at: " + request.getContextPath() + request.getServletPath());
+        String action = request.getServletPath();
+        System.out.println(action);
+        switch (action) {
+            case "/pesquisarPerfil" -> pesquisarPerfil(request, response);
+            case "/paginaInicial" -> request.getRequestDispatcher("PaginaInicial.jsp").forward(request, response);
+        }
+    }
+
     private String gerarTokenSessao() {
         return UUID.randomUUID().toString();
     }
@@ -47,7 +61,7 @@ public class MembroController extends HttpServlet {
         int id = membroDAO.verificaId(nomeUsuario);
         if (id != 0) {
             System.out.println(id);
-            Membro membro = membroDAO.retornaMembro(id);
+            membro = membroDAO.retornaMembro(id);
             System.out.println("Nome: " + membro.getNome());
             System.out.println("Nome de usuário: " + membro.getNomeUsuario());
             System.out.println("Email: " + membro.getEmail());
@@ -71,12 +85,16 @@ public class MembroController extends HttpServlet {
                     session.setAttribute("perfis", membroDAO.listarMembros(3, membro.getIdPessoa()));
                     response.sendRedirect("PaginaInicial.jsp");
                 } else {
-                    response.sendRedirect("index.html?erro=1");
+                    response.sendRedirect(request.getContextPath() + "/index.html?erro=1");
                 }
+
             } else {
-                response.sendRedirect("index.html?erro=1");
+                response.sendRedirect(request.getContextPath() + "/index.html?erro=1");
             }
+        } else {
+            response.sendRedirect(request.getContextPath() + "/index.html?erro=1");
         }
+
     }
 
     private void realizarCadastro(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -97,10 +115,10 @@ public class MembroController extends HttpServlet {
     private void seguirMembro(HttpServletRequest request, HttpServletResponse response) throws IOException {
         int idMembro = Integer.parseInt(request.getParameter("idMembro"));
         int idSeguindo = Integer.parseInt(request.getParameter("idSeguindo"));
-
-        if (membroDAO.seguirMembro(idMembro, idSeguindo)) {
+        membro = membroDAO.retornaMembro(idMembro);
+        if (membro.seguirMembro(idSeguindo)) {
             response.getWriter().write("Usuário seguido com sucesso");
-            System.out.println(membroDAO.retornaMembro(idMembro).getMembrosSeguindo().size());
+            System.out.println(membro.getMembrosSeguindo().size());
             atualizarDadosMembro(request, idMembro);
         } else {
             response.getWriter().write("Usuário não foi seguido");
@@ -108,45 +126,21 @@ public class MembroController extends HttpServlet {
     }
 
     private String dataNascimentoToString(String mes, String dia, String ano) {
-        int numeroMes = 0;
-        switch (mes) {
-            case "Janeiro":
-                numeroMes = 1;
-                break;
-            case "Fevereiro":
-                numeroMes = 2;
-                break;
-            case "Março":
-                numeroMes = 3;
-                break;
-            case "Abril":
-                numeroMes = 4;
-                break;
-            case "Maio":
-                numeroMes = 5;
-                break;
-            case "Junho":
-                numeroMes = 6;
-                break;
-            case "Julho":
-                numeroMes = 7;
-                break;
-            case "Agosto":
-                numeroMes = 8;
-                break;
-            case "Setembro":
-                numeroMes = 9;
-                break;
-            case "Outubro":
-                numeroMes = 10;
-                break;
-            case "Novembro":
-                numeroMes = 11;
-                break;
-            case "Dezembro":
-                numeroMes = 12;
-                break;
-        }
+        int numeroMes = switch (mes) {
+            case "Janeiro" -> 1;
+            case "Fevereiro" -> 2;
+            case "Março" -> 3;
+            case "Abril" -> 4;
+            case "Maio" -> 5;
+            case "Junho" -> 6;
+            case "Julho" -> 7;
+            case "Agosto" -> 8;
+            case "Setembro" -> 9;
+            case "Outubro" -> 10;
+            case "Novembro" -> 11;
+            case "Dezembro" -> 12;
+            default -> 0;
+        };
         return dia + "-" + numeroMes + "-" + ano;
     }
 
@@ -157,5 +151,14 @@ public class MembroController extends HttpServlet {
             session.setAttribute("usuario", membroAtualizado);
             session.setAttribute("perfis", membroDAO.listarMembros(3, membroAtualizado.getIdPessoa()));
         }
+    }
+
+    private void pesquisarPerfil(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String query = request.getParameter("query");
+        ArrayList<Membro> membros = membroDAO.pesquisarPerfil(query, membro.getIdPessoa());
+        String jsonResponse = new Gson().toJson(membros);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(jsonResponse);
     }
 }

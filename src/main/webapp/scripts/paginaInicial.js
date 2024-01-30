@@ -1,27 +1,24 @@
 document.addEventListener("DOMContentLoaded", function () {
     let formNovaPublicacao = document.getElementById("formNovaPublicacao");
     let textoPublicacao = document.getElementById("textoNovaPublicacao");
-    let elementoContagem = document.getElementById("contagemCaracteres");
+    let elementoContagemPublicacao = document.getElementById("contagemCaracteresPublicacao");
     let botaoPostar = document.getElementById("btnPostar");
     const iconeSVGinputIMG = document.getElementById("icone-escolher-imagem");
     const inputImagem = document.getElementById('input-imagem');
     const imagemPreview = document.getElementById('imagem-preview');
-    const botaoSeguir1 = document.getElementById('botaoSeguir1');
-    const botaoSeguir2 = document.getElementById('botaoSeguir2');
-    const botaoSeguir3 = document.getElementById('botaoSeguir3');
-
     let imageURL;
+    obterComunidades();
     textoPublicacao.addEventListener('input', function () {
         if (this.value.length > 200) {
             this.value = this.value.slice(0, 200);
         }
-        elementoContagem.textContent = (200 - this.value.length).toString();
+        elementoContagemPublicacao.textContent = (200 - this.value.length).toString();
         if (this.value.length > 0) {
-            elementoContagem.style.display = "flex";
+            elementoContagemPublicacao.style.display = "flex";
             botaoPostar.style.backgroundColor = "#164863";
             botaoPostar.style.cursor = "pointer";
         } else {
-            elementoContagem.style.display = "none";
+            elementoContagemPublicacao.style.display = "none";
             botaoPostar.style.backgroundColor = "#0c202a1f"
             botaoPostar.style.cursor = "no-drop";
         }
@@ -36,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     iconeSVGinputIMG.addEventListener('click', function () {
         abrirSeletorArquivo();
-    })
+    });
     inputImagem.addEventListener('change', function () {
         const file = this.files[0];
         if (file) {
@@ -47,6 +44,37 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         console.log('Arquivo selecionado:', this.files[0]);
     });
+    let verComunidades = $('#ver-comunidades');
+    verComunidades.on('mouseenter', function () {
+        $(this).css({
+            cursor: 'pointer',
+            backgroundColor: '#1F465EFF',
+            transition: '0.5s'
+        })
+    })
+    verComunidades.on('mouseleave', function () {
+        $(this).css({
+            cursor: 'default',
+            backgroundColor: 'var(--COR-03)',
+            transition: '0.5s'
+        })
+    })
+
+    function obterComunidades() {
+        $.ajax({
+            url: "obterComunidades",
+            type: "GET",
+            dataType: "json",
+            success: function (results) {
+                // Manipular os dados do resultado
+                console.log("Sucesso: " + results);
+            },
+            error: function (error) {
+                console.log("Erro: " + error)
+            }
+        })
+
+    }
 
     function submeterFormulario() {
         let dados = {
@@ -92,7 +120,7 @@ function seguirUsuario(idMembro, idSeguindo, i) {
             idMembro: idMembro,
             idSeguindo: idSeguindo
         },
-        success: function (response) {
+        success: function () {
             console.log("Usuário seguido com sucesso");
             botaoSeguir.innerText = 'SEGUINDO';
             botaoSeguir.style.fontSize = '20px';
