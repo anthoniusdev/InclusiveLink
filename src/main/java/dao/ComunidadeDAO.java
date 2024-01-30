@@ -195,4 +195,35 @@ public class ComunidadeDAO {
             throw new RuntimeException(e);
         }
     }
+    public ArrayList<Comunidade> listarComunidadesUsuario(int idUsuario){
+        try (Connection con = conectar()){
+            String read = "SELECT idComunidade FROM participante_comunidade WHERE idParticipante = ? ORDER BY idComunidade DESC";
+            try (PreparedStatement preparedStatement = con.prepareStatement(read)){
+                preparedStatement.setInt(1, idUsuario);
+                ResultSet rs = preparedStatement.executeQuery();
+                ArrayList<Comunidade> comunidades = new ArrayList<>();
+                while (rs.next()){
+                    int idComunidade = rs.getInt(1);
+                    System.out.println(idComunidade);
+                    comunidades.add(retornaComunidade(idComunidade));
+                }
+                return comunidades;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public boolean sairComunidade(int idComunidade, int idParticipante){
+        try (Connection con = conectar()){
+            String delete = "DELETE FROM participante_comunidade WHERE idComunidade = ? AND idParticipante = ?";
+            try (PreparedStatement preparedStatement = con.prepareStatement(delete)){
+                preparedStatement.setInt(1, idComunidade);
+                preparedStatement.setInt(2, idParticipante);
+                preparedStatement.executeUpdate();
+                return true;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

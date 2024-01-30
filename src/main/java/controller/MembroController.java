@@ -12,10 +12,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
-@WebServlet(urlPatterns = {"/RealizarCadastro", "/Cadastrar", "/Login", "/seguirMembro", "/pesquisarPerfil"})
+@WebServlet(urlPatterns = {"/RealizarCadastro", "/Cadastrar", "/Login", "/seguirMembro", "/pesquisarPerfil", "/paginaInicial"})
 public class MembroController extends HttpServlet {
     private final MembroDAO membroDAO = new MembroDAO();
     private Membro membro = new Membro();
+
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         super.service(request, response);
@@ -43,8 +44,9 @@ public class MembroController extends HttpServlet {
         System.out.println("Served at: " + request.getContextPath() + request.getServletPath());
         String action = request.getServletPath();
         System.out.println(action);
-        switch (action){
+        switch (action) {
             case "/pesquisarPerfil" -> pesquisarPerfil(request, response);
+            case "/paginaInicial" -> request.getRequestDispatcher("PaginaInicial.jsp").forward(request, response);
         }
     }
 
@@ -83,12 +85,16 @@ public class MembroController extends HttpServlet {
                     session.setAttribute("perfis", membroDAO.listarMembros(3, membro.getIdPessoa()));
                     response.sendRedirect("PaginaInicial.jsp");
                 } else {
-                    response.sendRedirect("index.html?erro=1");
+                    response.sendRedirect(request.getContextPath() + "/index.html?erro=1");
                 }
+
             } else {
-                response.sendRedirect("index.html?erro=1");
+                response.sendRedirect(request.getContextPath() + "/index.html?erro=1");
             }
+        } else {
+            response.sendRedirect(request.getContextPath() + "/index.html?erro=1");
         }
+
     }
 
     private void realizarCadastro(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -146,7 +152,8 @@ public class MembroController extends HttpServlet {
             session.setAttribute("perfis", membroDAO.listarMembros(3, membroAtualizado.getIdPessoa()));
         }
     }
-    private void pesquisarPerfil(HttpServletRequest request, HttpServletResponse response) throws  IOException{
+
+    private void pesquisarPerfil(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String query = request.getParameter("query");
         ArrayList<Membro> membros = membroDAO.pesquisarPerfil(query, membro.getIdPessoa());
         String jsonResponse = new Gson().toJson(membros);

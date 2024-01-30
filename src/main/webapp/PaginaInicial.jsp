@@ -24,14 +24,15 @@
             }
             @SuppressWarnings("unchecked")
             ArrayList<Membro> membrosRede = (ArrayList<Membro>) httpSession.getAttribute("perfis");
-            String dadosJson = request.getParameter("dados");
 %>
 <html lang="pt-BR">
 <head>
-    <title>Inclusive link</title>
+    <title>Inclusive Link</title>
     <link rel="stylesheet" href="styles/PaginaInicial.css">
     <script src="scripts/js/jquery-3.7.1.js"></script>
     <script src="scripts/paginaInicial.js"></script>
+    <script src="scripts/barra-lateral-pesquisar-amigo/pesquisarPerfil.js"></script>
+    <script src="scripts/barra-lateral-criar-comunidade/criarComunidade.js"></script>
 </head>
 <body>
 <main>
@@ -123,6 +124,10 @@
                 </button>
             </div>
             <span id="linhaCriarComunidade"></span>
+            <div class="ver-comunidades" id="ver-comunidades">
+                <a href="verComunidades">VER COMUNIDADES PARTICIPANTES</a>
+                <div class="icone-caret-right"></div>
+            </div>
         </div>
     </div>
     <div id="fundo-escuro">
