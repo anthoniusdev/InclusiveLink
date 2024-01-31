@@ -90,32 +90,38 @@
                         <img src="<%=publicacao.getAutor().getFotoPerfil()%>"
                              alt="Foto do perfil de <%=publicacao.getAutor().getNome()%>">
                     </div>
-                    <div class="nome-autor">
-                        <h3><%=publicacao.getAutor().getNome()%>
-                        </h3>
-                    </div>
-                    <div class="texto-publicacao">
-                        <p><%=publicacao.getTexto()%>
-                        </p>
-                    </div>
-                    <%
-                        if (publicacao.getMidia() != null) {
-                    %>
-                    <div class="midia-publicacao">
-                        <img src="<%=publicacao.getMidia()%>" alt="">
-                    </div>
-                    <%
-                        }
-                    %>
-                    <div class="curtida-publicacao">
-                        <img src="" alt="">
-<%--                        Adicionar a lógica para adicionar as imagens certas aqui--%>
-                        <small><%=publicacao.getCurtidas().size()%></small>
-                    </div>
-                    <div class="comentarios-publicacao">
-                        <img src="" alt="">
-<%--                        Adicionar a lógica para adicionar as imagens certas aqui--%>
-                        <small><%=publicacao.getComentarios().size()%></small>
+                    <div class="informacoes-publicacao">
+                        <div class="nome-autor">
+                            <h3><%=publicacao.getAutor().getNome()%>
+                            </h3>
+                        </div>
+                        <div class="texto-publicacao">
+                            <p><%=publicacao.getTexto()%>
+                            </p>
+                        </div>
+                        <%
+                            if (publicacao.getMidia() != null) {
+                        %>
+                        <div class="midia-publicacao">
+                            <img src="<%=publicacao.getMidia()%>" alt="">
+                        </div>
+                        <%
+                            }
+                        %>
+                        <div class="inshights-publicacao">
+                            <div class="curtida-publicacao">
+                                <img src="" alt="">
+                                <%--                        Adicionar a lógica para adicionar as imagens certas aqui--%>
+                                <small><%=publicacao.getCurtidas().size()%>
+                                </small>
+                            </div>
+                            <div class="comentarios-publicacao">
+                                <img src="" alt="">
+                                <%--                        Adicionar a lógica para adicionar as imagens certas aqui--%>
+                                <small><%=publicacao.getComentarios().size()%>
+                                </small>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <%

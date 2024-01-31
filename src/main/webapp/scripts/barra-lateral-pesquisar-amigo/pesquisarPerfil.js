@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     const inputPesquisarPerfil = $('#pesquisarPerfil');
     let listaPerfisPesquisa = $('#listaPesquisaPerfil');
-    const perfisSugeridos = $('#perfisSugeridos');
     inputPesquisarPerfil.on('input', function () {
         let valor = this.value;
         if (valor.length > 0) {
@@ -15,17 +14,19 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     function mostrarCaixaResultados(bool, input) {
+        let perfisSugeridos = $('#perfisSugeridos');
+
         if (bool) {
             input.style.borderRadius = "0px";
             input.style.borderTopLeftRadius = "20px";
-            input.style.borderTopRightRadius = "20px";
+            input.style.borderTopRightRadius = "20px"
             listaPerfisPesquisa.css("display", "flex");
             listaPerfisPesquisa.css("flex-direction", "column");
-            perfisSugeridos.style.display = "none";
+            perfisSugeridos.css("display", "none");
         } else {
-            input.style.borderRadius = "20px";
-            listaPerfisPesquisa.css("display", "none")
-            perfisSugeridos.style.display = "fixed";
+            input.css("border-radius", "20px");
+            listaPerfisPesquisa.css("display", "none");
+            perfisSugeridos.css("display", "fixed");
         }
     }
 

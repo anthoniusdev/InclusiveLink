@@ -147,10 +147,10 @@ public class PublicacaoDAO {
                 ArrayList<Publicacao> feed = new ArrayList<>();
                 while (rs.next()) {
                     feed.add(retornaPublicacao(rs.getInt(1)));
-                    System.out.println(retornaPublicacao(rs.getInt(1)).getTexto());
-                    System.out.println(retornaPublicacao(rs.getInt(1)).getAutor());
-                    System.out.println(retornaPublicacao(rs.getInt(1)).getIdPublicacao());
-                    System.out.println("--------------");
+//                    System.out.println(retornaPublicacao(rs.getInt(1)).getTexto());
+//                    System.out.println(retornaPublicacao(rs.getInt(1)).getAutor());
+//                    System.out.println(retornaPublicacao(rs.getInt(1)).getIdPublicacao());
+//                    System.out.println("--------------");
                 }
                 return feed;
             }

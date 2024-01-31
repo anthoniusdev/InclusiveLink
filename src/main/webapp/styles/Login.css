@@ -195,6 +195,9 @@ footer {
     background-color: var(--COR-03);
     color: var(--COR-01);
     margin-top: 58px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 
 footer .LOGO-E-NOMES {
@@ -244,6 +247,8 @@ footer .Nomes {
     margin-left: auto;
     margin-right: 40px;
     float: right;
+    position: absolute;
+    right: 0;
 }
 
 footer .Nomes h3 {
