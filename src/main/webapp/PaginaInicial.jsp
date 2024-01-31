@@ -10,6 +10,7 @@
 <%@page import="model.Membro" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="model.Comunidade" %>
+<%@ page import="model.Publicacao" %>
 <%
     HttpSession httpSession = request.getSession(false);
     if (httpSession == null || httpSession.getAttribute("authenticated") == null) {
@@ -24,14 +25,18 @@
             }
             @SuppressWarnings("unchecked")
             ArrayList<Membro> membrosRede = (ArrayList<Membro>) httpSession.getAttribute("perfis");
-            String dadosJson = request.getParameter("dados");
+            @SuppressWarnings("unchecked")
+            ArrayList<Publicacao> feedUsuario = (ArrayList<Publicacao>) httpSession.getAttribute("feed");
+
 %>
 <html lang="pt-BR">
 <head>
-    <title>Inclusive link</title>
+    <title>Inclusive Link</title>
     <link rel="stylesheet" href="styles/PaginaInicial.css">
     <script src="scripts/js/jquery-3.7.1.js"></script>
     <script src="scripts/paginaInicial.js"></script>
+    <script src="scripts/barra-lateral-pesquisar-amigo/pesquisarPerfil.js"></script>
+    <script src="scripts/barra-lateral-criar-comunidade/criarComunidade.js"></script>
 </head>
 <body>
 <main>
@@ -59,11 +64,6 @@
                             <img src="images/gallery_img.svg" alt="">
                         </label>
                         <input type="file" id="input-imagem" name="imagem" accept="image/*">
-                        <%=membro.getNome()%>
-                        <%=membro.getNomeUsuario()%>
-                        <%=membro.getEmail()%>
-                        <%=membro.getMembrosSeguindo().size()%>
-                        <%=membro.getMembrosSeguidores().size()%>
                     </div>
                     <div class="im"></div>
                     <div class="btnPostar">
@@ -72,10 +72,64 @@
                 </form>
                 <div class="imgPreview">
                     <img id="imagem-preview" alt="" src="">
+                    <div class="remover-foto" id="remover-foto">
+                        <img src="images/octicon_x-12.svg" alt="ícone de remover a foto da publicação">
+                    </div>
                 </div>
             </div>
             <div class="postagens">
-
+                <%
+                    if (!feedUsuario.isEmpty()) {
+                        for (Publicacao publicacao : feedUsuario) {
+                            if (publicacao.getAutor().getFotoPerfil() == null) {
+                                publicacao.getAutor().setFotoPerfil("images/person_foto.svg");
+                            }
+                %>
+                <div class="caixa-publicacao">
+                    <div class="foto-perfil-autor">
+                        <img src="<%=publicacao.getAutor().getFotoPerfil()%>"
+                             alt="Foto do perfil de <%=publicacao.getAutor().getNome()%>">
+                    </div>
+                    <div class="informacoes-publicacao">
+                        <div class="nome-autor">
+                            <h3><%=publicacao.getAutor().getNome()%>
+                            </h3>
+                        </div>
+                        <div class="texto-publicacao">
+                            <p><%=publicacao.getTexto()%>
+                            </p>
+                        </div>
+                        <%
+                            if (publicacao.getMidia() != null) {
+                        %>
+                        <div class="midia-publicacao">
+                            <img src="<%=publicacao.getMidia()%>" alt="">
+                        </div>
+                        <%
+                            }
+                        %>
+                        <div class="inshights-publicacao">
+                            <div class="curtida-publicacao">
+                                <img src="" alt="">
+                                <%--                        Adicionar a lógica para adicionar as imagens certas aqui--%>
+                                <small><%=publicacao.getCurtidas().size()%>
+                                </small>
+                            </div>
+                            <div class="comentarios-publicacao">
+                                <img src="" alt="">
+                                <%--                        Adicionar a lógica para adicionar as imagens certas aqui--%>
+                                <small><%=publicacao.getComentarios().size()%>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <%
+                    }
+                } else {
+                %>
+                <h3>ArrayVazia</h3>
+                <%}%>
             </div>
         </div>
         <div class="pesquisar-amigo">
@@ -123,6 +177,10 @@
                 </button>
             </div>
             <span id="linhaCriarComunidade"></span>
+            <div class="ver-comunidades" id="ver-comunidades">
+                <a href="verComunidades">VER COMUNIDADES PARTICIPANTES</a>
+                <div class="icone-caret-right"></div>
+            </div>
         </div>
     </div>
     <div id="fundo-escuro">
@@ -166,7 +224,6 @@
         </div>
     </div>
 </main>
-<h1>Página Inicial</h1>
 </body>
 </html>
 <%

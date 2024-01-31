@@ -27,7 +27,7 @@ html, body, footer {
     padding: 0;
 }
 
-.principal {
+.comunidades-participantes {
     background-color: var(--COR-03);
     display: flex;
     flex-direction: column;
@@ -67,105 +67,55 @@ html, body, footer {
     border-radius: 20px;
 }
 
-.criarPublicacao form {
+.caixa-comunidade {
     display: flex;
     flex-direction: row;
-    padding-top: 20px;
+    padding: 15px 0;
+    border-top: 2px solid var(--COR-04);
 }
 
-.criarPublicacao textarea {
-    border: none;
-    background-color: var(--COR-03);
-    width: 100%;
-    color: var(--COR-TEXTO-04);
-    font-size: 25px;
-    font-family: var(--FONTE);
-    resize: none;
-    overflow-y: hidden;
-}
-
-.criarPublicacao textarea:focus {
-    outline: none;
-
-}
-
-.criarPublicacao .foto-perfil {
-    padding-left: 35px;
-    padding-right: 35px;
-}
-
-.criarPublicacao .areaInput {
+.caixa-comunidade .imagem-foto-perfil-comunidade {
+    max-width: 140px;
+    overflow: hidden;
+    border-radius: 100%;
+    margin-left: 30px;
+    max-height: 140px;
+    justify-content: center;
     display: flex;
-    flex-direction: column;
-    align-self: center;
-    width: 580px;
-}
-
-#textoNovaPublicacao::placeholder {
-    font-family: var(--FONTE);
-    color: var(--COR-TEXTO-05);
-    font-size: 25px;
-}
-
-#linhaAreaInput {
-    height: 2px;
-    background-color: var(--COR-TEXTO-05);
-    margin-top: 5px;
-    margin-bottom: 10px;
-}
-
-#imagemPublicacao {
-    width: 30px;
-}
-
-.btnPostar {
-    align-items: center;
-    display: flex;
+    align-content: center;
     flex-wrap: wrap;
-    margin-bottom: 25px;
-    margin-left: 40px;
+    height: 100vh;
 }
 
-.btnPostar button {
-    background-color: #0c202a1f;
+.caixa-comunidade h3 {
+    width: 500px;
+    margin-left: 50px;
+    margin-right: 50px;
     color: var(--COR-01);
-    border-radius: 20px;
-    height: 75px;
-    width: 160px;
-    border: none;
-    font-family: var(--FONTE);
+    align-self: center;
     font-size: 25px;
-    box-sizing: border-box;
 }
 
-#contagemCaracteresPublicacao {
-    display: none;
-    flex-direction: row-reverse;
-    color: var(--COR-TEXTO-05);
-}
-
-#icone-escolher-imagem {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    width: 30px;
-}
-
-#icone-escolher-imagem svg {
-    width: 24px;
-    height: 24px;
-}
-
-#input-imagem {
-    display: none;
-}
-
-#imagem-preview {
-    max-width: 300px;
-    max-height: 300px;
-    margin-left: 150px;
-    margin-bottom: 30px;
+.sair-comunidade {
+    width: 100px;
+    height: 50px;
+    align-self: center;
+    background-color: var(--COR-04);
+    color: var(--COR-TEXTO-04);
+    margin-right: 50px;
+    margin-left: 50px;
+    border: none;
     border-radius: 20px;
+    font-family: var(--FONTE);
+    font-size: 30px;
+}
+
+.sair-comunidade:hover {
+    cursor: pointer;
+    border: 1px solid #FF0000;
+    background-color: var(--COR-03);
+    transition: 0.5s;
+    color: #FF0000;
 }
 
 .pesquisar-amigo {
@@ -289,7 +239,11 @@ html, body, footer {
     flex-wrap: wrap;
     cursor: pointer;
 }
-
+.sem-comunidades{
+    align-self: center;
+    font-size: 40px;
+    color: var(--COR-01);
+}
 .listaPesquisaPerfil {
     background-color: var(--COR-03);
     border: 1px solid var(--COR-04);
@@ -616,7 +570,7 @@ html, body, footer {
     display: none;
 }
 
-.ver-comunidades {
+.pagina-incial {
     background-color: var(--COR-03);
     display: flex;
     flex-direction: row;
@@ -624,14 +578,12 @@ html, body, footer {
     height: 80px;
     border-radius: 20px;
 }
-
-#ver-comunidades:hover {
+#pagina-inicial:hover{
     cursor: pointer;
     background-color: #1F465EFF;
     transition: 0.2s;
 }
-
-.ver-comunidades a {
+.pagina-incial a {
     text-decoration: none;
     font-size: 25px;
     padding-left: 40px;
@@ -644,12 +596,11 @@ html, body, footer {
     flex-wrap: wrap;
 }
 
-.ver-comunidades img {
+.pagina-incial img {
     width: 30px;
     position: absolute;
     right: 80px;
 }
-
 .icone-caret-right {
     width: 40px;
     height: 65px;
@@ -659,50 +610,4 @@ html, body, footer {
     position: absolute;
     right: 15px;
     margin-top: 5px;
-}
-
-.remover-foto {
-    display: none;
-    width: auto;
-    height: 50px;
-    position: relative;
-}
-
-.remover-foto:hover {
-    cursor: pointer;
-}
-
-.imgPreview {
-    display: flex;
-}
-
-.caixa-publicacao {
-    display: flex;
-    border-top: 3px solid var(--COR-04);
-}
-
-.caixa-publicacao .foto-perfil-autor {
-    width: 83px;
-    height: 83px;
-    margin: 20px;
-}
-
-.caixa-publicacao .nome-autor {
-    color: var(--COR-TEXTO-04);
-    font-size: 20px;
-    font-synthesis: none;
-}
-.caixa-publicacao .texto-publicacao{
-    width: auto;
-    max-width: 750px;
-    height: auto;
-    color: var(--COR-TEXTO-04);
-    font-size: 20px;
-    font-synthesis: none;
-}
-.inshights-publicacao{
-    display: flex;
-    flex-direction: row;
-    color: var(--COR-TEXTO-04);
-    font-synthesis: none;
 }

@@ -5,7 +5,7 @@
 
 :root {
     --COR-04: #164863;
-    --COR-03: #427D9D;
+    --COR-03: #427d9d;
     --COR-02: #9BBEC8;
     --COR-01: #DDF2FD;
     --COR-TEXTO-01: rgba(22, 72, 99, 0.3);
@@ -194,7 +194,14 @@ label.MantConect::before {
 footer {
     background-color: var(--COR-03);
     color: var(--COR-01);
+<<<<<<< HEAD
     margin-top: 70px;
+=======
+    margin-top: 58px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+>>>>>>> d506f5b690d382d5d18d53d4087261dcf258e477
 }
 
 footer .LOGO-E-NOMES {
@@ -245,6 +252,8 @@ footer .Nomes {
     margin-left: auto;
     margin-right: 40px;
     float: right;
+    position: absolute;
+    right: 0;
 }
 
 footer .Nomes h3 {
