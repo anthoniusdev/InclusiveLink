@@ -660,3 +660,15 @@ html, body, footer {
     right: 15px;
     margin-top: 5px;
 }
+.remover-foto{
+    display: none;
+    width: auto;
+    height: 50px;
+    position: relative;
+}
+.remover-foto:hover{
+    cursor: pointer;
+}
+.imgPreview{
+    display: flex;
+}

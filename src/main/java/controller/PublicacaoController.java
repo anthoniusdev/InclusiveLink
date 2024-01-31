@@ -50,4 +50,5 @@ public class PublicacaoController extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
+
 }

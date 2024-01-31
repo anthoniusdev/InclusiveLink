@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const iconeSVGinputIMG = document.getElementById("icone-escolher-imagem");
     const inputImagem = document.getElementById('input-imagem');
     const imagemPreview = document.getElementById('imagem-preview');
+    let file;
+    let xFt = document.getElementById('remover-foto');
     let imageURL;
     obterComunidades();
     textoPublicacao.addEventListener('input', function () {
@@ -34,16 +36,25 @@ document.addEventListener("DOMContentLoaded", function () {
     iconeSVGinputIMG.addEventListener('click', function () {
         abrirSeletorArquivo();
     });
-    inputImagem.addEventListener('change', function () {
-        const file = this.files[0];
+    inputImagem.addEventListener('input', function () {
+        file = this.files[0];
         if (file) {
             imageURL = URL.createObjectURL(file);
             imagemPreview.src = imageURL;
+            xFt.style.display = 'block';
             botaoPostar.style.backgroundColor = "#164863";
             botaoPostar.style.cursor = "pointer";
         }
         console.log('Arquivo selecionado:', this.files[0]);
     });
+    xFt.addEventListener('click', function (){
+        file = null;
+        imageURL = null;
+        imagemPreview.src = null;
+        xFt.style.display = 'none';
+        botaoPostar.style.backgroundColor = "#0c202a1f";
+        botaoPostar.style.cursor = "default";
+    })
     let verComunidades = $('#ver-comunidades');
     verComunidades.on('mouseenter', function () {
         $(this).css({
