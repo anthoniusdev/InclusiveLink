@@ -110,13 +110,30 @@
                         %>
                         <div class="inshights-publicacao">
                             <div class="curtida-publicacao">
-                                <img src="" alt="">
+                                <%
+                                    String ftCurt = null;
+                                    if (!publicacao.getCurtidas().isEmpty()) {
+                                        System.out.println(publicacao.getCurtidas().getFirst().getIdPessoa());
+                                        System.out.println("Membro " + publicacao.getCurtidas().getFirst().getNome() + " curtiu");
+                                        for (Membro membro1: publicacao.getCurtidas()){
+                                            if (membro1.getIdPessoa() == membro.getIdPessoa()) {
+                                                ftCurt = "images/iconamoon_heart-fill.svg";
+                                                break;
+                                            }
+                                        }
+                                    } else {
+                                        System.out.println("ta vazio essa porrrra");
+                                        ftCurt = "images/iconamoon_heart-bold.svg";
+                                    }
+                                %>
+                                <img class="icone-curtida" src="<%=ftCurt%>" alt="Ícone de curtida"
+                                     onclick="curtirPublicacao(<%=publicacao.getIdPublicacao()%>)">
                                 <%--                        Adicionar a lógica para adicionar as imagens certas aqui--%>
                                 <small><%=publicacao.getCurtidas().size()%>
                                 </small>
                             </div>
                             <div class="comentarios-publicacao">
-                                <img src="" alt="">
+                                <img src="images/majesticons_comment-line.svg" alt="Ícone de comentário">
                                 <%--                        Adicionar a lógica para adicionar as imagens certas aqui--%>
                                 <small><%=publicacao.getComentarios().size()%>
                                 </small>

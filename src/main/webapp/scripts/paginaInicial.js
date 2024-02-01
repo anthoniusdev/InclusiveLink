@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const iconeSVGinputIMG = document.getElementById("icone-escolher-imagem");
     const inputImagem = document.getElementById('input-imagem');
     const imagemPreview = document.getElementById('imagem-preview');
+    // let icone_curtir_publicacao = document.getElementById('icone-curtir-publicacao');
+    let icone_curtir_publicacao = document.querySelectorAll('.icone-curtida');
     let file;
     let xFt = document.getElementById('remover-foto');
     let imageURL;
@@ -70,7 +72,38 @@ document.addEventListener("DOMContentLoaded", function () {
             transition: '0.5s'
         })
     })
+    icone_curtir_publicacao.forEach(function (icones){
+        icones.addEventListener('mouseenter', function (){
+            this.style.cursor = 'pointer';
+            if (this.src.includes('images/iconamoon_heart-bold.svg')){
+                this.src = 'images/iconamoon_heart-bold-js.svg';
+            }
+            this.style.boxShadow = "0px 0 20px 5px #FC6E6E";
 
+        })
+        icones.addEventListener('mouseleave', function (){
+            this.style.cursor = 'default';
+            if (this.src.includes('images/iconamoon_heart-bold-js.svg')){
+                this.src = 'images/iconamoon_heart-bold.svg';
+            }
+            this.style.boxShadow = '';
+        })
+        icones.addEventListener('click', function (){
+            let smallElement = icones.parentElement.querySelector('small');
+            if (!smallElement) {
+                console.error("Elemento <small> não encontrado.");
+                console.log("Conteúdo de icones:", icones);
+                return;
+            }
+            if (this.src.includes('images/iconamoon_heart-bold-js.svg')){
+                this.src = 'images/iconamoon_heart-fill.svg';
+                smallElement.innerHTML = (1 + parseInt(smallElement.innerHTML)).toString()
+            }else{
+                this.src = 'images/iconamoon_heart-bold-js.svg';
+                smallElement.innerHTML = (parseInt(smallElement.innerHTML) - 1).toString()
+            }
+        })
+    })
     function obterComunidades() {
         $.ajax({
             url: "obterComunidades",
@@ -140,6 +173,20 @@ function seguirUsuario(idMembro, idSeguindo, i) {
         },
         error: function (error) {
             console.log("Erro ao seguir usuário: " + error.responseText);
+        }
+    })
+}
+function curtirPublicacao(idPublicacao){
+    $.ajax({
+        type: 'POST',
+        url: 'curtirPublicacao',
+        data: {idPublicacao: idPublicacao},
+        dataType: "json",
+        success: function (){
+            console.log('publicacao curtida')
+        },
+        error: function (error){
+            console.log(error)
         }
     })
 }

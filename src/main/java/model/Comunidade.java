@@ -171,7 +171,12 @@ public class Comunidade implements Serializable {
         return false;
 
     }
-
+    public ArrayList<Comunidade> listarComunidadesParticipantes(int idMembro){
+        return new ComunidadeDAO().listarComunidadesUsuario(idMembro);
+    }
+    public ArrayList<Comunidade> listarComunidadesParticipantes(int idMembro, int limit){
+        return new ComunidadeDAO().listarComunidades(limit);
+    }
 
     public void excluirComunidade(model.Comunidade comunidade) {
         comunidade = null;

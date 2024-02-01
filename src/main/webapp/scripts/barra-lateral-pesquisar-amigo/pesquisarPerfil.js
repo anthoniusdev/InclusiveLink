@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     const inputPesquisarPerfil = $('#pesquisarPerfil');
     let listaPerfisPesquisa = $('#listaPesquisaPerfil');
-    inputPesquisarPerfil.on('input', function () {
+    inputPesquisarPerfil.on('input' || 'change', function () {
         let valor = this.value;
         if (valor.length > 0) {
             mostrarCaixaResultados(true, this);

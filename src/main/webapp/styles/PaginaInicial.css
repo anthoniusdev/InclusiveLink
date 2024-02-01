@@ -692,17 +692,43 @@ html, body, footer {
     font-size: 20px;
     font-synthesis: none;
 }
-.caixa-publicacao .texto-publicacao{
+
+.caixa-publicacao .texto-publicacao {
     width: auto;
+    max-height: 300px;
     max-width: 750px;
     height: auto;
     color: var(--COR-TEXTO-04);
     font-size: 20px;
     font-synthesis: none;
+    word-wrap: break-word;
 }
-.inshights-publicacao{
+
+.inshights-publicacao {
     display: flex;
     flex-direction: row;
     color: var(--COR-TEXTO-04);
     font-synthesis: none;
+    margin-bottom: 20px;
+}
+.inshights-publicacao .curtida-publicacao{
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+.curtida-publicacao small, .comentarios-publicacao small{
+    font-size: 20px;
+}
+.inshights-publicacao .comentarios-publicacao{
+    margin-left: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.comentarios-publicacao img, .curtida-publicacao img{
+    width: 22px;
+    height: 22px;
+    border-radius: 100%;
+    transition: 0.5s;
+COR: FC6E6E
 }

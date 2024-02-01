@@ -158,4 +158,16 @@ public class PublicacaoDAO {
             throw new RuntimeException(e);
         }
     }
+    public void descurtirPublicacao(int idPublicacao, int idMembro){
+        try (Connection con = conectar()){
+            String delete = "DELETE FROM publicacao_curtida WHERE idPublicacao = ? AND idMembro = ?";
+            try (PreparedStatement preparedStatement = con.prepareStatement(delete)){
+                preparedStatement.setInt(1, idPublicacao);
+                preparedStatement.setInt(2, idMembro);
+                preparedStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
