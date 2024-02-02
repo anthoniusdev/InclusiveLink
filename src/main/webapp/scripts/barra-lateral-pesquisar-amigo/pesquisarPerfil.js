@@ -1,35 +1,45 @@
 document.addEventListener('DOMContentLoaded', function () {
     const inputPesquisarPerfil = $('#pesquisarPerfil');
     let listaPerfisPesquisa = $('#listaPesquisaPerfil');
-    inputPesquisarPerfil.on('input' || 'change', function () {
-        let valor = this.value;
+    inputPesquisarPerfil.on('input change', function () {
+        let valor = inputPesquisarPerfil.val();
         if (valor.length > 0) {
-            mostrarCaixaResultados(true, this);
+            mostrarCaixaResultados(true);
+            if (valor.length > 1) {
+                pesquisarPerfil(valor);
+            }
         } else {
-            mostrarCaixaResultados(false, this);
-        }
-        if (valor.length > 1) {
-            pesquisarPerfil(valor);
+            mostrarCaixaResultados(false);
         }
     });
-
-    function mostrarCaixaResultados(bool, input) {
+    function mostrarCaixaResultados(bool) {
         let perfisSugeridos = $('#perfisSugeridos');
 
         if (bool) {
-            input.style.borderRadius = "0px";
-            input.style.borderTopLeftRadius = "20px";
-            input.style.borderTopRightRadius = "20px"
-            listaPerfisPesquisa.css("display", "flex");
-            listaPerfisPesquisa.css("flex-direction", "column");
-            perfisSugeridos.css("display", "none");
+            inputPesquisarPerfil.css({
+                borderRadius: "0px",
+                borderTopLeftRadius: "20px",
+                borderTopRightRadius: "20px"
+            });
+            listaPerfisPesquisa.css({
+                display: "flex",
+                flexDirection: "column"
+            });
+            perfisSugeridos.css({
+                display: "none"
+            });
         } else {
-            input.css("border-radius", "20px");
-            listaPerfisPesquisa.css("display", "none");
-            perfisSugeridos.css("display", "fixed");
+            inputPesquisarPerfil.css({
+                borderRadius: '20px'
+            });
+            listaPerfisPesquisa.css({
+                display: 'none'
+            });
+            perfisSugeridos.css({
+                display: 'none'
+            });
         }
     }
-
     function pesquisarPerfil(query) {
         $.ajax({
             type: "GET",

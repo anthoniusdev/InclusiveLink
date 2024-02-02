@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const inputImagem = document.getElementById('input-imagem');
     const imagemPreview = document.getElementById('imagem-preview');
     // let icone_curtir_publicacao = document.getElementById('icone-curtir-publicacao');
-    let icone_curtir_publicacao = document.querySelectorAll('.icone-curtida');
     let file;
     let xFt = document.getElementById('remover-foto');
     let imageURL;
@@ -24,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
             botaoPostar.style.cursor = "pointer";
         } else {
             elementoContagemPublicacao.style.display = "none";
-            botaoPostar.style.backgroundColor = "#0c202a1f"
+            botaoPostar.style.backgroundColor = "#0c202a1f";
             botaoPostar.style.cursor = "default";
         }
     })
@@ -32,9 +31,21 @@ document.addEventListener("DOMContentLoaded", function () {
         this.style.height = 'auto';
         this.style.height = Math.min(this.scrollHeight, 300) + 'px';
     });
+    textoPublicacao.addEventListener('focus', function (){
+        let linha = document.getElementById('linhaAreaInput');
+        linha.style.height = '4px';
+    });
+    textoPublicacao.addEventListener('focusout', function (){
+        let linha = document.getElementById('linhaAreaInput');
+        linha.style.height = '2px';
+    })
     formNovaPublicacao.addEventListener("submit", function (event) {
         event.preventDefault();
-        submeterFormulario();
+        if (textoPublicacao.value.length>0 || imageURL != null) {
+            submeterFormulario();
+        }else{
+            textoPublicacao.focus();
+        }
     });
     iconeSVGinputIMG.addEventListener('click', function () {
         abrirSeletorArquivo();
@@ -55,8 +66,10 @@ document.addEventListener("DOMContentLoaded", function () {
         imageURL = null;
         imagemPreview.src = null;
         xFt.style.display = 'none';
-        botaoPostar.style.backgroundColor = "#0c202a1f";
-        botaoPostar.style.cursor = "default";
+        if (textoPublicacao.value.length === 0) {
+            botaoPostar.style.backgroundColor = "#0c202a1f";
+            botaoPostar.style.cursor = "default";
+        }
     })
     let verComunidades = $('#ver-comunidades');
     verComunidades.on('mouseenter', function () {
@@ -71,38 +84,6 @@ document.addEventListener("DOMContentLoaded", function () {
             cursor: 'default',
             backgroundColor: 'var(--COR-03)',
             transition: '0.5s'
-        })
-    })
-    icone_curtir_publicacao.forEach(function (icones) {
-        icones.addEventListener('mouseenter', function () {
-            this.style.cursor = 'pointer';
-            if (this.src.includes('images/iconamoon_heart-bold.svg')) {
-                this.src = 'images/iconamoon_heart-bold-js.svg';
-            }
-            this.style.boxShadow = "0px 0 20px 5px #FC6E6E";
-
-        })
-        icones.addEventListener('mouseleave', function () {
-            this.style.cursor = 'default';
-            if (this.src.includes('images/iconamoon_heart-bold-js.svg')) {
-                this.src = 'images/iconamoon_heart-bold.svg';
-            }
-            this.style.boxShadow = '';
-        })
-        icones.addEventListener('click', function () {
-            let smallElement = icones.parentElement.querySelector('small');
-            if (!smallElement) {
-                console.error("Elemento <small> não encontrado.");
-                console.log("Conteúdo de icones:", icones);
-                return;
-            }
-            if (this.src.includes('images/iconamoon_heart-bold-js.svg')) {
-                this.src = 'images/iconamoon_heart-fill.svg';
-                smallElement.innerHTML = (1 + parseInt(smallElement.innerHTML)).toString()
-            } else {
-                this.src = 'images/iconamoon_heart-bold-js.svg';
-                smallElement.innerHTML = (parseInt(smallElement.innerHTML) - 1).toString()
-            }
         })
     })
 
@@ -129,6 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return response.text();
         }).then(data => {
             console.log(data);
+            location.reload();
         }).catch(error => {
             console.error("Erro na requisição:", error)
         }).finally(() => {
@@ -195,7 +177,7 @@ function carregarPublicacoes() {
     let proximo_intervalo;
     if (div_postagens) {
         proximo_intervalo = div_postagens.childElementCount;
-    }else{
+    } else {
         proximo_intervalo = 0;
     }
     $.ajax({
@@ -274,10 +256,33 @@ function carregarPublicacoes() {
                 })
                 icone_curtida_publicacao.on('click', function () {
                     curtirPublicacao(publicacao.idPublicacao);
+                });
+                icone_curtida_publicacao.on('mouseenter', function () {
+                    this.style.cursor = 'pointer';
+                    if (this.src.includes('images/iconamoon_heart-bold.svg')) {
+                        this.src = 'images/iconamoon_heart-bold-js.svg';
+                    }
+                    this.style.boxShadow = "0 0 20px 5px #FC6E6E";
+                });
+                icone_curtida_publicacao.on('mouseleave', function () {
+                    this.style.cursor = 'default';
+                    if (this.src.includes('images/iconamoon_heart-bold-js.svg')) {
+                        this.src = 'images/iconamoon_heart-bold.svg';
+                    }
+                    this.style.boxShadow = '';
                 })
                 let contador_curtidas = $("<small>", {
                     text: publicacao.curtidas.length.toString()
-                })
+                });
+                icone_curtida_publicacao.on('click', function () {
+                    if (this.src.includes('images/iconamoon_heart-bold-js.svg')) {
+                        this.src = 'images/iconamoon_heart-fill.svg';
+                        contador_curtidas.text(1 + parseInt(contador_curtidas.text())).toString()
+                    } else {
+                        this.src = 'images/iconamoon_heart-bold-js.svg';
+                        contador_curtidas.text(parseInt(contador_curtidas.text()) - 1).toString()
+                    }
+                });
                 classe_curtida_publicacao.append(icone_curtida_publicacao);
                 classe_curtida_publicacao.append(contador_curtidas);
                 classe_inshights_publicacao.append(classe_curtida_publicacao);

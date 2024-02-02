@@ -74,6 +74,8 @@ public class Publicacao implements Serializable {
 
     public Publicacao(int idPublicacao) {
         this.idPublicacao = idPublicacao;
+        PublicacaoDAO publicacaoDAO = new PublicacaoDAO();
+        this.setCurtidas(publicacaoDAO.curtidas(idPublicacao));
     }
 
     public Publicacao() {
@@ -114,23 +116,28 @@ public class Publicacao implements Serializable {
     public int getNumeroCurtidas() {
         return numeroCurtidas;
     }
-
-    public boolean curtir(int idMembro) {
+    public boolean jaCurtiu(int idMembro){
+        for (Membro membroCurtiu: getCurtidas()){
+            if (membroCurtiu.getIdPessoa() == idMembro){
+                return true;
+            }
+        }
+        return false;
+    }
+    public void curtir(int idMembro) {
         try {
             PublicacaoDAO publicacaoDAO = new PublicacaoDAO();
             publicacaoDAO.curtirPublicacao(getIdPublicacao(), idMembro);
-            return true;
         } catch (Exception e) {
             System.out.println(e);
-            return false;
+            throw new RuntimeException(e);
         }
     }
 
-    public boolean descurtir(int idMembro) {
+    public void descurtir(int idMembro) {
         try {
             PublicacaoDAO publicacaoDAO = new PublicacaoDAO();
             publicacaoDAO.descurtirPublicacao(getIdPublicacao(), idMembro);
-            return true;
         } catch (Exception e) {
             System.out.println(e);
             throw new RuntimeException(e);

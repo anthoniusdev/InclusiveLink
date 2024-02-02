@@ -82,8 +82,11 @@ public class Membro extends Pessoa implements Serializable {
         this.idComunidadesSeguindos = membro.getComunidadesSeguindos();
         this.idComentarios = membro.getComentarios();
     }
-    public Membro(){}
-    public Membro(int idMembro){
+
+    public Membro() {
+    }
+
+    public Membro(int idMembro) {
         super(idMembro);
         Membro membro = new Membro(new MembroDAO().retornaMembro(idMembro));
         this.fotoPerfil = membro.getFotoPerfil();
@@ -99,6 +102,7 @@ public class Membro extends Pessoa implements Serializable {
         this.idComunidadesSeguindos = membro.getComunidadesSeguindos();
         this.idComentarios = membro.getComentarios();
     }
+
     public String getFotoPerfil() {
         return fotoPerfil;
     }
@@ -265,10 +269,6 @@ public class Membro extends Pessoa implements Serializable {
     }
     // --------------------------------------------------------------------------------------------------------
 
-    public boolean aceitarSolicitacao() {
-        //NÃO SEI COMO FUNCIONARIA ESSE MÉTODO
-        return true;
-    }
 
     public void excluirPublicacao(Publicacao publicacaoParaExcluir) {
         try {
@@ -278,15 +278,17 @@ public class Membro extends Pessoa implements Serializable {
             throw new RuntimeException(e);
         }
     }
-    public String getHashSenha(){
+
+    public String getHashSenha() {
         MembroDAO membroDAO = new MembroDAO();
         String hash = membroDAO.retornaHashSenha(this.getNomeUsuario());
-        if ( hash == null){
+        if (hash == null) {
             hash = membroDAO.retornaHashSenha(this.getEmail());
         }
         return hash;
     }
-    public int retornaIdPorNomeUser(){
+
+    public int retornaIdPorNomeUser() {
         return new MembroDAO().verificaId(this.nomeUsuario);
     }
 
@@ -359,62 +361,55 @@ public class Membro extends Pessoa implements Serializable {
         return isModerador;
     }
 
-    public void atualizarDados() {
-        MembroDAO membroDAO = new MembroDAO();
-        Membro membroAtualizado = membroDAO.retornaMembro(this.getIdPessoa());
-        this.setIdPessoa(membroAtualizado.getIdPessoa());
-        this.setNome(membroAtualizado.getNome());
-        this.setDataNascimento(membroAtualizado.getDataNascimento());
-        this.setEmail(membroAtualizado.getEmail());
-        this.setSenha(membroAtualizado.getSenha());
-        this.fotoPerfil = membroAtualizado.getFotoPerfil();
-        this.fotoFundo = membroAtualizado.getFotoFundo();
-        this.descricao = membroAtualizado.getDescricao();
-        this.perfilVisivel = membroAtualizado.isPerfilVisivel();
-        this.nomeUsuario = membroAtualizado.getNomeUsuario();
-        this.idPublicacaoCurtidas = membroAtualizado.getCurtidas();
-        this.idPublicacoes = membroAtualizado.getPublicacoes();
-        this.idMembrosSeguindos = membroAtualizado.getMembrosSeguindos();
-        this.idMembrosSeguidores = membroAtualizado.getMembrosSeguidores();
-        this.idComunidadesParticipantes = membroAtualizado.getComunidadesParticipantes();
-        this.idComunidadesSeguindos = membroAtualizado.getComunidadesSeguindos();
-        this.idComentarios = membroAtualizado.getComentarios();
-    }
-    public boolean seguirMembro(int idSeguindo){
+    public boolean seguirMembro(int idSeguindo) {
         try {
             MembroDAO membroDAO = new MembroDAO();
             return membroDAO.seguirMembro(this.getIdPessoa(), idSeguindo);
-        }catch (Exception e){
-            throw new RuntimeException(e);
-        }
-    }
-    public boolean curtirPublicacao(int idPublicacao){
-        try {
-            for (int curtida: getCurtidas()){
-                if (curtida == idPublicacao) {
-                    return descurtirPublicacao(idPublicacao);
-                }
-            }
-            return new Publicacao(idPublicacao).curtir(this.getIdPessoa());
-        }catch (Exception e){
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
-    }
-    public ArrayList<Membro> listarMembros(int quantidade){
-        return new MembroDAO().listarMembros(quantidade, this.getIdPessoa());
-    }
-    public ArrayList<Membro> pesquisarPerfil(String query){
-        return new MembroDAO().pesquisarPerfil(query, this.getIdPessoa());
-    }
-    public boolean isNomeDeUsuarioUnique(String nomeUsuario){
-        return new MembroDAO().isNomeUsuarioUnique(nomeUsuario);
-    }
-    private boolean descurtirPublicacao(int idPublicacao){
-        try {
-            return new Publicacao(idPublicacao).descurtir(this.getIdPessoa());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
+
+    private void curtir(int idPublicacao) {
+        try {
+            new Publicacao(idPublicacao).curtir(this.getIdPessoa());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void curtirPublicacao(int idPublicacao) {
+        try {
+            if (new Publicacao(idPublicacao).jaCurtiu(this.getIdPessoa())){
+                descurtirPublicacao(idPublicacao);
+            }else{
+                curtir(idPublicacao);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void descurtirPublicacao(int idPublicacao) {
+        try {
+            new Publicacao(idPublicacao).descurtir(this.getIdPessoa());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ArrayList<Membro> listarMembros(int quantidade) {
+        return new MembroDAO().listarMembros(quantidade, this.getIdPessoa());
+    }
+
+    public ArrayList<Membro> pesquisarPerfil(String query) {
+        return new MembroDAO().pesquisarPerfil(query, this.getIdPessoa());
+    }
+
+    public boolean isNomeDeUsuarioUnique(String nomeUsuario) {
+        return new MembroDAO().isNomeUsuarioUnique(nomeUsuario);
+    }
+
 }
