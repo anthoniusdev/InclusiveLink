@@ -125,7 +125,8 @@ public class Publicacao implements Serializable {
             return false;
         }
     }
-    public boolean descurtir(int idMembro){
+
+    public boolean descurtir(int idMembro) {
         try {
             PublicacaoDAO publicacaoDAO = new PublicacaoDAO();
             publicacaoDAO.descurtirPublicacao(getIdPublicacao(), idMembro);
@@ -185,9 +186,15 @@ public class Publicacao implements Serializable {
             throw new RuntimeException(e);
         }
     }
-    public ArrayList<Publicacao> listarPublicacoes(int idMembro){
+
+    public ArrayList<Publicacao> listarPublicacoes(int idMembro) {
         return new PublicacaoDAO().feed(idMembro);
     }
+
+    public ArrayList<Publicacao> feedMembro(int idMembro, int intervalo_inicial, int quantidade_publicacoes) {
+        return new PublicacaoDAO().feed(idMembro, intervalo_inicial, quantidade_publicacoes);
+    }
+
     public void excluirPublicacao(Membro autor, Comunidade comunidade) {
         if (autor.isParticipante(comunidade) || autor.isModerador(comunidade)) {
             try {

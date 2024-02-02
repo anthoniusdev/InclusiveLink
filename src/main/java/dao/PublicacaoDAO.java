@@ -137,6 +137,25 @@ public class PublicacaoDAO {
         }
     }
 
+    public ArrayList<Publicacao> feed(int idUsuario, int indice_inicial, int quantidade_publicacoes) {
+        try (Connection con = conectar()) {
+            String read = "SELECT idPublicacao FROM publicacao WHERE id_autor IN (SELECT idSeguindo FROM membro_seguindo WHERE idMembro = ?) OR id_autor = ? ORDER BY data DESC, hora DESC LIMIT ?, ?";
+            try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
+                preparedStatement.setInt(1, idUsuario);
+                preparedStatement.setInt(2, idUsuario);
+                preparedStatement.setInt(3, indice_inicial);
+                preparedStatement.setInt(4, quantidade_publicacoes);
+                ResultSet rs = preparedStatement.executeQuery();
+                ArrayList<Publicacao> feed = new ArrayList<>();
+                while (rs.next()) {
+                    feed.add(retornaPublicacao(rs.getInt(1)));
+                }
+                return feed;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public ArrayList<Publicacao> feed(int idUsuario) {
         try (Connection con = conectar()) {
             String read = "SELECT idPublicacao FROM publicacao WHERE id_autor IN (SELECT idSeguindo FROM membro_seguindo WHERE idMembro = ?) OR id_autor = ? ORDER BY CONCAT(data, ' ', hora) DESC";
@@ -147,10 +166,6 @@ public class PublicacaoDAO {
                 ArrayList<Publicacao> feed = new ArrayList<>();
                 while (rs.next()) {
                     feed.add(retornaPublicacao(rs.getInt(1)));
-//                    System.out.println(retornaPublicacao(rs.getInt(1)).getTexto());
-//                    System.out.println(retornaPublicacao(rs.getInt(1)).getAutor());
-//                    System.out.println(retornaPublicacao(rs.getInt(1)).getIdPublicacao());
-//                    System.out.println("--------------");
                 }
                 return feed;
             }
