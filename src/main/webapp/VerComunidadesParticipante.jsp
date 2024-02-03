@@ -54,7 +54,9 @@
                 </div>
                 <h3><%=comunidade.getNome()%>
                 </h3>
-                <button onclick="sairComunidade(<%=comunidade.getIdComunidade()%>, <%=comunidadesParticipantes.indexOf(comunidade)%>)" class="sair-comunidade">SAIR</button>
+                <button onclick="sairComunidade(<%=comunidade.getIdComunidade()%>, <%=comunidadesParticipantes.indexOf(comunidade)%>)"
+                        class="sair-comunidade">SAIR
+                </button>
             </div>
             <%
                 }

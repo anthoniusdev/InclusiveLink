@@ -112,7 +112,7 @@ html, body, footer {
 
 .sair-comunidade:hover {
     cursor: pointer;
-    border: 2px solid #FF0000;
+    border: 1px solid #FF0000;
     background-color: var(--COR-03);
     transition: 0.5s;
     color: #FF0000;

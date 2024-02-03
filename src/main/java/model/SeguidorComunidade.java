@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 public class SeguidorComunidade extends Membro{
     private ArrayList<Comunidade> seguindoComunidades = new ArrayList<Comunidade>();
-
+    private int idComunidade;
+    public SeguidorComunidade(){}
     public SeguidorComunidade(Membro membro){
         super(membro);
     }
@@ -29,5 +30,13 @@ public class SeguidorComunidade extends Membro{
             }
         }
         return verificaSeguindoComunidade;
+    }
+
+    public int getIdComunidade() {
+        return idComunidade;
+    }
+
+    public void setIdComunidade(int idComunidade) {
+        this.idComunidade = idComunidade;
     }
 }

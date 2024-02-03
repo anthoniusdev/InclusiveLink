@@ -12,7 +12,6 @@ target/
 *.iws
 *.iml
 *.ipr
-usersImages
 src/main/java/dao/Conexao.java
 src/main/java/util/ObterURL.java
 ### Eclipse ###
@@ -65,4 +64,7 @@ build/
 hs_err_pid*
 replay_pid*
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 81d09ac6d197b6cb340e40c29869501864059ed0

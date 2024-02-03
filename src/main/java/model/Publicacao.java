@@ -2,9 +2,10 @@ package model;
 
 import dao.PublicacaoDAO;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Publicacao {
+public class Publicacao implements Serializable {
     private int idPublicacao;
     private String texto;
     private String midia;

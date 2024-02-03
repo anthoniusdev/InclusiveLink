@@ -1,5 +1,5 @@
 let ftPer, ftFun;
-document.addEventListener("DOMContentLoaded", function (){
+document.addEventListener("DOMContentLoaded", function () {
     let botaoCriarNovaComunidade = $('#botaoCriarNovaComunidade');
     let botaoCriarComunidade = $('#botaoCriarComunidade');
     let ftPerURL, ftFunURL;
@@ -41,15 +41,6 @@ document.addEventListener("DOMContentLoaded", function (){
             backgroundColor: 'var(--COR-03)',
             transition: '0.5s'
         })
-    })
-    botaoCriarComunidade.on('click', function () {
-        $(this).css({
-            border: "4px solid #427D9D",
-            backgroundColor: "#164863",
-            transition: '0.5s'
-        })
-        $(this).text("CRIADO");
-        fecharPopUpCriarComunidade();
     })
     labelNomeComunidade.on('mouseenter', function () {
         this.style.cursor = 'text';
@@ -106,6 +97,7 @@ document.addEventListener("DOMContentLoaded", function (){
         }
         console.log('Arquivo selecionado:', this.files[0]);
     })
+
     function abrirPopUpCriarComunidade() {
         $('#popup-nova-comunidade').css({
             display: 'block'
@@ -122,6 +114,20 @@ document.addEventListener("DOMContentLoaded", function (){
     }
 
     function fecharPopUpCriarComunidade() {
+        $('#nomeComunidade').val('');
+        $('#descricaoComunidade').val('');
+        ftPer = null;
+        ftFun = null;
+        ftPerURL = null;
+        ftFunURL = null;
+        let botao = $('#botaoCriarComunidade');
+        botao.css({
+            border: "none",
+            backgroundColor: "var(--COR-03)",
+            transition: '0.5s'
+        });
+        botao.text('CRIAR');
+
         $('#popup-nova-comunidade').css({
             display: 'none',
             transition: '0.2s'
@@ -132,6 +138,7 @@ document.addEventListener("DOMContentLoaded", function (){
 
     }
 })
+
 function criarComunidade(idAutor) {
     let formData = new FormData();
     formData.append('nomeComunidade', $('#nomeComunidade').val());
@@ -147,16 +154,16 @@ function criarComunidade(idAutor) {
         contentType: false,
         dataType: "json",
         success: function (response) {
-            if (response && response.success) {
-                console.log("SUCESSO NA CRIAÇÃO DA COMUNIDADE: " + (response.message || "Sem mensagem de sucesso."));
-            } else {
-                console.log("ERRO NA CRIAÇÃO DA COMUNIDADE: " + (response.message || "Sem mensagem de erro específica."));
-            }
-            console.log(response)
+            let botao = $('#botaoCriarComunidade');
+            botao.css({
+                border: "4px solid #427D9D",
+                backgroundColor: "#164863",
+                transition: '0.5s'
+            })
+            botao.text("CRIADO");
         },
         error: function (error) {
             console.log("ERRO NA CRIAÇÃO DA COMUNIDADE: " + (error.responseText || "Erro desconhecido."));
         }
-
     });
 }

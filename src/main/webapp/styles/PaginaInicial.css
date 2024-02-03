@@ -660,3 +660,49 @@ html, body, footer {
     right: 15px;
     margin-top: 5px;
 }
+
+.remover-foto {
+    display: none;
+    width: auto;
+    height: 50px;
+    position: relative;
+}
+
+.remover-foto:hover {
+    cursor: pointer;
+}
+
+.imgPreview {
+    display: flex;
+}
+
+.caixa-publicacao {
+    display: flex;
+    border-top: 3px solid var(--COR-04);
+}
+
+.caixa-publicacao .foto-perfil-autor {
+    width: 83px;
+    height: 83px;
+    margin: 20px;
+}
+
+.caixa-publicacao .nome-autor {
+    color: var(--COR-TEXTO-04);
+    font-size: 20px;
+    font-synthesis: none;
+}
+.caixa-publicacao .texto-publicacao{
+    width: auto;
+    max-width: 750px;
+    height: auto;
+    color: var(--COR-TEXTO-04);
+    font-size: 20px;
+    font-synthesis: none;
+}
+.inshights-publicacao{
+    display: flex;
+    flex-direction: row;
+    color: var(--COR-TEXTO-04);
+    font-synthesis: none;
+}

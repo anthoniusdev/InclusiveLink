@@ -136,7 +136,7 @@ public class Comunidade implements Serializable {
         this.idSeguidores = seguidor;
     }
 
-    public boolean criarComunidade(){
+    public boolean criarComunidade() {
         Comunidade novaComunidade;
         try {
             ComunidadeDAO comunidadeDAO = new ComunidadeDAO();
@@ -147,11 +147,11 @@ public class Comunidade implements Serializable {
                 this.setIdComunidade(novaComunidade.getIdComunidade());
                 System.out.println("TUDO CERTO");
                 return true;
-            }else{
+            } else {
                 System.out.println("comunidade ja existe");
             }
             // ALterar logica para retornar caso a comunidade já exista
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
         return false;

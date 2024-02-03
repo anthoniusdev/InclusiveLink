@@ -24,7 +24,7 @@ public class PublicacaoDAO {
                 preparedStatementPublicacao.setInt(3, publicacao.getAutor().getIdPessoa());
                 int linhasAfetadas = preparedStatementPublicacao.executeUpdate();
                 if (linhasAfetadas > 0) {
-                    try (ResultSet idGerado = preparedStatementPublicacao.getGeneratedKeys()){
+                    try (ResultSet idGerado = preparedStatementPublicacao.getGeneratedKeys()) {
                         if (idGerado.next()) {
                             idPublicacao = idGerado.getInt(1);
                         }
@@ -53,18 +53,16 @@ public class PublicacaoDAO {
             if (rs.next()) {
                 MembroDAO membroDAO = new MembroDAO();
                 ComentarioDAO comentarioDAO = new ComentarioDAO();
-                while (rs.next()) {
-                    publicacaoRetornada.setIdPublicacao(rs.getInt(1));
-                    publicacaoRetornada.setTexto(rs.getString(2));
-                    publicacaoRetornada.setMidia(rs.getString(3));
-                    publicacaoRetornada.setAutor(membroDAO.retornaMembro(rs.getInt(4)));
-                    publicacaoRetornada.setData(rs.getString(5));
-                    publicacaoRetornada.setHora(rs.getString(6));
-                    publicacaoRetornada.setCurtidas(curtidas(idPublicacao));
-                    publicacaoRetornada.setComentarios(comentarioDAO.comentarios(idPublicacao));
-                    // publicacaoRetornada.setNumeroComentarios(); --> Verificar depois
-                    // publicacaoRetornada.setNumeroCurtidas(); --> Verificar depois
-                }
+                publicacaoRetornada.setIdPublicacao(rs.getInt(1));
+                publicacaoRetornada.setTexto(rs.getString(2));
+                publicacaoRetornada.setMidia(rs.getString(3));
+                publicacaoRetornada.setAutor(membroDAO.retornaMembro(rs.getInt(4)));
+                publicacaoRetornada.setData(rs.getString(5));
+                publicacaoRetornada.setHora(rs.getString(6));
+                publicacaoRetornada.setCurtidas(curtidas(idPublicacao));
+                publicacaoRetornada.setComentarios(comentarioDAO.comentarios(idPublicacao));
+                publicacaoRetornada.setNumeroComentarios(publicacaoRetornada.getComentarios().size());
+                publicacaoRetornada.setNumeroCurtidas(publicacaoRetornada.getCurtidas().size());
             }
             preparedStatement.close();
         } catch (Exception e) {
@@ -139,4 +137,25 @@ public class PublicacaoDAO {
         }
     }
 
+    public ArrayList<Publicacao> feed(int idUsuario) {
+        try (Connection con = conectar()) {
+            String read = "SELECT idPublicacao FROM publicacao WHERE id_autor IN (SELECT idSeguindo FROM membro_seguindo WHERE idMembro = ?) OR id_autor = ? ORDER BY CONCAT(data, ' ', hora) DESC";
+            try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
+                preparedStatement.setInt(1, idUsuario);
+                preparedStatement.setInt(2, idUsuario);
+                ResultSet rs = preparedStatement.executeQuery();
+                ArrayList<Publicacao> feed = new ArrayList<>();
+                while (rs.next()) {
+                    feed.add(retornaPublicacao(rs.getInt(1)));
+//                    System.out.println(retornaPublicacao(rs.getInt(1)).getTexto());
+//                    System.out.println(retornaPublicacao(rs.getInt(1)).getAutor());
+//                    System.out.println(retornaPublicacao(rs.getInt(1)).getIdPublicacao());
+//                    System.out.println("--------------");
+                }
+                return feed;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
