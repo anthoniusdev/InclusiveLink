@@ -1,0 +1,189 @@
+@font-face {
+    font-family: 'Monomaniac One';
+    src: url("../fonts/MonomaniacOne-Regular.ttf") format('truetype');
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #DDF2FD;
+    font-family: 'Monomaniac One', sans-serif;
+}
+
+.retanguloPerfil {
+    width: 63%;
+    height: 250vh;
+    border-radius: 20px;
+    background-color: #427D9D;
+    position: absolute;
+    left: 2%;
+    top: 3.5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    overflow: hidden;
+}
+
+.header {
+    margin-right: 38rem;
+    width: 250px;
+    display: flex;
+}
+
+.homePage{
+    font-size: 2rem;
+    color: rgba(221, 242, 253, 0.60);
+    cursor: pointer;
+    margin-right: 5rem;
+    margin-top: 0.5rem;
+}
+.perfil{
+    margin-top: 0.5rem;
+    font-size: 2rem;
+    color: rgba(221, 242, 253, 0.60);
+    cursor: pointer;
+}
+
+.fundoPerfil {
+    width: 100%;
+    height: 36vh;
+    display: block;
+    top: 4rem;
+    position: absolute;
+    object-fit: cover;
+    object-position: center;
+    border-top: 4px solid #164863;
+}
+.fotoPerfil{
+    border-radius: 50%;
+    width: 15%;
+    height: 18vh;
+    top: 16rem;
+    left: 3%;
+    display: block;
+    position: absolute;
+    object-fit: cover;
+    object-position: center;
+    border: 6px solid #427D9D;
+}
+
+.nomeComunidade{
+    margin-right: 45rem;
+    margin-top: 20rem;
+    font-size: 1.7rem;
+    color: #DDF2FD;
+}
+.tooltip-container {
+    position: relative;
+    margin-left: 144px;
+    vertical-align: ;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: #164863;
+    color: white;
+    cursor: pointer;
+    border-radius: 20px;
+}
+
+
+.profile-description {
+    margin-right: 9.5rem;
+    min-width: 700px;
+    max-width: 700px;
+    text-align: justify;
+    text-justify: distribute-all-lines;
+    line-height: 1.5;
+    background: rgba(120, 33, 33, 0);
+}
+.descricao{
+    font-size: 1.4rem;
+    color: #DDF2FD;
+}
+
+.seguindoSeguidores{
+    margin-right: 34.5rem;
+    width: 300px;
+    display: flex;
+    align-items: center;
+}
+
+.numSeguindo{
+    font-size: 1.4rem;
+    color: #DDF2FD;
+}
+.seguindo{
+    font-size: 1.4rem;
+    color: rgba(221, 242, 253, 0.60);
+}
+.numSeguidores{
+    margin-left: 30px;
+    font-size: 1.4rem;
+    color: #DDF2FD;
+}
+.seguidores{
+    font-size: 1.4rem;
+    color: rgba(221, 242, 253, 0.60);
+}
+
+.linha {
+    width: 100%;
+    height: 4px;
+    background-color: #164863;
+}
+
+
+.pesquisaPerfis {
+    width: 30%;
+    height: 8vh;
+    border-radius: 20px;
+    background-color: #427D9D;
+    position: absolute;
+    right: 2%;
+    top: 3.5%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.Perfis {
+    width: 30%;
+    height: 50vh;
+    border-radius: 20px;
+    background-color: #427D9D;
+    position: absolute;
+    right: 2%;
+    top: 14%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.pesquisaComunidades {
+    width: 30%;
+    height: 8vh;
+    border-radius: 20px;
+    background-color: #427D9D;
+    position: absolute;
+    right: 2%;
+    top: 68%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.Comunidades {
+    width: 30%;
+    height: 50vh;
+    border-radius: 20px;
+    background-color: #427D9D;
+    position: absolute;
+    right: 2%;
+    top: 78.5%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
