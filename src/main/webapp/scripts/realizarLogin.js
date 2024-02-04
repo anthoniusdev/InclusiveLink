@@ -33,15 +33,16 @@ document.addEventListener("DOMContentLoaded", async function () {
         let urlParametros = new URLSearchParams(window.location.search);
         let erroParam = urlParametros.get('erro');
 
+        const nomeUsuario = document.getElementById("username");
+        const senha = document.getElementById("password");
+
         if (erroParam === '1') {
             errorValidation(nomeUsuario, "Nome de usuário ou senha incorretos!");
             errorValidation(senha, "Nome de usuário ou senha incorretos!");
             urlParametros.delete('erro');
             window.history.replaceState({}, document.title, "?" + urlParametros.toString());
-
             return false;
         }
-
         return true;
     }
 

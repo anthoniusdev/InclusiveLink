@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
@@ -13,7 +12,8 @@ target/
 *.iws
 *.iml
 *.ipr
-
+src/main/java/dao/Conexao.java
+src/main/java/util/ObterURL.java
 ### Eclipse ###
 .apt_generated
 .classpath
@@ -63,4 +63,8 @@ build/
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
->>>>>>> a6456b7960a9630e10c48bbf75e9c9a6b54fe613
+
+<<<<<<< HEAD
+
+=======
+>>>>>>> 81d09ac6d197b6cb340e40c29869501864059ed0

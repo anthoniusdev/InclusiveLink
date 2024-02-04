@@ -1,8 +1,8 @@
 package controller;
 
 import com.google.gson.JsonObject;
-import dao.MembroDAO;
-import dao.PessoaDAO;
+import model.Membro;
+import model.Pessoa;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,9 +16,6 @@ import java.io.PrintWriter;
 @WebServlet(urlPatterns = {"/verificarUnicidade"})
 public class UnicidadeController extends HttpServlet {
 
-    private final PessoaDAO pessoaDAO = new PessoaDAO();
-    private final MembroDAO membroDAO = new MembroDAO();
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("application/json");
@@ -31,12 +28,12 @@ public class UnicidadeController extends HttpServlet {
         JsonObject jsonObject = new JsonObject();
         try {
             if (tipo.equals("nomeUsuario")) {
-                unico = membroDAO.isNomeUsuarioUnique(valor);
+                unico = new Membro().isNomeDeUsuarioUnique(valor);
                 jsonObject.addProperty("tipo", "nomeUsuario");
                 jsonObject.addProperty("valor", valor);
                 jsonObject.addProperty("unico", unico);
             } else if (tipo.equals("email")) {
-                unico = pessoaDAO.isEmailUnique(valor);
+                unico = new Pessoa().isEmailUnique(valor);
                 jsonObject.addProperty("tipo", "email");
                 jsonObject.addProperty("valor", valor);
                 jsonObject.addProperty("unico", unico);

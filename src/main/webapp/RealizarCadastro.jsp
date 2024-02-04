@@ -5,6 +5,7 @@
 <head>
     <title>Inclusive Link</title>
     <link rel="stylesheet" href="styles/RealizarCadastro.css">
+    <link rel="icon" href="images/LOGO.ico">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="scripts/realizarCadastro.js"></script>
     <meta charset="UTF-8">
@@ -89,7 +90,7 @@
     <div class="LOGO-E-NOMES">
         <div class="Logo-Nome-IL">
             <div class="bola-azul">
-                <img src="images/LOGO-QUALIDADE-MELHOR.png" alt="Logo InclusiveLink">
+                <img src="images/LOGO-InclusiveLink.png" alt="Logo InclusiveLink">
             </div>
             <h1>Inclusive Link</h1>
         </div>

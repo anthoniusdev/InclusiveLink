@@ -1,44 +1,42 @@
 package model;
 
-import java.util.*;
+import dao.ComunidadeDAO;
 
-public class Comunidade {
+import java.io.Serializable;
+import java.util.ArrayList;
+
+public class Comunidade implements Serializable {
     private int idComunidade;
     private String nome;
-    private ModeradorComunidade criador; // -> Por ser criador, dá para passar o criador logo como ModeradorComunidade
-    private ModeradorComunidade moderador;
+    private int idCriador;
     private String fotoPerfil;
     private String fotoFundo;
     private String descricao;
-    private ArrayList<Publicacao> publicacoes = new ArrayList<>();
-    private Publicacao publicacao;
-    private ArrayList<ModeradorComunidade> moderadores = new ArrayList<ModeradorComunidade>();
-    private ArrayList<ParticipanteComunidade> participantes = new ArrayList<ParticipanteComunidade>();
-    private ArrayList<SeguidorComunidade> seguidores = new ArrayList<SeguidorComunidade>();
-    public Comunidade(String nome, Membro criador, String fotoPerfil, String fotoFundo, String descricao, ArrayList<Publicacao> publicacoes, ArrayList<ModeradorComunidade> moderadores, int numeroParticipantes, ArrayList<ParticipanteComunidade> participantes, int numeroSeguidores, ArrayList<SeguidorComunidade> seguidor) {
-        this.nome = nome;
-        this.fotoPerfil = fotoPerfil;
-        this.fotoFundo = fotoFundo;
-        this.descricao = descricao;
-        this.publicacoes = publicacoes;
-        this.moderadores = moderadores;
-        this.participantes = participantes;
-        this.seguidores = seguidor;
-    }
-    public Comunidade(String nome, Membro criador, String fotoPerfil, String fotoFundo, String descricao, int idComunidade) {
-        this.nome = nome;
-        this.criador = definirModerador(participarComunidade(criador));
-        this.fotoPerfil = fotoPerfil;
-        this.fotoFundo = fotoFundo;
-        this.descricao = descricao;
-        this.participantes.size();
-        this.idComunidade = idComunidade;
+    private ArrayList<Integer> idPublicacoes = new ArrayList<>();
+    private ArrayList<Integer> idModeradores = new ArrayList<>();
+    private ArrayList<Integer> idParticipantes = new ArrayList<>();
+    private ArrayList<Integer> idSeguidores = new ArrayList<>();
 
+    public Comunidade(int idComunidade, String nome, int idCriador, String fotoPerfil, String fotoFundo, String descricao, ArrayList<Integer> idPublicacoes, ArrayList<Integer> idModeradores, ArrayList<Integer> idParticipantes, ArrayList<Integer> idSeguidores) {
+        this.idComunidade = idComunidade;
+        this.nome = nome;
+        this.idCriador = idCriador;
+        this.fotoPerfil = fotoPerfil;
+        this.fotoFundo = fotoFundo;
+        this.descricao = descricao;
+        this.idPublicacoes = idPublicacoes;
+        this.idModeradores = idModeradores;
+        this.idParticipantes = idParticipantes;
+        this.idSeguidores = idSeguidores;
     }
+
+    public Comunidade() {
+    }
+
     public ParticipanteComunidade participarComunidade(Membro membro) {
         if (membro.isSeguidor(this)) {
             ParticipanteComunidade novoParticipante = new ParticipanteComunidade((SeguidorComunidade) membro);
-            participantes.add(novoParticipante);
+            idParticipantes.add(novoParticipante.getIdPessoa());
             return novoParticipante;
         } else {
             return null;
@@ -50,7 +48,7 @@ public class Comunidade {
         ModeradorComunidade novoModerador = null;
         try {
             novoModerador = new ModeradorComunidade(participanteComunidade);
-            moderadores.add(novoModerador);
+            idModeradores.add(novoModerador.getIdPessoa());
         } catch (Exception e) {
             System.out.println(e);
             novoModerador = null;
@@ -61,8 +59,8 @@ public class Comunidade {
     }
 
 
-    public void setCriador(ModeradorComunidade criador) {
-        this.criador = criador;
+    public void setIdCriador(int idCriador) {
+        this.idCriador = idCriador;
     }
 
     public int getIdComunidade() {
@@ -97,8 +95,8 @@ public class Comunidade {
         this.fotoPerfil = fotoPerfil;
     }
 
-    public Membro getCriador() {
-        return criador;
+    public int getIdCriador() {
+        return idCriador;
     }
 
     public String getFotoFundo() {
@@ -109,66 +107,93 @@ public class Comunidade {
         this.fotoFundo = fotoFundo;
     }
 
-    public ArrayList<Publicacao> getPublicacoes() {
-        return publicacoes;
+    public ArrayList<Integer> getIdPublicacoes() {
+        return idPublicacoes;
     }
 
-    public void setPublicacoes(ArrayList<Publicacao> publicacoes) {
-        this.publicacoes = publicacoes;
+    public void setPublicacoes(ArrayList<Integer> publicacoes) {
+        this.idPublicacoes = publicacoes;
     }
 
-    public ArrayList<ModeradorComunidade> getModeradores() {
-        return moderadores;
+    public ArrayList<Integer> getIdModeradores() {
+        return idModeradores;
     }
 
-    public void setModeradores(ArrayList<ModeradorComunidade> moderadores) {
-        this.moderadores = moderadores;
+    public void setModeradores(ArrayList<Integer> moderadores) {
+        this.idModeradores = moderadores;
     }
 
-    public ArrayList<ParticipanteComunidade> getParticipantes() {
-        return participantes;
+    public ArrayList<Integer> getIdParticipantes() {
+        return idParticipantes;
     }
 
-    public void setParticipantes(ArrayList<ParticipanteComunidade> participantes) {
-        this.participantes = participantes;
+    public void setParticipantes(ArrayList<Integer> idParticipantes) {
+        this.idParticipantes = idParticipantes;
     }
 
-
-    public ArrayList<SeguidorComunidade> getSeguidores() {
-        return seguidores;
+    public ArrayList<Integer> getIdSeguidores() {
+        return idSeguidores;
     }
 
-    public void setSeguidor(ArrayList<SeguidorComunidade> seguidor) {
-        this.seguidores = seguidor;
+    public void setSeguidor(ArrayList<Integer> seguidor) {
+        this.idSeguidores = seguidor;
     }
 
+    public boolean criarComunidade() {
+        Comunidade novaComunidade;
+        try {
+            ComunidadeDAO comunidadeDAO = new ComunidadeDAO();
+            if (!comunidadeDAO.verificaComunidade(this.getIdComunidade())) {
+                System.out.println("verificou que a comunidade nao existe");
+                System.out.println("id do autor: " + this.getIdCriador());
+                novaComunidade = comunidadeDAO.criarComunidade(this);
+                this.setIdComunidade(novaComunidade.getIdComunidade());
+                System.out.println("TUDO CERTO");
+                return true;
+            } else {
+                System.out.println("comunidade ja existe");
+            }
+            // ALterar logica para retornar caso a comunidade já exista
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return false;
+    }
 
     public boolean seguirComunidade(Membro membroSeguir) {
         boolean verificacaoSeguindo = true;
-        for (Membro membrosSeguindo : seguidores) {
-            if (membrosSeguindo.getIdPessoa() == membroSeguir.getIdPessoa()) {
+        for (int idMembroSeguindo : idSeguidores) {
+            if (idMembroSeguindo == membroSeguir.getIdPessoa()) {
                 verificacaoSeguindo = false;
+                break;
             }
         }
         if (verificacaoSeguindo) {
-            seguidores.add((SeguidorComunidade) membroSeguir);
+            idSeguidores.add(membroSeguir.getIdPessoa());
             return true;
-        } else {
-            return false;
         }
+        return false;
+
     }
 
+    public ArrayList<Comunidade> listarComunidadesParticipantes(int idMembro) {
+        return new ComunidadeDAO().listarComunidadesUsuario(idMembro);
+    }
+
+    public ArrayList<Comunidade> listarComunidadesParticipantes(int idMembro, int limit) {
+        return new ComunidadeDAO().listarComunidades(limit);
+    }
 
     public void excluirComunidade(model.Comunidade comunidade) {
         comunidade = null;
     }
 
     public void removerParticipanteComunidade(ParticipanteComunidade participante) {
-        participantes.remove(participante);
+        idParticipantes.remove(participante.getIdPessoa());
     }
 
     public void excluirPublicacao(Publicacao publicacao) {
-        publicacoes.remove(publicacao);
+        idPublicacoes.remove(publicacao.getIdPublicacao());
     }
 
     public void criarPublicacao(Publicacao publicacao) {
@@ -176,7 +201,7 @@ public class Comunidade {
 
         try {
             novaPublicacao = new Publicacao();
-            publicacoes.add(novaPublicacao);
+            idPublicacoes.add(novaPublicacao.getIdPublicacao());
         } catch (Exception e) {
             System.out.println(e);
             novaPublicacao = null;
@@ -185,7 +210,10 @@ public class Comunidade {
     }
 
     public void removerSeguidorComunidade(SeguidorComunidade seguidor) {
-        seguidores.remove(seguidor);
+        idSeguidores.remove(seguidor.getIdPessoa());
     }
 
+    public ArrayList<Comunidade> pesquisarComunidade(String query) {
+        return new ComunidadeDAO().pesquisarComunidade(query);
+    }
 }

@@ -4,8 +4,8 @@
     <inspection_tool class="DuplicatedCode" enabled="true" level="WEAK WARNING" enabled_by_default="true">
       <Languages>
         <language minSize="19" name="Style Sheets" />
-        <language minSize="67" name="Java" />
-        <language minSize="79" name="JavaScript" />
+        <language minSize="78" name="Java" />
+        <language minSize="109" name="JavaScript" />
       </Languages>
     </inspection_tool>
     <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
@@ -65,5 +65,6 @@
         </list>
       </option>
     </inspection_tool>
+    <inspection_tool class="ThrowablePrintStackTrace" enabled="false" level="WARNING" enabled_by_default="false" />
   </profile>
 </component>

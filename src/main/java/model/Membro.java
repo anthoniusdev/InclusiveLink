@@ -75,12 +75,32 @@ public class Membro extends Pessoa implements Serializable {
         this.perfilVisivel = membro.isPerfilVisivel();
         this.nomeUsuario = membro.getNomeUsuario();
         this.idPublicacaoCurtidas = membro.getCurtidas();
-        this.idPublicacoes = null;
-        this.idMembrosSeguindos = null;
-        this.idMembrosSeguidores = null;
-        this.idComunidadesParticipantes = null;
-        this.idComunidadesSeguindos = null;
-        this.idComentarios = null;
+        this.idPublicacoes = membro.getPublicacoes();
+        this.idMembrosSeguindos = membro.getMembrosSeguindos();
+        this.idMembrosSeguidores = membro.getMembrosSeguidores();
+        this.idComunidadesParticipantes = membro.getComunidadesParticipantes();
+        this.idComunidadesSeguindos = membro.getComunidadesSeguindos();
+        this.idComentarios = membro.getComentarios();
+    }
+
+    public Membro() {
+    }
+
+    public Membro(int idMembro) {
+        super(idMembro);
+        Membro membro = new Membro(new MembroDAO().retornaMembro(idMembro));
+        this.fotoPerfil = membro.getFotoPerfil();
+        this.fotoFundo = membro.getFotoFundo();
+        this.descricao = membro.getDescricao();
+        this.perfilVisivel = membro.isPerfilVisivel();
+        this.nomeUsuario = membro.getNomeUsuario();
+        this.idPublicacaoCurtidas = membro.getCurtidas();
+        this.idPublicacoes = membro.getPublicacoes();
+        this.idMembrosSeguindos = membro.getMembrosSeguindos();
+        this.idMembrosSeguidores = membro.getMembrosSeguidores();
+        this.idComunidadesParticipantes = membro.getComunidadesParticipantes();
+        this.idComunidadesSeguindos = membro.getComunidadesSeguindos();
+        this.idComentarios = membro.getComentarios();
     }
 
     public String getFotoPerfil() {
@@ -249,32 +269,18 @@ public class Membro extends Pessoa implements Serializable {
     }
     // --------------------------------------------------------------------------------------------------------
 
-    public boolean aceitarSolicitacao() {
-        //NÃO SEI COMO FUNCIONARIA ESSE MÉTODO
-        return true;
+
+    public String getHashSenha() {
+        MembroDAO membroDAO = new MembroDAO();
+        String hash = membroDAO.retornaHashSenha(this.getNomeUsuario());
+        if (hash == null) {
+            hash = membroDAO.retornaHashSenha(this.getEmail());
+        }
+        return hash;
     }
 
-    public void excluirPublicacao(Publicacao publicacaoParaExcluir) {
-        try {
-            publicacaoParaExcluir.excluirPublicacao();
-            idPublicacoes.remove(publicacaoParaExcluir);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void curtirPublicacao(Publicacao publicacao) {
-        boolean publicacaoCurtida = false;
-        for (int idPublicCurtidaExiste : idPublicacaoCurtidas) {
-            if (publicacao.getIdPublicacao() == idPublicCurtidaExiste) {
-                publicacaoCurtida = true;
-                break;
-            }
-        }
-        if (!publicacaoCurtida) {
-            MembroDAO membroDAO = new MembroDAO();
-            idPublicacaoCurtidas.add(publicacao.getIdPublicacao());
-        }
+    public int retornaIdPorNomeUser() {
+        return new MembroDAO().verificaId(this.nomeUsuario);
     }
 
     public void excluirSeguidor(Membro seguidorExcluido) {
@@ -315,8 +321,8 @@ public class Membro extends Pessoa implements Serializable {
 
     public boolean isParticipante(Comunidade comunidade) {
         boolean isParticipante = false;
-        for (ParticipanteComunidade participanteComunidade : comunidade.getParticipantes()) {
-            if (participanteComunidade.getIdPessoa() == this.getIdPessoa()) {
+        for (int idParticipanteComunidade : comunidade.getIdParticipantes()) {
+            if (idParticipanteComunidade == this.getIdPessoa()) {
                 isParticipante = true;
                 break;
             }
@@ -326,8 +332,8 @@ public class Membro extends Pessoa implements Serializable {
 
     public boolean isSeguidor(Comunidade comunidade) {
         boolean isSeguidor = false;
-        for (SeguidorComunidade seguidorComunidade : comunidade.getSeguidores()) {
-            if (seguidorComunidade.getIdPessoa() == this.getIdPessoa()) {
+        for (int idSeguidorComunidade : comunidade.getIdSeguidores()) {
+            if (idSeguidorComunidade == this.getIdPessoa()) {
                 isSeguidor = true;
                 break;
             }
@@ -337,8 +343,8 @@ public class Membro extends Pessoa implements Serializable {
 
     public boolean isModerador(Comunidade comunidade) {
         boolean isModerador = false;
-        for (ModeradorComunidade moderadorComunidade : comunidade.getModeradores()) {
-            if (moderadorComunidade.getIdPessoa() == this.getIdPessoa()) {
+        for (int idModeradorComunidade : comunidade.getIdModeradores()) {
+            if (idModeradorComunidade == this.getIdPessoa()) {
                 isModerador = true;
                 break;
             }
@@ -346,30 +352,54 @@ public class Membro extends Pessoa implements Serializable {
         return isModerador;
     }
 
-    public void atualizarDados() {
-        MembroDAO membroDAO = new MembroDAO();
-        Membro membroAtualizado = membroDAO.retornaMembro(this.getIdPessoa());
-        this.setIdPessoa(membroAtualizado.getIdPessoa());
-        this.setNome(membroAtualizado.getNome());
-        this.setDataNascimento(membroAtualizado.getDataNascimento());
-        this.setEmail(membroAtualizado.getEmail());
-        this.setSenha(membroAtualizado.getSenha());
-        this.fotoPerfil = membroAtualizado.getFotoPerfil();
-        this.fotoFundo = membroAtualizado.getFotoFundo();
-        this.descricao = membroAtualizado.getDescricao();
-        this.perfilVisivel = membroAtualizado.isPerfilVisivel();
-        this.nomeUsuario = membroAtualizado.getNomeUsuario();
-        this.idPublicacaoCurtidas = membroAtualizado.getCurtidas();
-        this.idPublicacoes = membroAtualizado.getPublicacoes();
-        this.idMembrosSeguindos = membroAtualizado.getMembrosSeguindos();
-        this.idMembrosSeguidores = membroAtualizado.getMembrosSeguidores();
-        this.idComunidadesParticipantes = membroAtualizado.getComunidadesParticipantes();
-        this.idComunidadesSeguindos = membroAtualizado.getComunidadesSeguindos();
-        this.idComentarios = membroAtualizado.getComentarios();
+    public boolean seguirMembro(int idSeguindo) {
+        try {
+            MembroDAO membroDAO = new MembroDAO();
+            return membroDAO.seguirMembro(this.getIdPessoa(), idSeguindo);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    @Override
-    public boolean fazerLogin() {
-        return false;
+    private void curtir(int idPublicacao) {
+        try {
+            new Publicacao(idPublicacao).curtir(this.getIdPessoa());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void curtirPublicacao(int idPublicacao) {
+        try {
+            if (new Publicacao(idPublicacao).jaCurtiu(this.getIdPessoa())){
+                descurtirPublicacao(idPublicacao);
+            }else{
+                curtir(idPublicacao);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void descurtirPublicacao(int idPublicacao) {
+        try {
+            new Publicacao(idPublicacao).descurtir(this.getIdPessoa());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ArrayList<Membro> listarMembros(int quantidade) {
+        return new MembroDAO().listarMembros(quantidade, this.getIdPessoa());
+    }
+
+    public ArrayList<Membro> pesquisarPerfil(String query) {
+        return new MembroDAO().pesquisarPerfil(query, this.getIdPessoa());
+    }
+
+    public boolean isNomeDeUsuarioUnique(String nomeUsuario) {
+        return new MembroDAO().isNomeUsuarioUnique(nomeUsuario);
     }
 }
