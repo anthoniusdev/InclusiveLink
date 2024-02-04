@@ -81,7 +81,7 @@ form {
     border-radius: 20px;
     display: flex;
     flex-direction: column;
-    height: 460px;
+    height: 480px;
     justify-content: center;
 }
 
@@ -194,10 +194,14 @@ label.MantConect::before {
 footer {
     background-color: var(--COR-03);
     color: var(--COR-01);
+<<<<<<< HEAD
+    margin-top: 70px;
+=======
     margin-top: 58px;
     position: absolute;
     bottom: 0;
     width: 100%;
+>>>>>>> d506f5b690d382d5d18d53d4087261dcf258e477
 }
 
 footer .LOGO-E-NOMES {
@@ -226,6 +230,7 @@ footer .Logo-Nome-IL {
     flex-direction: row;
     margin-left: 41px;
 }
+
 
 #manterConectado:focus {
     outline: none;

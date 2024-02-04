@@ -211,7 +211,7 @@ form .btnCadastrar button:active {
 footer {
     background-color: var(--COR-03);
     color: var(--COR-01);
-    margin-top: 38px;
+    margin-top: 40px;
 }
 
 footer .LOGO-E-NOMES {
