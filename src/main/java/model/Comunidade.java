@@ -3,7 +3,7 @@ package model;
 import dao.ComunidadeDAO;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
 
 public class Comunidade implements Serializable {
     private int idComunidade;
@@ -29,7 +29,10 @@ public class Comunidade implements Serializable {
         this.idParticipantes = idParticipantes;
         this.idSeguidores = idSeguidores;
     }
-    public Comunidade(){}
+
+    public Comunidade() {
+    }
+
     public ParticipanteComunidade participarComunidade(Membro membro) {
         if (membro.isSeguidor(this)) {
             ParticipanteComunidade novoParticipante = new ParticipanteComunidade((SeguidorComunidade) membro);
@@ -156,6 +159,7 @@ public class Comunidade implements Serializable {
         }
         return false;
     }
+
     public boolean seguirComunidade(Membro membroSeguir) {
         boolean verificacaoSeguindo = true;
         for (int idMembroSeguindo : idSeguidores) {
@@ -171,10 +175,12 @@ public class Comunidade implements Serializable {
         return false;
 
     }
-    public ArrayList<Comunidade> listarComunidadesParticipantes(int idMembro){
+
+    public ArrayList<Comunidade> listarComunidadesParticipantes(int idMembro) {
         return new ComunidadeDAO().listarComunidadesUsuario(idMembro);
     }
-    public ArrayList<Comunidade> listarComunidadesParticipantes(int idMembro, int limit){
+
+    public ArrayList<Comunidade> listarComunidadesParticipantes(int idMembro, int limit) {
         return new ComunidadeDAO().listarComunidades(limit);
     }
 
@@ -207,4 +213,7 @@ public class Comunidade implements Serializable {
         idSeguidores.remove(seguidor.getIdPessoa());
     }
 
+    public ArrayList<Comunidade> pesquisarComunidade(String query) {
+        return new ComunidadeDAO().pesquisarComunidade(query);
+    }
 }

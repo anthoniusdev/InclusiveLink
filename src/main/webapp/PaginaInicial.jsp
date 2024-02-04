@@ -29,10 +29,12 @@
 <head>
     <title>Inclusive Link</title>
     <link rel="stylesheet" href="styles/PaginaInicial.css">
+    <link rel="icon" href="images/LOGO.ico">
     <script src="scripts/js/jquery-3.7.1.js"></script>
     <script src="scripts/paginaInicial.js"></script>
-    <script src="scripts/barra-lateral-pesquisar-amigo/pesquisarPerfil.js"></script>
-    <script src="scripts/barra-lateral-criar-comunidade/criarComunidade.js"></script>
+    <script src="scripts/barra-lateral-amigo/pesquisarPerfil.js"></script>
+    <script src="scripts/barra-lateral-comunidade/criarComunidade.js"></script>
+    <script src="scripts/barra-lateral-comunidade/pesquisarComunidade.js"></script>
 </head>
 <body>
 <main>
@@ -45,7 +47,7 @@
                 <a href="">PERFIL</a>
             </div>
             <div class="criarPublicacao">
-                <form action="novaPublicacao" method="post" id="formNovaPublicacao">
+                <form action="novaPublicacao" method="post" id="formNovaPublicacao" enctype="multipart/form-data">
                     <div class="foto-perfil">
                         <img src="<%=fotoPerfil%>" alt="Foto de perfil">
                     </div>
@@ -111,6 +113,7 @@
                 <img src="images/search.svg" alt="search">
                 <input type="search" placeholder="PESQUISAR COMUNIDADE" id="pesquisarComunidade">
             </label>
+            <div class="lista-pesquisa-comunidade" id="lista-pesquisa-comunidade"></div>
         </div>
         <div class="comunidades-sugeridas" id="comunidades-sugeridas">
             <div class="criar-comunidade" id="criar-comunidade">

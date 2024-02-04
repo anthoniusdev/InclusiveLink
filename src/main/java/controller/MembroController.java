@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
-@WebServlet(urlPatterns = {"/RealizarCadastro", "/Cadastrar", "/Login", "/seguirMembro", "/pesquisarPerfil", "/paginaInicial", "/curtirPublicacao"})
+@WebServlet(urlPatterns = {"/RealizarCadastro", "/Cadastrar", "/Login", "/seguirMembro", "/pesquisarPerfil", "/paginaInicial", "/curtirPublicacao", "/obterUsuarioAutenticado"})
 public class MembroController extends HttpServlet {
 
     @Override
@@ -46,6 +46,7 @@ public class MembroController extends HttpServlet {
         switch (action) {
             case "/pesquisarPerfil" -> pesquisarPerfil(request, response);
             case "/paginaInicial" -> paginaInicial(request, response);
+            case "/obterUsuarioAutenticado" -> obterUsuarioAutenticado(request, response);
         }
     }
 
@@ -182,5 +183,15 @@ public class MembroController extends HttpServlet {
         HttpSession session = request.getSession(false);
         Membro membro = (Membro) session.getAttribute("usuario");
         membro.curtirPublicacao(Integer.parseInt(request.getParameter("idPublicacao")));
+    }
+    private void obterUsuarioAutenticado(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        HttpSession session = request.getSession(false);
+        Membro membro = (Membro) session.getAttribute("usuario");
+        String jsonResponse = new Gson().toJson(membro.getIdPessoa());
+        // Até o momento só preciso do ID, se precisar de mais alguma tem que adicionar
+        System.out.println(jsonResponse);
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(jsonResponse);
     }
 }

@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 flexDirection: "column"
             });
             perfisSugeridos.css({
-                display: "none"
+                display: 'none'
             });
         } else {
             inputPesquisarPerfil.css({
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 display: 'none'
             });
             perfisSugeridos.css({
-                display: 'none'
+                display: 'block'
             });
         }
     }

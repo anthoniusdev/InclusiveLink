@@ -270,15 +270,6 @@ public class Membro extends Pessoa implements Serializable {
     // --------------------------------------------------------------------------------------------------------
 
 
-    public void excluirPublicacao(Publicacao publicacaoParaExcluir) {
-        try {
-            publicacaoParaExcluir.excluirPublicacao();
-            idPublicacoes.remove(publicacaoParaExcluir);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public String getHashSenha() {
         MembroDAO membroDAO = new MembroDAO();
         String hash = membroDAO.retornaHashSenha(this.getNomeUsuario());
@@ -411,5 +402,4 @@ public class Membro extends Pessoa implements Serializable {
     public boolean isNomeDeUsuarioUnique(String nomeUsuario) {
         return new MembroDAO().isNomeUsuarioUnique(nomeUsuario);
     }
-
 }

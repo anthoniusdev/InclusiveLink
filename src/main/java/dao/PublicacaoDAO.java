@@ -57,6 +57,7 @@ public class PublicacaoDAO {
                 publicacaoRetornada.setTexto(rs.getString(2));
                 publicacaoRetornada.setMidia(rs.getString(3));
                 publicacaoRetornada.setAutor(membroDAO.retornaMembro(rs.getInt(4)));
+                publicacaoRetornada.getAutor().setSenha(null);
                 publicacaoRetornada.setData(rs.getString(5));
                 publicacaoRetornada.setHora(rs.getString(6));
                 publicacaoRetornada.setCurtidas(curtidas(idPublicacao));
@@ -123,17 +124,15 @@ public class PublicacaoDAO {
 
     // CRUD - - - DELETE - - -
     // <-- Deleta uma publicacao específica -->
-    public void excluirPublicacao(int idPublicacao) {
-        if (verificaPublicacao(idPublicacao)) {
-            String delete = "delete from publicacao where idpublicacao = ?";
-            try (Connection con = conectar()) {
-                PreparedStatement preparedStatement = con.prepareStatement(delete);
+    public void excluirPublicacao(int idPublicacao){
+        try (Connection con = conectar()){
+            String delete = "DELETE FROM publicacao WHERE idPublicacao = ?";
+            try (PreparedStatement preparedStatement = con.prepareStatement(delete)){
                 preparedStatement.setInt(1, idPublicacao);
                 preparedStatement.executeUpdate();
-                preparedStatement.close();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -185,4 +184,5 @@ public class PublicacaoDAO {
             throw new RuntimeException(e);
         }
     }
+
 }

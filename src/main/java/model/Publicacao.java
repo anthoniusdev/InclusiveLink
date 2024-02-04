@@ -184,16 +184,6 @@ public class Publicacao implements Serializable {
         this.hora = hora;
     }
 
-
-    public void excluirPublicacao() {
-        try {
-            PublicacaoDAO publicacaoDAO = new PublicacaoDAO();
-            publicacaoDAO.excluirPublicacao(getIdPublicacao());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public ArrayList<Publicacao> listarPublicacoes(int idMembro) {
         return new PublicacaoDAO().feed(idMembro);
     }
@@ -201,42 +191,9 @@ public class Publicacao implements Serializable {
     public ArrayList<Publicacao> feedMembro(int idMembro, int intervalo_inicial, int quantidade_publicacoes) {
         return new PublicacaoDAO().feed(idMembro, intervalo_inicial, quantidade_publicacoes);
     }
-
-    public void excluirPublicacao(Membro autor, Comunidade comunidade) {
-        if (autor.isParticipante(comunidade) || autor.isModerador(comunidade)) {
-            try {
-                PublicacaoDAO publicacaoDAO = new PublicacaoDAO();
-                publicacaoDAO.excluirPublicacao(getIdPublicacao());
-                autor.excluirPublicacao(this);
-                this.getCurtidas().clear(); // Excluir curtidas no DAO -> ArrayList
-                this.getComentarios().clear(); // Excluir comentarios no DAO -> ArrayList
-                comunidade.excluirPublicacao(this);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
+    public void excluirPublicacao(){
+        new PublicacaoDAO().excluirPublicacao(this.idPublicacao);
     }
-    /* metodos que eu acho que deveria estar na classe comentario:
-    public void adicionarComentario(Comentario comentario, Comunidade comunidade){
-        if (comentario.getAutor().isParticipante(comunidade) || comentario.getAutor().isModerador(comunidade)){
-            try {
-                PublicacaoDAO publicacaoDAO = new PublicacaoDAO();
-                publicacaoDAO.adicionarComentario(comentario);
-                comentarios.add(comentario);
-            }catch (Exception e){
-                System.out.println(e);
-            }
-        }
-    }
-    public void adicionarComentario(Comentario comentario){
-        try {
-            PublicacaoDAO publicacaoDAO = new PublicacaoDAO();
-            publicacaoDAO.adicionarComentario(comentario, comentario.getAutor());
-            comentarios.add(comentario);
-        }catch (Exception e){
-            System.out.println(e);
-        }
-    }*/
 
     public int getNumeroComentarios() {
         return numeroComentarios;

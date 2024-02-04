@@ -1,3 +1,9 @@
+let usuarioAutenticado;
+obterUsuarioAutenticado().then(function (usuario) {
+    usuarioAutenticado = usuario;
+}).catch(function (error) {
+    console.log(error);
+})
 carregarPublicacoes();
 let carregando = false, publicacoesCarregadas = [];
 document.addEventListener("DOMContentLoaded", function () {
@@ -31,19 +37,19 @@ document.addEventListener("DOMContentLoaded", function () {
         this.style.height = 'auto';
         this.style.height = Math.min(this.scrollHeight, 300) + 'px';
     });
-    textoPublicacao.addEventListener('focus', function (){
+    textoPublicacao.addEventListener('focus', function () {
         let linha = document.getElementById('linhaAreaInput');
         linha.style.height = '4px';
     });
-    textoPublicacao.addEventListener('focusout', function (){
+    textoPublicacao.addEventListener('focusout', function () {
         let linha = document.getElementById('linhaAreaInput');
         linha.style.height = '2px';
     })
     formNovaPublicacao.addEventListener("submit", function (event) {
         event.preventDefault();
-        if (textoPublicacao.value.length>0 || imageURL != null) {
+        if (textoPublicacao.value.length > 0 || imageURL != null) {
             submeterFormulario();
-        }else{
+        } else {
             textoPublicacao.focus();
         }
     });
@@ -88,11 +94,7 @@ document.addEventListener("DOMContentLoaded", function () {
     })
 
     function submeterFormulario() {
-        let dados = {
-            inputTexto: textoPublicacao.value,
-            inputMidia: imageURL
-        };
-        new FormData(formNovaPublicacao);
+        let formData = new FormData(formNovaPublicacao);
         textoPublicacao.value = "";
         imagemPreview.src = "";
         elementoContagemPublicacao.textContent = (200).toString();
@@ -102,7 +104,7 @@ document.addEventListener("DOMContentLoaded", function () {
         xFt.style.display = 'none';
         fetch("novaPublicacao", {
             method: "POST",
-            body: JSON.stringify(dados)
+            body: formData
         }).then(response => {
             if (!response.ok) {
                 throw new Error("Erro na requisicição: " + response.status);
@@ -157,6 +159,20 @@ function seguirUsuario(idMembro, idSeguindo, i) {
     })
 }
 
+function excluirPublicacao(idPublicacao) {
+    $.ajax({
+        type: 'POST',
+        url: 'excluirPublicacao',
+        data: {idPublicacao: idPublicacao},
+        dataType: "json",
+        success: function () {
+            console.log('publicacao excluida');
+        }, error: function (erro) {
+            console.log(erro);
+        }
+    })
+}
+
 function curtirPublicacao(idPublicacao) {
     $.ajax({
         type: 'POST',
@@ -188,6 +204,18 @@ function carregarPublicacoes() {
         cache: false,
         success: function (publicacoesEncontradas) {
             proximo_intervalo += 5;
+            let confirmacao = $('<div>', {
+                class: 'confirmacao-exclusao',
+            });
+            let mensagem = $('<div>', {
+                class: 'mensagem',
+                text: 'PUBLICAÇÃO EXCLUÍDA'
+            });
+            confirmacao.css({
+                display: 'none'
+            });
+            confirmacao.append(mensagem);
+            $('.postagens').append(confirmacao);
             publicacoesEncontradas.forEach(function (publicacao) {
                 let classe_caixa_publicacao = $("<div>", {
                     class: 'caixa-publicacao'
@@ -239,15 +267,13 @@ function carregarPublicacoes() {
                 let classe_curtida_publicacao = $("<div>", {
                     class: 'curtida-publicacao'
                 })
-                let ftCurt = null;
+                let  ftCurt = 'images/iconamoon_heart-bold.svg';
                 if (publicacao.curtidas.length > 0) {
                     publicacao.curtidas.forEach(function (curtida) {
-                        if (curtida.idPessoa === publicacao.autor.idPessoa) {
+                        if (curtida.idPessoa === usuarioAutenticado) {
                             ftCurt = 'images/iconamoon_heart-fill.svg';
                         }
                     })
-                } else {
-                    ftCurt = 'images/iconamoon_heart-bold.svg';
                 }
                 let icone_curtida_publicacao = $("<img>", {
                     class: 'icone-curtida',
@@ -298,6 +324,27 @@ function carregarPublicacoes() {
                 classe_inshights_publicacao.append(classe_comentario_publicacao);
                 classe_informacoes_publicacao.append(classe_inshights_publicacao);
                 classe_caixa_publicacao.append(classe_informacoes_publicacao);
+                if (publicacao.autor.idPessoa === usuarioAutenticado) {
+                    let botaoApagar = $('<button>', {
+                        class: 'botao-apagar',
+                        text: 'EXCLUIR',
+                    })
+                    botaoApagar.on('click', function () {
+                        excluirPublicacao(publicacao.idPublicacao);
+                        classe_caixa_publicacao.css({
+                            display: 'none'
+                        });
+                        confirmacao.css({
+                            display: 'block'
+                        })
+                        setTimeout(function () {
+                            confirmacao.css({
+                                display: 'none'
+                            });
+                        }, 3000)
+                    })
+                    classe_caixa_publicacao.append(botaoApagar);
+                }
                 $('#postagens').append(classe_caixa_publicacao);
                 console.log('publicacao encontrada:' + publicacao);
                 publicacoesCarregadas.push(publicacao.idPublicacao)
@@ -306,5 +353,22 @@ function carregarPublicacoes() {
         }, error: function (error) {
             console.log(error)
         }
+    })
+}
+
+function obterUsuarioAutenticado() {
+    return new Promise(function (resolve, reject) {
+        $.ajax({
+            type: 'GET',
+            url: 'obterUsuarioAutenticado',
+            dataType: 'json',
+            success: function (usuario) {
+                resolve(usuario);
+            },
+            error: function (status, error) {
+                console.error('Erro na requisição: ', status, error);
+                reject('Erro na requisição');
+            }
+        })
     })
 }

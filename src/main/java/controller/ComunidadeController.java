@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
-@WebServlet(urlPatterns = {"/obterComunidades", "/formNovaComunidade", "/verComunidades", "/criarComunidade"})
+@WebServlet(urlPatterns = {"/obterComunidades", "/formNovaComunidade", "/verComunidades", "/criarComunidade", "/pesquisarComunidade"})
 public class ComunidadeController extends HttpServlet {
 
     @Override
@@ -48,6 +48,7 @@ public class ComunidadeController extends HttpServlet {
         switch (action) {
             case "/obterComunidades" -> obterComunidades(request, response);
             case "/verComunidades" -> verComunidades(request, response);
+            case "/pesquisarComunidade" -> pesquisarComunidade(request, response);
         }
     }
 
@@ -172,5 +173,13 @@ public class ComunidadeController extends HttpServlet {
             jsonResponse.put("message", "Erro ao criar a comunidade.");
         }
         response.getWriter().write(jsonResponse.toString());
+    }
+
+    private void pesquisarComunidade(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String query = request.getParameter("query");
+        String jsonResponse = new Gson().toJson(new Comunidade().pesquisarComunidade(query));
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(jsonResponse);
     }
 }

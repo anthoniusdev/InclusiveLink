@@ -213,4 +213,22 @@ public class ComunidadeDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public ArrayList<Comunidade> pesquisarComunidade(String query){
+        try(Connection con = conectar()){
+            String read = "SELECT idComunidade FROM comunidade WHERE nome LIKE ?";
+            try (PreparedStatement preparedStatement = con.prepareStatement(read)){
+                preparedStatement.setString(1, "%" + query + "%");
+                try(ResultSet rs = preparedStatement.executeQuery()){
+                    ArrayList<Comunidade> comunidades = new ArrayList<>();
+                    while (rs.next()){
+                        comunidades.add(retornaComunidade(rs.getInt(1)));
+                    }
+                    return comunidades;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
