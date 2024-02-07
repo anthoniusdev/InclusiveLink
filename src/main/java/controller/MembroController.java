@@ -189,7 +189,6 @@ public class MembroController extends HttpServlet {
         Membro membro = (Membro) session.getAttribute("usuario");
         String jsonResponse = new Gson().toJson(membro.getIdPessoa());
         // Até o momento só preciso do ID, se precisar de mais alguma tem que adicionar
-        System.out.println(jsonResponse);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(jsonResponse);
