@@ -2,7 +2,9 @@ package model;
 
 import dao.PessoaDAO;
 
-public class Pessoa {
+import java.io.Serializable;
+
+public class Pessoa implements Serializable {
     private int idPessoa;
     private String nome;
     private String dataNascimento;

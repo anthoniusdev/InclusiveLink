@@ -3,7 +3,9 @@ package model;
 import dao.PublicacaoDAO;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Publicacao implements Serializable {
     private int idPublicacao;
@@ -11,13 +13,13 @@ public class Publicacao implements Serializable {
     private String midia;
     private Membro autor;
     private int numeroCurtidas;
-    private ArrayList<Membro> curtidas;
+    private ArrayList<Integer> curtidas;
     private int numeroComentarios;
-    private ArrayList<Comentario> comentarios;
+    private ArrayList<Integer> idComentarios;
     private String data;
     private String hora;
 
-    public Publicacao(int idPublicacao, String texto, String midia, Membro autor, int numeroCurtidas, ArrayList<Membro> curtidas, int numeroComentarios, ArrayList<Comentario> comentarios, String data, String hora) {
+    public Publicacao(int idPublicacao, String texto, String midia, Membro autor, int numeroCurtidas, ArrayList<Integer> curtidas, int numeroComentarios, ArrayList<Integer> comentarios, String data, String hora) {
         this.idPublicacao = idPublicacao;
         this.texto = texto;
         this.midia = midia;
@@ -25,7 +27,7 @@ public class Publicacao implements Serializable {
         this.numeroCurtidas = numeroCurtidas;
         this.curtidas = curtidas;
         this.numeroComentarios = numeroComentarios;
-        this.comentarios = comentarios;
+        this.idComentarios = comentarios;
         this.data = data;
         this.hora = hora;
     }
@@ -35,9 +37,9 @@ public class Publicacao implements Serializable {
         setTexto(texto);
         setMidia(midia);
         numeroCurtidas = 0;
-        curtidas = new ArrayList<Membro>();
+        curtidas = new ArrayList<>();
         numeroComentarios = 0;
-        comentarios = new ArrayList<Comentario>();
+        idComentarios = new ArrayList<Integer>();
         setAutor(autor);
         try {
             PublicacaoDAO publicacaoDAO = new PublicacaoDAO();
@@ -67,15 +69,47 @@ public class Publicacao implements Serializable {
                     this.setHora(novaPublicacao.getHora());
                 }
             } catch (Exception e) {
-                System.out.println(e);
+                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         }
     }
 
-    public Publicacao(int idPublicacao) {
-        this.idPublicacao = idPublicacao;
-        PublicacaoDAO publicacaoDAO = new PublicacaoDAO();
-        this.setCurtidas(publicacaoDAO.curtidas(idPublicacao));
+    public Publicacao(int idPublicacao){
+        try {
+            Publicacao publicacao = new PublicacaoDAO().retornaPublicacao(idPublicacao);
+            this.setIdPublicacao(idPublicacao);
+            this.setCurtidas(publicacao.getCurtidas());
+            this.setComentarios(publicacao.getComentarios());
+            this.setAutor(publicacao.getAutor());
+            this.setTexto(publicacao.getTexto());
+            this.setNumeroComentarios(publicacao.getNumeroComentarios());
+            this.setNumeroCurtidas(publicacao.getNumeroCurtidas());
+            this.setMidia(publicacao.getMidia());
+            this.setHora(publicacao.getHora());
+            try {
+                // Setando data no formato correto
+                String dataString = publicacao.getData();
+                SimpleDateFormat formatoOriginal = new SimpleDateFormat("yyyy-MM-dd");
+                Date date = formatoOriginal.parse(dataString);
+                SimpleDateFormat novoFormato = new SimpleDateFormat("dd/MM/yyyy");
+                String stringDataConvertida = novoFormato.format(date);
+                this.setData(stringDataConvertida);
+
+                // Setando a hora no formato correto
+                String horaString = publicacao.getHora();
+                SimpleDateFormat formatoOriginalH = new SimpleDateFormat("HH:mm:ss");
+                Date hora = formatoOriginalH.parse(horaString);
+                SimpleDateFormat novoFormatoH = new SimpleDateFormat("HH:mm");
+                String stringHoraConvertida = novoFormatoH.format(hora);
+                this.setHora(stringHoraConvertida);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 
     public Publicacao() {
@@ -116,14 +150,16 @@ public class Publicacao implements Serializable {
     public int getNumeroCurtidas() {
         return numeroCurtidas;
     }
-    public boolean jaCurtiu(int idMembro){
-        for (Membro membroCurtiu: getCurtidas()){
-            if (membroCurtiu.getIdPessoa() == idMembro){
+
+    public boolean jaCurtiu(int idMembro) {
+        for (int membroCurtiu : getCurtidas()) {
+            if (membroCurtiu == idMembro) {
                 return true;
             }
         }
         return false;
     }
+
     public void curtir(int idMembro) {
         try {
             PublicacaoDAO publicacaoDAO = new PublicacaoDAO();
@@ -139,12 +175,12 @@ public class Publicacao implements Serializable {
             PublicacaoDAO publicacaoDAO = new PublicacaoDAO();
             publicacaoDAO.descurtirPublicacao(getIdPublicacao(), idMembro);
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
 
-    public ArrayList<Membro> getCurtidas() {
+    public ArrayList<Integer> getCurtidas() {
         return curtidas;
     }
 
@@ -156,16 +192,16 @@ public class Publicacao implements Serializable {
         this.numeroComentarios = numeroComentarios;
     }
 
-    public void setComentarios(ArrayList<Comentario> comentarios) {
-        this.comentarios = comentarios;
+    public void setComentarios(ArrayList<Integer> idComentarios) {
+        this.idComentarios = idComentarios;
     }
 
-    public void setCurtidas(ArrayList<Membro> curtidas) {
+    public void setCurtidas(ArrayList<Integer> curtidas) {
         this.curtidas = curtidas;
     }
 
-    public ArrayList<Comentario> getComentarios() {
-        return comentarios;
+    public ArrayList<Integer> getComentarios() {
+        return idComentarios;
     }
 
     public String getData() {
@@ -191,7 +227,8 @@ public class Publicacao implements Serializable {
     public ArrayList<Publicacao> feedMembro(int idMembro, int intervalo_inicial, int quantidade_publicacoes) {
         return new PublicacaoDAO().feed(idMembro, intervalo_inicial, quantidade_publicacoes);
     }
-    public void excluirPublicacao(){
+
+    public void excluirPublicacao() {
         new PublicacaoDAO().excluirPublicacao(this.idPublicacao);
     }
 
