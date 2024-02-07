@@ -1,6 +1,7 @@
 package controller;
 
 import com.google.gson.Gson;
+import dao.MembroDAO;
 import model.Membro;
 import model.Publicacao;
 import util.ServicoAutenticacao;
@@ -12,15 +13,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
-<<<<<<< HEAD
 @WebServlet(urlPatterns = {"/RealizarCadastro", "/Cadastrar", "/Login", "/seguirMembro", "/criarComunidade", "/pesquisarPerfil", "/paginaInicial"})
 public class  MembroController extends HttpServlet {
     private final MembroDAO membroDAO = new MembroDAO();
     private Membro membro = new Membro();
-=======
-@WebServlet(urlPatterns = {"/RealizarCadastro", "/Cadastrar", "/Login", "/seguirMembro", "/pesquisarPerfil", "/paginaInicial", "/curtirPublicacao", "/obterUsuarioAutenticado"})
-public class MembroController extends HttpServlet {
->>>>>>> 70a9ad274cdf4c60c0f690b7c1cfc37801eb21cc
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
