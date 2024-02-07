@@ -238,7 +238,13 @@ footer .Logo-Nome-IL {
 #manterConectado:active {
     color: var(--COR-03);
 }
-
+footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: auto;
+    background-color: var(--COR-03);
+}
 footer .Logo-Nome-IL h1 {
     margin-bottom: 0;
     font-size: var(--TAMANHO-FONTE-INPUT);

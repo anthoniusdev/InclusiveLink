@@ -14,7 +14,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const iconeSVGinputIMG = document.getElementById("icone-escolher-imagem");
     const inputImagem = document.getElementById('input-imagem');
     const imagemPreview = document.getElementById('imagem-preview');
-    // let icone_curtir_publicacao = document.getElementById('icone-curtir-publicacao');
     let file;
     let xFt = document.getElementById('remover-foto');
     let imageURL;
@@ -159,35 +158,6 @@ function seguirUsuario(idMembro, idSeguindo, i) {
     })
 }
 
-function excluirPublicacao(idPublicacao) {
-    $.ajax({
-        type: 'POST',
-        url: 'excluirPublicacao',
-        data: {idPublicacao: idPublicacao},
-        dataType: "json",
-        success: function () {
-            console.log('publicacao excluida');
-        }, error: function (erro) {
-            console.log(erro);
-        }
-    })
-}
-
-function curtirPublicacao(idPublicacao) {
-    $.ajax({
-        type: 'POST',
-        url: 'curtirPublicacao',
-        data: {idPublicacao: idPublicacao},
-        dataType: "json",
-        success: function () {
-            console.log('publicacao curtida')
-        },
-        error: function (error) {
-            console.log(error)
-        }
-    })
-}
-
 function carregarPublicacoes() {
     let div_postagens = document.getElementById('postagens');
     let proximo_intervalo;
@@ -220,6 +190,11 @@ function carregarPublicacoes() {
                 let classe_caixa_publicacao = $("<div>", {
                     class: 'caixa-publicacao'
                 });
+                classe_caixa_publicacao.on('click', function (event) {
+                    if (!$(event.target).hasClass('icone-curtida')) {
+                        window.location.href = 'verPublicacao?username=' + publicacao.autor.nomeUsuario + '&idPublicacao=' + publicacao.idPublicacao;
+                    }
+                })
                 let classe_foto_perfil_autor = $("<div>", {
                     class: 'foto-perfil-autor'
                 })
@@ -267,10 +242,10 @@ function carregarPublicacoes() {
                 let classe_curtida_publicacao = $("<div>", {
                     class: 'curtida-publicacao'
                 })
-                let  ftCurt = 'images/iconamoon_heart-bold.svg';
+                let ftCurt = 'images/iconamoon_heart-bold.svg';
                 if (publicacao.curtidas.length > 0) {
                     publicacao.curtidas.forEach(function (curtida) {
-                        if (curtida.idPessoa === usuarioAutenticado) {
+                        if (curtida === usuarioAutenticado) {
                             ftCurt = 'images/iconamoon_heart-fill.svg';
                         }
                     })
@@ -317,7 +292,7 @@ function carregarPublicacoes() {
                 })
                 let icone_comentario_publicacao = $("<img src='images/majesticons_comment-line.svg' alt='ícone de comentário'>")
                 let contador_comentarios = $("<small>", {
-                    text: publicacao.comentarios.length
+                    text: publicacao.numeroComentarios
                 })
                 classe_comentario_publicacao.append(icone_comentario_publicacao);
                 classe_comentario_publicacao.append(contador_comentarios);
@@ -330,18 +305,7 @@ function carregarPublicacoes() {
                         text: 'EXCLUIR',
                     })
                     botaoApagar.on('click', function () {
-                        excluirPublicacao(publicacao.idPublicacao);
-                        classe_caixa_publicacao.css({
-                            display: 'none'
-                        });
-                        confirmacao.css({
-                            display: 'block'
-                        })
-                        setTimeout(function () {
-                            confirmacao.css({
-                                display: 'none'
-                            });
-                        }, 3000)
+                        excluirPublicacao(publicacao.idPublicacao, classe_caixa_publicacao, confirmacao);
                     })
                     classe_caixa_publicacao.append(botaoApagar);
                 }

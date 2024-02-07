@@ -88,11 +88,10 @@ public class Membro extends Pessoa implements Serializable {
 
     public Membro(int idMembro) {
         super(idMembro);
-        Membro membro = new Membro(new MembroDAO().retornaMembro(idMembro));
+        Membro membro = new MembroDAO().retornaMembro(idMembro);
         this.fotoPerfil = membro.getFotoPerfil();
         this.fotoFundo = membro.getFotoFundo();
         this.descricao = membro.getDescricao();
-        this.perfilVisivel = membro.isPerfilVisivel();
         this.nomeUsuario = membro.getNomeUsuario();
         this.idPublicacaoCurtidas = membro.getCurtidas();
         this.idPublicacoes = membro.getPublicacoes();
@@ -104,7 +103,7 @@ public class Membro extends Pessoa implements Serializable {
     }
 
     public String getFotoPerfil() {
-        return fotoPerfil;
+        return this.fotoPerfil;
     }
 
     public void setFotoPerfil(String fotoPerfil) {
@@ -112,7 +111,7 @@ public class Membro extends Pessoa implements Serializable {
     }
 
     public String getFotoFundo() {
-        return fotoFundo;
+        return this.fotoFundo;
     }
 
     public void setFotoFundo(String fotoFundo) {
@@ -211,8 +210,8 @@ public class Membro extends Pessoa implements Serializable {
             }
             return membroDAO.verificaMembro(this);
         } catch (Exception e) {
-            System.out.println(e);
-            return false;
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 

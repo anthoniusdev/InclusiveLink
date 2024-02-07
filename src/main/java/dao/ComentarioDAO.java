@@ -1,11 +1,8 @@
 package dao;
 
 import model.Comentario;
-import model.Membro;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class ComentarioDAO {
@@ -17,18 +14,26 @@ public class ComentarioDAO {
     // CRUD - - - CREATE - - -
     // Inserindo um novo registro na tabela publicacao_comentario
     // <-- Cria um comentario no banco de dados -->
-    public Comentario criarComentario(Comentario comentario) {
-        String create = "insert into publicacao_comentario(idPublicacao, texto, midia, id_autor) values(?, ?, ?, ?)";
+    public Comentario criarComentario(int idPublicacao, String texto, int idAutor) {
         try (Connection con = conectar()) {
-            PreparedStatement preparedStatement = con.prepareStatement(create);
-            preparedStatement.setInt(1, comentario.getIdPublicacao());
-            preparedStatement.setString(2, comentario.getTexto());
-            preparedStatement.setString(3, comentario.getMidia());
-            preparedStatement.setInt(4, comentario.getAutor().getIdPessoa());
-            preparedStatement.executeUpdate();
-            ResultSet idGerado = preparedStatement.getGeneratedKeys();
-            return retornaComentario(idGerado.getInt(1));
-        } catch (Exception e) {
+            String create = "insert into publicacao_comentario(idPublicacao, texto, id_autor) values(?, ?, ?)";
+            try (PreparedStatement preparedStatement = con.prepareStatement(create, Statement.RETURN_GENERATED_KEYS)) {
+                preparedStatement.setInt(1, idPublicacao);
+                preparedStatement.setString(2, texto);
+                preparedStatement.setInt(3, idAutor);
+                int linhas_afetadas = preparedStatement.executeUpdate();
+                if (linhas_afetadas > 0) {
+                    try (ResultSet idGerado = preparedStatement.getGeneratedKeys()) {
+                        if (idGerado.next()) {
+                            return retornaComentario(idGerado.getInt(1));
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            return null;
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -44,37 +49,37 @@ public class ComentarioDAO {
             preparedStatement.setInt(1, idComentario);
             ResultSet rs = preparedStatement.executeQuery();
             // Pega o resultado da consulta ao banco de dados  |
+            //
             //                                                 v
-            comentario.setIdComentario(rs.getInt(1));
-            comentario.setIdPublicacao(rs.getInt(2));
-            comentario.setTexto(rs.getString(3));
-            comentario.setMidia(rs.getString(4));
-            MembroDAO membroDAO = new MembroDAO();
-            comentario.setAutor(membroDAO.retornaMembro(rs.getInt(5)));
-            comentario.setData(rs.getString(6));
-            comentario.setHora(rs.getString(7));
-            comentario.setCurtidas(curtidas(comentario.getIdComentario()));
-            comentario.setNumeroCurtidas(comentario.getCurtidas().size());
-            // comentario.setNumeroComentarios(); --> Verificar depois
-            // comentario.setComentarios(); --> Verificar depois
-            return comentario;
+            if (rs.next()) {
+                comentario.setIdComentario(rs.getInt(1));
+                comentario.setIdPublicacao(rs.getInt(2));
+                comentario.setTexto(rs.getString(3));
+                comentario.setMidia(rs.getString(4));
+                comentario.setAutor(new MembroDAO().retornaMembro(rs.getInt(5)));
+                comentario.getAutor().setSenha(null);
+                comentario.setData(rs.getString(6));
+                comentario.setHora(rs.getString(7));
+                comentario.setCurtidas(curtidas(comentario.getIdComentario()));
+                comentario.setNumeroCurtidas(comentario.getCurtidas().size());
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        return comentario;
     }
 
     // CRUD - - - READ - - -
     // <-- Lê e armaneza na ArrayList registros da tabela comentario_curtida -->
-    public ArrayList<Membro> curtidas(int idComentario) {
+    public ArrayList<Integer> curtidas(int idComentario) {
         String read = "select idMembro from comentario_curtida where idcomentario = ?";
-        ArrayList<Membro> membros = new ArrayList<>();
+        ArrayList<Integer> membros = new ArrayList<>();
         try (Connection con = conectar()) {
             PreparedStatement preparedStatement = con.prepareStatement(read);
             preparedStatement.setInt(1, idComentario);
             ResultSet rs = preparedStatement.executeQuery();
-            MembroDAO membroDAO = new MembroDAO();
             while (rs.next()) {
-                membros.add(membroDAO.retornaMembro(rs.getInt(1)));
+                membros.add(rs.getInt(1));
             }
             return membros;
         } catch (Exception e) {
@@ -84,18 +89,36 @@ public class ComentarioDAO {
 
     // CRUD - - - READ - - -
     // <-- Armazena os comentários de uma publicação específica e retorna a ArrayList -->
-    public ArrayList<Comentario> comentarios(int idPublicacao) {
-        String read = "select idComentario from publicacao_comentario where idPublicacao = ?";
-        ArrayList<Comentario> comentarios = new ArrayList<>();
+//        public ArrayList<Integer> comentarios (int idPublicacao){
+//            String read = "select idComentario from publicacao_comentario where idPublicacao = ?";
+//            ArrayList<Integer> comentarios = new ArrayList<>();
+//            try (Connection con = conectar()) {
+//                PreparedStatement preparedStatement = con.prepareStatement(read);
+//                preparedStatement.setInt(1, idPublicacao);
+//                ResultSet rs = preparedStatement.executeQuery();
+//                while (rs.next()) {
+//                    comentarios.add(rs.getInt(1));
+//                }
+//                return comentarios;
+//            } catch (Exception e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
+    public ArrayList<Comentario> comentarios(int idPublicacao, int indice_inicial, int quantidade_publicacoes) {
         try (Connection con = conectar()) {
-            PreparedStatement preparedStatement = con.prepareStatement(read);
-            preparedStatement.setInt(1, idPublicacao);
-            ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()) {
-                comentarios.add(retornaComentario(rs.getInt(1)));
+            String read = "SELECT idComentario FROM publicacao_comentario WHERE idPublicacao = ? ORDER BY data DESC, hora DESC LIMIT ?, ?";
+            try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
+                preparedStatement.setInt(1, idPublicacao);
+                preparedStatement.setInt(2, indice_inicial);
+                preparedStatement.setInt(3, quantidade_publicacoes);
+                ResultSet rs = preparedStatement.executeQuery();
+                ArrayList<Comentario> comentarios = new ArrayList<>();
+                while (rs.next()){
+                    comentarios.add(retornaComentario(rs.getInt(1)));
+                }
+                return comentarios;
             }
-            return comentarios;
-        } catch (Exception e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
