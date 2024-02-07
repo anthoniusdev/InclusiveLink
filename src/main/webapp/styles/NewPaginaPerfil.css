@@ -43,7 +43,7 @@ body {
 .page {
     background-color: var(--azul);
     width: 62vw;
-    border-radius: 1rem;
+    border-radius: 20px;
     display: flex;
 }
 
@@ -276,7 +276,7 @@ input {
     font-size: smaller;
 }
 
-.post-list {
+.post-list-1{
     border-bottom: var(--azul-escuro) 3px solid;
 }
 
