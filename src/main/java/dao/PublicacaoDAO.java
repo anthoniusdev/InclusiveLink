@@ -57,6 +57,7 @@ public class PublicacaoDAO {
                 publicacaoRetornada.setTexto(rs.getString(2));
                 publicacaoRetornada.setMidia(rs.getString(3));
                 publicacaoRetornada.setAutor(membroDAO.retornaMembro(rs.getInt(4)));
+                publicacaoRetornada.getAutor().setSenha(null);
                 publicacaoRetornada.setData(rs.getString(5));
                 publicacaoRetornada.setHora(rs.getString(6));
                 publicacaoRetornada.setCurtidas(curtidas(idPublicacao));
@@ -123,20 +124,37 @@ public class PublicacaoDAO {
 
     // CRUD - - - DELETE - - -
     // <-- Deleta uma publicacao específica -->
-    public void excluirPublicacao(int idPublicacao) {
-        if (verificaPublicacao(idPublicacao)) {
-            String delete = "delete from publicacao where idpublicacao = ?";
-            try (Connection con = conectar()) {
-                PreparedStatement preparedStatement = con.prepareStatement(delete);
+    public void excluirPublicacao(int idPublicacao){
+        try (Connection con = conectar()){
+            String delete = "DELETE FROM publicacao WHERE idPublicacao = ?";
+            try (PreparedStatement preparedStatement = con.prepareStatement(delete)){
                 preparedStatement.setInt(1, idPublicacao);
                 preparedStatement.executeUpdate();
-                preparedStatement.close();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
+    public ArrayList<Publicacao> feed(int idUsuario, int indice_inicial, int quantidade_publicacoes) {
+        try (Connection con = conectar()) {
+            String read = "SELECT idPublicacao FROM publicacao WHERE id_autor IN (SELECT idSeguindo FROM membro_seguindo WHERE idMembro = ?) OR id_autor = ? ORDER BY data DESC, hora DESC LIMIT ?, ?";
+            try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
+                preparedStatement.setInt(1, idUsuario);
+                preparedStatement.setInt(2, idUsuario);
+                preparedStatement.setInt(3, indice_inicial);
+                preparedStatement.setInt(4, quantidade_publicacoes);
+                ResultSet rs = preparedStatement.executeQuery();
+                ArrayList<Publicacao> feed = new ArrayList<>();
+                while (rs.next()) {
+                    feed.add(retornaPublicacao(rs.getInt(1)));
+                }
+                return feed;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
     public ArrayList<Publicacao> feed(int idUsuario) {
         try (Connection con = conectar()) {
             String read = "SELECT idPublicacao FROM publicacao WHERE id_autor IN (SELECT idSeguindo FROM membro_seguindo WHERE idMembro = ?) OR id_autor = ? ORDER BY CONCAT(data, ' ', hora) DESC";
@@ -147,10 +165,6 @@ public class PublicacaoDAO {
                 ArrayList<Publicacao> feed = new ArrayList<>();
                 while (rs.next()) {
                     feed.add(retornaPublicacao(rs.getInt(1)));
-//                    System.out.println(retornaPublicacao(rs.getInt(1)).getTexto());
-//                    System.out.println(retornaPublicacao(rs.getInt(1)).getAutor());
-//                    System.out.println(retornaPublicacao(rs.getInt(1)).getIdPublicacao());
-//                    System.out.println("--------------");
                 }
                 return feed;
             }
@@ -158,4 +172,17 @@ public class PublicacaoDAO {
             throw new RuntimeException(e);
         }
     }
+    public void descurtirPublicacao(int idPublicacao, int idMembro){
+        try (Connection con = conectar()){
+            String delete = "DELETE FROM publicacao_curtida WHERE idPublicacao = ? AND idMembro = ?";
+            try (PreparedStatement preparedStatement = con.prepareStatement(delete)){
+                preparedStatement.setInt(1, idPublicacao);
+                preparedStatement.setInt(2, idMembro);
+                preparedStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
