@@ -13,10 +13,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
-@WebServlet(urlPatterns = {"/RealizarCadastro", "/Cadastrar", "/Login", "/seguirMembro", "/criarComunidade", "/pesquisarPerfil", "/paginaInicial"})
+@WebServlet(urlPatterns = {"/RealizarCadastro", "/Cadastrar", "/Login", "/seguirMembro", "/pesquisarPerfil", "/paginaInicial"})
 public class  MembroController extends HttpServlet {
-    private final MembroDAO membroDAO = new MembroDAO();
-    private Membro membro = new Membro();
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
