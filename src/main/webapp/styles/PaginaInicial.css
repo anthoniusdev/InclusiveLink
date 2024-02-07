@@ -28,6 +28,7 @@ html, body, footer {
 }
 
 .principal {
+    box-shadow: 0 1px 20px 5px;
     background-color: var(--COR-03);
     display: flex;
     flex-direction: column;
@@ -86,7 +87,6 @@ html, body, footer {
 
 .criarPublicacao textarea:focus {
     outline: none;
-
 }
 
 .criarPublicacao .foto-perfil {
@@ -212,6 +212,8 @@ html, body, footer {
 
 .pesquisar-amigo .lista-pesquisa-perfil {
     background-color: var(--COR-03);
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
 }
 
 .pesquisar-amigo .lista-pesquisa-perfil img {
@@ -232,6 +234,7 @@ html, body, footer {
 .pesquisar-amigo .resultado-pesquisa-perfil {
     display: flex;
     flex-direction: column;
+    border-top: 2px solid var(--COR-04);
 }
 
 .pesquisar-amigo .resultado-pesquisa-perfil:hover {
@@ -252,17 +255,25 @@ html, body, footer {
 
 .perfis-sugeridos .caixa-usuario {
     display: flex;
+    transition: 0.5s;
 }
 
-.perfis-sugeridos img {
+.perfis-sugeridos .caixa-usuario:hover, .resultados-pesquisa-comunidade:hover{
+    background-color: rgba(51,71,87,0.42);
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.perfis-sugeridos img, .resultados-pesquisa-comunidade img{
     width: 50px;
     height: 50px;
     margin-left: 20px;
     margin-top: 10px;
     margin-bottom: 10px;
+    border-radius: 100%;
 }
 
-.perfis-sugeridos .caixa-usuario p {
+.perfis-sugeridos .caixa-usuario p, .resultados-pesquisa-comunidade .nome-comunidade{
     color: var(--COR-TEXTO-04);
     margin-left: 35px;
     font-size: 20px;
@@ -288,6 +299,12 @@ html, body, footer {
     align-items: center;
     flex-wrap: wrap;
     cursor: pointer;
+    transition: 0.5s;
+}
+
+.botaoSeguir:hover{
+    border: 2px solid var(--COR-01);
+    background-color: var(--COR-03);
 }
 
 .listaPesquisaPerfil {
@@ -692,17 +709,112 @@ html, body, footer {
     font-size: 20px;
     font-synthesis: none;
 }
-.caixa-publicacao .texto-publicacao{
+
+.caixa-publicacao .texto-publicacao {
     width: auto;
+    max-height: 300px;
     max-width: 750px;
     height: auto;
     color: var(--COR-TEXTO-04);
     font-size: 20px;
     font-synthesis: none;
+    word-wrap: break-word;
 }
-.inshights-publicacao{
+
+.caixa-publicacao .midia-publicacao img {
+    border-radius: 20px;
+    max-width: 400px;
+    max-height: 400px;
+}
+
+.icone-curtida:hover {
+    cursor: pointer;
+    box-shadow: 0 0 20px 5px #FC6E6E;
+}
+
+.inshights-publicacao {
     display: flex;
     flex-direction: row;
     color: var(--COR-TEXTO-04);
     font-synthesis: none;
+    margin-bottom: 20px;
+}
+
+.inshights-publicacao .curtida-publicacao {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.curtida-publicacao small, .comentarios-publicacao small {
+    font-size: 20px;
+}
+
+.inshights-publicacao .comentarios-publicacao {
+    margin-left: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.comentarios-publicacao img, .curtida-publicacao img {
+    width: 22px;
+    height: 22px;
+    border-radius: 100%;
+    transition: 0.5s;
+}
+
+.informacoes-publicacao {
+    width: 750px;
+}
+
+.botao-apagar {
+    width: auto;
+    height: 50px;
+    border-radius: 10px;
+    background-color: var(--COR-04);
+    color: var(--COR-TEXTO-04);
+    border: none;
+    font-family: var(--FONTE);
+    font-size: 30px;
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    left: 850px;
+    transition: 1s;
+}
+
+.botao-apagar:hover {
+    cursor: pointer;
+    justify-content: center;
+    height: +10%;
+    border: 1px solid #5a1a1a;
+    background-color: var(--COR-03);
+    color: #521818;
+}
+
+.confirmacao-exclusao{
+    position: fixed;
+    top: 35px;
+    padding: 25px;
+    background-color: var(--COR-04);
+    border-radius: 20px;
+    box-shadow: 0 0 20px 17px;
+    color: var(--COR-TEXTO-04);
+    right: 43%;
+    font-size: 20px;
+    font-synthesis: none;
+    transition: 1s;
+    display: none;
+}
+.resultados-pesquisa-comunidade{
+    display: flex;
+    flex-direction: row;
+    background-color: var(--COR-03);
+    transition: 0.5s;
+    border-top: 2px solid var(--COR-04);
+}
+.lista-pesquisa-comunidade{
+    background-color: var(--COR-03);
 }

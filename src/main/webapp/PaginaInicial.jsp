@@ -9,8 +9,7 @@
 <%@ page import="javax.servlet.http.HttpSession" %>
 <%@page import="model.Membro" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="model.Comunidade" %>
-<%@ page import="model.Publicacao" %>
+
 <%
     HttpSession httpSession = request.getSession(false);
     if (httpSession == null || httpSession.getAttribute("authenticated") == null) {
@@ -25,18 +24,17 @@
             }
             @SuppressWarnings("unchecked")
             ArrayList<Membro> membrosRede = (ArrayList<Membro>) httpSession.getAttribute("perfis");
-            @SuppressWarnings("unchecked")
-            ArrayList<Publicacao> feedUsuario = (ArrayList<Publicacao>) httpSession.getAttribute("feed");
-
 %>
 <html lang="pt-BR">
 <head>
     <title>Inclusive Link</title>
     <link rel="stylesheet" href="styles/PaginaInicial.css">
+    <link rel="icon" href="images/LOGO.ico">
     <script src="scripts/js/jquery-3.7.1.js"></script>
     <script src="scripts/paginaInicial.js"></script>
-    <script src="scripts/barra-lateral-pesquisar-amigo/pesquisarPerfil.js"></script>
-    <script src="scripts/barra-lateral-criar-comunidade/criarComunidade.js"></script>
+    <script src="scripts/barra-lateral-amigo/pesquisarPerfil.js"></script>
+    <script src="scripts/barra-lateral-comunidade/criarComunidade.js"></script>
+    <script src="scripts/barra-lateral-comunidade/pesquisarComunidade.js"></script>
 </head>
 <body>
 <main>
@@ -49,7 +47,7 @@
                 <a href="">PERFIL</a>
             </div>
             <div class="criarPublicacao">
-                <form action="novaPublicacao" method="post" id="formNovaPublicacao">
+                <form action="novaPublicacao" method="post" id="formNovaPublicacao" enctype="multipart/form-data">
                     <div class="foto-perfil">
                         <img src="<%=fotoPerfil%>" alt="Foto de perfil">
                     </div>
@@ -77,60 +75,7 @@
                     </div>
                 </div>
             </div>
-            <div class="postagens">
-                <%
-                    if (!feedUsuario.isEmpty()) {
-                        for (Publicacao publicacao : feedUsuario) {
-                            if (publicacao.getAutor().getFotoPerfil() == null) {
-                                publicacao.getAutor().setFotoPerfil("images/person_foto.svg");
-                            }
-                %>
-                <div class="caixa-publicacao">
-                    <div class="foto-perfil-autor">
-                        <img src="<%=publicacao.getAutor().getFotoPerfil()%>"
-                             alt="Foto do perfil de <%=publicacao.getAutor().getNome()%>">
-                    </div>
-                    <div class="informacoes-publicacao">
-                        <div class="nome-autor">
-                            <h3><%=publicacao.getAutor().getNome()%>
-                            </h3>
-                        </div>
-                        <div class="texto-publicacao">
-                            <p><%=publicacao.getTexto()%>
-                            </p>
-                        </div>
-                        <%
-                            if (publicacao.getMidia() != null) {
-                        %>
-                        <div class="midia-publicacao">
-                            <img src="<%=publicacao.getMidia()%>" alt="">
-                        </div>
-                        <%
-                            }
-                        %>
-                        <div class="inshights-publicacao">
-                            <div class="curtida-publicacao">
-                                <img src="" alt="">
-                                <%--                        Adicionar a lógica para adicionar as imagens certas aqui--%>
-                                <small><%=publicacao.getCurtidas().size()%>
-                                </small>
-                            </div>
-                            <div class="comentarios-publicacao">
-                                <img src="" alt="">
-                                <%--                        Adicionar a lógica para adicionar as imagens certas aqui--%>
-                                <small><%=publicacao.getComentarios().size()%>
-                                </small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <%
-                    }
-                } else {
-                %>
-                <h3>ArrayVazia</h3>
-                <%}%>
-            </div>
+            <div class="postagens" id="postagens"></div>
         </div>
         <div class="pesquisar-amigo">
             <label>
@@ -168,6 +113,7 @@
                 <img src="images/search.svg" alt="search">
                 <input type="search" placeholder="PESQUISAR COMUNIDADE" id="pesquisarComunidade">
             </label>
+            <div class="lista-pesquisa-comunidade" id="lista-pesquisa-comunidade"></div>
         </div>
         <div class="comunidades-sugeridas" id="comunidades-sugeridas">
             <div class="criar-comunidade" id="criar-comunidade">

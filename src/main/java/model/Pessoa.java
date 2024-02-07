@@ -1,6 +1,8 @@
 package model;
 
-public abstract class Pessoa {
+import dao.PessoaDAO;
+
+public class Pessoa {
     private int idPessoa;
     private String nome;
     private String dataNascimento;
@@ -22,14 +24,17 @@ public abstract class Pessoa {
         this.senha = senha;
     }
 
-    public Pessoa(int idPessoa, String nome, String dataNascimento, String email) {
-        this.idPessoa = idPessoa;
-        this.nome = nome;
-        this.dataNascimento = dataNascimento;
-        this.email = email;
+    public Pessoa(){}
+
+    public Pessoa(int idPessoa) {
+        Pessoa pessoaEncontrada = new PessoaDAO().retornaPessoa(idPessoa);
+        this.idPessoa = pessoaEncontrada.getIdPessoa();
+        this.nome = pessoaEncontrada.getNome();
+        this.dataNascimento = pessoaEncontrada.getDataNascimento();
+        this.email = pessoaEncontrada.getEmail();
+        this.senha = pessoaEncontrada.getSenha();
     }
 
-    public Pessoa(){}
     public int getIdPessoa() {
         return idPessoa;
     }
@@ -69,6 +74,8 @@ public abstract class Pessoa {
     public void setSenha(String senha) {
         this.senha = senha;
     }
+    public boolean isEmailUnique(String email){
+        return new PessoaDAO().isEmailUnique(email);
+    }
 
-    public abstract boolean fazerLogin();
 }

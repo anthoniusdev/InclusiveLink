@@ -1,6 +1,5 @@
 package controller;
 
-import dao.ComunidadeDAO;
 import model.Comunidade;
 import model.Membro;
 import model.ParticipanteComunidade;
@@ -28,7 +27,6 @@ public class ParticipanteComunidadeController extends HttpServlet {
     }
     private void sairComunidade(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            ComunidadeDAO comunidadeDAO = new ComunidadeDAO();
             HttpSession httpSession = request.getSession(false);
             if (httpSession == null || httpSession.getAttribute("authenticated") == null) {
                 response.sendRedirect("index.html");
@@ -45,7 +43,7 @@ public class ParticipanteComunidadeController extends HttpServlet {
                 System.out.println("retornou que removeu");
                 jsonResponse.put("status", "success");
                 jsonResponse.put("message", "Usuário removido da comunidade com sucesso.");
-                ArrayList<Comunidade> comunidades_usuario = comunidadeDAO.listarComunidadesUsuario(membro.getIdPessoa());
+                ArrayList<Comunidade> comunidades_usuario = new Comunidade().listarComunidadesParticipantes(membro.getIdPessoa());
                 httpSession.setAttribute("comunidades-participantes-usuario", comunidades_usuario);
             } else {
                 System.out.println("retornou poha nenhuma");
