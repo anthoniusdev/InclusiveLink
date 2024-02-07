@@ -1,6 +1,5 @@
 package dao;
 
-import model.Membro;
 import model.Publicacao;
 
 import java.sql.*;
@@ -32,7 +31,8 @@ public class PublicacaoDAO {
                 }
             }
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         if (verificaPublicacao(idPublicacao)) {
             return retornaPublicacao(idPublicacao);
@@ -51,23 +51,22 @@ public class PublicacaoDAO {
             preparedStatement.setInt(1, idPublicacao);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
-                MembroDAO membroDAO = new MembroDAO();
-                ComentarioDAO comentarioDAO = new ComentarioDAO();
                 publicacaoRetornada.setIdPublicacao(rs.getInt(1));
                 publicacaoRetornada.setTexto(rs.getString(2));
                 publicacaoRetornada.setMidia(rs.getString(3));
-                publicacaoRetornada.setAutor(membroDAO.retornaMembro(rs.getInt(4)));
+                publicacaoRetornada.setAutor(new MembroDAO().retornaMembro(rs.getInt(4)));
                 publicacaoRetornada.getAutor().setSenha(null);
                 publicacaoRetornada.setData(rs.getString(5));
                 publicacaoRetornada.setHora(rs.getString(6));
                 publicacaoRetornada.setCurtidas(curtidas(idPublicacao));
-                publicacaoRetornada.setComentarios(comentarioDAO.comentarios(idPublicacao));
+                publicacaoRetornada.setComentarios(comentarios(idPublicacao));
                 publicacaoRetornada.setNumeroComentarios(publicacaoRetornada.getComentarios().size());
                 publicacaoRetornada.setNumeroCurtidas(publicacaoRetornada.getCurtidas().size());
             }
             preparedStatement.close();
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return publicacaoRetornada;
     }
@@ -82,28 +81,27 @@ public class PublicacaoDAO {
             ResultSet rs = preparedStatement.executeQuery();
             return rs.next();
         } catch (Exception e) {
-            System.out.println(e);
-            return false;
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
     // CRUD - - - READ - - -
     // <-- Armaneza as curtidas de alguma publicação específica e retorna a ArrayList -->
-    public ArrayList<Membro> curtidas(int idPublicacao) {
+    public ArrayList<Integer> curtidas(int idPublicacao) {
         String read = "SELECT idMembro FROM publicacao_curtida pc WHERE pc.idPublicacao = ?";
-        ArrayList<Membro> membros = new ArrayList<>();
+        ArrayList<Integer> membros = new ArrayList<>();
         try (Connection con = conectar()) {
             PreparedStatement preparedStatement = con.prepareStatement(read);
             preparedStatement.setInt(1, idPublicacao);
             ResultSet rs = preparedStatement.executeQuery();
-            MembroDAO membroDAO = new MembroDAO();
             while (rs.next()) {
-                membros.add(membroDAO.retornaMembro(rs.getInt(1)));
+                membros.add(rs.getInt(1));
             }
             return membros;
         } catch (Exception e) {
-            System.out.println(e);
-            return null;
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
@@ -118,16 +116,17 @@ public class PublicacaoDAO {
             preparedStatement.executeUpdate();
             preparedStatement.close();
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
     // CRUD - - - DELETE - - -
     // <-- Deleta uma publicacao específica -->
-    public void excluirPublicacao(int idPublicacao){
-        try (Connection con = conectar()){
+    public void excluirPublicacao(int idPublicacao) {
+        try (Connection con = conectar()) {
             String delete = "DELETE FROM publicacao WHERE idPublicacao = ?";
-            try (PreparedStatement preparedStatement = con.prepareStatement(delete)){
+            try (PreparedStatement preparedStatement = con.prepareStatement(delete)) {
                 preparedStatement.setInt(1, idPublicacao);
                 preparedStatement.executeUpdate();
             }
@@ -155,6 +154,7 @@ public class PublicacaoDAO {
             throw new RuntimeException(e);
         }
     }
+
     public ArrayList<Publicacao> feed(int idUsuario) {
         try (Connection con = conectar()) {
             String read = "SELECT idPublicacao FROM publicacao WHERE id_autor IN (SELECT idSeguindo FROM membro_seguindo WHERE idMembro = ?) OR id_autor = ? ORDER BY CONCAT(data, ' ', hora) DESC";
@@ -172,10 +172,11 @@ public class PublicacaoDAO {
             throw new RuntimeException(e);
         }
     }
-    public void descurtirPublicacao(int idPublicacao, int idMembro){
-        try (Connection con = conectar()){
+
+    public void descurtirPublicacao(int idPublicacao, int idMembro) {
+        try (Connection con = conectar()) {
             String delete = "DELETE FROM publicacao_curtida WHERE idPublicacao = ? AND idMembro = ?";
-            try (PreparedStatement preparedStatement = con.prepareStatement(delete)){
+            try (PreparedStatement preparedStatement = con.prepareStatement(delete)) {
                 preparedStatement.setInt(1, idPublicacao);
                 preparedStatement.setInt(2, idMembro);
                 preparedStatement.executeUpdate();
@@ -185,4 +186,20 @@ public class PublicacaoDAO {
         }
     }
 
+    public ArrayList<Integer> comentarios(int idPublicacao) {
+        try (Connection con = conectar()) {
+            String read = "SELECT idComentario FROM publicacao_comentario WHERE idPublicacao = ?";
+            try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
+                preparedStatement.setInt(1, idPublicacao);
+                ResultSet rs = preparedStatement.executeQuery();
+                ArrayList<Integer> comentarios = new ArrayList<>();
+                while (rs.next()) {
+                    comentarios.add(rs.getInt(1));
+                }
+                return comentarios;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

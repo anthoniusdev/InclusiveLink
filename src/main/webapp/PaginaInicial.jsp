@@ -29,12 +29,15 @@
 <head>
     <title>Inclusive Link</title>
     <link rel="stylesheet" href="styles/PaginaInicial.css">
+    <link rel="stylesheet" href="styles/barra-lateral.css">
     <link rel="icon" href="images/LOGO.ico">
     <script src="scripts/js/jquery-3.7.1.js"></script>
     <script src="scripts/paginaInicial.js"></script>
     <script src="scripts/barra-lateral-amigo/pesquisarPerfil.js"></script>
     <script src="scripts/barra-lateral-comunidade/criarComunidade.js"></script>
     <script src="scripts/barra-lateral-comunidade/pesquisarComunidade.js"></script>
+    <script src="scripts/curtirPublicacao.js"></script>
+    <script src="scripts/excluirPublicacao.js"></script>
 </head>
 <body>
 <main>

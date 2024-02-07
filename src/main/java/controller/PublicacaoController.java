@@ -10,6 +10,7 @@ import util.ObterData;
 import util.ObterExtensaoArquivo;
 import util.ObterURL;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,7 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
-@WebServlet(urlPatterns = {"/novaPublicacao", "/verPublicacoes", "/excluirPublicacao"})
+@WebServlet(urlPatterns = {"/novaPublicacao", "/verPublicacoes", "/excluirPublicacao", "/verPublicacao", "/obterIdPublicacao", "/curtidasPublicacao", "/comentariosPublicacao"})
 public class PublicacaoController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -39,6 +40,10 @@ public class PublicacaoController extends HttpServlet {
         String action = request.getServletPath();
         switch (action) {
             case "/verPublicacoes" -> verPublicacoes(request, response);
+            case "/verPublicacao" -> verPublicacao(request, response);
+            case "/obterIdPublicacao" -> obterId(request, response);
+            case "/curtidasPublicacao" -> curtidasPublicacao(request, response);
+            case "/comentariosPublicacao" -> comentariosPublicacao(request, response);
         }
     }
 
@@ -108,6 +113,74 @@ public class PublicacaoController extends HttpServlet {
     }
 
     private void excluirPublicacao(HttpServletRequest request) throws ServletException, IOException {
-        new Publicacao(Integer.parseInt(request.getParameter("idPublicacao"))).excluirPublicacao();
+        try {
+            new Publicacao(Integer.parseInt(request.getParameter("idPublicacao"))).excluirPublicacao();
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void verPublicacao(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            Publicacao publicacao = new Publicacao(Integer.parseInt(request.getParameter("idPublicacao")));
+            HttpSession httpSession = request.getSession(false);
+            httpSession.setAttribute("publicacao", publicacao);
+            RequestDispatcher rd = request.getRequestDispatcher("publicacao.jsp");
+            rd.forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void obterId(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            HttpSession httpSession = request.getSession(false);
+            Publicacao publicacao = (Publicacao) httpSession.getAttribute("publicacao");
+            String jsonResponse = new Gson().toJson(publicacao.getIdPublicacao());
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(jsonResponse);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void curtidasPublicacao(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            HttpSession httpSession = request.getSession(false);
+            if (httpSession == null || httpSession.getAttribute("authenticated") == null) {
+                response.sendRedirect("index.html");
+                return;
+            }
+            Publicacao publicacao = (Publicacao) httpSession.getAttribute("publicacao");
+            String jsonResponse = new Gson().toJson(publicacao.getCurtidas());
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(jsonResponse);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void comentariosPublicacao(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            HttpSession httpSession = request.getSession(false);
+            if (httpSession == null || httpSession.getAttribute("authenticated") == null) {
+                response.sendRedirect("index.html");
+                return;
+            }
+            Publicacao publicacao = (Publicacao) httpSession.getAttribute("publicacao");
+            String jsonResponse = new Gson().toJson(publicacao.getComentarios());
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(jsonResponse);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 }
