@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 @WebServlet(urlPatterns = {"/RealizarCadastro", "/Cadastrar", "/Login", "/seguirMembro", "/criarComunidade", "/pesquisarPerfil", "/paginaInicial"})
-public class MembroController extends HttpServlet {
+public class  MembroController extends HttpServlet {
     private final MembroDAO membroDAO = new MembroDAO();
     private Membro membro = new Membro();
 

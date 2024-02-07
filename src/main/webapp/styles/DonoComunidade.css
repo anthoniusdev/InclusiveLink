@@ -74,21 +74,62 @@ body {
     font-size: 1.7rem;
     color: #DDF2FD;
 }
-.tooltip-container {
+
+.context-menu-btn {
+    display: inline-block;
+    cursor: pointer;
+    width: 30px;
+    height: 25px;
     position: relative;
-    margin-left: 144px;
-    vertical-align: ;
 }
 
-.tooltip {
-    position: relative;
+.bar {
+    width: 80%;
+    height: 5px;
+    background-color: #9BBEC8;
+    border-radius: 3px;
+    position: absolute;
+    left: 10%;
+
+}
+
+.bar:nth-child(1) {
+    top: 8px;
+}
+
+.bar:nth-child(2) {
+    top: 20px;
+    transform: translateY(-50%);
+}
+
+.bar:nth-child(3) {
+    top: 27px;
+}
+
+
+.context-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: none;
+    min-width: 120px;
+    z-index: 1;
+}
+
+
+.menu{
     display: inline-block;
-    margin: 10px;
-    padding: 10px 20px;
+    position: relative;
+    width: 40px;
+    height: 40px;
     background-color: #164863;
-    color: white;
-    cursor: pointer;
-    border-radius: 20px;
+    border-radius: 12px;
+    left: 46%;
+    top: -0.5%;
+    text-align: center;
 }
 
 
