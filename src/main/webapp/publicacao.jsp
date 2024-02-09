@@ -213,10 +213,6 @@
         </div>
     </div>
 </main>
-<%=publicacao.getAutor().getNome()%>
-<%=publicacao.getTexto()%>
-<%=publicacao.getData()%>
-<%=publicacao.getHora()%>
 </body>
 </html>
 <%

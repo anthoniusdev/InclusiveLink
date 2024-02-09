@@ -86,7 +86,6 @@ public class Publicacao implements Serializable {
             this.setNumeroComentarios(publicacao.getNumeroComentarios());
             this.setNumeroCurtidas(publicacao.getNumeroCurtidas());
             this.setMidia(publicacao.getMidia());
-            this.setHora(publicacao.getHora());
             try {
                 // Setando data no formato correto
                 String dataString = publicacao.getData();
@@ -165,7 +164,7 @@ public class Publicacao implements Serializable {
             PublicacaoDAO publicacaoDAO = new PublicacaoDAO();
             publicacaoDAO.curtirPublicacao(getIdPublicacao(), idMembro);
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }

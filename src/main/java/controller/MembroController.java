@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
-@WebServlet(urlPatterns = {"/RealizarCadastro", "/Cadastrar", "/Login", "/seguirMembro", "/pesquisarPerfil", "/paginaInicial", "/curtirPublicacao", "/obterUsuarioAutenticado"})
+@WebServlet(urlPatterns = {"/RealizarCadastro", "/Cadastrar", "/Login", "/seguirMembro", "/pesquisarPerfil", "/paginaInicial", "/curtirPublicacao", "/obterUsuarioAutenticado", "/curtirComentario"})
 public class MembroController extends HttpServlet {
 
     @Override
@@ -35,6 +35,7 @@ public class MembroController extends HttpServlet {
             case "/Login" -> realizarLogin(request, response);
             case "/seguirMembro" -> seguirMembro(request, response);
             case "/curtirPublicacao" -> curtirPublicacao(request, response);
+            case "/curtirComentario" -> curtirComentario(request, response);
         }
     }
 
@@ -192,5 +193,10 @@ public class MembroController extends HttpServlet {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(jsonResponse);
+    }
+    private void curtirComentario(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession httpSession = request.getSession(false);
+        Membro membro = (Membro) httpSession.getAttribute("usuario");
+        membro.curtirComentario(Integer.parseInt(request.getParameter("idComentario")));
     }
 }

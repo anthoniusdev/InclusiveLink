@@ -297,3 +297,7 @@ html, body, footer {
 .texto-comentario p{
     word-break: break-all;
 }
+.curtida-comentario{
+    display: flex;
+    margin-bottom: 10px;
+}

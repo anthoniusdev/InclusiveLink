@@ -381,9 +381,32 @@ public class Membro extends Pessoa implements Serializable {
         }
     }
 
+    public void curtirComentario(int idComentario) {
+        try {
+            Comentario comentario = new Comentario(idComentario);
+            if (comentario.jaCurtiu(this.getIdPessoa())){
+                descurtirComentario(idComentario);
+            }else{
+                comentario.curtirComentario(this.getIdPessoa());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
     private void descurtirPublicacao(int idPublicacao) {
         try {
             new Publicacao(idPublicacao).descurtir(this.getIdPessoa());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void descurtirComentario(int idComentario) {
+        try {
+            new Comentario(idComentario).descurtirComentario(this.getIdPessoa());
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
