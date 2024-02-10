@@ -118,7 +118,6 @@ document.addEventListener('DOMContentLoaded', function () {
             carregarComentarios(idPublicacao);
         }
     })
-
 })
 
 function carregarInformacoesInshights() {
@@ -371,4 +370,8 @@ function curtirComentario(idComentario) {
         type: "POST",
         data: {idComentario: idComentario}
     })
+}
+
+function apagarPost(){
+
 }

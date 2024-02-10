@@ -4,7 +4,6 @@ obterUsuarioAutenticado().then(function (usuario) {
 }).catch(function (error) {
     console.log(error);
 })
-carregarPublicacoes();
 let carregando = false, publicacoesCarregadas = [];
 document.addEventListener("DOMContentLoaded", function () {
     let formNovaPublicacao = document.getElementById("formNovaPublicacao");
@@ -17,6 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let file;
     let xFt = document.getElementById('remover-foto');
     let imageURL;
+    carregarPublicacoes();
     textoPublicacao.addEventListener('input', function () {
         if (this.value.length > 200) {
             this.value = this.value.slice(0, 200);
@@ -191,7 +191,7 @@ function carregarPublicacoes() {
                     class: 'caixa-publicacao'
                 });
                 classe_caixa_publicacao.on('click', function (event) {
-                    if (!$(event.target).hasClass('icone-curtida')) {
+                    if (!$(event.target).hasClass('icone-curtida') && !$(event.target).hasClass('botao-apagar')) {
                         window.location.href = 'verPublicacao?username=' + publicacao.autor.nomeUsuario + '&idPublicacao=' + publicacao.idPublicacao;
                     }
                 })
@@ -305,7 +305,7 @@ function carregarPublicacoes() {
                         text: 'EXCLUIR',
                     })
                     botaoApagar.on('click', function () {
-                        excluirPublicacao(publicacao.idPublicacao, classe_caixa_publicacao, confirmacao);
+                        excluirPublicacao(publicacao.idPublicacao, classe_caixa_publicacao, confirmacao, false);
                     })
                     classe_caixa_publicacao.append(botaoApagar);
                 }
@@ -336,3 +336,4 @@ function obterUsuarioAutenticado() {
         })
     })
 }
+

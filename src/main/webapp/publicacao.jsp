@@ -94,12 +94,6 @@
                     </div>
                 </div>
             </div>
-            <%if (membro.getIdPessoa() == publicacao.getAutor().getIdPessoa()) {%>
-            <button class="botao-apagar" onclick="excluirPublicacao(<%=publicacao.getIdPublicacao()%>, false, false)">
-                EXCLUIR
-            </button>
-            <div class="confirmacao-exclusao" id="confirmacao"></div>
-            <%}%>
         </div>
         <div class="adicionar-comentario">
             <form action="novoComentario" method="post" id="formNovoComentario">
