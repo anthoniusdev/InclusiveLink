@@ -26,23 +26,27 @@ body {
 }
 
 .header {
-    margin-right: 38rem;
+    margin-right: 44rem;
     width: 250px;
     display: flex;
 }
-
+.header a{
+    text-decoration: none;
+}
 .homePage{
     font-size: 2rem;
     color: rgba(221, 242, 253, 0.60);
     cursor: pointer;
     margin-right: 5rem;
     margin-top: 0.5rem;
+    margin-left: 5rem;
+    text-decoration: none;
 }
 .perfil{
     margin-top: 0.5rem;
     font-size: 2rem;
     color: #DDF2FD;
-    cursor: pointer;
+    cursor: default;
 }
 .perfil::after {
     content: '';

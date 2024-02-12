@@ -5,6 +5,7 @@ import model.Membro;
 import model.Publicacao;
 import util.ServicoAutenticacao;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
@@ -12,7 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
-@WebServlet(urlPatterns = {"/RealizarCadastro", "/Cadastrar", "/Login", "/seguirMembro", "/pesquisarPerfil", "/paginaInicial", "/curtirPublicacao", "/obterUsuarioAutenticado", "/curtirComentario"})
+@WebServlet(urlPatterns = {"/RealizarCadastro", "/Cadastrar", "/Login", "/home", "/perfil", "/seguirMembro", "/pesquisarPerfil", "/paginaInicial", "/curtirPublicacao", "/obterUsuarioAutenticado", "/curtirComentario"})
 public class MembroController extends HttpServlet {
 
     @Override
@@ -45,8 +46,9 @@ public class MembroController extends HttpServlet {
         String action = request.getServletPath();
         System.out.println(action);
         switch (action) {
+            case "/home", "/paginaInicial" -> paginaInicial(request, response);
+            case "/perfil" -> perfil(request, response);
             case "/pesquisarPerfil" -> pesquisarPerfil(request, response);
-            case "/paginaInicial" -> paginaInicial(request, response);
             case "/obterUsuarioAutenticado" -> obterUsuarioAutenticado(request, response);
         }
     }
@@ -185,6 +187,7 @@ public class MembroController extends HttpServlet {
         Membro membro = (Membro) session.getAttribute("usuario");
         membro.curtirPublicacao(Integer.parseInt(request.getParameter("idPublicacao")));
     }
+
     private void obterUsuarioAutenticado(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession(false);
         Membro membro = (Membro) session.getAttribute("usuario");
@@ -194,9 +197,19 @@ public class MembroController extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(jsonResponse);
     }
+
     private void curtirComentario(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession httpSession = request.getSession(false);
         Membro membro = (Membro) httpSession.getAttribute("usuario");
         membro.curtirComentario(Integer.parseInt(request.getParameter("idComentario")));
+    }
+
+    private void perfil(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Membro membro = new Membro(request.getParameter("nome_usuario"));
+        request.setAttribute("perfilVisitado", membro);
+        System.out.println(membro.getIdPessoa());
+        System.out.println(membro.getNome());
+        RequestDispatcher rd = request.getRequestDispatcher("perfil.jsp");
+        rd.forward(request, response);
     }
 }

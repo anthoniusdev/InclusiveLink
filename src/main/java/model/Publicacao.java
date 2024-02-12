@@ -234,4 +234,7 @@ public class Publicacao implements Serializable {
     public int getNumeroComentarios() {
         return numeroComentarios;
     }
+    public ArrayList<Publicacao> perfilUsuario(int idUsuario, int intervalo, int quantidade){
+        return new PublicacaoDAO().perfilMembro(idUsuario, intervalo, quantidade);
+    }
 }

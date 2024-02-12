@@ -202,4 +202,21 @@ public class PublicacaoDAO {
             throw new RuntimeException(e);
         }
     }
-}
+    public ArrayList<Publicacao> perfilMembro(int idMebro, int indice_inicial, int quantidade_publicacoes) {
+        try (Connection con = conectar()) {
+            String read = "SELECT idPublicacao FROM publicacao WHERE id_autor = ? ORDER BY data DESC, hora DESC LIMIT ?, ?";
+            try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
+                preparedStatement.setInt(1, idMebro);
+                preparedStatement.setInt(2, indice_inicial);
+                preparedStatement.setInt(3, quantidade_publicacoes);
+                ResultSet rs = preparedStatement.executeQuery();
+                ArrayList<Publicacao> feed = new ArrayList<>();
+                while (rs.next()) {
+                    feed.add(retornaPublicacao(rs.getInt(1)));
+                }
+                return feed;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }}

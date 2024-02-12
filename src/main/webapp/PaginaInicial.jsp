@@ -32,12 +32,14 @@
     <link rel="stylesheet" href="styles/barra-lateral.css">
     <link rel="icon" href="images/LOGO.ico">
     <script src="scripts/js/jquery-3.7.1.js"></script>
+    <script src="scripts/obterUsuarioAutenticado.js"></script>
     <script src="scripts/paginaInicial.js"></script>
     <script src="scripts/barra-lateral-amigo/pesquisarPerfil.js"></script>
     <script src="scripts/barra-lateral-comunidade/criarComunidade.js"></script>
     <script src="scripts/barra-lateral-comunidade/pesquisarComunidade.js"></script>
     <script src="scripts/curtirPublicacao.js"></script>
     <script src="scripts/excluirPublicacao.js"></script>
+    <script src="scripts/carregarPublicacoes.js"></script>
 </head>
 <body>
 <main>
@@ -47,7 +49,7 @@
                 <div class="selecionado">
                     PÁGINA INICIAL
                     <span id="linhaSelecionado"></span></div>
-                <a href="">PERFIL</a>
+                <a href="perfil?nome_usuario=<%=membro.getNomeUsuario()%>">PERFIL</a>
             </div>
             <div class="criarPublicacao">
                 <form action="novaPublicacao" method="post" id="formNovaPublicacao" enctype="multipart/form-data">
