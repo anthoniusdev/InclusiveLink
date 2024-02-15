@@ -6,6 +6,7 @@ import model.Membro;
 import model.Publicacao;
 import util.ServicoAutenticacao;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
@@ -13,8 +14,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
+<<<<<<< HEAD
 @WebServlet(urlPatterns = {"/RealizarCadastro", "/Cadastrar", "/Login", "/seguirMembro", "/pesquisarPerfil", "/paginaInicial"})
 public class  MembroController extends HttpServlet {
+=======
+@WebServlet(urlPatterns = {"/RealizarCadastro", "/Cadastrar", "/Login", "/home", "/perfil", "/seguirMembro", "/pesquisarPerfil", "/paginaInicial", "/curtirPublicacao", "/obterUsuarioAutenticado", "/curtirComentario", "/editarPerfil"})
+public class MembroController extends HttpServlet {
+>>>>>>> e188e16c1bc7c1a541ba350da91902a69524d1e9
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -36,6 +42,8 @@ public class  MembroController extends HttpServlet {
             case "/Login" -> realizarLogin(request, response);
             case "/seguirMembro" -> seguirMembro(request, response);
             case "/curtirPublicacao" -> curtirPublicacao(request, response);
+            case "/curtirComentario" -> curtirComentario(request, response);
+            case "/editarPerfil" -> editarPerfil(request, response);
         }
     }
 
@@ -45,8 +53,9 @@ public class  MembroController extends HttpServlet {
         String action = request.getServletPath();
         System.out.println(action);
         switch (action) {
+            case "/home", "/paginaInicial" -> paginaInicial(request, response);
+            case "/perfil" -> perfil(request, response);
             case "/pesquisarPerfil" -> pesquisarPerfil(request, response);
-            case "/paginaInicial" -> paginaInicial(request, response);
             case "/obterUsuarioAutenticado" -> obterUsuarioAutenticado(request, response);
         }
     }
@@ -129,7 +138,6 @@ public class  MembroController extends HttpServlet {
             if (membro.seguirMembro(idSeguindo)) {
                 response.getWriter().write("Usuário seguido com sucesso");
                 System.out.println(membro.getMembrosSeguindo().size());
-//                atualizarDadosMembro(request, idMembro);
             } else {
                 response.getWriter().write("Usuário não foi seguido");
             }
@@ -185,6 +193,7 @@ public class  MembroController extends HttpServlet {
         Membro membro = (Membro) session.getAttribute("usuario");
         membro.curtirPublicacao(Integer.parseInt(request.getParameter("idPublicacao")));
     }
+
     private void obterUsuarioAutenticado(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession(false);
         Membro membro = (Membro) session.getAttribute("usuario");
@@ -193,5 +202,23 @@ public class  MembroController extends HttpServlet {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(jsonResponse);
+    }
+
+    private void curtirComentario(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession httpSession = request.getSession(false);
+        Membro membro = (Membro) httpSession.getAttribute("usuario");
+        membro.curtirComentario(Integer.parseInt(request.getParameter("idComentario")));
+    }
+
+    private void perfil(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Membro membro = new Membro(request.getParameter("nome_usuario"));
+        request.setAttribute("perfilVisitado", membro);
+        System.out.println(membro.getIdPessoa());
+        System.out.println(membro.getNome());
+        RequestDispatcher rd = request.getRequestDispatcher("perfil.jsp");
+        rd.forward(request, response);
+    }
+    private void editarPerfil(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
     }
 }

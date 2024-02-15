@@ -105,7 +105,13 @@ public class PublicacaoController extends HttpServlet {
         HttpSession httpSession = request.getSession(false);
         Membro membro = (Membro) httpSession.getAttribute("usuario");
         int intervalo = Integer.parseInt(request.getParameter("intervalo"));
-        ArrayList<Publicacao> publicacaos = new Publicacao().feedMembro(membro.getIdPessoa(), intervalo, 5);
+        ArrayList<Publicacao> publicacaos;
+        if (request.getParameter("nomeUsuario" )!= null) {
+            Membro perfilVisitado = new Membro(request.getParameter("nomeUsuario"));
+            publicacaos = new Publicacao().perfilUsuario(perfilVisitado.getIdPessoa(), intervalo, 5);
+        }else{
+            publicacaos = new Publicacao().feedMembro(membro.getIdPessoa(), intervalo, 5);
+        }
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         String json = new Gson().toJson(publicacaos);

@@ -61,7 +61,7 @@ public class Membro extends Pessoa implements Serializable {
         setCurtidas(null);
         setPublicacoes(null);
         setMembrosSeguidores(null);
-        setMembrosSeguindos(null);
+        setMembrosSeguindo(null);
         setComunidadesParticipantes(null);
         setComunidadesSeguindos(null);
         setComentarios(null);
@@ -76,10 +76,10 @@ public class Membro extends Pessoa implements Serializable {
         this.nomeUsuario = membro.getNomeUsuario();
         this.idPublicacaoCurtidas = membro.getCurtidas();
         this.idPublicacoes = membro.getPublicacoes();
-        this.idMembrosSeguindos = membro.getMembrosSeguindos();
+        this.idMembrosSeguindos = membro.getMembrosSeguindo();
         this.idMembrosSeguidores = membro.getMembrosSeguidores();
         this.idComunidadesParticipantes = membro.getComunidadesParticipantes();
-        this.idComunidadesSeguindos = membro.getComunidadesSeguindos();
+        this.idComunidadesSeguindos = membro.getComunidadesSeguindo();
         this.idComentarios = membro.getComentarios();
     }
 
@@ -95,13 +95,27 @@ public class Membro extends Pessoa implements Serializable {
         this.nomeUsuario = membro.getNomeUsuario();
         this.idPublicacaoCurtidas = membro.getCurtidas();
         this.idPublicacoes = membro.getPublicacoes();
-        this.idMembrosSeguindos = membro.getMembrosSeguindos();
+        this.idMembrosSeguindos = membro.getMembrosSeguindo();
         this.idMembrosSeguidores = membro.getMembrosSeguidores();
         this.idComunidadesParticipantes = membro.getComunidadesParticipantes();
-        this.idComunidadesSeguindos = membro.getComunidadesSeguindos();
+        this.idComunidadesSeguindos = membro.getComunidadesSeguindo();
         this.idComentarios = membro.getComentarios();
     }
-
+    public Membro(String nomeUsuario){
+        super(new MembroDAO().verificaId(nomeUsuario));
+        Membro membro = new MembroDAO().retornaMembro(this.getIdPessoa());
+        this.setFotoPerfil(membro.getFotoPerfil());
+        this.fotoFundo = membro.getFotoFundo();
+        this.descricao = membro.getDescricao();
+        this.nomeUsuario = membro.getNomeUsuario();
+        this.idPublicacaoCurtidas = membro.getCurtidas();
+        this.idPublicacoes = membro.getPublicacoes();
+        this.idMembrosSeguindos = membro.getMembrosSeguindo();
+        this.idMembrosSeguidores = membro.getMembrosSeguidores();
+        this.idComunidadesParticipantes = membro.getComunidadesParticipantes();
+        this.idComunidadesSeguindos = membro.getComunidadesSeguindo();
+        this.idComentarios = membro.getComentarios();
+    }
     public String getFotoPerfil() {
         return this.fotoPerfil;
     }
@@ -133,16 +147,11 @@ public class Membro extends Pessoa implements Serializable {
     public void setMembrosSeguidores(ArrayList<Integer> membrosSeguidores) {
         this.idMembrosSeguidores = membrosSeguidores;
     }
-
-    public ArrayList<Integer> getMembrosSeguindos() {
-        return idMembrosSeguindos;
-    }
-
-    public void setMembrosSeguindos(ArrayList<Integer> membrosSeguindos) {
+    public void setMembrosSeguindo(ArrayList<Integer> membrosSeguindos) {
         this.idMembrosSeguindos = membrosSeguindos;
     }
 
-    public ArrayList<Integer> getComunidadesSeguindos() {
+    public ArrayList<Integer> getComunidadesSeguindo() {
         return idComunidadesSeguindos;
     }
 
@@ -249,7 +258,7 @@ public class Membro extends Pessoa implements Serializable {
         SeguidorComunidade seguidorComunidade = new SeguidorComunidade(this);
         boolean comunidadeJaSeguida = false;
         try {
-            for (Integer idComunidade : seguidorComunidade.getComunidadesSeguindos()) {
+            for (Integer idComunidade : seguidorComunidade.getComunidadesSeguindo()) {
                 if (comunidadeSeguida.getIdComunidade() == idComunidade) {
                     comunidadeJaSeguida = true;
                     break;
@@ -381,9 +390,32 @@ public class Membro extends Pessoa implements Serializable {
         }
     }
 
+    public void curtirComentario(int idComentario) {
+        try {
+            Comentario comentario = new Comentario(idComentario);
+            if (comentario.jaCurtiu(this.getIdPessoa())){
+                descurtirComentario(idComentario);
+            }else{
+                comentario.curtirComentario(this.getIdPessoa());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
     private void descurtirPublicacao(int idPublicacao) {
         try {
             new Publicacao(idPublicacao).descurtir(this.getIdPessoa());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void descurtirComentario(int idComentario) {
+        try {
+            new Comentario(idComentario).descurtirComentario(this.getIdPessoa());
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);

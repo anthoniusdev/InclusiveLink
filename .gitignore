@@ -63,8 +63,3 @@ build/
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
-
-<<<<<<< HEAD
-
-=======
->>>>>>> 81d09ac6d197b6cb340e40c29869501864059ed0

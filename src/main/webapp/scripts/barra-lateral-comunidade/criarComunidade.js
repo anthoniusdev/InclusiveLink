@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded", function () {
         $('#popup-nova-comunidade').css({
             display: 'block'
         })
-        $('#fundo-escuro').css({
+        $('#fundo-escuro-comunidade').css({
             display: 'block'
         })
         if (fotoPerfilComunidade.src == null) {
@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded", function () {
             display: 'none',
             transition: '0.2s'
         })
-        $('#fundo-escuro').css({
+        $('#fundo-escuro-comunidade').css({
             display: 'none'
         })
 
