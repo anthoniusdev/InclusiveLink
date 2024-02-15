@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
-@WebServlet(urlPatterns = {"/RealizarCadastro", "/Cadastrar", "/Login", "/home", "/perfil", "/seguirMembro", "/pesquisarPerfil", "/paginaInicial", "/curtirPublicacao", "/obterUsuarioAutenticado", "/curtirComentario"})
+@WebServlet(urlPatterns = {"/RealizarCadastro", "/Cadastrar", "/Login", "/home", "/perfil", "/seguirMembro", "/pesquisarPerfil", "/paginaInicial", "/curtirPublicacao", "/obterUsuarioAutenticado", "/curtirComentario", "/editarPerfil"})
 public class MembroController extends HttpServlet {
 
     @Override
@@ -37,6 +37,7 @@ public class MembroController extends HttpServlet {
             case "/seguirMembro" -> seguirMembro(request, response);
             case "/curtirPublicacao" -> curtirPublicacao(request, response);
             case "/curtirComentario" -> curtirComentario(request, response);
+            case "/editarPerfil" -> editarPerfil(request, response);
         }
     }
 
@@ -131,7 +132,6 @@ public class MembroController extends HttpServlet {
             if (membro.seguirMembro(idSeguindo)) {
                 response.getWriter().write("Usuário seguido com sucesso");
                 System.out.println(membro.getMembrosSeguindo().size());
-//                atualizarDadosMembro(request, idMembro);
             } else {
                 response.getWriter().write("Usuário não foi seguido");
             }
@@ -211,5 +211,8 @@ public class MembroController extends HttpServlet {
         System.out.println(membro.getNome());
         RequestDispatcher rd = request.getRequestDispatcher("perfil.jsp");
         rd.forward(request, response);
+    }
+    private void editarPerfil(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
     }
 }

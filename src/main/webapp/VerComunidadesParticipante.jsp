@@ -118,7 +118,7 @@
             <div class="icone-caret-right"></div>
         </div>
     </div>
-    <div id="fundo-escuro">
+    <div class="fundo-escuro" id="fundo-escuro-comunidade">
         <div id="popup-nova-comunidade" class="popup-nova-comunidade">
             <div class="popup-content">
                 <div class="cabecalho">

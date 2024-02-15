@@ -157,3 +157,6 @@ function seguirUsuario(idMembro, idSeguindo, i) {
         }
     })
 }
+function perfil(nomeUsuario){
+    window.location.href = "perfil?nome_usuario=" + nomeUsuario;
+}

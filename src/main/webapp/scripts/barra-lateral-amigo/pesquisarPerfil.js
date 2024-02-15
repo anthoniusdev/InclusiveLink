@@ -61,6 +61,12 @@ document.addEventListener('DOMContentLoaded', function () {
             const caixaUsuario = $("<div>", {
                 class: "resultado-pesquisa-perfil"
             });
+            caixaUsuario.on('click', function () {
+                $(this).css({
+                    backgroundColor: "rgb(7,25,37)"
+                });
+                window.location.href = "perfil?nome_usuario=" + membroEncontrado.nomeUsuario;
+            })
             if (membroEncontrado.fotoPerfil == null) {
                 membroEncontrado.fotoPerfil = "images/person_foto.svg";
             }
@@ -90,10 +96,5 @@ document.addEventListener('DOMContentLoaded', function () {
             cursor: 'default',
         })
     });
-    listaPerfisPesquisa.on('click', '.resultado-pesquisa-perfil', function () {
-        $(this).css({
-            backgroundColor: "rgb(7,25,37)"
-        });
-        window.location.href = "perfil";
-    })
+
 })
