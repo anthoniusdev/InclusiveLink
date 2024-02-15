@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="styles/DonoComunidade.css">
     <title>AdministradorComunidade</title>
+    <script src="scripts/DonoComunidade.js"></script>
+    <script src="scripts/js/jquery-3.7.1.js"></script>
 </head>
 <body>
 
@@ -19,10 +21,19 @@
     <img src="images/img-foto-perfil.png" class="fotoPerfil">
 
     <div class="menu">
-        <div class="context-menu-btn">
+        <div class="context-menu-btn" onclick="abrirOpcoes()">
             <span class="bar"></span>
             <span class="bar"></span>
             <span class="bar"></span>
+            <span class="dropdown-icon"></span>
+        </div>
+        <div class="context-menu" id="contextMenu">
+            <ul>
+                <li>ADICIONAR MODERADOR</li>
+                <li>ACEITAR PARTICIPANTE</li>
+                <li>EXCLUIR COMUNIDADE</li>
+                <li>EDITAR PERFIL</li>
+            </ul>
         </div>
     </div>
     <p class="nomeComunidade"> Nome Comunidade</p>

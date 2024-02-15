@@ -70,7 +70,7 @@ body {
 
 .nomeComunidade{
     margin-right: 45rem;
-    margin-top: 20rem;
+    margin-top: 17rem;
     font-size: 1.7rem;
     color: #DDF2FD;
 }
@@ -130,6 +130,18 @@ body {
     left: 46%;
     top: -0.5%;
     text-align: center;
+}
+.dropdown-icon{
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #9BBEC8;
+    position: absolute;
+    top: 50%;
+    right: 10%;
+    transform: translateY(-50%);
 }
 
 
