@@ -48,7 +48,7 @@ public class ComentarioController extends HttpServlet implements Serializable {
     }
 
     private void obterComentarios(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int idPublicacao = Integer.parseInt(request.getParameter("publicacao"));
+        int idPublicacao = Integer.parseInt(request.getParameter("idPublicacao"));
         int contagem_inicial = Integer.parseInt(request.getParameter("intervalo"));
         ArrayList<Comentario> comentarios = new ComentarioDAO().comentarios(idPublicacao, contagem_inicial, 5);
         response.setContentType("application/json");

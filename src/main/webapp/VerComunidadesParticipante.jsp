@@ -35,6 +35,7 @@
     <script src="scripts/barra-lateral-comunidade/criarComunidade.js"></script>
     <script src="scripts/barra-lateral-comunidade/pesquisarComunidade.js"></script>
     <link rel="stylesheet" href="styles/VerComunidadesParticipante.css">
+    <script src="scripts/seguirUsuario.js"></script>
 </head>
 <body>
 <main>
@@ -118,7 +119,7 @@
             <div class="icone-caret-right"></div>
         </div>
     </div>
-    <div id="fundo-escuro">
+    <div class="fundo-escuro" id="fundo-escuro-comunidade">
         <div id="popup-nova-comunidade" class="popup-nova-comunidade">
             <div class="popup-content">
                 <div class="cabecalho">

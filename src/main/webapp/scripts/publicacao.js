@@ -1,4 +1,4 @@
-var idPublicacao;
+let idPublicacao;
 obterIdPublicacao().then(function (id) {
     idPublicacao = id;
     carregarComentarios(idPublicacao);
@@ -6,11 +6,12 @@ obterIdPublicacao().then(function (id) {
     console.log(error);
 });
 let usuarioAutenticado;
-obterUsuarioAutenticado().then(function (usuario) {
+obterUsuarioAutenticado(function (usuario){}).then(function (usuario) {
     usuarioAutenticado = usuario;
 }).catch(function (error) {
     console.log(error);
 });
+console.log('usuario autenticado ' + usuarioAutenticado);
 let carregando = false, comentariosCarregados = [];
 document.addEventListener('DOMContentLoaded', function () {
     let form_novoComentario = $('#formNovoComentario');
@@ -28,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
             texto_textArea.focus();
         }
     })
+
     function submeterForm() {
         elementoContagem.text('200');
         elementoContagem.css({
@@ -109,21 +111,21 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
     icone_voltar.on('click', function () {
-        window.location.href = 'PaginaInicial.jsp';
+        window.history.back();
     })
     $(window).scroll(function () {
         if (!carregando && $(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
             carregando = true;
-            carregarComentarios();
+            carregarComentarios(idPublicacao);
         }
     })
-
 })
 
 function carregarInformacoesInshights() {
     carregarInformacoesCurtidas();
     carregarInformacoesComentarios();
 }
+
 function carregarComentarios(idPublicacao) {
     let div_postagens = document.getElementById('comentarios');
     let proximo_intervalo;
@@ -139,7 +141,7 @@ function carregarComentarios(idPublicacao) {
         type: 'GET',
         url: 'obterComentarios',
         data: {
-            publicacao: idPublicacao,
+            idPublicacao: idPublicacao,
             intervalo: proximo_intervalo
         },
         success: function (results) {
@@ -320,6 +322,7 @@ function obterIdPublicacao() {
         })
     })
 }
+
 function obterUsuarioAutenticado() {
     return new Promise(function (resolve, reject) {
         $.ajax({
@@ -361,6 +364,11 @@ function excluirComentario(idComentario, post, confirmacao) {
         }
     })
 }
-function curtirComentario(idComentario){
 
+function curtirComentario(idComentario) {
+    $.ajax({
+        url: "curtirComentario",
+        type: "POST",
+        data: {idComentario: idComentario}
+    })
 }

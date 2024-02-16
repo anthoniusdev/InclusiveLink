@@ -11,9 +11,6 @@ public class ComentarioDAO {
         return conexao.conectar();
     }
 
-    // CRUD - - - CREATE - - -
-    // Inserindo um novo registro na tabela publicacao_comentario
-    // <-- Cria um comentario no banco de dados -->
     public Comentario criarComentario(int idPublicacao, String texto, int idAutor) {
         try (Connection con = conectar()) {
             String create = "insert into publicacao_comentario(idPublicacao, texto, id_autor) values(?, ?, ?)";
@@ -38,9 +35,6 @@ public class ComentarioDAO {
         }
     }
 
-    // CRUD - - - READ - - -
-    // Lê um registro da tabela publicacao_comentarrio
-    // <-- Retorna um objeto da classe Comentario para utilização de serviço futuro -->
     public Comentario retornaComentario(int idComentario) {
         String read = "select * from publicacao_comentario where idComentario = ?";
         Comentario comentario = new Comentario();
@@ -48,9 +42,6 @@ public class ComentarioDAO {
             PreparedStatement preparedStatement = con.prepareStatement(read);
             preparedStatement.setInt(1, idComentario);
             ResultSet rs = preparedStatement.executeQuery();
-            // Pega o resultado da consulta ao banco de dados  |
-            //
-            //                                                 v
             if (rs.next()) {
                 comentario.setIdComentario(rs.getInt(1));
                 comentario.setIdPublicacao(rs.getInt(2));
@@ -69,8 +60,6 @@ public class ComentarioDAO {
         return comentario;
     }
 
-    // CRUD - - - READ - - -
-    // <-- Lê e armaneza na ArrayList registros da tabela comentario_curtida -->
     public ArrayList<Integer> curtidas(int idComentario) {
         String read = "select idMembro from comentario_curtida where idcomentario = ?";
         ArrayList<Integer> membros = new ArrayList<>();
@@ -87,23 +76,6 @@ public class ComentarioDAO {
         }
     }
 
-    // CRUD - - - READ - - -
-    // <-- Armazena os comentários de uma publicação específica e retorna a ArrayList -->
-//        public ArrayList<Integer> comentarios (int idPublicacao){
-//            String read = "select idComentario from publicacao_comentario where idPublicacao = ?";
-//            ArrayList<Integer> comentarios = new ArrayList<>();
-//            try (Connection con = conectar()) {
-//                PreparedStatement preparedStatement = con.prepareStatement(read);
-//                preparedStatement.setInt(1, idPublicacao);
-//                ResultSet rs = preparedStatement.executeQuery();
-//                while (rs.next()) {
-//                    comentarios.add(rs.getInt(1));
-//                }
-//                return comentarios;
-//            } catch (Exception e) {
-//                throw new RuntimeException(e);
-//            }
-//        }
     public ArrayList<Comentario> comentarios(int idPublicacao, int indice_inicial, int quantidade_publicacoes) {
         try (Connection con = conectar()) {
             String read = "SELECT idComentario FROM publicacao_comentario WHERE idPublicacao = ? ORDER BY data DESC, hora DESC LIMIT ?, ?";
@@ -117,6 +89,31 @@ public class ComentarioDAO {
                     comentarios.add(retornaComentario(rs.getInt(1)));
                 }
                 return comentarios;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void curtirComentario(int idComentario, int idMembro){
+        try(Connection con = conectar()){
+            String read = "INSERT INTO comentario_curtida VALUES (?, ?)";
+            try(PreparedStatement preparedStatement = con.prepareStatement(read)){
+                preparedStatement.setInt(1, idComentario);
+                preparedStatement.setInt(2, idMembro);
+                preparedStatement.executeUpdate();
+            }
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void descurtirComentario(int idComentario, int idMembro){
+        try (Connection con = conectar()){
+            String delete = "DELETE FROM comentario_curtida WHERE idMembro = ? AND idComentario = ?";
+            try (PreparedStatement preparedStatement = con.prepareStatement(delete)){
+                preparedStatement.setInt(1, idMembro);
+                preparedStatement.setInt(2, idComentario);
+                preparedStatement.executeUpdate();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

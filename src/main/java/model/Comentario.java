@@ -24,6 +24,23 @@ public class Comentario extends Publicacao {
         }
     }
 
+    public Comentario(int idComentario) {
+        try {
+            this.setIdComentario(idComentario);
+            Comentario comentario = new ComentarioDAO().retornaComentario(idComentario);
+            this.setIdPublicacao(comentario.getIdPublicacao());
+            this.setCurtidas(comentario.getCurtidas());
+            this.setComentarios(comentario.getComentarios());
+            this.setAutor(comentario.getAutor());
+            this.setTexto(comentario.getTexto());
+            this.setNumeroComentarios(comentario.getNumeroComentarios());
+            this.setNumeroCurtidas(comentario.getNumeroCurtidas());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
     public Comentario() {
     }
 
@@ -33,5 +50,11 @@ public class Comentario extends Publicacao {
 
     public void setIdComentario(int idComentario) {
         this.idComentario = idComentario;
+    }
+    public void curtirComentario(int idMembro){
+        new ComentarioDAO().curtirComentario(this.getIdComentario(), idMembro);
+    }
+    public void descurtirComentario(int idMembro){
+        new ComentarioDAO().descurtirComentario(this.getIdComentario(), idMembro);
     }
 }

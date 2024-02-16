@@ -3,8 +3,13 @@ package controller;
 import com.google.gson.Gson;
 import model.Membro;
 import model.Publicacao;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.json.JSONObject;
 import util.ServicoAutenticacao;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
@@ -12,7 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
-@WebServlet(urlPatterns = {"/RealizarCadastro", "/Cadastrar", "/Login", "/seguirMembro", "/pesquisarPerfil", "/paginaInicial", "/curtirPublicacao", "/obterUsuarioAutenticado"})
+@WebServlet(urlPatterns = {"/RealizarCadastro", "/Cadastrar", "/Login", "/home", "/perfil", "/seguirMembro", "/pesquisarPerfil", "/paginaInicial", "/curtirPublicacao", "/obterUsuarioAutenticado", "/curtirComentario", "/editarPerfil"})
 public class MembroController extends HttpServlet {
 
     @Override
@@ -35,6 +40,8 @@ public class MembroController extends HttpServlet {
             case "/Login" -> realizarLogin(request, response);
             case "/seguirMembro" -> seguirMembro(request, response);
             case "/curtirPublicacao" -> curtirPublicacao(request, response);
+            case "/curtirComentario" -> curtirComentario(request, response);
+            case "/editarPerfil" -> editarPerfil(request, response);
         }
     }
 
@@ -44,8 +51,9 @@ public class MembroController extends HttpServlet {
         String action = request.getServletPath();
         System.out.println(action);
         switch (action) {
+            case "/home", "/paginaInicial" -> paginaInicial(request, response);
+            case "/perfil" -> perfil(request, response);
             case "/pesquisarPerfil" -> pesquisarPerfil(request, response);
-            case "/paginaInicial" -> paginaInicial(request, response);
             case "/obterUsuarioAutenticado" -> obterUsuarioAutenticado(request, response);
         }
     }
@@ -122,16 +130,10 @@ public class MembroController extends HttpServlet {
 
     private void seguirMembro(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
-            int idMembro = Integer.parseInt(request.getParameter("idMembro"));
-            int idSeguindo = Integer.parseInt(request.getParameter("idSeguindo"));
-            Membro membro = new Membro(idMembro);
-            if (membro.seguirMembro(idSeguindo)) {
-                response.getWriter().write("Usuário seguido com sucesso");
-                System.out.println(membro.getMembrosSeguindo().size());
-//                atualizarDadosMembro(request, idMembro);
-            } else {
-                response.getWriter().write("Usuário não foi seguido");
-            }
+            HttpSession httpSession = request.getSession(false);
+            Membro membro = (Membro) httpSession.getAttribute("usuario");
+            membro.seguirMembro(Integer.parseInt(request.getParameter("idSeguindo")));
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -184,13 +186,54 @@ public class MembroController extends HttpServlet {
         Membro membro = (Membro) session.getAttribute("usuario");
         membro.curtirPublicacao(Integer.parseInt(request.getParameter("idPublicacao")));
     }
+
     private void obterUsuarioAutenticado(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession(false);
+        boolean object = Boolean.parseBoolean(request.getParameter("object"));
         Membro membro = (Membro) session.getAttribute("usuario");
-        String jsonResponse = new Gson().toJson(membro.getIdPessoa());
-        // Até o momento só preciso do ID, se precisar de mais alguma tem que adicionar
+        String jsonResponse;
+        if (object) {
+            jsonResponse = new Gson().toJson(membro);
+        } else {
+            jsonResponse = new Gson().toJson(membro.getIdPessoa());
+        }
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(jsonResponse);
+    }
+
+    private void curtirComentario(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession httpSession = request.getSession(false);
+        Membro membro = (Membro) httpSession.getAttribute("usuario");
+        membro.curtirComentario(Integer.parseInt(request.getParameter("idComentario")));
+    }
+
+    private void perfil(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Membro membro = new Membro(request.getParameter("nome_usuario"));
+        request.setAttribute("perfilVisitado", membro);
+        System.out.println(membro.getIdPessoa());
+        System.out.println(membro.getNome());
+        RequestDispatcher rd = request.getRequestDispatcher("perfil.jsp");
+        rd.forward(request, response);
+    }
+
+    private void editarPerfil(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            ServletFileUpload upload = new ServletFileUpload(new DiskFileItemFactory());
+            ArrayList<FileItem> items = (ArrayList<FileItem>) upload.parseRequest(request);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            JSONObject jsonResponse = new JSONObject();
+            if (new Membro().editarPerfil(items)) {
+                jsonResponse.put("success", true);
+                jsonResponse.put("message", "Comunidade criada com sucesso.");
+            } else {
+                jsonResponse.put("success", false);
+                jsonResponse.put("message", "Erro ao criar a comunidade.");
+            }
+            response.getWriter().write(jsonResponse.toString());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
