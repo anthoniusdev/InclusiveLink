@@ -102,7 +102,7 @@ function carregarPublicacoes(tipo) {
                 let ftCurt = 'images/iconamoon_heart-bold.svg';
                 if (publicacao.curtidas.length > 0) {
                     publicacao.curtidas.forEach(function (curtida) {
-                        if (curtida === usuarioAutenticado) {
+                        if (curtida === usuarioAutenticado.idPessoa) {
                             ftCurt = 'images/iconamoon_heart-fill.svg';
                         }
                     })

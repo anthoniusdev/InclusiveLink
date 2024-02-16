@@ -98,6 +98,7 @@ body {
     object-fit: cover;
     object-position: center;
     border: 6px solid #427D9D;
+    background-color: #ffffff;
 }
 
 .nome-usuario {
@@ -132,6 +133,7 @@ body {
 .numSeguindo {
     font-size: 1.4rem;
     color: #DDF2FD;
+    transition: 0.25s;
 }
 
 .seguindo {
@@ -143,6 +145,7 @@ body {
     margin-left: 30px;
     font-size: 1.4rem;
     color: #DDF2FD;
+    transition: 0.25s;
 }
 
 .seguidores {
@@ -217,9 +220,6 @@ body {
     display: none;
 }
 
-#editar-perfil {
-    z-index: 1;
-}
 
 .pop-up-editar-perfil {
     background-color: var(--COR-04);
@@ -369,18 +369,51 @@ body {
     background-color: var(--COR-05);
     cursor: pointer;
 }
-#foto-perfil-usuario{
+
+#foto-perfil-usuario {
     border-radius: 100%;
 }
-.botao-acao-perfil{
+
+.botao-acao-perfil {
     display: flex;
     position: absolute;
     right: 5rem;
     top: 22rem;
 }
-.botao-acao-perfil button{
+
+.botao-acao-perfil button {
     width: 8rem;
     background-color: var(--COR-04);
     border: none;
     cursor: pointer;
+}
+
+#numSeguidores:hover, #numSeguindos:hover {
+    font-size: 2rem;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.pop-up-ver-seguindos, .pop-up-seguidores {
+    display: flex;
+    background-color: var(--COR-04);
+    width: 950px;
+    height: auto;
+    position: absolute;
+    top: 2rem;
+    left: 18rem;
+    border-radius: 20px;
+    flex-direction: column;
+}
+
+.caixa-perfil {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+}
+
+.foto-perfil-autor img {
+    width: 83px;
+    height: 83px;
 }

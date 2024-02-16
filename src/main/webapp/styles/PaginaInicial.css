@@ -94,11 +94,14 @@ html, body, footer {
     padding-left: 35px;
     padding-right: 35px;
 }
-.criarPublicacao .foto-perfil img{
+
+.criarPublicacao .foto-perfil img {
     width: 83px;
     height: 83px;
     border-radius: 100%;
+    background-color: #ffffff;
 }
+
 .criarPublicacao .areaInput {
     display: flex;
     flex-direction: column;
@@ -203,11 +206,14 @@ html, body, footer {
     height: 83px;
     margin: 20px;
 }
-.caixa-publicacao .foto-perfil-autor img{
+
+.caixa-publicacao .foto-perfil-autor img {
     width: 83px;
     height: 83px;
     border-radius: 100%;
+    background-color: #ffffff;
 }
+
 .caixa-publicacao .nome-autor {
     color: var(--COR-TEXTO-04);
     font-size: 20px;

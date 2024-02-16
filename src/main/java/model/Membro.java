@@ -342,25 +342,27 @@ public class Membro extends Pessoa implements Serializable {
         return isModerador;
     }
 
-    private void pararSeguir(int idSeguindo) {
+    public void pararSeguir(int idSeguindo) {
         try {
             new MembroDAO().pararSeguir(this.getIdPessoa(), idSeguindo);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
-    private void seguir(int id){
+
+    private void seguir(int id) {
         try {
             new MembroDAO().seguirMembro(this.getIdPessoa(), id);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
-    public void seguirMembro(int id){
+
+    public void seguirMembro(int id) {
         try {
-            if (segue(id)){
+            if (segue(id)) {
                 pararSeguir(id);
-            }else{
+            } else {
                 seguir(id);
             }
         } catch (Exception e) {
@@ -497,7 +499,12 @@ public class Membro extends Pessoa implements Serializable {
             throw new RuntimeException(e);
         }
     }
+
     public boolean segue(int id) {
         return new MembroDAO().membrosSeguindos(this.getIdPessoa()).contains(id);
+    }
+
+    public void removerSeguidor(int idSeguidor) {
+        new MembroDAO().pararSeguir(idSeguidor, this.getIdPessoa());
     }
 }
