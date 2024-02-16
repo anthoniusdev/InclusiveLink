@@ -33,6 +33,7 @@
     <script src="scripts/curtirPublicacao.js"></script>
     <script src="scripts/excluirPublicacao.js"></script>
     <script src="scripts/publicacao.js"></script>
+    <script src="scripts/seguirUsuario.js"></script>
 </head>
 <body>
 <main>

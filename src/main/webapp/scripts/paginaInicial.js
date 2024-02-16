@@ -1,9 +1,10 @@
 let usuarioAutenticado;
-obterUsuarioAutenticado().then(function (usuario) {
-    usuarioAutenticado = usuario;
-}).catch(function (error) {
-    console.log(error);
-})
+obterUsuarioAutenticado(function (usuario) {
+    if (usuario) {
+        usuarioAutenticado = usuario;
+    }
+});
+console.log('usuario autenticado ' + usuarioAutenticado);
 let carregando = false;
 document.addEventListener("DOMContentLoaded", function () {
     let formNovaPublicacao = document.getElementById("formNovaPublicacao");
@@ -134,29 +135,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-function seguirUsuario(idMembro, idSeguindo, i) {
-    let botaoSeguir = document.getElementById('botaoSeguir' + i);
-    botaoSeguir.style.outline = "4px solid #FFF";
-    botaoSeguir.style.transition = "0.25s";
-    $.ajax({
-        type: "POST",
-        url: "seguirMembro",
-        data: {
-            idMembro: idMembro,
-            idSeguindo: idSeguindo
-        },
-        success: function () {
-            console.log("Usuário seguido com sucesso");
-            botaoSeguir.innerText = 'SEGUINDO';
-            botaoSeguir.style.fontSize = '20px';
-            botaoSeguir.style.backgroundColor = 'var(--COR-03)';
-            botaoSeguir.style.outline = '3px solid var(--COR-04)';
-        },
-        error: function (error) {
-            console.log("Erro ao seguir usuário: " + error.responseText);
-        }
-    })
-}
-function perfil(nomeUsuario){
+
+function perfil(nomeUsuario) {
     window.location.href = "perfil?nome_usuario=" + nomeUsuario;
 }

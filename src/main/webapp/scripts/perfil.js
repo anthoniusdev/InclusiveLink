@@ -1,11 +1,12 @@
-let usuarioAutenticado;
+let usuarioAutenticado, alteracaoSalva = false, ftFunURL, ftPerURL, carregando = false;
+let ftPerUsuario, ftFunUsuario;
 obterUsuarioAutenticado().then(function (usuario) {
     usuarioAutenticado = usuario;
 }).catch(function (error) {
     console.log(error);
 });
-let carregando = false;
 document.addEventListener("DOMContentLoaded", function () {
+    let ftpChange = false, ftfChange = false;
     let botaoEditarPerfil = $('#editar-perfil');
     let botaoFecharEditarPerfil = $('#close-editar-perfil');
     let labelNomeUsuario = $('#label-nome-usuario');
@@ -13,18 +14,52 @@ document.addEventListener("DOMContentLoaded", function () {
     let labelDescricao = $('#label-descricao-usuario');
     let elementoContagemDescricao = $('#contagem-caracteres-descricao-usuario');
     let inputDescricao = $('#descricao-usuario');
-    let fundoPreto = $('#fundo-escuro-editar-perfil');
+    let iconeEditarFtFundo = $('#icone-editar-foto-fundo-usuario');
+    let iconeEditarFtPerfil = $('#icone-editar-foto-perfil-usuario');
     botaoEditarPerfil.on('click', function () {
         $('#fundo-escuro-editar-perfil').css({
-            display: 'block'
-        })
+            display: 'block',
+            overflow: 'auto'
+        });
         botaoEditarPerfil.css({
             display: 'none'
-        })
+        });
+        $('#body').css({
+            overflow: 'hidden'
+        });
+
     })
     botaoFecharEditarPerfil.on('click', function () {
+        if (alteracaoSalva === true) {
+            window.location.reload();
+        } else if (alteracaoSalva === false) {
+            if (ftpChange) {
+                let fp = 'images/person_foto.svg';
+                if (usuarioAutenticado.fotoPerfil !== undefined && usuarioAutenticado.fotoPerfil !== '') {
+                    fp = usuarioAutenticado.fotoPerfil;
+                }
+                $('#foto-perfil-usuario').attr('src', fp);
+            }
+            if (ftfChange) {
+                let ff = 'images/DefaultFundoPerfil.png';
+                if (usuarioAutenticado.fotoFundo !== undefined && usuarioAutenticado.fotoFundo !== '') {
+                    ff = usuarioAutenticado.fotoFundo;
+                }
+                $('#foto-fundo-usuario').attr('src', ff);
+            }
+            if (usuarioAutenticado.descricao !== null) {
+                inputDescricao.text(usuarioAutenticado.descricao);
+            } else {
+                inputDescricao.text('');
+            }
+            inputNomeUsuario.val(usuarioAutenticado.nome);
+        }
         $('#fundo-escuro-editar-perfil').css({
-            display: 'none'
+            display: 'none',
+            overflow: 'hidden'
+        });
+        $('#body').css({
+            overflow: 'auto'
         });
         botaoEditarPerfil.css({
             display: 'block'
@@ -62,21 +97,65 @@ document.addEventListener("DOMContentLoaded", function () {
             height: Math.min(this.scrollHeight, 300) + 'px'
         });
     });
-    labelDescricao.on('click', function (){
+    labelDescricao.on('click', function () {
         inputDescricao.focus();
+    });
+    let editarFtFun = $('#editarFotoFundoUsuario');
+    let editarFtPer = $('#editarFotoPerfilUsuario');
+    iconeEditarFtFundo.on('click', function () {
+        editarFtFun.click();
+    });
+    iconeEditarFtPerfil.on('click', function () {
+        editarFtPer.click();
+    });
+    editarFtFun.on('change', function () {
+        const file = this.files[0];
+        if (file) {
+            ftFunURL = URL.createObjectURL(file);
+            console.log(ftFunURL)
+            $('#foto-fundo-usuario').attr('src', ftFunURL);
+            ftFunUsuario = file;
+            ftfChange = true;
+        }
+        console.log('Arquivo selecionado:', this.files[0]);
+    })
+    editarFtPer.on('change', function () {
+        const file = this.files[0];
+        if (file) {
+            ftPerURL = URL.createObjectURL(file);
+            console.log(ftPerURL);
+            $('#foto-perfil-usuario').attr('src', ftPerURL);
+            ftPerUsuario = file;
+            ftpChange = true;
+        }
+        console.log('Arquivo selecionado:', this.files[0]);
     })
 })
-function editarPerfil(){
+
+function editarPerfil() {
+    let formData = new FormData();
+    formData.append('idUsuario', usuarioAutenticado);
+    formData.append('nome', $('#nome-usuario').val());
+    formData.append('descricao', $('#descricao-usuario').val());
+    formData.append('fotoPerfil', ftPerUsuario);
+    formData.append('fotoFundo', ftFunUsuario);
     $.ajax({
         url: 'editarPerfil',
         type: 'POST',
-        data: {
-            idUsuario: usuarioAutenticado,
-            nome: $('#nome-usuario').val(),
-            descricao: $('#descricao-usuario').val()
+        data: formData,
+        processData: false,
+        contentType: false,
+        dataType: "json",
+        success: function () {
+            $('#btnSave').text('SALVO').css({
+                border: "4px solid #427D9D",
+                backgroundColor: "#164863",
+                transition: '0.5s'
+            });
+            alteracaoSalva = true;
         },
-        success: function (){
-            $('#btnSave').text('SALVO');
+        error: function (error) {
+            console.log('ERRO: ' + error);
         }
     })
 }

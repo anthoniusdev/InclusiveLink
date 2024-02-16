@@ -3,10 +3,25 @@
     src: url("../fonts/MonomaniacOne-Regular.ttf") format('truetype');
 }
 
+:root {
+    --COR-05: #335d7461;
+    --COR-04: #164863;
+    --COR-03: #427D9D;
+    --COR-02: #9BBEC8;
+    --COR-01: #DDF2FD;
+    --COR-TEXTO-01: rgba(22, 72, 99, 0.3);
+    --COR-TEXTO-02: rgba(22, 72, 99, 0.8);
+    --COR-TEXTO-03: rgba(221, 242, 253, 0.50);
+    --COR-TEXTO-04: #DDF2FD;
+    --COR-TEXTO-05: rgba(221, 242, 253, 0.70);
+    --FONTE: "Monomaniac One", sans-serif;
+    --TAMANHO-FONTE: 25px;
+}
+
 body {
     margin: 0;
     padding: 0;
-    background-color: #DDF2FD;
+    background-color: var(--COR-02);
     font-family: 'Monomaniac One', sans-serif;
 }
 
@@ -337,4 +352,35 @@ body {
 
 #descricao-usuario:focus {
     outline: none;
+}
+
+.postagens {
+    width: 100%;
+}
+
+.caixa-publicacao {
+    display: flex;
+    margin-bottom: 1rem;
+    width: 100%;
+    height: auto;
+}
+
+.caixa-publicacao:hover {
+    background-color: var(--COR-05);
+    cursor: pointer;
+}
+#foto-perfil-usuario{
+    border-radius: 100%;
+}
+.botao-acao-perfil{
+    display: flex;
+    position: absolute;
+    right: 5rem;
+    top: 22rem;
+}
+.botao-acao-perfil button{
+    width: 8rem;
+    background-color: var(--COR-04);
+    border: none;
+    cursor: pointer;
 }

@@ -29,7 +29,7 @@
 
 %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <link rel="icon" href="images/LOGO.ico">
@@ -44,11 +44,12 @@
     <script src="scripts/excluirPublicacao.js"></script>
     <script src="scripts/carregarPublicacoes.js"></script>
     <script src="scripts/obterUsuarioAutenticado.js"></script>
-    <script src="scripts/obterPerfilVisitado.js"></script>
     <script src="scripts/perfil.js"></script>
+    <script src="scripts/seguirUsuario.js"></script>
+    <script src="scripts/verificaSeguindo.js"></script>
     <title>@<%=perfilVisitado.getNomeUsuario()%> - InclusiveLink</title>
 </head>
-<body>
+<body id="body">
 <main>
     <div class="container">
         <div class="retanguloPerfil">
@@ -61,10 +62,22 @@
             <%
                 if (paginaUsuario) {
             %>
-            <button id="editar-perfil">EDITAR PERFIL</button>
+            <div class="botao-acao-perfil">
+                <button id="editar-perfil">EDITAR PERFIL</button>
+            </div>
             <%
+            } else {
+                String txt = "SEGUIR";
+                if (usuario.segue(perfilVisitado.getIdPessoa())) {
+                    txt = "SEGUINDO";
                 }
             %>
+            <div class="botao-acao-perfil">
+                <button id="botao-seguir-perfil"
+                        onclick="seguirUsuario(<%=usuario.getIdPessoa()%>, <%=perfilVisitado.getIdPessoa()%>, false)"><%=txt%>
+                </button>
+            </div>
+            <%}%>
             <%--    Foto de perfil do usuário --%>
             <img src="<%=fotoPerfil%>" class="fotoPerfil" alt="Foto de perfil do usuário">
             <p class="nome-usuario"><%=perfilVisitado.getNome()%>
@@ -196,7 +209,7 @@
                     <button onclick="editarPerfil()" id="btnSave">SALVAR ALTERAÇÕES</button>
                 </div>
                 <div class="foto-fundo-usuario">
-                    <img src="<%=fotoFundo%>" alt="Foto de fundo de <%=usuario.getNome()%>">
+                    <img id="foto-fundo-usuario" src="<%=fotoFundo%>" alt="Foto de fundo de <%=usuario.getNome()%>">
                     <div class="icone-editar-foto" id="icone-editar-foto-fundo-usuario">
                         <img src="images/ri_edit-fill.svg" id="img-icone-editar-foto-fundo-usuario"
                              alt="Ícone de alterar foto perfil">
@@ -204,7 +217,7 @@
                     <input type="file" id="editarFotoFundoUsuario" name="fotoFundoUsuario" accept="image/*">
                 </div>
                 <div class="foto-perfil-usuario">
-                    <img src="<%=fotoPerfil%>" alt="Foto do perfil de <%=usuario.getFotoPerfil()%>">
+                    <img id="foto-perfil-usuario" src="<%=fotoPerfil%>" alt="Foto do perfil de <%=usuario.getNome()%>">
                     <div class="icone-editar-foto" id="icone-editar-foto-perfil-usuario">
                         <img src="images/ri_edit-fill.svg" id="img-icone-editar-foto-perfil-usuario"
                              alt="Ícone de alterar foto perfil">
@@ -214,16 +227,13 @@
                 <div class="inputs">
                     <label for="nome-usuario" id="label-nome-usuario">
                         <small>Nome</small>
-                        <input type="text" id="nome-usuario" name="nome-usuario" value="<%=usuario.getNome()%>" required>
+                        <input type="text" id="nome-usuario" name="nome-usuario" value="<%=perfilVisitado.getNome()%>"
+                               required>
                     </label>
                     <label for="descricao-usuario" id="label-descricao-usuario">
                         <small>Descrição</small>
                         <textarea id="descricao-usuario" name="descricao-usuario" rows="1"
-                                  maxlength="200"><%
-                                if (usuario.getDescricao() != null) {
-                            %><%=usuario.getDescricao()%><%
-                                }
-                            %></textarea>
+                                  maxlength="200"><%if (perfilVisitado.getDescricao() != null) {%><%=perfilVisitado.getDescricao()%><%}%></textarea>
                         <div id="contagem-caracteres-descricao-usuario">200</div>
                     </label>
                 </div>

@@ -101,9 +101,13 @@ document.addEventListener("DOMContentLoaded", function () {
     function abrirPopUpCriarComunidade() {
         $('#popup-nova-comunidade').css({
             display: 'block'
-        })
+        });
         $('#fundo-escuro-comunidade').css({
-            display: 'block'
+            display: 'block',
+            overflow: 'auto'
+        });
+        $('#body').css({
+            overflow: 'hidden'
         })
         if (fotoPerfilComunidade.src == null) {
             fotoPerfilComunidade.attr('src', "images/img-foto-perfil.png");
@@ -133,9 +137,12 @@ document.addEventListener("DOMContentLoaded", function () {
             transition: '0.2s'
         })
         $('#fundo-escuro-comunidade').css({
-            display: 'none'
-        })
-
+            display: 'none',
+            overflow: 'none'
+        });
+        $('#body').css({
+            overflow: 'auto'
+        });
     }
 })
 

@@ -40,8 +40,9 @@
     <script src="scripts/curtirPublicacao.js"></script>
     <script src="scripts/excluirPublicacao.js"></script>
     <script src="scripts/carregarPublicacoes.js"></script>
+    <script src="scripts/seguirUsuario.js"></script>
 </head>
-<body>
+<body id="body">
 <main>
     <div class="container">
         <div class="principal">
