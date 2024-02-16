@@ -382,4 +382,42 @@ public class MembroDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public boolean editarPerfil(int idMembro, String nome, String descricao, String urlFotoPerfil, String urlFotoFundo) {
+        try (Connection con = conectar()) {
+            new PessoaDAO().editarNome(idMembro, nome);
+            String update = "UPDATE membro SET descricao = ?, fotoPerfil = ?, fotoFundo = ? WHERE idPessoa = ?";
+            try (PreparedStatement preparedStatement = con.prepareStatement(update)) {
+                preparedStatement.setString(1, descricao);
+                preparedStatement.setString(2, urlFotoPerfil);
+                preparedStatement.setString(3, urlFotoFundo);
+                preparedStatement.setInt(4, idMembro);
+                preparedStatement.executeUpdate();
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void pararSeguir(int idUsuario, int idSeguindo) {
+        try (Connection con = conectar()) {
+            String delete = "DELETE FROM membro_seguindo WHERE idMembro = ? AND idSeguindo = ?";
+            try (PreparedStatement preparedStatement = con.prepareStatement(delete)) {
+                preparedStatement.setInt(1, idUsuario);
+                preparedStatement.setInt(2, idSeguindo);
+                preparedStatement.executeUpdate();
+                String delete1 = "DELETE FROM membro_seguidor WHERE idMembro = ? AND idSeguidor = ?";
+                try (PreparedStatement preparedStatement1 = con.prepareStatement(delete1)) {
+                    preparedStatement1.setInt(1, idSeguindo);
+                    preparedStatement1.setInt(2, idUsuario);
+                    preparedStatement1.executeUpdate();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
 }

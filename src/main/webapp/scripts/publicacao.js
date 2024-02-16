@@ -1,4 +1,4 @@
-var idPublicacao;
+let idPublicacao;
 obterIdPublicacao().then(function (id) {
     idPublicacao = id;
     carregarComentarios(idPublicacao);
@@ -6,11 +6,12 @@ obterIdPublicacao().then(function (id) {
     console.log(error);
 });
 let usuarioAutenticado;
-obterUsuarioAutenticado().then(function (usuario) {
+obterUsuarioAutenticado(function (usuario){}).then(function (usuario) {
     usuarioAutenticado = usuario;
 }).catch(function (error) {
     console.log(error);
 });
+console.log('usuario autenticado ' + usuarioAutenticado);
 let carregando = false, comentariosCarregados = [];
 document.addEventListener('DOMContentLoaded', function () {
     let form_novoComentario = $('#formNovoComentario');
@@ -110,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
     icone_voltar.on('click', function () {
-        window.location.href = 'PaginaInicial.jsp';
+        window.history.back();
     })
     $(window).scroll(function () {
         if (!carregando && $(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
@@ -370,8 +371,4 @@ function curtirComentario(idComentario) {
         type: "POST",
         data: {idComentario: idComentario}
     })
-}
-
-function apagarPost(){
-
 }
