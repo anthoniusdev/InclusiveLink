@@ -33,6 +33,7 @@
     <script src="scripts/curtirPublicacao.js"></script>
     <script src="scripts/excluirPublicacao.js"></script>
     <script src="scripts/publicacao.js"></script>
+    <script src="scripts/seguirUsuario.js"></script>
 </head>
 <body>
 <main>
@@ -94,12 +95,6 @@
                     </div>
                 </div>
             </div>
-            <%if (membro.getIdPessoa() == publicacao.getAutor().getIdPessoa()) {%>
-            <button class="botao-apagar" onclick="excluirPublicacao(<%=publicacao.getIdPublicacao()%>, false, false)">
-                EXCLUIR
-            </button>
-            <div class="confirmacao-exclusao" id="confirmacao"></div>
-            <%}%>
         </div>
         <div class="adicionar-comentario">
             <form action="novoComentario" method="post" id="formNovoComentario">
@@ -172,7 +167,7 @@
             <div class="icone-caret-right"></div>
         </div>
     </div>
-    <div id="fundo-escuro">
+    <div class="fundo-escuro" id="fundo-escuro-comunidade">
         <div id="popup-nova-comunidade" class="popup-nova-comunidade">
             <div class="popup-content">
                 <div class="cabecalho">
@@ -213,10 +208,6 @@
         </div>
     </div>
 </main>
-<%=publicacao.getAutor().getNome()%>
-<%=publicacao.getTexto()%>
-<%=publicacao.getData()%>
-<%=publicacao.getHora()%>
 </body>
 </html>
 <%

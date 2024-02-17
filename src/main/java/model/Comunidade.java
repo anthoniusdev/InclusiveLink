@@ -32,7 +32,19 @@ public class Comunidade implements Serializable {
 
     public Comunidade() {
     }
-
+    public Comunidade(int idComunidade){
+        Comunidade comunidade = new ComunidadeDAO().retornaComunidade(idComunidade);
+        this.setIdComunidade(idComunidade);
+        this.nome = comunidade.getNome();
+        this.idCriador = comunidade.getIdCriador();
+        this.fotoPerfil = comunidade.getFotoPerfil();
+        this.fotoFundo = comunidade.getFotoFundo();
+        this.descricao = comunidade.getDescricao();
+        this.idPublicacoes = comunidade.getIdPublicacoes();
+        this.idModeradores = comunidade.getIdModeradores();
+        this.idParticipantes = comunidade.getIdParticipantes();
+        this.idSeguidores = comunidade.getIdSeguidores();
+    }
     public ParticipanteComunidade participarComunidade(Membro membro) {
         if (membro.isSeguidor(this)) {
             ParticipanteComunidade novoParticipante = new ParticipanteComunidade((SeguidorComunidade) membro);

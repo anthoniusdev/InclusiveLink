@@ -17,11 +17,9 @@ function excluirPublicacao(idPublicacao, post, confirmacao) {
                 });
             }, 3000)
             console.log('publicacao excluida');
-        }, error: function (erro) {
+        },
+        error: function (erro) {
             console.log(erro);
         }
     })
-    if (!post){
-        window.location.href='PaginaInicial.jsp';
-    }
 }
