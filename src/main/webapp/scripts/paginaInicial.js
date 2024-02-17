@@ -1,8 +1,8 @@
 let usuarioAutenticado;
-obterUsuarioAutenticado(function (usuario) {
-    if (usuario) {
-        usuarioAutenticado = usuario;
-    }
+obterUsuarioAutenticado(function (usuario){}).then(function (usuario) {
+    usuarioAutenticado = usuario;
+}).catch(function (error) {
+    console.log(error);
 });
 console.log('usuario autenticado ' + usuarioAutenticado);
 let carregando = false;

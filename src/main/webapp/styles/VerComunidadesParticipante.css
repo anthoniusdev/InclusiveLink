@@ -74,6 +74,10 @@ html, body, footer {
     border-top: 2px solid var(--COR-04);
 }
 
+.caixa-comunidade a {
+    text-decoration: none;
+}
+
 .caixa-comunidade .imagem-foto-perfil-comunidade {
     max-width: 140px;
     overflow: hidden;
@@ -239,11 +243,13 @@ html, body, footer {
     flex-wrap: wrap;
     cursor: pointer;
 }
-.sem-comunidades{
+
+.sem-comunidades {
     align-self: center;
     font-size: 40px;
     color: var(--COR-01);
 }
+
 .listaPesquisaPerfil {
     background-color: var(--COR-03);
     border: 1px solid var(--COR-04);
@@ -578,11 +584,13 @@ html, body, footer {
     height: 80px;
     border-radius: 20px;
 }
-#pagina-inicial:hover{
+
+#pagina-inicial:hover {
     cursor: pointer;
     background-color: #1F465EFF;
     transition: 0.2s;
 }
+
 .pagina-incial a {
     text-decoration: none;
     font-size: 25px;
@@ -601,6 +609,7 @@ html, body, footer {
     position: absolute;
     right: 80px;
 }
+
 .icone-caret-right {
     width: 40px;
     height: 65px;

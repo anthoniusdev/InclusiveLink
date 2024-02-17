@@ -52,11 +52,13 @@
                     for (Comunidade comunidade : comunidadesParticipantes) {
             %>
             <div class="caixa-comunidade" id="caixa-comunidade<%=comunidadesParticipantes.indexOf(comunidade)%>">
+                <a href="minhasComunidades?idComunidade=<%= comunidade.getIdComunidade()%>">
                 <div class="imagem-foto-perfil-comunidade">
                     <img src="<%=comunidade.getFotoPerfil()%>" alt="Foto de perfil de <%=comunidade.getNome()%>">
                 </div>
                 <h3><%=comunidade.getNome()%>
                 </h3>
+                </a>
                 <button onclick="sairComunidade(<%=comunidade.getIdComunidade()%>, <%=comunidadesParticipantes.indexOf(comunidade)%>)"
                         class="sair-comunidade">SAIR
                 </button>

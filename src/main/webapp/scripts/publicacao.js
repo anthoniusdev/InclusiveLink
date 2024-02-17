@@ -6,7 +6,7 @@ obterIdPublicacao().then(function (id) {
     console.log(error);
 });
 let usuarioAutenticado;
-obterUsuarioAutenticado(function (usuario){}).then(function (usuario) {
+obterUsuarioAutenticado().then(function (usuario) {
     usuarioAutenticado = usuario;
 }).catch(function (error) {
     console.log(error);

@@ -1,6 +1,7 @@
 package controller;
 
 import com.google.gson.Gson;
+import dao.MembroDAO;
 import model.Membro;
 import model.Publicacao;
 import org.apache.commons.fileupload.FileItem;
@@ -17,8 +18,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
-@WebServlet(urlPatterns = {"/RealizarCadastro", "/Cadastrar", "/Login", "/home", "/perfil", "/seguirMembro", "/pesquisarPerfil", "/paginaInicial", "/curtirPublicacao", "/obterUsuarioAutenticado", "/curtirComentario", "/editarPerfil"})
+@WebServlet(urlPatterns = {"/RealizarCadastro", "/Cadastrar", "/Login", "/home", "/perfil", "/seguirMembro", "/pesquisarPerfil", "/paginaInicial", "/curtirPublicacao", "/obterUsuarioAutenticado", "/curtirComentario", "/editarPerfil", "/removerSeguidor"})
 public class MembroController extends HttpServlet {
+
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -42,6 +44,7 @@ public class MembroController extends HttpServlet {
             case "/curtirPublicacao" -> curtirPublicacao(request, response);
             case "/curtirComentario" -> curtirComentario(request, response);
             case "/editarPerfil" -> editarPerfil(request, response);
+            case "/removerSeguidor" -> removerSeguidor(request, response);
         }
     }
 
@@ -189,14 +192,9 @@ public class MembroController extends HttpServlet {
 
     private void obterUsuarioAutenticado(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         HttpSession session = request.getSession(false);
-        boolean object = Boolean.parseBoolean(request.getParameter("object"));
         Membro membro = (Membro) session.getAttribute("usuario");
         String jsonResponse;
-        if (object) {
-            jsonResponse = new Gson().toJson(membro);
-        } else {
-            jsonResponse = new Gson().toJson(membro.getIdPessoa());
-        }
+        jsonResponse = new Gson().toJson(membro);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(jsonResponse);
@@ -235,5 +233,11 @@ public class MembroController extends HttpServlet {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void removerSeguidor(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession httpSession = request.getSession(false);
+        Membro usuario = (Membro) httpSession.getAttribute("usuario");
+        usuario.removerSeguidor(Integer.parseInt(request.getParameter("idSeguidor")));
     }
 }

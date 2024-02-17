@@ -1,5 +1,5 @@
 let usuarioAutenticado, alteracaoSalva = false, ftFunURL, ftPerURL, carregando = false;
-let ftPerUsuario, ftFunUsuario;
+let ftPerUsuario, ftFunUsuario, alteracaoSeguindo = false, alteracaoSeguidor = false;
 obterUsuarioAutenticado().then(function (usuario) {
     usuarioAutenticado = usuario;
 }).catch(function (error) {
@@ -27,8 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
         $('#body').css({
             overflow: 'hidden'
         });
-
-    })
+    });
     botaoFecharEditarPerfil.on('click', function () {
         if (alteracaoSalva === true) {
             window.location.reload();
@@ -129,6 +128,56 @@ document.addEventListener("DOMContentLoaded", function () {
             ftpChange = true;
         }
         console.log('Arquivo selecionado:', this.files[0]);
+    });
+    // --------------------- POP-UP SEGUINDOS ----------------------------
+    let fundoEscuroSeguindos = $('#fundo-escuro-seguindos');
+    // abrir pop-up
+    $('#numSeguindos').on('click', function () {
+        fundoEscuroSeguindos.css({
+            display: 'block'
+        });
+        $('#body').css({
+            overflow: 'hidden'
+        })
+    });
+
+    // fechar pop-up
+    $('#close-seguindos').on('click', function () {
+        if (alteracaoSeguindo === true) {
+            window.location.reload();
+        } else {
+            fundoEscuroSeguindos.css({
+                display: 'none'
+            });
+            $('#body').css({
+                overflow: 'auto'
+            })
+        }
+    })
+    // --------------------- POP-UP SEGUIDORES ----------------------------
+    let fundoEscuroSeguidores = $('#fundo-escuro-seguidores');
+    // abrir pop-up
+    $('#numSeguidores').on('click', function () {
+        fundoEscuroSeguidores.css({
+            display: 'block'
+        });
+        $('#body').css({
+            overflow: 'hidden'
+        })
+    });
+
+    // fechar pop-up
+    $('#close-seguidores').on('click', function () {
+        if (alteracaoSeguidor === true) {
+            window.location.reload();
+        } else {
+            fundoEscuroSeguidores.css({
+                display: 'none'
+            });
+            $('#body').css({
+                overflow: 'auto'
+            })
+        }
     })
 })
 
@@ -158,4 +207,25 @@ function editarPerfil() {
             console.log('ERRO: ' + error);
         }
     })
+}
+
+function pararSeguir(idUsuario, idSeguindo, nomeUsuarioSeguindo) {
+    seguirUsuario(idUsuario, idSeguindo, 'i');
+    let s = '#' + nomeUsuarioSeguindo;
+    $(s).css({
+        display: 'none'
+    });
+    alteracaoSeguindo = true;
+}
+
+function removerSeguidor(idSeguidor) {
+    alteracaoSeguidor = true;
+    $.ajax({
+        type: 'POST',
+        url: 'removerSeguidor',
+        data: {idSeguidor: idSeguidor},
+        error: function (error) {
+            console.log("Erro ao seguir usuário: " + error.responseText);
+        }
+    });
 }

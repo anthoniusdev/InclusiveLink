@@ -102,7 +102,7 @@ function carregarPublicacoes(tipo) {
                 let ftCurt = 'images/iconamoon_heart-bold.svg';
                 if (publicacao.curtidas.length > 0) {
                     publicacao.curtidas.forEach(function (curtida) {
-                        if (curtida === usuarioAutenticado) {
+                        if (curtida === usuarioAutenticado.idPessoa) {
                             ftCurt = 'images/iconamoon_heart-fill.svg';
                         }
                     })
@@ -156,7 +156,7 @@ function carregarPublicacoes(tipo) {
                 classe_inshights_publicacao.append(classe_comentario_publicacao);
                 classe_informacoes_publicacao.append(classe_inshights_publicacao);
                 classe_caixa_publicacao.append(classe_informacoes_publicacao);
-                if (publicacao.autor.idPessoa === usuarioAutenticado) {
+                if (publicacao.autor.idPessoa === usuarioAutenticado.idPessoa) {
                     let botaoApagar = $('<button>', {
                         class: 'botao-apagar',
                         text: 'EXCLUIR',

@@ -91,11 +91,12 @@
             <%}%>
 
             <div class="seguindoSeguidores">
-                <p class="numSeguindo"><%=perfilVisitado.getMembrosSeguindo().size() + perfilVisitado.getComunidadesSeguindo().size()%>
+                <p class="numSeguindo"
+                   id="numSeguindos"><%=perfilVisitado.getMembrosSeguindo().size() + perfilVisitado.getComunidadesSeguindo().size()%>
                 </p>
                 <p class="seguindo">Seguindo</p>
 
-                <p class="numSeguidores"><%=perfilVisitado.getMembrosSeguidores().size()%>
+                <p class="numSeguidores" id="numSeguidores"><%=perfilVisitado.getMembrosSeguidores().size()%>
                 </p>
                 <p class="seguidores">Seguidores</p>
             </div>
@@ -240,6 +241,80 @@
             </div>
         </div>
         <%}%>
+        <%-- Fundo escuro para visualizar os seguindos--%>
+        <div class="fundo-escuro" id="fundo-escuro-seguindos">
+            <div class="pop-up-ver-seguindos">
+                <div class="cabecalho">
+                    <span class="close" id="close-seguindos"><img src="images/octicon_x-12.svg" alt=""></span>
+                    <p>SEGUINDOS</p>
+                </div>
+                <div class="lista-seguindos">
+                    <%
+                        for (int idSeguindo : perfilVisitado.getMembrosSeguindo()) {
+                            Membro seguindo = new Membro(idSeguindo);
+                            String ftPer = seguindo.getFotoPerfil();
+                            if (ftPer == null) {
+                                ftPer = "images/person_foto.svg";
+                            }
+                    %>
+                    <div class="caixa-perfil" id="<%=seguindo.getNomeUsuario()%>">
+                        <div class="foto-perfil">
+                            <img src="<%=ftPer%>" alt="foto de perfil de <%=seguindo.getNome()%>">
+                        </div>
+                        <p class="nome"><%=seguindo.getNome()%>
+                        </p>
+                        <%
+                            if (paginaUsuario) {
+                        %>
+                        <button class="remover"
+                                onclick="pararSeguir(<%=usuario.getIdPessoa()%>, <%=seguindo.getIdPessoa()%>, '<%=seguindo.getNomeUsuario()%>')">
+                            REMOVER
+                        </button>
+                        <%}%>
+                    </div>
+                    <%
+                        }
+                    %>
+                </div>
+            </div>
+        </div>
+        <%-- Fundo escuro para visulizar os seguidores--%>
+        <div class="fundo-escuro" id="fundo-escuro-seguidores">
+            <div class="pop-up-seguidores">
+                <div class="cabecalho">
+                    <span class="close" id="close-seguidores"><img src="images/octicon_x-12.svg" alt=""></span>
+                    <p>SEGUIDORES</p>
+                </div>
+                <div class="lista-seguidores">
+                    <%
+                        for (int idSeguidor : perfilVisitado.getMembrosSeguidores()) {
+                            Membro seguidor = new Membro(idSeguidor);
+                            String ftPer = seguidor.getFotoPerfil();
+                            if (ftPer == null) {
+                                ftPer = "images/person_foto.svg";
+                            }
+                    %>
+                    <div class="caixa-perfil" id="<%=seguidor.getNomeUsuario()%>">
+                        <div class="foto-perfil">
+                            <img src="<%=ftPer%>" alt="foto de perfil de <%=seguidor.getNome()%>">
+                        </div>
+                        <p class="nome"><%=seguidor.getNome()%>
+                        </p>
+                        <%
+                            if (paginaUsuario) {
+                        %>
+                        <button class="remover"
+                                onclick="removerSeguidor(<%=seguidor.getIdPessoa()%>); this.parentNode.style.display='none'">
+                            REMOVER
+                        </button>
+                        <%}%>
+                    </div>
+                    <%
+                        }
+                    %>
+                </div>
+            </div>
+        </div>
     </div>
 </main>
 </body>

@@ -19,9 +19,6 @@ function seguirUsuario(idMembro, idSeguindo, i) {
             idMembro: idMembro,
             idSeguindo: idSeguindo
         },
-        success: function () {
-            console.log("Usuário seguido com sucesso");
-        },
         error: function (error) {
             console.log("Erro ao seguir usuário: " + error.responseText);
         }
