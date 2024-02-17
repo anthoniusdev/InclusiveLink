@@ -78,7 +78,7 @@
                 </button>
             </div>
             <%}%>
-            <%--    Foto de perfil do usuário --%>
+            <%-- Foto de perfil do usuário --%>
             <img src="<%=fotoPerfil%>" class="fotoPerfil" alt="Foto de perfil do usuário">
             <p class="nome-usuario"><%=perfilVisitado.getNome()%></p>
 

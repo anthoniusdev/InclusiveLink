@@ -382,8 +382,9 @@ body {
 }
 
 .botao-acao-perfil button {
+    margin-right: -4rem;
     font-size: 1.2rem;
-    padding: 10px;
+    padding: 13px;
     background-color: var(--COR-04);
     border: none;
     cursor: pointer;
@@ -419,19 +420,25 @@ body {
     display: flex;
     flex-direction: row;
 }
-
 .foto-perfil-autor img {
     width: 83px;
     height: 83px;
 }
-/*.btn-editar-perfil{
+.botao-apagar{
+    margin-left: auto;
+    margin-top: 1rem;
+    margin-right: 1rem;
     font-size: 1.2rem;
+    height: 2rem;
+    padding: 10px;
+    padding-bottom: 40px;
     background-color: var(--COR-04);
     color: var(--COR-TEXTO-04);
     border: none;
     border-radius: 20px;
     cursor: pointer;
+    font-family: 'Monomaniac One', sans-serif;
 }
-.btn-editar-perfil:hover {
-    background-color: #2980b9;
-}*/
+.botao-apagar:hover {
+    background-color: var(--COR-05);
+}
