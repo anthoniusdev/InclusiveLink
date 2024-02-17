@@ -106,8 +106,8 @@
                 <p class="nomeUsuario"><%=membroSugerido.getNome()%>
                 </p>
                 </a>
-                <button onclick="seguirUsuario(<%=membro.getIdPessoa()%>, <%=membroSugerido.getIdPessoa()%>, <%=membrosRede.indexOf(membroSugerido)%>)"
-                        class="botaoSeguir" id="botaoSeguir<%=membrosRede.indexOf(membroSugerido)%>">
+                <button onclick="seguirUsuario(<%=membro.getIdPessoa()%>, <%=membroSugerido.getIdPessoa()%>, <%=membrosRede.indexOf(membroSugerido) + 1%>)"
+                        class="botaoSeguir" id="botaoSeguir<%=membrosRede.indexOf(membroSugerido) + 1%>">
                     SEGUIR
                 </button>
             </div>
