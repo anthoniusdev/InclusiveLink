@@ -80,18 +80,18 @@ html, body, footer {
 }
 
 .caixa-comunidade .imagem-foto-perfil-comunidade {
-    max-width: 140px;
+    height: 83px;
+    width: 83px;
     overflow: hidden;
     border-radius: 100%;
     margin-left: 30px;
-    max-height: 140px;
     justify-content: center;
     display: flex;
     align-content: center;
-    flex-wrap: wrap;
-    height: 100vh;
 }
-
+.imagem-foto-perfil-comunidade img{
+    border-radius: 100%;
+}
 .caixa-comunidade h3 {
     width: 500px;
     margin-left: 50px;
