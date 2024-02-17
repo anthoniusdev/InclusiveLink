@@ -382,12 +382,19 @@ body {
 }
 
 .botao-acao-perfil button {
-    width: 8rem;
+    font-size: 1.2rem;
+    padding: 10px;
     background-color: var(--COR-04);
     border: none;
     cursor: pointer;
+    color: var(--COR-TEXTO-04);
+    border-radius: 20px;
+    font-family: 'Monomaniac One', sans-serif;
+    justify-content: end;
 }
-
+.botao-acao-perfil button:hover {
+    background-color: var(--COR-05);
+}
 #numSeguidores:hover, #numSeguindos:hover {
     font-size: 2rem;
     cursor: pointer;
@@ -417,3 +424,14 @@ body {
     width: 83px;
     height: 83px;
 }
+/*.btn-editar-perfil{
+    font-size: 1.2rem;
+    background-color: var(--COR-04);
+    color: var(--COR-TEXTO-04);
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.btn-editar-perfil:hover {
+    background-color: #2980b9;
+}*/
