@@ -76,6 +76,7 @@ html, body, footer {
 
 .caixa-comunidade a {
     text-decoration: none;
+    display: flex;
 }
 
 .caixa-comunidade .imagem-foto-perfil-comunidade {
