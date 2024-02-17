@@ -26,3 +26,12 @@ document.getElementById("botaoAtivar").addEventListener("click", ativarOpcoes);
 
 // Adicionar ouvinte de eventos ao documento para ocultar a div quando clicar fora dela
 document.addEventListener("click", ocultarDiv);
+
+document.addEventListener('DOMContentLoaded', function () {
+    let icone_voltar = $('.bi bi-arrow-left');
+    carregarInformacoesInshights();
+    icone_voltar.on('click', function () {
+        window.history.back();
+    })
+
+})
