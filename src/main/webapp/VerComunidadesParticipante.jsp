@@ -50,8 +50,12 @@
             <%
                 if (!comunidadesParticipantes.isEmpty() && comunidadesParticipantes != null) {
                     for (Comunidade comunidade : comunidadesParticipantes) {
+                        if(membro.getIdPessoa() == comunidade.getIdCriador())
             %>
             <div class="caixa-comunidade" id="caixa-comunidade<%=comunidadesParticipantes.indexOf(comunidade)%>">
+                <%
+                    if(membro.getIdPessoa() == comunidade.getIdCriador()){
+                %>
                 <a href="minhasComunidades?idComunidade=<%= comunidade.getIdComunidade()%>">
                 <div class="imagem-foto-perfil-comunidade">
                     <img src="<%=comunidade.getFotoPerfil()%>" alt="Foto de perfil de <%=comunidade.getNome()%>">
@@ -62,6 +66,18 @@
                 <button onclick="sairComunidade(<%=comunidade.getIdComunidade()%>, <%=comunidadesParticipantes.indexOf(comunidade)%>)"
                         class="sair-comunidade">SAIR
                 </button>
+                <%
+                    } else{
+                 %>
+                <div class="imagem-foto-perfil-comunidade">
+                    <img src="<%=comunidade.getFotoPerfil()%>" alt="Foto de perfil de <%=comunidade.getNome()%>">
+                </div>
+                <h3><%=comunidade.getNome()%>
+                </h3>
+                <button onclick="sairComunidade(<%=comunidade.getIdComunidade()%>, <%=comunidadesParticipantes.indexOf(comunidade)%>)"
+                        class="sair-comunidade">SAIR
+                </button>
+               <% }%>
             </div>
             <%
                 }

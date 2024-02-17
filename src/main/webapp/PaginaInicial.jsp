@@ -9,6 +9,7 @@
 <%@ page import="javax.servlet.http.HttpSession" %>
 <%@page import="model.Membro" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="model.Comunidade" %>
 
 <%
     HttpSession httpSession = request.getSession(false);
@@ -24,6 +25,7 @@
             }
             @SuppressWarnings("unchecked")
             ArrayList<Membro> membrosRede = (ArrayList<Membro>) httpSession.getAttribute("perfis");
+            ArrayList<Comunidade> comunidadesRede = (ArrayList<Comunidade>) httpSession.getAttribute("comunidades");
 %>
 <html lang="pt-BR">
 <head>
@@ -124,6 +126,10 @@
             <div class="lista-pesquisa-comunidade" id="lista-pesquisa-comunidade"></div>
         </div>
         <div class="comunidades-sugeridas" id="comunidades-sugeridas">
+            <%
+                for (Comunidade ComunidadeSugerida : comunidadesRede) {
+                    if (!ComunidadeSugerida.getIdParticipantes().contains(membro.getIdPessoa())) {
+            %>
             <div class="criar-comunidade" id="criar-comunidade">
                 <button id="botaoCriarNovaComunidade">
                     <div class="imagem"><img src="images/gravity-ui_circle-plus-fill.svg" alt=""></div>
