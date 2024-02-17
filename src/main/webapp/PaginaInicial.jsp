@@ -32,14 +32,17 @@
     <link rel="stylesheet" href="styles/barra-lateral.css">
     <link rel="icon" href="images/LOGO.ico">
     <script src="scripts/js/jquery-3.7.1.js"></script>
+    <script src="scripts/obterUsuarioAutenticado.js"></script>
     <script src="scripts/paginaInicial.js"></script>
     <script src="scripts/barra-lateral-amigo/pesquisarPerfil.js"></script>
     <script src="scripts/barra-lateral-comunidade/criarComunidade.js"></script>
     <script src="scripts/barra-lateral-comunidade/pesquisarComunidade.js"></script>
     <script src="scripts/curtirPublicacao.js"></script>
     <script src="scripts/excluirPublicacao.js"></script>
+    <script src="scripts/carregarPublicacoes.js"></script>
+    <script src="scripts/seguirUsuario.js"></script>
 </head>
-<body>
+<body id="body">
 <main>
     <div class="container">
         <div class="principal">
@@ -47,7 +50,7 @@
                 <div class="selecionado">
                     PÁGINA INICIAL
                     <span id="linhaSelecionado"></span></div>
-                <a href="">PERFIL</a>
+                <a href="perfil?nome_usuario=<%=membro.getNomeUsuario()%>">PERFIL</a>
             </div>
             <div class="criarPublicacao">
                 <form action="novaPublicacao" method="post" id="formNovaPublicacao" enctype="multipart/form-data">
@@ -93,6 +96,7 @@
                     if (!membroSugerido.getMembrosSeguidores().contains(membro.getIdPessoa())) {
             %>
             <div class="caixa-usuario" id="caixa-usuario">
+                <a href="perfil?nome_usuario=<%=membroSugerido.getNomeUsuario()%>">
                 <%
                     if (membroSugerido.getFotoPerfil() == null) {
                         membroSugerido.setFotoPerfil("images/person_foto.svg");
@@ -101,6 +105,7 @@
                 <img src="<%=membroSugerido.getFotoPerfil()%>" alt="Foto de perfil de <%=membroSugerido.getNome()%>">
                 <p class="nomeUsuario"><%=membroSugerido.getNome()%>
                 </p>
+                </a>
                 <button onclick="seguirUsuario(<%=membro.getIdPessoa()%>, <%=membroSugerido.getIdPessoa()%>, <%=membrosRede.indexOf(membroSugerido)%>)"
                         class="botaoSeguir" id="botaoSeguir<%=membrosRede.indexOf(membroSugerido)%>">
                     SEGUIR
@@ -132,7 +137,7 @@
             </div>
         </div>
     </div>
-    <div id="fundo-escuro">
+    <div class="fundo-escuro" id="fundo-escuro-comunidade">
         <div id="popup-nova-comunidade" class="popup-nova-comunidade">
             <div class="popup-content">
                 <div class="cabecalho">

@@ -4,186 +4,91 @@
 }
 
 body {
-    margin: 0;
-    padding: 0;
-    background-color: #DDF2FD;
+    background-color: #9BBEC8;
+    color: #DDF2FD;
     font-family: 'Monomaniac One', sans-serif;
 }
 
-.retanguloPerfil {
-    width: 63%;
-    height: 250vh;
-    border-radius: 20px;
-    background-color: #427D9D;
-    position: absolute;
-    left: 2%;
-    top: 3.5%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    overflow: hidden;
-}
-
-.header {
-    margin-right: 38rem;
-    width: 250px;
-    display: flex;
-}
-
-.homePage{
-    font-size: 2rem;
-    color: rgba(221, 242, 253, 0.60);
-    cursor: pointer;
-    margin-right: 5rem;
-    margin-top: 0.5rem;
-}
-.perfil{
-    margin-top: 0.5rem;
-    font-size: 2rem;
-    color: rgba(221, 242, 253, 0.60);
-    cursor: pointer;
-}
-
-.fundoPerfil {
+footer {
+    position: fixed;
+    bottom: 0;
     width: 100%;
-    height: 36vh;
-    display: block;
-    top: 4rem;
-    position: absolute;
-    object-fit: cover;
-    object-position: center;
-    border-top: 4px solid #164863;
-}
-.fotoPerfil{
-    border-radius: 50%;
-    width: 15%;
-    height: 18vh;
-    top: 16rem;
-    left: 3%;
-    display: block;
-    position: absolute;
-    object-fit: cover;
-    object-position: center;
-    border: 6px solid #427D9D;
-}
-
-.nomeComunidade{
-    margin-right: 45rem;
-    margin-top: 20rem;
-    font-size: 1.7rem;
+    background-color: #427D9D;
+    padding: 15px;
     color: #DDF2FD;
 }
-.tooltip-container {
-    position: relative;
-    margin-left: 144px;
-    vertical-align: ;
+span.h4{
+    margin-left: 25px;
+    cursor: pointer;
+}
+.icone{
+    font-size: 1.5rem;
+    border-radius: 20px;
+    background-color: #164863;
+    color: #DDF2FD;
+    text-align: center;
+}
+button.btn:hover {
+    background-color: #164863a2;
+}
+.post{
+    font-size: 1rem;
+    width: 130px;
+    height: 30px;
+    border-radius: 20px;
+    background-color: #164863;
+    color: #DDF2FD;
+    text-align: center;
+    padding-bottom: 35px;
 }
 
-.tooltip {
-    position: relative;
-    display: inline-block;
+
+input {
+    width: 55%;
+    border: none;
+    outline: none;
+    border-bottom: 3px solid #ddf2fdbb;
+    font-size: 16px;
+    line-height: 24px;
+    background-color: transparent;
     margin: 10px;
-    padding: 10px 20px;
+    color: #DDF2FD;
+    border-radius: 2px;
+}
+input::placeholder {
+    color: #ddf2fdbb;
+}
+.icon-custom-size {
+    font-size: 13px;
+}
+
+.form-control{
+    font-family: 'Monomaniac One', sans-serif;
+    background-color: transparent !important;
+    border: none;
+    border-radius: 0;
+    box-shadow: none !important;
+    justify-content: start;
+    font-size: 20px;
+    padding: 0px;
+}
+.form-control::placeholder{
+    color: #DDF2FD;
+}
+
+.menu{
+    border-radius: 20px;
     background-color: #164863;
-    color: white;
-    cursor: pointer;
-    border-radius: 20px;
-}
-
-
-.profile-description {
-    margin-right: 9.5rem;
-    min-width: 700px;
-    max-width: 700px;
-    text-align: justify;
-    text-justify: distribute-all-lines;
-    line-height: 1.5;
-    background: rgba(120, 33, 33, 0);
-}
-.descricao{
-    font-size: 1.4rem;
     color: #DDF2FD;
-}
-
-.seguindoSeguidores{
-    margin-right: 34.5rem;
-    width: 300px;
-    display: flex;
-    align-items: center;
-}
-
-.numSeguindo{
-    font-size: 1.4rem;
-    color: #DDF2FD;
-}
-.seguindo{
-    font-size: 1.4rem;
-    color: rgba(221, 242, 253, 0.60);
-}
-.numSeguidores{
-    margin-left: 30px;
-    font-size: 1.4rem;
-    color: #DDF2FD;
-}
-.seguidores{
-    font-size: 1.4rem;
-    color: rgba(221, 242, 253, 0.60);
-}
-
-.linha {
-    width: 100%;
-    height: 4px;
-    background-color: #164863;
+    text-align: center;
+    height: 100px;
+    width: 20%;
+    margin-top: 0;
 }
 
 
-.pesquisaPerfis {
-    width: 30%;
-    height: 8vh;
-    border-radius: 20px;
-    background-color: #427D9D;
-    position: absolute;
-    right: 2%;
-    top: 3.5%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-}
-.Perfis {
-    width: 30%;
-    height: 50vh;
-    border-radius: 20px;
-    background-color: #427D9D;
-    position: absolute;
-    right: 2%;
-    top: 14%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-}
+.btn-extra-small {
+    padding: 1px;
+    font-size: 12px;
 
-.pesquisaComunidades {
-    width: 30%;
-    height: 8vh;
-    border-radius: 20px;
-    background-color: #427D9D;
-    position: absolute;
-    right: 2%;
-    top: 68%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-}
-.Comunidades {
-    width: 30%;
-    height: 50vh;
-    border-radius: 20px;
-    background-color: #427D9D;
-    position: absolute;
-    right: 2%;
-    top: 78.5%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
 }

@@ -95,6 +95,13 @@ html, body, footer {
     padding-right: 35px;
 }
 
+.criarPublicacao .foto-perfil img {
+    width: 83px;
+    height: 83px;
+    border-radius: 100%;
+    background-color: #ffffff;
+}
+
 .criarPublicacao .areaInput {
     display: flex;
     flex-direction: column;
@@ -198,6 +205,13 @@ html, body, footer {
     width: 83px;
     height: 83px;
     margin: 20px;
+}
+
+.caixa-publicacao .foto-perfil-autor img {
+    width: 83px;
+    height: 83px;
+    border-radius: 100%;
+    background-color: #ffffff;
 }
 
 .caixa-publicacao .nome-autor {

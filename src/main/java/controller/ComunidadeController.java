@@ -11,6 +11,7 @@ import util.ObterData;
 import util.ObterExtensaoArquivo;
 import util.ObterURL;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,7 +23,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
-@WebServlet(urlPatterns = {"/obterComunidades", "/formNovaComunidade", "/verComunidades", "/criarComunidade", "/pesquisarComunidade"})
+@WebServlet(urlPatterns = {"/obterComunidades", "/formNovaComunidade", "/verComunidades", "/criarComunidade", "/pesquisarComunidade", "/minhasComunidades"})
 public class ComunidadeController extends HttpServlet {
 
     @Override
@@ -49,6 +50,7 @@ public class ComunidadeController extends HttpServlet {
             case "/obterComunidades" -> obterComunidades(request, response);
             case "/verComunidades" -> verComunidades(request, response);
             case "/pesquisarComunidade" -> pesquisarComunidade(request, response);
+            case "/minhasComunidades" -> minhasComunidades(request, response);
         }
     }
 
@@ -80,7 +82,6 @@ public class ComunidadeController extends HttpServlet {
     }
 
     private void criarComunidade(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("veio p ca");
         Comunidade comunidade = new Comunidade();
         DiskFileItemFactory factory = new DiskFileItemFactory();
         ServletFileUpload upload = new ServletFileUpload(factory);
@@ -94,18 +95,15 @@ public class ComunidadeController extends HttpServlet {
             FileItem fotoFundo = null;
             for (FileItem item : items) {
                 if (item.isFormField()) {
-                    if ("nomeComunidade".equals(item.getFieldName())) {
-                        nomeComunidade = item.getString();
-                    } else if ("descricaoComunidade".equals(item.getFieldName())) {
-                        descricaoComunidade = item.getString();
-                    } else if ("idAutor".equals(item.getFieldName())) {
-                        idAutor = Integer.parseInt(item.getString());
+                    switch (item.getFieldName()) {
+                        case "nomeComunidade" -> nomeComunidade = item.getString();
+                        case "descricaoComunidade" -> descricaoComunidade = item.getString();
+                        case "idAutor" -> idAutor = Integer.parseInt(item.getString());
                     }
                 } else {
-                    if ("fotoPerfil".equals(item.getFieldName())) {
-                        fotoPerfil = item;
-                    } else if ("fotoFundo".equals(item.getFieldName())) {
-                        fotoFundo = item;
+                    switch (item.getFieldName()) {
+                        case "fotoPerfil" -> fotoPerfil = item;
+                        case "fotoFundo" -> fotoFundo = item;
                     }
                 }
             }
@@ -121,14 +119,8 @@ public class ComunidadeController extends HttpServlet {
             String urlFotoFundo = "arquivosEstaticos" + File.separator + "fotoFundoComunidade" + File.separator + anoAtual + File.separator + mesAtual + File.separator + diaAtual + File.separator;
             String diretorioFotoPerfil = urlCaminho + File.separator + urlFotoPerfil;
             String diretorioFotoFundo = urlCaminho + File.separator + urlFotoFundo;
-            System.out.println(fotoPerfil);
-            System.out.println(fotoFundo);
             File diretorioFileFotoPerfil = new File(diretorioFotoPerfil);
-            if (!diretorioFileFotoPerfil.exists()) {
-                if (diretorioFileFotoPerfil.mkdirs()) {
-                    System.out.println("criou diretorio ftper");
-                }
-            }
+            if (!diretorioFileFotoPerfil.exists()) diretorioFileFotoPerfil.mkdirs();
             if (diretorioFileFotoPerfil.exists()) {
                 UUID randomName = UUID.randomUUID();
                 if (fotoPerfil != null) {
@@ -139,11 +131,7 @@ public class ComunidadeController extends HttpServlet {
                 System.out.println("DIRETORIO NAO ENCONTRADO");
             }
             File diretorioFileFotoFundo = new File(diretorioFotoFundo);
-            if (!diretorioFileFotoFundo.exists()) {
-                if (diretorioFileFotoFundo.mkdirs()) {
-                    System.out.println("criou diretorio ftfun");
-                }
-            }
+            if (!diretorioFileFotoFundo.exists()) diretorioFileFotoFundo.mkdirs();
             if (diretorioFileFotoFundo.exists()) {
                 UUID randomName = UUID.randomUUID();
                 if (fotoFundo != null) {
@@ -181,5 +169,12 @@ public class ComunidadeController extends HttpServlet {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(jsonResponse);
+    }
+
+    private void minhasComunidades(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Comunidade comunidade = new Comunidade(Integer.parseInt(request.getParameter("idComunidade")));
+        request.setAttribute("comunidade", comunidade);
+        RequestDispatcher rd = request.getRequestDispatcher("DonoComunidade.jsp");
+        rd.forward(request, response);
     }
 }
