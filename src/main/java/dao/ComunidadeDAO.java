@@ -231,4 +231,24 @@ public class ComunidadeDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public void selecionarComunidade(Comunidade comunidade){
+        String read = "select * from comunidade where idComunidade = ?";
+        try(Connection con = conectar()) {
+            PreparedStatement preparedStatement = con.prepareStatement(read);
+            preparedStatement.setString(1, String.valueOf(comunidade.getIdComunidade()));
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()){
+                comunidade.setIdComunidade(Integer.parseInt(rs.getString(1)));
+                comunidade.setNome(rs.getString(2));
+                comunidade.setIdCriador(Integer.parseInt(rs.getString(3)));
+                comunidade.setFotoPerfil(rs.getString(4));
+                comunidade.setFotoFundo(rs.getString(5));
+                comunidade.setDescricao(rs.getString(6));
+            }
+            con.close();
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

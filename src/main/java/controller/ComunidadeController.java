@@ -1,6 +1,7 @@
 package controller;
 
 import com.google.gson.Gson;
+import dao.ComunidadeDAO;
 import model.Comunidade;
 import model.Membro;
 import org.apache.commons.fileupload.FileItem;
@@ -11,6 +12,7 @@ import util.ObterData;
 import util.ObterExtensaoArquivo;
 import util.ObterURL;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,7 +24,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
-@WebServlet(urlPatterns = {"/obterComunidades", "/formNovaComunidade", "/verComunidades", "/criarComunidade", "/pesquisarComunidade"})
+@WebServlet(urlPatterns = {"/obterComunidades", "/formNovaComunidade", "/verComunidades", "/criarComunidade", "/pesquisarComunidade", "/minhasComunidades"})
 public class ComunidadeController extends HttpServlet {
 
     @Override
@@ -49,6 +51,7 @@ public class ComunidadeController extends HttpServlet {
             case "/obterComunidades" -> obterComunidades(request, response);
             case "/verComunidades" -> verComunidades(request, response);
             case "/pesquisarComunidade" -> pesquisarComunidade(request, response);
+            case "/minhasComunidades" -> minhasComunidades(request, response);
         }
     }
 
@@ -167,5 +170,19 @@ public class ComunidadeController extends HttpServlet {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(jsonResponse);
+    }
+
+    private void minhasComunidades(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Comunidade comunidade = new Comunidade();
+        int idComunidade = Integer.parseInt(request.getParameter("idComunidade"));
+        comunidade.setIdComunidade(idComunidade);
+        ComunidadeDAO dao = new ComunidadeDAO();
+        dao.selecionarComunidade(comunidade);
+        request.setAttribute("nomeComunidade", comunidade.getNome());
+        request.setAttribute("fundoComunidade", comunidade.getFotoFundo());
+        request.setAttribute("fotoComunidade", comunidade.getFotoPerfil());
+        request.setAttribute("descricaoComunidade", comunidade.getDescricao());
+        RequestDispatcher rd = request.getRequestDispatcher("DonoComunidade.jsp");
+        rd.forward(request, response);
     }
 }
