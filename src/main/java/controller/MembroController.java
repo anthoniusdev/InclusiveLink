@@ -1,6 +1,7 @@
 package controller;
 
 import com.google.gson.Gson;
+import dao.MembroDAO;
 import model.Membro;
 import model.Publicacao;
 import org.apache.commons.fileupload.FileItem;
@@ -19,6 +20,7 @@ import java.util.UUID;
 
 @WebServlet(urlPatterns = {"/RealizarCadastro", "/Cadastrar", "/Login", "/home", "/perfil", "/seguirMembro", "/pesquisarPerfil", "/paginaInicial", "/curtirPublicacao", "/obterUsuarioAutenticado", "/curtirComentario", "/editarPerfil", "/removerSeguidor"})
 public class MembroController extends HttpServlet {
+
 
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
