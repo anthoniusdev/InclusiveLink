@@ -99,7 +99,6 @@
                 </p>
                 <p class="seguidores">Seguidores</p>
             </div>
-            <div class="linha"></div>
             <div class="postagens" id="postagens"></div>
         </div>
         <div class="pesquisar-amigo">
