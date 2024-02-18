@@ -85,7 +85,7 @@
             </div>
             <div class="postagens" id="postagens"></div>
         </div>
-        <-- Aqui Bima-->
+        <-- Aqui Bima->
         <div class="container">
             <div class="pesquisar-amigo">
                 <label>
