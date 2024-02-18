@@ -50,7 +50,7 @@
         <div class="principal">
             <div class="cabecalho">
                 <div class="selecionado">
-                    PÁGINA INICIAL
+                    HOME
                     <span id="linhaSelecionado"></span></div>
                 <a href="perfil?nome_usuario=<%=membro.getNomeUsuario()%>">PERFIL</a>
             </div>

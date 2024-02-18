@@ -153,13 +153,6 @@ body {
     color: rgba(221, 242, 253, 0.60);
 }
 
-.linha {
-    width: 100%;
-    height: 4px;
-    background-color: #164863;
-}
-
-
 .pesquisaPerfis {
     width: 30%;
     height: 8vh;
@@ -382,12 +375,20 @@ body {
 }
 
 .botao-acao-perfil button {
-    width: 8rem;
+    margin-right: -4rem;
+    font-size: 1.2rem;
+    padding: 13px;
     background-color: var(--COR-04);
     border: none;
     cursor: pointer;
+    color: var(--COR-TEXTO-04);
+    border-radius: 20px;
+    font-family: 'Monomaniac One', sans-serif;
+    justify-content: end;
 }
-
+.botao-acao-perfil button:hover {
+    background-color: var(--COR-05);
+}
 #numSeguidores:hover, #numSeguindos:hover {
     font-size: 2rem;
     cursor: pointer;
@@ -412,8 +413,51 @@ body {
     display: flex;
     flex-direction: row;
 }
-
 .foto-perfil-autor img {
-    width: 83px;
-    height: 83px;
+    margin: 20px;
+    border-radius: 100%;
+    width: 100px;
+    height: 100px;
+}
+.botao-apagar{
+    margin-left: auto;
+    margin-top: 1rem;
+    margin-right: 1rem;
+    font-size: 1.2rem;
+    height: 2rem;
+    padding: 10px;
+    padding-bottom: 40px;
+    background-color: var(--COR-04);
+    color: var(--COR-TEXTO-04);
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: 'Monomaniac One', sans-serif;
+}
+.botao-apagar:hover {
+    background-color: var(--COR-05);
+}
+.caixa-publicacao{
+ border-top: 4px solid #164863;
+}
+.texto-publicacao p{
+    margin-bottom: 5px;
+    margin-top: 20px;
+    font-size: 1.2rem;
+    color: var(--COR-TEXTO-04);
+}
+.inshights-publicacao{
+    margin-left: -13px;
+    display: flex;
+    color: var(--COR-TEXTO-04);
+    font-size: 1.5rem;
+}
+.inshights-publicacao img{
+    margin-bottom: -3px;
+    margin-left: 10px;
+    height: 20px;
+    width: 20px;
+}
+.nome-autor h3{
+    color: var(--COR-TEXTO-04);
 }

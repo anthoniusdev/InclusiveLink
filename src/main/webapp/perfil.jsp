@@ -63,7 +63,7 @@
                 if (paginaUsuario) {
             %>
             <div class="botao-acao-perfil">
-                <button id="editar-perfil">EDITAR PERFIL</button>
+                <button class="btn-editar-perfil" id="editar-perfil">EDITAR PERFIL</button>
             </div>
             <%
             } else {
@@ -78,10 +78,9 @@
                 </button>
             </div>
             <%}%>
-            <%--    Foto de perfil do usuário --%>
+            <%-- Foto de perfil do usuário --%>
             <img src="<%=fotoPerfil%>" class="fotoPerfil" alt="Foto de perfil do usuário">
-            <p class="nome-usuario"><%=perfilVisitado.getNome()%>
-            </p>
+            <p class="nome-usuario"><%=perfilVisitado.getNome()%></p>
 
             <%if (perfilVisitado.getDescricao() != null) {%>
             <div class="profile-description">
@@ -100,7 +99,6 @@
                 </p>
                 <p class="seguidores">Seguidores</p>
             </div>
-            <div class="linha"></div>
             <div class="postagens" id="postagens"></div>
         </div>
         <div class="pesquisar-amigo">

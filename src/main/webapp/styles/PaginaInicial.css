@@ -93,6 +93,9 @@ html, body, footer {
 .criarPublicacao .foto-perfil {
     padding-left: 35px;
     padding-right: 35px;
+    width: 83px;
+    height: 83px;
+    border-radius: 100%;
 }
 
 .criarPublicacao .foto-perfil img {
