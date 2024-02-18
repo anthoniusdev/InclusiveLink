@@ -90,5 +90,13 @@ input::placeholder {
 .btn-extra-small {
     padding: 1px;
     font-size: 12px;
+}
+.bi.bi-arrow-left.fs-4.ms-3.icone-voltar {
+    width: 40px;
+    transition: 0.5s;
+}
 
+.bi.bi-arrow-left.fs-4.ms-3.icone-voltar:hover {
+    cursor: pointer;
+    width: 55px;
 }
