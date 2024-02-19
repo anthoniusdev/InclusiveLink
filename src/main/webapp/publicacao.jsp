@@ -42,7 +42,7 @@
             <div class="icone-voltar">
                 <img src="images/ri_arrow-up-line.svg" alt="imagem de setinha para voltar a página anterior">
             </div>
-            <h3>POST</h3>
+            <span class="txtPost">POST</span>
         </div>
         <div class="publicacao" id="publicacao">
             <div class="img-foto-perfil">
@@ -99,7 +99,12 @@
         <div class="adicionar-comentario">
             <form action="novoComentario" method="post" id="formNovoComentario">
                 <div class="foto-perfil">
-                    <img src="<%=urlFtPer%>" alt="Foto do perfil de <%=membro.getNome()%>">
+                    <%String urlFtPerUsu = membro.getFotoPerfil();
+                        if(urlFtPerUsu == null){
+                            urlFtPerUsu = "images/person_foto.svg";
+                        }
+                    %>
+                    <img src="<%=urlFtPerUsu%>" alt="Foto do perfil de <%=membro.getNome()%>">
                 </div>
                 <div class="area-input">
                     <label for="textoNovaPublicacao">
