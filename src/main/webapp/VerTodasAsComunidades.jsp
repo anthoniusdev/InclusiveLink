@@ -28,8 +28,11 @@
 <html>
 <head>
     <title>Inclusive Link</title>
+    <link rel="stylesheet" href="styles/VerTodasAsComunidades.css">
+    <link rel="stylesheet" href="styles/barra-lateral.css">
     <link rel="icon" href="images/LOGO.ico">
     <script src="scripts/js/jquery-3.7.1.js"></script>
+    <script src="scripts/verTodasAsComunidades.js"></script>
     <script src="scripts/verComunidades.js"></script>
     <script src="scripts/barra-lateral-amigo/pesquisarPerfil.js"></script>
     <script src="scripts/barra-lateral-comunidade/criarComunidade.js"></script>
@@ -39,17 +42,47 @@
 <body>
 <main>
     <div class="principal">
-        <%
-            if (comunidades != null) {
-                for (Comunidade comunidade : comunidades) {
-                    if (comunidade.getNome() != null) {
-        %>
-        <%=comunidade.getNome()%>
-        <%
-                    }
+        <div class="todas-comunidades">
+            <div class="cabecalho">
+                <a href="verComunidades">COMUNIDADES PARTICIPANTES</a>
+                <div class="selecionado">
+                    COMUNIDADES
+                    <span id="linhaSelecionado"></span></div>
+            </div>
+            <%
+                if (!comunidades.isEmpty()) {
+                    for (Comunidade comunidade : comunidades) {
+                        if (comunidade.getFotoPerfil() == null) {
+                            comunidade.setFotoPerfil("images/people-group-solid.svg");
+                        }
+            %>
+            <div class="caixa-comunidade" id="caixa-comunidade<%=comunidades.indexOf(comunidade) + 1%>">
+                <a href="minhasComunidades?idComunidade=<%= comunidade.getIdComunidade()%>">
+                    <div class="imagem-foto-perfil-comunidade">
+                        <img src="<%=comunidade.getFotoPerfil()%>" alt="Foto de perfil de <%=comunidade.getNome()%>">
+                    </div>
+                    <h3><%=comunidade.getNome()%>
+                    </h3>
+                </a>
+                <%
+                    if (comunidade.getIdParticipantes().contains(membro.getIdPessoa())) {
+                %>
+                <button onclick="sairComunidade(<%=comunidade.getIdComunidade()%>, <%=comunidades.indexOf(comunidade) + 1%>)"
+                        class="sair-comunidade">SAIR
+                </button>
+                <%} else {%>
+                <button onclick="participarComunidade(<%=comunidade.getIdComunidade()%>, <%=comunidades.indexOf(comunidade) + 1%>)"
+                        class="participar-comunidade">PARTICIPAR
+                </button>
+                <%}%>
+            </div>
+            <%
                 }
-            }
-        %>
+            } else {
+            %>
+            <small class="sem-comunidades">Não há comunidades.</small>
+            <%}%>
+        </div>
     </div>
     <div class="pesquisar-amigo">
         <label>

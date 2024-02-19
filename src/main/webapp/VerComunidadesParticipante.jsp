@@ -7,7 +7,7 @@
   Time: 02:28
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%
     HttpSession httpSession = request.getSession(false);
     if (httpSession == null || httpSession.getAttribute("authenticated") == null) {
@@ -50,34 +50,18 @@
             <%
                 if (!comunidadesParticipantes.isEmpty()) {
                     for (Comunidade comunidade : comunidadesParticipantes) {
-                        if(membro.getIdPessoa() == comunidade.getIdCriador())
             %>
             <div class="caixa-comunidade" id="caixa-comunidade<%=comunidadesParticipantes.indexOf(comunidade)%>">
-                <%
-                    if(membro.getIdPessoa() == comunidade.getIdCriador()){
-                %>
                 <a href="minhasComunidades?idComunidade=<%= comunidade.getIdComunidade()%>">
-                <div class="imagem-foto-perfil-comunidade">
-                    <img src="<%=comunidade.getFotoPerfil()%>" alt="Foto de perfil de <%=comunidade.getNome()%>">
-                </div>
-                <h3><%=comunidade.getNome()%>
-                </h3>
+                    <div class="imagem-foto-perfil-comunidade">
+                        <img src="<%=comunidade.getFotoPerfil()%>" alt="Foto de perfil de <%=comunidade.getNome()%>">
+                    </div>
+                    <h3><%=comunidade.getNome()%>
+                    </h3>
                 </a>
                 <button onclick="sairComunidade(<%=comunidade.getIdComunidade()%>, <%=comunidadesParticipantes.indexOf(comunidade)%>)"
                         class="sair-comunidade">SAIR
                 </button>
-                <%
-                    } else{
-                 %>
-                <div class="imagem-foto-perfil-comunidade">
-                    <img src="<%=comunidade.getFotoPerfil()%>" alt="Foto de perfil de <%=comunidade.getNome()%>">
-                </div>
-                <h3><%=comunidade.getNome()%>
-                </h3>
-                <button onclick="sairComunidade(<%=comunidade.getIdComunidade()%>, <%=comunidadesParticipantes.indexOf(comunidade)%>)"
-                        class="sair-comunidade">SAIR
-                </button>
-               <% }%>
             </div>
             <%
                 }
