@@ -137,7 +137,6 @@ body {
 .numSeguindo {
     font-size: 1.4rem;
     color: #DDF2FD;
-    transition: 0.25s;
 }
 
 .seguindo {
@@ -149,7 +148,6 @@ body {
     margin-left: 30px;
     font-size: 1.4rem;
     color: #DDF2FD;
-    transition: 0.25s;
 }
 
 .seguidores {
@@ -394,7 +392,6 @@ body {
     background-color: var(--COR-05);
 }
 #numSeguidores:hover, #numSeguindos:hover {
-    font-size: 2rem;
     cursor: pointer;
     text-decoration: underline;
 }
@@ -402,7 +399,7 @@ body {
 .pop-up-ver-seguindos, .pop-up-seguidores {
     display: flex;
     background-color: var(--COR-04);
-    width: 950px;
+    width: 700px;
     height: auto;
     position: absolute;
     top: 2rem;
@@ -464,4 +461,30 @@ body {
 }
 .nome-autor h3{
     color: var(--COR-TEXTO-04);
+}
+.caixa-perfil{
+    padding: 20px;
+    color: var(--COR-TEXTO-04);
+    font-size: 1.5rem;
+}
+.caixa-perfil p{
+    margin-left: 20px;
+}
+.caixa-perfil .remover{
+    margin-left: auto;
+    margin-top: 1rem;
+    margin-right: 3rem;
+    height: 2rem;
+    font-size: 1.2rem;
+    padding: 10px;
+    padding-bottom: 40px;
+    background-color: var(--COR-03);
+    color: var(--COR-TEXTO-04);
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: 'Monomaniac One', sans-serif;
+}
+.caixa-perfil .remover:hover{
+    background-color: var(--COR-05);
 }
