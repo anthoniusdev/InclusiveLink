@@ -467,6 +467,11 @@ body {
     color: var(--COR-TEXTO-04);
     font-size: 1.5rem;
 }
+.caixa-perfil img{
+    border-radius: 100%;
+    height: 83px;
+    width: 83px;
+}
 .caixa-perfil p{
     margin-left: 20px;
 }
