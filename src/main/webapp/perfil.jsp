@@ -54,8 +54,8 @@
     <div class="container">
         <div class="retanguloPerfil">
             <div class="header">
-                <a href="home"><p class="homePage">Home</p></a>
-                <p class="perfil">Perfil</p>
+                <a href="home"><p class="homePage">HOME</p></a>
+                <p class="perfil">PERFIL</p>
             </div>
             <%--    Foto de fundo do usuário --%>
             <img src="<%=fotoFundo%>" class="fundoPerfil" alt="Foto de fundo do usuário">

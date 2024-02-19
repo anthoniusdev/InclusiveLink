@@ -38,31 +38,34 @@ body {
     justify-content: flex-start;
     align-items: center;
     overflow: hidden;
+    box-shadow: 0 1px 20px 5px;
 }
 
 .header {
     margin-right: 44rem;
     width: 250px;
+    height: 40px;
     display: flex;
 }
 
 .header a {
     text-decoration: none;
+    height: 40px;
 }
 
 .homePage {
-    font-size: 2rem;
+    font-size: 16px;
     color: rgba(221, 242, 253, 0.60);
     cursor: pointer;
     margin-right: 5rem;
     margin-top: 0.5rem;
-    margin-left: 5rem;
+    margin-left: 3rem;
     text-decoration: none;
 }
 
 .perfil {
     margin-top: 0.5rem;
-    font-size: 2rem;
+    font-size: 16px;
     color: #DDF2FD;
     cursor: default;
 }
@@ -71,12 +74,13 @@ body {
     content: '';
     display: block;
     width: 100%;
-    height: 5px;
+    height: 6px;
     background-color: #DDF2FD;
     border-radius: 20px;
 }
 
 .fundoPerfil {
+    margin-top: -16px;
     width: 100%;
     height: 36vh;
     display: block;
@@ -103,7 +107,7 @@ body {
 
 .nome-usuario {
     margin-right: 45rem;
-    margin-top: 20rem;
+    margin-top: 23rem;
     font-size: 1.7rem;
     color: #DDF2FD;
 }
@@ -124,7 +128,7 @@ body {
 }
 
 .seguindoSeguidores {
-    margin-right: 34.5rem;
+    margin-right: 36.5rem;
     width: 300px;
     display: flex;
     align-items: center;
@@ -133,7 +137,6 @@ body {
 .numSeguindo {
     font-size: 1.4rem;
     color: #DDF2FD;
-    transition: 0.25s;
 }
 
 .seguindo {
@@ -145,7 +148,6 @@ body {
     margin-left: 30px;
     font-size: 1.4rem;
     color: #DDF2FD;
-    transition: 0.25s;
 }
 
 .seguidores {
@@ -391,7 +393,6 @@ body {
     background-color: var(--COR-05);
 }
 #numSeguidores:hover, #numSeguindos:hover {
-    font-size: 2rem;
     cursor: pointer;
     text-decoration: underline;
 }
@@ -399,7 +400,7 @@ body {
 .pop-up-ver-seguindos, .pop-up-seguidores {
     display: flex;
     background-color: var(--COR-04);
-    width: 950px;
+    width: 700px;
     height: auto;
     position: absolute;
     top: 2rem;
@@ -425,8 +426,8 @@ body {
     margin-left: auto;
     margin-top: 1rem;
     margin-right: 1rem;
-    font-size: 1.2rem;
     height: 2rem;
+    font-size: 1.2rem;
     padding: 10px;
     padding-bottom: 40px;
     background-color: var(--COR-04);
@@ -464,5 +465,35 @@ body {
     color: var(--COR-TEXTO-04);
 }
 .icone-curtida{
+    border-radius: 100%; }
+.caixa-perfil{
+    padding: 20px;
+    color: var(--COR-TEXTO-04);
+    font-size: 1.5rem;
+}
+.caixa-perfil img{
     border-radius: 100%;
+    height: 83px;
+    width: 83px;
+}
+.caixa-perfil p{
+    margin-left: 20px;
+}
+.caixa-perfil .remover{
+    margin-left: auto;
+    margin-top: 1rem;
+    margin-right: 3rem;
+    height: 2rem;
+    font-size: 1.2rem;
+    padding: 10px;
+    padding-bottom: 40px;
+    background-color: var(--COR-03);
+    color: var(--COR-TEXTO-04);
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: 'Monomaniac One', sans-serif;
+}
+.caixa-perfil .remover:hover{
+    background-color: var(--COR-05);
 }
