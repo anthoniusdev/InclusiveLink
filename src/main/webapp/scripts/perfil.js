@@ -183,7 +183,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function editarPerfil() {
     let formData = new FormData();
-    formData.append('idUsuario', usuarioAutenticado);
+    formData.append('idUsuario', usuarioAutenticado.idPessoa);
     formData.append('nome', $('#nome-usuario').val());
     formData.append('descricao', $('#descricao-usuario').val());
     formData.append('fotoPerfil', ftPerUsuario);

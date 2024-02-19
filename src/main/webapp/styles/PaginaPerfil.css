@@ -286,6 +286,7 @@ body {
     justify-content: center;
     border-radius: 110px;
     border: 6px solid var(--COR-04);
+    background-color: #ffffff;
 }
 
 .foto-perfil-usuario img {
@@ -418,6 +419,7 @@ body {
     border-radius: 100%;
     width: 100px;
     height: 100px;
+    background-color: #ffffff;
 }
 .botao-apagar{
     margin-left: auto;
@@ -460,4 +462,7 @@ body {
 }
 .nome-autor h3{
     color: var(--COR-TEXTO-04);
+}
+.icone-curtida{
+    border-radius: 100%;
 }
