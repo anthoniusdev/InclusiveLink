@@ -72,7 +72,7 @@
                 </button>
                 <%} else {%>
                 <button onclick="participarComunidade(<%=comunidade.getIdComunidade()%>, <%=comunidades.indexOf(comunidade) + 1%>)"
-                        class="participar-comunidade">PARTICIPAR
+                        class="participar-comunidade" id="btnParticipar<%=comunidades.indexOf(comunidade) + 1%>">PARTICIPAR
                 </button>
                 <%}%>
             </div>
