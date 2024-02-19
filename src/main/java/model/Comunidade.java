@@ -228,4 +228,7 @@ public class Comunidade implements Serializable {
     public ArrayList<Comunidade> pesquisarComunidade(String query) {
         return new ComunidadeDAO().pesquisarComunidade(query);
     }
+    public ArrayList<Comunidade> obterTodasComunidades(){
+        return new ComunidadeDAO().comunidades();
+    }
 }

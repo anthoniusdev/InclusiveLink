@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
-@WebServlet(urlPatterns = {"/obterComunidades", "/formNovaComunidade", "/verComunidades", "/criarComunidade", "/pesquisarComunidade", "/minhasComunidades"})
+@WebServlet(urlPatterns = {"/obterComunidades", "/formNovaComunidade", "/verComunidades", "/criarComunidade", "/pesquisarComunidade", "/minhasComunidades", "/comunidades"})
 public class ComunidadeController extends HttpServlet {
 
     @Override
@@ -36,8 +36,8 @@ public class ComunidadeController extends HttpServlet {
         System.out.println("Served at: " + request.getContextPath() + request.getServletPath());
         String action = request.getServletPath();
         System.out.println(action);
-        switch (action) {
-            case "/criarComunidade" -> criarComunidade(request, response);
+        if (action.equals("/criarComunidade")) {
+            criarComunidade(request, response);
         }
     }
 
@@ -51,6 +51,7 @@ public class ComunidadeController extends HttpServlet {
             case "/verComunidades" -> verComunidades(request, response);
             case "/pesquisarComunidade" -> pesquisarComunidade(request, response);
             case "/minhasComunidades" -> minhasComunidades(request, response);
+            case "/comunidades" -> todasComunidades(request, response);
         }
     }
 
@@ -177,6 +178,10 @@ public class ComunidadeController extends HttpServlet {
         RequestDispatcher rd = request.getRequestDispatcher("DonoComunidade.jsp");
         rd.forward(request, response);
     }
-
-
+    private void todasComunidades(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession httpSession = request.getSession(false);
+        httpSession.setAttribute("allComunidades", new Comunidade().obterTodasComunidades());
+        RequestDispatcher rd = request.getRequestDispatcher("VerTodasAsComunidades.jsp");
+        rd.forward(request, response);
+    }
 }

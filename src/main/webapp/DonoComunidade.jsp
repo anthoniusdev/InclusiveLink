@@ -59,7 +59,7 @@
                         <%
                             boolean temModeradores = comunidade.getIdModeradores() != null;
 
-                            if(comunidade.getIdCriador() == usuario.getIdPessoa() || (temModeradores && comunidade.getIdModeradores().contains(usuario.getIdPessoa()))){
+                            if (comunidade.getIdCriador() == usuario.getIdPessoa() || (temModeradores && comunidade.getIdModeradores().contains(usuario.getIdPessoa()))) {
 
 
                         %>
@@ -102,13 +102,16 @@
                                 </div>
                             </div>
                         </div>
-                        <%}else {
+                        <%
+                        } else {
                         %>
                         <div class="d-flex justify-content-end pt-3">
                             <button type="button" class="btn icone"
-                                    style="margin-right: 10px;">PARTICIPAR</button>
+                                    style="margin-right: 10px;">PARTICIPAR
+                            </button>
                         </div>
-                        <%}
+                        <%
+                            }
                         %>
 
                         <div
@@ -124,19 +127,18 @@
                     </p>
 
                     <div style="padding-bottom: 20px;">
-                        <span style="padding-left: 50px;">0</span>
-                        <span style="opacity: 0.5;">Seguindo</span>
-                        <span>0</span>
-                        <span style="opacity: 0.5;">Seguidores</span>
+                        <span style="padding-left: 50px;"><%=comunidade.getIdParticipantes().size()%></span>
+                        <span style="opacity: 0.5;">Participantes</span>
                     </div>
                 </div>
                 <div class="postar"
                      style="border-top: 4px solid #164863; padding-bottom: 10px;">
                     <div
                             style="padding-left: 40px; padding-top: 20px; margin-bottom: 15px;">
-                        <%String ftPer;
+                        <%
+                            String ftPer;
                             ftPer = usuario.getFotoPerfil();
-                            if (ftPer == null){
+                            if (ftPer == null) {
                                 ftPer = "images/person_foto.svg";
                             }
                         %>
@@ -153,12 +155,13 @@
                     </div>
                 </div>
                 <div class="pots" style="padding-bottom: 10px;">
-                    <%for(int idPub: comunidade.getIdPublicacoes()){
-                        Publicacao publicacao = new Publicacao(idPub);
-                        ftPer = publicacao.getAutor().getFotoPerfil();
-                        if (ftPer == null){
-                            ftPer = "images/person_foto.svg";
-                        }
+                    <%
+                        for (int idPub : comunidade.getIdPublicacoes()) {
+                            Publicacao publicacao = new Publicacao(idPub);
+                            ftPer = publicacao.getAutor().getFotoPerfil();
+                            if (ftPer == null) {
+                                ftPer = "images/person_foto.svg";
+                            }
                     %>
                     <div
                             style="border-top: 4px solid #164863;  padding-left: 40px; padding-top: 20px; margin-bottom: 15px;">
@@ -184,7 +187,8 @@
                                      style="border-radius: 20px;">
                             </div>
                         </div>
-                        <p style="padding-left: 85px; width: 99%;"><%=publicacao.getTexto()%></p>
+                        <p style="padding-left: 85px; width: 99%;"><%=publicacao.getTexto()%>
+                        </p>
                         <div style="padding-left: 80px;">
                             <i class="bi bi-heart icon-custom-size"
                                style=" size: 50px; cursor: pointer;"></i>
@@ -195,46 +199,6 @@
                         </div>
                     </div>
                     <%}%>
-<%--                    <div--%>
-<%--                            style="border-top: 4px solid #164863;  padding-left: 40px; padding-top: 20px; margin-bottom: 15px;">--%>
-<%--                        <div class="row">--%>
-<%--                            <div class="col-md-10">--%>
-<%--                                <img src="DefaultFotoPerfil.webp"--%>
-<%--                                     class="img-fluid"--%>
-<%--                                     style="border-radius: 100%; width: 70px; height: 70px;">--%>
-<%--                                <span class="h5"--%>
-<%--                                      style="margin-left: 10px;">Nome de--%>
-<%--                                            Usuário</span>--%>
-<%--                            </div>--%>
-<%--                            <div class="col-md-2">--%>
-<%--                                <button type="button" class="btn post"--%>
-<%--                                        style="width: 50px; padding-top: 10px;"><i--%>
-<%--                                        class="bi bi-trash-fill"></i></button>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                        <p style="padding-left: 85px; width: 99%;">Lorem--%>
-<%--                            ipsum dolor sit amet, consectetur adipiscing--%>
-<%--                            elit, sed do eiusmod tempor incididunt ut--%>
-<%--                            labore et dolore magna aliqua.--%>
-<%--                        </p>--%>
-<%--                        <div style="padding-left: 80px;">--%>
-<%--                            <div--%>
-<%--                                    style="width: 90%; height: 300px; border-radius: 20px;">--%>
-<%--                                <img src="DefaultFundoPerfil.webp"--%>
-<%--                                     class="img-fluid"--%>
-<%--                                     style="border-radius: 20px;">--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                        <div--%>
-<%--                                style="padding-left: 80px; padding-top:30px">--%>
-<%--                            <i class="bi bi-heart icon-custom-size"--%>
-<%--                               style=" size: 50px; cursor: pointer;"></i>--%>
-<%--                            <span>0</span>--%>
-<%--                            <i class="bi bi-chat-left icon-custom-size"--%>
-<%--                               style=" size: 50px; cursor: pointer; padding-left: 10px;"></i>--%>
-<%--                            <span>0</span>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
                 </div>
             </div>
         </div>
