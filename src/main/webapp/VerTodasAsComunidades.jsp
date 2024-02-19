@@ -3,8 +3,8 @@
 <%@ page import="model.Comunidade" %><%--
   Created by IntelliJ IDEA.
   User: antho
-  Date: 27/01/2024
-  Time: 02:28
+  Date: 19/02/2024
+  Time: 12:48
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
@@ -23,35 +23,40 @@
             @SuppressWarnings("unchecked")
             ArrayList<Membro> membrosRede = (ArrayList<Membro>) httpSession.getAttribute("perfis");
             @SuppressWarnings("unchecked")
-            ArrayList<Comunidade> comunidadesParticipantes = (ArrayList<Comunidade>) httpSession.getAttribute("comunidades-participantes-usuario");
+            ArrayList<Comunidade> comunidades = (ArrayList<Comunidade>) httpSession.getAttribute("allComunidades");
 %>
 <html>
 <head>
     <title>Inclusive Link</title>
+    <link rel="stylesheet" href="styles/VerTodasAsComunidades.css">
+    <link rel="stylesheet" href="styles/barra-lateral.css">
     <link rel="icon" href="images/LOGO.ico">
     <script src="scripts/js/jquery-3.7.1.js"></script>
+    <script src="scripts/verTodasAsComunidades.js"></script>
     <script src="scripts/verComunidades.js"></script>
     <script src="scripts/barra-lateral-amigo/pesquisarPerfil.js"></script>
     <script src="scripts/barra-lateral-comunidade/criarComunidade.js"></script>
     <script src="scripts/barra-lateral-comunidade/pesquisarComunidade.js"></script>
-    <link rel="stylesheet" href="styles/VerComunidadesParticipante.css">
     <script src="scripts/seguirUsuario.js"></script>
 </head>
 <body>
 <main>
-    <div class="container">
-        <div class="comunidades-participantes">
+    <div class="principal">
+        <div class="todas-comunidades">
             <div class="cabecalho">
+                <a href="verComunidades">COMUNIDADES PARTICIPANTES</a>
                 <div class="selecionado">
-                    COMUNIDADES PARTICIPANTES
+                    COMUNIDADES
                     <span id="linhaSelecionado"></span></div>
-                <a href="comunidades">COMUNIDADES</a>
             </div>
             <%
-                if (!comunidadesParticipantes.isEmpty()) {
-                    for (Comunidade comunidade : comunidadesParticipantes) {
+                if (!comunidades.isEmpty()) {
+                    for (Comunidade comunidade : comunidades) {
+                        if (comunidade.getFotoPerfil() == null) {
+                            comunidade.setFotoPerfil("images/people-group-solid.svg");
+                        }
             %>
-            <div class="caixa-comunidade" id="caixa-comunidade<%=comunidadesParticipantes.indexOf(comunidade)%>">
+            <div class="caixa-comunidade" id="caixa-comunidade<%=comunidades.indexOf(comunidade) + 1%>">
                 <a href="minhasComunidades?idComunidade=<%= comunidade.getIdComunidade()%>">
                     <div class="imagem-foto-perfil-comunidade">
                         <img src="<%=comunidade.getFotoPerfil()%>" alt="Foto de perfil de <%=comunidade.getNome()%>">
@@ -59,9 +64,17 @@
                     <h3><%=comunidade.getNome()%>
                     </h3>
                 </a>
-                <button onclick="sairComunidade(<%=comunidade.getIdComunidade()%>, <%=comunidadesParticipantes.indexOf(comunidade)%>)"
+                <%
+                    if (comunidade.getIdParticipantes().contains(membro.getIdPessoa())) {
+                %>
+                <button onclick="sairComunidade(<%=comunidade.getIdComunidade()%>, <%=comunidades.indexOf(comunidade) + 1%>)"
                         class="sair-comunidade">SAIR
                 </button>
+                <%} else {%>
+                <button onclick="participarComunidade(<%=comunidade.getIdComunidade()%>, <%=comunidades.indexOf(comunidade) + 1%>)"
+                        class="participar-comunidade" id="btnParticipar<%=comunidades.indexOf(comunidade) + 1%>">PARTICIPAR
+                </button>
+                <%}%>
             </div>
             <%
                 }

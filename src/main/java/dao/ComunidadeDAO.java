@@ -53,7 +53,6 @@ public class ComunidadeDAO {
     }
 
     public Comunidade retornaComunidade(int idComunidade) {
-        // Código para retornarComunidade
         try (Connection con = conectar()) {
             String read = "SELECT * FROM comunidade WHERE idComunidade = ?";
             try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
@@ -248,6 +247,21 @@ public class ComunidadeDAO {
             }
             con.close();
         }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public ArrayList<Comunidade> comunidades(){
+        try (Connection con = conectar()){
+            String read = "SELECT idComunidade FROM comunidade";
+            try (PreparedStatement preparedStatement = con.prepareStatement(read)){
+                ResultSet rs = preparedStatement.executeQuery();
+                ArrayList<Comunidade> comunidades = new ArrayList<>();
+                while (rs.next()){
+                    comunidades.add(retornaComunidade(rs.getInt(1)));
+                }
+                return comunidades;
+            }
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }

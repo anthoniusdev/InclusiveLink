@@ -162,7 +162,18 @@ function carregarPublicacoes(tipo) {
                         text: 'EXCLUIR',
                     })
                     botaoApagar.on('click', function () {
-                        excluirPublicacao(publicacao.idPublicacao, classe_caixa_publicacao, confirmacao, false);
+                        excluirPublicacao(publicacao.idPublicacao, confirmacao, false);
+                        classe_caixa_publicacao.css({
+                            display: 'none'
+                        })
+                        confirmacao.css({
+                            display: 'block'
+                        })
+                        setTimeout(function () {
+                            confirmacao.css({
+                                display: 'none'
+                            });
+                        }, 3000);
                     })
                     classe_caixa_publicacao.append(botaoApagar);
                 }

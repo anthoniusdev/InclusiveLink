@@ -9,7 +9,6 @@
 <%@ page import="javax.servlet.http.HttpSession" %>
 <%@page import="model.Membro" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="model.Comunidade" %>
 
 <%
     HttpSession httpSession = request.getSession(false);
@@ -25,7 +24,6 @@
             }
             @SuppressWarnings("unchecked")
             ArrayList<Membro> membrosRede = (ArrayList<Membro>) httpSession.getAttribute("perfis");
-            ArrayList<Comunidade> comunidadesRede = (ArrayList<Comunidade>) httpSession.getAttribute("comunidades");
 %>
 <html lang="pt-BR">
 <head>

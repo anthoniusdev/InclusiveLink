@@ -1,8 +1,3 @@
-/*String url = "jdbc:mysql://localhost:3306/projetopoo";
-  String user = "root";
-  String password = "123456";
-*/
-
 package dao;
 
 import java.sql.Connection;
@@ -14,7 +9,6 @@ public class Conexao {
         try {
             String driver = "com.mysql.cj.jdbc.Driver";
             Class.forName(driver);
-
             String url = "jdbc:mysql://localhost:3306/projetopoo";
             String user = "root";
             String password = "123456";
