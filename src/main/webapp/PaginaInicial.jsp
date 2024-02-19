@@ -85,8 +85,7 @@
             </div>
             <div class="postagens" id="postagens"></div>
         </div>
-        <-- Aqui Bima->
-        <div class="container">
+        <div class="containerSide">
             <div class="pesquisar-amigo">
                 <label>
                     <img src="images/search.svg" alt="search">

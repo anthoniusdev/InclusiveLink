@@ -53,7 +53,7 @@ body {
     font-size: 16px;
     color: rgba(221, 242, 253, 0.60);
     cursor: pointer;
-    margin-right: 5rem;
+    margin-right: 70px;
     margin-top: 0.5rem;
     margin-left: 3rem;
     text-decoration: none;
@@ -94,6 +94,7 @@ body {
 }
 
 .nome-usuario {
+    margin-bottom: 0px;
     margin-left: 3rem;
     font-size: 1.7rem;
     color: #DDF2FD;
@@ -110,7 +111,8 @@ body {
 }
 
 .descricao {
-
+    margin-bottom: 0px;
+    margin-left: 3rem;
     font-size: 1.4rem;
     color: #DDF2FD;
 }
@@ -231,8 +233,9 @@ body {
 }
 
 .cabecalho button {
+    cursor: pointer;
     position: absolute;
-    right: 3rem;
+    margin-left: 47.5rem;
     align-self: center;
     display: flex;
     width: 11rem;
@@ -484,4 +487,11 @@ body {
     border-radius: 20px;
     max-width: 400px;
     max-height: 400px
+}
+.container{
+    display: flex;
+}
+.containerSide{
+    display: flex;
+    flex-direction: column;
 }

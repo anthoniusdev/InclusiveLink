@@ -10,8 +10,8 @@
     --COR-01: #DDF2FD;
     --COR-TEXTO-01: rgba(22, 72, 99, 0.3);
     --COR-TEXTO-02: rgba(22, 72, 99, 0.8);
-    --MARGIN-TOP-CONTAINER: 10px;
-    --MARGIN-BOTTOM-CONTAINER: 22px;
+    --MARGIN-TOP-CONTAINER: 50px;
+    --MARGIN-BOTTOM-CONTAINER: 65px;
     --TAMANHO-FONTE-INPUT: 29px;
     --TAMANHO-FONTE-FOOTER-NOMES: 16px;
     --TAMANHO-FONTE-BTN-CADASTRAR: 37px;
@@ -19,7 +19,7 @@
     --WIDTH-INPUT-NORMAL: 670px;
     --WIDTH-INPUT-DATA: 216px;
     --WIDTH-INPUT-LAL: 328px;
-    --PADDING-FRM-CADASTRO: 48px 86px 18px 86px;
+    --PADDING-FRM-CADASTRO: 40px 40px 40px 40px;
     --MARGIN-INPUT-PRO-OUTRO: 1.6px;
     --FONTE: "Monomaniac One", sans-serif;
 }
@@ -211,7 +211,7 @@ form .btnCadastrar button:active {
 footer {
     background-color: var(--COR-03);
     color: var(--COR-01);
-    margin-top: 40px;
+
 }
 
 footer .LOGO-E-NOMES {

@@ -19,9 +19,7 @@
 }
 
 .pesquisar-amigo {
-    position: fixed;
-    right: 45px;
-    top: 20px;
+    margin-top: 20px;
     width: 450px;
     height: 50px;
 }
@@ -94,12 +92,11 @@
 }
 
 .perfis-sugeridos {
+    margin-top: 10px;
+    padding: 0;
     background-color: var(--COR-03);
     width: 450px;
     height: auto;
-    position: fixed;
-    right: 45px;
-    top: 75px;
     border-radius: 20px;
 }
 
@@ -138,17 +135,16 @@
 }
 
 .botaoSeguir {
-    position: absolute;
-    right: 30px;
+    margin-right: 10px;
     margin-top: 10px;
     border: none;
-    width: 110px;
-    height: 45px;
+    width: 100px;
+    height: 50px;
     border-radius: 20px;
     background-color: var(--COR-04);
     color: var(--COR-TEXTO-04);
     font-family: var(--FONTE);
-    font-size: 25px;
+    font-size: 1.2rem;
     text-align: center;
     display: flex;
     align-content: center;
@@ -160,7 +156,6 @@
 }
 
 .botaoSeguir:hover {
-    border: 2px solid var(--COR-01);
     background-color: var(--COR-03);
 }
 
@@ -175,10 +170,8 @@
 }
 
 .pesquisar-comunidade {
+    margin-top: 20px;
     background-color: var(--COR-03);
-    position: fixed;
-    right: 45px;
-    bottom: 370px;
     width: 450px;
     height: 50px;
     border-radius: 20px;
@@ -218,12 +211,10 @@
 }
 
 .comunidades-sugeridas {
+    margin-top: 10px;
     background-color: var(--COR-03);
     width: 450px;
     height: auto;
-    position: fixed;
-    right: 45px;
-    top: 365px;
     border-radius: 20px;
     display: flex;
     flex-direction: column;
@@ -511,7 +502,7 @@
 .ver-comunidades a {
     text-decoration: none;
     font-size: 25px;
-    padding-left: 40px;
+    padding-left: 30px;
     align-self: center;
     color: var(--COR-TEXTO-04);
     width: 100%;
@@ -533,8 +524,7 @@
     background-image: url("../images/caret-right-solid.svg");
     background-size: 35px;
     filter: invert(1);
-    position: absolute;
-    right: 15px;
+    margin-left: -90px;
     margin-top: 5px;
 }
 

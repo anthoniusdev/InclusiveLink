@@ -17,6 +17,9 @@
     --FONTE: "Monomaniac One", sans-serif;
     --TAMANHO-FONTE: 25px;
 }
+main{
+    display: fl;
+}
 
 body {
     background-color: var(--COR-02);
@@ -34,9 +37,9 @@ html, body, footer {
     display: flex;
     flex-direction: column;
     width: 960px;
+    border-radius: 20px;
     margin-left: 35px;
     margin-top: 20px;
-    border-radius: 20px;
     margin-right: 30px;
 }
 
@@ -314,7 +317,10 @@ html, body, footer {
     transition: 1s;
     display: none;
 }
-
 .container{
     display: flex;
+}
+.containerSide{
+    display: flex;
+    flex-direction: column;
 }
