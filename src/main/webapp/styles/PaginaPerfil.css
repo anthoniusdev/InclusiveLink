@@ -38,31 +38,34 @@ body {
     justify-content: flex-start;
     align-items: center;
     overflow: hidden;
+    box-shadow: 0 1px 20px 5px;
 }
 
 .header {
     margin-right: 44rem;
     width: 250px;
+    height: 40px;
     display: flex;
 }
 
 .header a {
     text-decoration: none;
+    height: 40px;
 }
 
 .homePage {
-    font-size: 2rem;
+    font-size: 16px;
     color: rgba(221, 242, 253, 0.60);
     cursor: pointer;
     margin-right: 5rem;
     margin-top: 0.5rem;
-    margin-left: 5rem;
+    margin-left: 3rem;
     text-decoration: none;
 }
 
 .perfil {
     margin-top: 0.5rem;
-    font-size: 2rem;
+    font-size: 16px;
     color: #DDF2FD;
     cursor: default;
 }
@@ -71,12 +74,13 @@ body {
     content: '';
     display: block;
     width: 100%;
-    height: 5px;
+    height: 6px;
     background-color: #DDF2FD;
     border-radius: 20px;
 }
 
 .fundoPerfil {
+    margin-top: -16px;
     width: 100%;
     height: 36vh;
     display: block;
@@ -103,7 +107,7 @@ body {
 
 .nome-usuario {
     margin-right: 45rem;
-    margin-top: 20rem;
+    margin-top: 23rem;
     font-size: 1.7rem;
     color: #DDF2FD;
 }
@@ -124,7 +128,7 @@ body {
 }
 
 .seguindoSeguidores {
-    margin-right: 34.5rem;
+    margin-right: 36.5rem;
     width: 300px;
     display: flex;
     align-items: center;
@@ -423,8 +427,8 @@ body {
     margin-left: auto;
     margin-top: 1rem;
     margin-right: 1rem;
-    font-size: 1.2rem;
     height: 2rem;
+    font-size: 1.2rem;
     padding: 10px;
     padding-bottom: 40px;
     background-color: var(--COR-04);

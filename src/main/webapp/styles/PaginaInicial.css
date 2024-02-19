@@ -282,29 +282,11 @@ html, body, footer {
 }
 
 .botao-apagar {
-    width: auto;
-    height: 50px;
-    border-radius: 10px;
-    background-color: var(--COR-04);
-    color: var(--COR-TEXTO-04);
-    border: none;
-    font-family: var(--FONTE);
-    font-size: 30px;
-    margin-top: 15px;
-    display: flex;
-    align-items: center;
-    position: absolute;
-    left: 850px;
-    transition: 1s;
+
 }
 
 .botao-apagar:hover {
-    cursor: pointer;
-    justify-content: center;
-    height: +10%;
-    border: 1px solid #5a1a1a;
-    background-color: var(--COR-03);
-    color: #521818;
+
 }
 
 .confirmacao-exclusao {
