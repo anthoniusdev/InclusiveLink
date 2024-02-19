@@ -314,3 +314,7 @@ html, body, footer {
     transition: 1s;
     display: none;
 }
+
+.container{
+    display: flex;
+}

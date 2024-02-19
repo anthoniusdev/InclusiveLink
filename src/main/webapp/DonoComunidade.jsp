@@ -49,13 +49,21 @@
                           box-shadow: 5px 5px 7px rgba(0, 0, 0, 0.5); border-bottom: 4px solid #164863;">
                 <div>
                     <div style="padding-top: 15px;">
-                        <i class="bi bi-arrow-left fs-4 ms-3"></i>
+                        <i class="bi bi-arrow-left fs-4 ms-3 icone-voltar"></i>
                         <span class="h4">COMUNIDADE</span>
                     </div>
                     <div style="margin-top: 10px;">
                         <img src="<%=fotoFundo%>"
                              class="img-fluid fundoComunidade"
                              style="width: 100%;  height: 280px; border-top: 4px solid #164863;">
+                        <%
+                            boolean temModeradores = comunidade.getIdModeradores() != null;
+
+                            if(comunidade.getIdCriador() == usuario.getIdPessoa() || (temModeradores && comunidade.getIdModeradores().contains(usuario.getIdPessoa()))){
+
+
+                        %>
+
                         <div class="d-flex justify-content-end pt-3">
                             <button type="button" id="botaoAtivar" class="btn icone"
                                     style="margin-right: 10px;"><i
@@ -94,6 +102,15 @@
                                 </div>
                             </div>
                         </div>
+                        <%}else {
+                        %>
+                        <div class="d-flex justify-content-end pt-3">
+                            <button type="button" class="btn icone"
+                                    style="margin-right: 10px;">PARTICIPAR</button>
+                        </div>
+                        <%}
+                        %>
+
                         <div
                                 style="margin-left: 30px; margin-top: -140px;">
                             <img src="<%=fotoPerfil%>"

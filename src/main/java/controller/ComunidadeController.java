@@ -177,4 +177,6 @@ public class ComunidadeController extends HttpServlet {
         RequestDispatcher rd = request.getRequestDispatcher("DonoComunidade.jsp");
         rd.forward(request, response);
     }
+
+
 }
