@@ -49,7 +49,7 @@
                           box-shadow: 5px 5px 7px rgba(0, 0, 0, 0.5); border-bottom: 4px solid #164863;">
                 <div>
                     <div style="padding-top: 15px;">
-                        <i class="bi bi-arrow-left fs-4 ms-3 icone-voltar"></i>
+                        <i class="bi bi-arrow-left fs-4 ms-3 icone-voltar" onclick="window.history.back()"> </i>
                         <span class="h4">COMUNIDADE</span>
                     </div>
                     <div style="margin-top: 10px;">
@@ -67,7 +67,7 @@
                         <div class="d-flex justify-content-end pt-3">
                             <button type="button" id="botaoAtivar" class="btn icone"
                                     style="margin-right: 10px;"><i
-                                    class="bi bi-list" id="botaoAtivar1" onclick="ativarOpcoes()"></i></button>
+                                    class="bi bi-list" onclick="ativarOpcoes()"></i></button>
                         </div>
                         <div
                                 id="opcoes" class="container-xm d-flex justify-content-end align-items-center d-none"
@@ -95,9 +95,47 @@
                                     </div>
                                     <div class="col-lg-12 col-sm-6">
                                         <button
-                                                type="button" class="btn btn-extra-small">EDITAR
+                                                type="button" class="btn btn-extra-small" id="editarPerfil" onclick="ativarEditarPerfil()"()>EDITAR
                                             PERFIL
                                         </button>
+                                    </div>
+                                    <div class="fundo-escuro" name="EditandoPerfil" id="fundo-escuro-editar-perfil" style="display: none">
+                                        <div class="pop-up-editar-perfil">
+                                            <div class="cabecalho">
+                                                <span class="close" id="close-editar-perfil"><img src="images/octicon_x-12.svg" alt=""></span>
+                                                <p>EDITANDO PERFIL</p>
+                                                <button onclick="editarPerfil()" id="btnSave">SALVAR ALTERAÇÕES</button>
+                                            </div>
+                                            <div class="foto-fundo-usuario">
+                                                <img id="foto-fundo-usuario" src="<%=fotoFundo%>" alt="Foto de fundo de <%=comunidade.getNome()%>">
+                                                <div class="icone-editar-foto" id="icone-editar-foto-fundo-usuario">
+                                                    <img src="images/ri_edit-fill.svg" id="img-icone-editar-foto-fundo-usuario"
+                                                         alt="Ícone de alterar foto perfil">
+                                                </div>
+                                                <input type="file" id="editarFotoFundoUsuario" name="fotoFundoUsuario" accept="image/*">
+                                            </div>
+                                            <div class="foto-perfil-usuario">
+                                                <img id="foto-perfil-usuario" src="<%=fotoPerfil%>" alt="Foto do perfil de <%=comunidade.getNome()%>">
+                                                <div class="icone-editar-foto" id="icone-editar-foto-perfil-usuario">
+                                                    <img src="images/ri_edit-fill.svg" id="img-icone-editar-foto-perfil-usuario"
+                                                         alt="Ícone de alterar foto perfil">
+                                                </div>
+                                                <input type="file" id="editarFotoPerfilUsuario" name="fotoPerfilUsuario" accept="image/*">
+                                            </div>
+                                            <div class="inputs">
+                                                <label for="nome-usuario" id="label-nome-usuario">
+                                                    <small>Nome</small>
+                                                    <input type="text" id="nome-usuario" name="nome-usuario" value="<%=comunidade.getNome()%>"
+                                                           required>
+                                                </label>
+                                                <label for="descricao-usuario" id="label-descricao-usuario">
+                                                    <small>Descrição</small>
+                                                    <textarea id="descricao-usuario" name="descricao-usuario" rows="1"
+                                                              maxlength="200"><%if (comunidade.getDescricao() != null) {%><%=comunidade.getDescricao()%><%}%></textarea>
+                                                    <div id="contagem-caracteres-descricao-usuario">200</div>
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -280,6 +318,17 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
 <script src="scripts/DonoComunidade.js"></script>
+<script>
+    function ativarEditarPerfil() {
+        console.log("Função ativarEditarPerfil() chamada.");
+        var minhaDiv = document.getElementsByName("EditandoPerfil");
+        if (minhaDiv.classList.contains("d-none")) {
+
+        minhaDiv.classList.remove("d-none");
+        minhaDiv.classList.add("d-block");
+        }
+    }
+</script>
 </body>
 </html>
 <%}%>
