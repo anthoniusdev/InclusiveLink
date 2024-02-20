@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
-@WebServlet(urlPatterns = {"/obterComunidades", "/formNovaComunidade", "/verComunidades", "/criarComunidade", "/pesquisarComunidade", "/minhasComunidades", "/comunidades"})
+@WebServlet(urlPatterns = {"/obterComunidades", "/verComunidades", "/criarComunidade", "/pesquisarComunidade", "/minhasComunidades", "/comunidades"})
 public class ComunidadeController extends HttpServlet {
 
     @Override
@@ -36,8 +36,8 @@ public class ComunidadeController extends HttpServlet {
         System.out.println("Served at: " + request.getContextPath() + request.getServletPath());
         String action = request.getServletPath();
         System.out.println(action);
-        if (action.equals("/criarComunidade")) {
-            criarComunidade(request, response);
+        switch (action) {
+            case "/criarComunidade" -> criarComunidade(request, response);
         }
     }
 
@@ -57,13 +57,17 @@ public class ComunidadeController extends HttpServlet {
 
 
     private void obterComunidades(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        Membro membro = (Membro) session.getAttribute("usuario");
-        ArrayList<Comunidade> comunidades = new Comunidade().listarComunidadesParticipantes(membro.getIdPessoa());
-        String jsonResponse = new Gson().toJson(comunidades);
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(jsonResponse);
+        try {
+            HttpSession session = request.getSession(false);
+            Membro membro = (Membro) session.getAttribute("usuario");
+            ArrayList<Comunidade> comunidades = new Comunidade().listarComunidadesParticipantes(membro.getIdPessoa());
+            String jsonResponse = new Gson().toJson(comunidades);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(jsonResponse);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void verComunidades(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -76,7 +80,8 @@ public class ComunidadeController extends HttpServlet {
             Membro membro = (Membro) httpSession.getAttribute("usuario");
             ArrayList<Comunidade> comunidades_usuario = new Comunidade().listarComunidadesParticipantes(membro.getIdPessoa());
             httpSession.setAttribute("comunidades-participantes-usuario", comunidades_usuario);
-            response.sendRedirect("VerComunidadesParticipante.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("VerComunidadesParticipante.jsp");
+            rd.forward(request, response);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -143,7 +148,7 @@ public class ComunidadeController extends HttpServlet {
                 System.out.println("DIRETORIO NAO ENCONTRADO");
             }
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
         response.setContentType("application/json");
@@ -165,23 +170,38 @@ public class ComunidadeController extends HttpServlet {
     }
 
     private void pesquisarComunidade(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String query = request.getParameter("query");
-        String jsonResponse = new Gson().toJson(new Comunidade().pesquisarComunidade(query));
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(jsonResponse);
+        try {
+            String query = request.getParameter("query");
+            String jsonResponse = new Gson().toJson(new Comunidade().pesquisarComunidade(query));
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().write(jsonResponse);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void minhasComunidades(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Comunidade comunidade = new Comunidade(Integer.parseInt(request.getParameter("idComunidade")));
-        request.setAttribute("comunidade", comunidade);
-        RequestDispatcher rd = request.getRequestDispatcher("DonoComunidade.jsp");
-        rd.forward(request, response);
+        try {
+            Comunidade comunidade = new Comunidade(Integer.parseInt(request.getParameter("idComunidade")));
+            request.setAttribute("comunidade", comunidade);
+            HttpSession httpSession = request.getSession(false);
+            httpSession.setAttribute("previousPage", request.getHeader("referer"));
+            RequestDispatcher rd = request.getRequestDispatcher("DonoComunidade.jsp");
+            rd.forward(request, response);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
+
     private void todasComunidades(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession httpSession = request.getSession(false);
-        httpSession.setAttribute("allComunidades", new Comunidade().obterTodasComunidades());
-        RequestDispatcher rd = request.getRequestDispatcher("VerTodasAsComunidades.jsp");
-        rd.forward(request, response);
+        try {
+            HttpSession httpSession = request.getSession(false);
+            httpSession.setAttribute("allComunidades", new Comunidade().obterTodasComunidades());
+            RequestDispatcher rd = request.getRequestDispatcher("VerTodasAsComunidades.jsp");
+            rd.forward(request, response);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

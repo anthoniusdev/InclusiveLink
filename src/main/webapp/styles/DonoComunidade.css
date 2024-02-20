@@ -100,3 +100,77 @@ input::placeholder {
     cursor: pointer;
     width: 55px;
 }
+.sair-comunidade {
+    width: 100px;
+    height: 50px;
+    align-self: center;
+    background-color: var(--COR-04);
+    color: var(--COR-TEXTO-04);
+    margin-right: 50px;
+    margin-left: 75px;
+    border: none;
+    border-radius: 20px;
+    font-family: var(--FONTE);
+    font-size: 30px;
+}
+
+.sair-comunidade:hover {
+    cursor: pointer;
+    border: 1px solid #FF0000;
+    background-color: var(--COR-03);
+    transition: 0.5s;
+    color: #FF0000;
+}
+.pop-up-adicionar-moderador{
+    display: flex;
+    background-color: var(--COR-04);
+    width: 700px;
+    height: auto;
+    position: absolute;
+    top: 2rem;
+    left: 18rem;
+    border-radius: 20px;
+    flex-direction: column;
+}
+.caixa-perfil {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+}
+.foto-perfil-autor img {
+    margin: 20px;
+    border-radius: 100%;
+    width: 100px;
+    height: 100px;
+    background-color: #ffffff;
+}
+.cabecalho {
+    display: flex;
+}
+
+.cabecalho img {
+    margin-left: 1rem;
+}
+
+.cabecalho p {
+    color: var(--COR-TEXTO-04);
+    font-size: 25px;
+    padding-left: 20px;
+    margin: 0;
+}
+.botoes{
+    display: flex;
+    justify-content: center;
+}
+.pergunta{
+    text-align: center;
+}
+.pop-up-answer{
+    background-color: var(--COR-04);
+    width: 450px;
+    top: 40%;
+    position: absolute;
+    left: 40%;
+    border-radius: 20px;
+}

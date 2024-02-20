@@ -1,7 +1,6 @@
 package controller;
 
 import com.google.gson.Gson;
-import dao.MembroDAO;
 import model.Membro;
 import model.Publicacao;
 import org.apache.commons.fileupload.FileItem;

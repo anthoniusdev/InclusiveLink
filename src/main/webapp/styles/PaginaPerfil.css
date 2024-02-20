@@ -349,9 +349,12 @@ body {
 
 .caixa-publicacao {
     display: flex;
-    margin-bottom: 1rem;
+    padding-bottom: 1rem;
     width: 100%;
     height: auto;
+}
+.caixa-publicacao img{
+    border-radius: 20px;
 }
 
 .caixa-publicacao:hover {

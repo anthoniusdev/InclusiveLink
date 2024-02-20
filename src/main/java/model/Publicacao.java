@@ -52,28 +52,28 @@ public class Publicacao implements Serializable {
         }
     }
 
-    public Publicacao(String texto, String midia, ParticipanteComunidade autor, Comunidade comunidade) {
-        Publicacao novaPublicacao;
-        if (autor.isParticipante(comunidade) || autor.isParticipante(comunidade)) {
-            try {
-                autor = new ParticipanteComunidade(autor);
-                setTexto(texto);
-                setMidia(midia);
-                setAutor(autor);
-                PublicacaoDAO publicacaoDAO = new PublicacaoDAO();
-                comunidade.criarPublicacao(this);
-                novaPublicacao = publicacaoDAO.novaPublicacao(this);
-                if (novaPublicacao != null) {
-                    this.setIdPublicacao(novaPublicacao.getIdPublicacao());
-                    this.setData(novaPublicacao.getData());
-                    this.setHora(novaPublicacao.getHora());
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                throw new RuntimeException(e);
-            }
-        }
-    }
+//    public Publicacao(String texto, String midia, ParticipanteComunidade autor, Comunidade comunidade) {
+//        Publicacao novaPublicacao;
+//        if (autor.isParticipante(comunidade) || autor.isParticipante(comunidade)) {
+//            try {
+//                autor = new ParticipanteComunidade(autor);
+//                setTexto(texto);
+//                setMidia(midia);
+//                setAutor(autor);
+//                PublicacaoDAO publicacaoDAO = new PublicacaoDAO();
+//                comunidade.criarPublicacao(this);
+//                novaPublicacao = publicacaoDAO.novaPublicacao(this);
+//                if (novaPublicacao != null) {
+//                    this.setIdPublicacao(novaPublicacao.getIdPublicacao());
+//                    this.setData(novaPublicacao.getData());
+//                    this.setHora(novaPublicacao.getHora());
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                throw new RuntimeException(e);
+//            }
+//        }
+//    }
 
     public Publicacao(int idPublicacao){
         try {

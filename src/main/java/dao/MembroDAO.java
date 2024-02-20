@@ -99,7 +99,7 @@ public class MembroDAO {
                     fotoFundo = rs.getString(9);
                     nomeUsuario = rs.getString(10);
                     descricao = rs.getString(11);
-                    return new Membro(idPessoa, nome, dataNascimento, email, senha, fotoPerfil, fotoFundo, nomeUsuario, membrosSeguidores(idPessoa), membrosSeguindos(idPessoa), comunidadeSeguindos(idPessoa), comunidadesParticipantes(idPessoa), descricao, publicacoesCurtidas(idPessoa), publicacoes(idPessoa), perfilVisivel, comentarios(idPessoa));
+                    return new Membro(idPessoa, nome, dataNascimento, email, senha, fotoPerfil, fotoFundo, nomeUsuario, membrosSeguidores(idPessoa), membrosSeguindos(idPessoa), comunidadesParticipantes(idPessoa), descricao, publicacoesCurtidas(idPessoa), publicacoes(idPessoa), perfilVisivel, comentarios(idPessoa));
                 } else {
                     return null;
                 }
@@ -177,24 +177,6 @@ public class MembroDAO {
                     membrosSeguindos.add(rs.getInt(1));
                 }
                 return membrosSeguindos;
-
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public ArrayList<Integer> comunidadeSeguindos(int idPessoa) {
-        try (Connection con = conectar()) {
-            String read = "select seguidor_comunidade.idComunidade from seguidor_comunidade inner join membro m on seguidor_comunidade.idSeguidor = m.idPessoa where m.idPessoa = ?";
-            try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
-                preparedStatement.setInt(1, idPessoa);
-                ResultSet rs = preparedStatement.executeQuery();
-                ArrayList<Integer> comunidadesSeguindos = new ArrayList<>();
-                while (rs.next()) {
-                    comunidadesSeguindos.add(rs.getInt(1));
-                }
-                return comunidadesSeguindos;
 
             }
         } catch (SQLException e) {
@@ -366,7 +348,7 @@ public class MembroDAO {
 
     public ArrayList<Membro> pesquisarPerfil(String query, int id) {
         try (Connection con = conectar()) {
-            String read = "SELECT idPessoa FROM pessoa WHERE nome LIKE ? AND idPessoa <> ?";
+            String read = "SELECT idPessoa FROM pessoa WHERE nome LIKE ? AND idPessoa <> ? LIMIT 4";
             try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
                 preparedStatement.setString(1, "%" + query + "%");
                 preparedStatement.setInt(2, id);

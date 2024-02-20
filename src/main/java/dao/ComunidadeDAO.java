@@ -69,8 +69,7 @@ public class ComunidadeDAO {
                             rs.getString(6),
                             publicacoes(idComunidade),
                             moderadores(idComunidade),
-                            participantes(idComunidade),
-                            seguidores(idComunidade)
+                            participantes(idComunidade)
                     );
                 }
             }
@@ -132,29 +131,13 @@ public class ComunidadeDAO {
         }
     }
 
-    public ArrayList<Integer> seguidores(int idComunidade) {
-        try (Connection con = conectar()) {
-            String read = "SELECT idSeguidor FROM seguidor_comunidade WHERE idComunidade = ?";
-            try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
-                preparedStatement.setInt(1, idComunidade);
-                ArrayList<Integer> seguidores = new ArrayList<>();
-                ResultSet rs = preparedStatement.executeQuery();
-                while (rs.next()) {
-                    seguidores.add(rs.getInt(1));
-                }
-                return seguidores;
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    public boolean verificaComunidade (int idComunidade){
+    public boolean verificaComunidade(int idComunidade) {
         try (Connection con = conectar()) {
             String read = "SELECT idComunidade FROM comunidade WHERE idComunidade = ?";
             try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
                 preparedStatement.setInt(1, idComunidade);
                 ResultSet rs = preparedStatement.executeQuery();
-                if (rs.next()){
+                if (rs.next()) {
                     return true;
                 }
             }
@@ -163,14 +146,15 @@ public class ComunidadeDAO {
         }
         return false;
     }
-    public ArrayList<Comunidade> listarComunidades(int limite){
-        try (Connection con = conectar()){
+
+    public ArrayList<Comunidade> listarComunidades(int limite) {
+        try (Connection con = conectar()) {
             String read = "SELECT idComunidade FROM comunidade ORDER BY comunidade.idComunidade DESC LIMIT ?";
-            try (PreparedStatement preparedStatement = con.prepareStatement(read)){
+            try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
                 preparedStatement.setInt(1, limite);
                 ResultSet rs = preparedStatement.executeQuery();
                 ArrayList<Comunidade> comunidades = new ArrayList<>();
-                while (rs.next()){
+                while (rs.next()) {
                     comunidades.add(retornaComunidade(rs.getInt(1)));
                 }
                 return comunidades;
@@ -179,13 +163,14 @@ public class ComunidadeDAO {
             throw new RuntimeException(e);
         }
     }
-    public ArrayList<Comunidade> listarComunidades(){
-        try (Connection con = conectar()){
+
+    public ArrayList<Comunidade> listarComunidades() {
+        try (Connection con = conectar()) {
             String read = "SELECT idComunidade FROM comunidade ORDER BY comunidade.idComunidade DESC";
-            try (PreparedStatement preparedStatement = con.prepareStatement(read)){
+            try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
                 ResultSet rs = preparedStatement.executeQuery();
                 ArrayList<Comunidade> comunidades = new ArrayList<>();
-                while (rs.next()){
+                while (rs.next()) {
                     comunidades.add(retornaComunidade(rs.getInt(1)));
                 }
                 return comunidades;
@@ -194,14 +179,15 @@ public class ComunidadeDAO {
             throw new RuntimeException(e);
         }
     }
-    public ArrayList<Comunidade> listarComunidadesUsuario(int idUsuario){
-        try (Connection con = conectar()){
+
+    public ArrayList<Comunidade> listarComunidadesUsuario(int idUsuario) {
+        try (Connection con = conectar()) {
             String read = "SELECT idComunidade FROM participante_comunidade WHERE idParticipante = ? ORDER BY idComunidade DESC";
-            try (PreparedStatement preparedStatement = con.prepareStatement(read)){
+            try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
                 preparedStatement.setInt(1, idUsuario);
                 ResultSet rs = preparedStatement.executeQuery();
                 ArrayList<Comunidade> comunidades = new ArrayList<>();
-                while (rs.next()){
+                while (rs.next()) {
                     int idComunidade = rs.getInt(1);
                     System.out.println(idComunidade);
                     comunidades.add(retornaComunidade(idComunidade));
@@ -213,14 +199,14 @@ public class ComunidadeDAO {
         }
     }
 
-    public ArrayList<Comunidade> pesquisarComunidade(String query){
-        try(Connection con = conectar()){
+    public ArrayList<Comunidade> pesquisarComunidade(String query) {
+        try (Connection con = conectar()) {
             String read = "SELECT idComunidade FROM comunidade WHERE nome LIKE ?";
-            try (PreparedStatement preparedStatement = con.prepareStatement(read)){
+            try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
                 preparedStatement.setString(1, "%" + query + "%");
-                try(ResultSet rs = preparedStatement.executeQuery()){
+                try (ResultSet rs = preparedStatement.executeQuery()) {
                     ArrayList<Comunidade> comunidades = new ArrayList<>();
-                    while (rs.next()){
+                    while (rs.next()) {
                         comunidades.add(retornaComunidade(rs.getInt(1)));
                     }
                     return comunidades;
@@ -231,13 +217,13 @@ public class ComunidadeDAO {
         }
     }
 
-    public void selecionarComunidade(Comunidade comunidade){
+    public void selecionarComunidade(Comunidade comunidade) {
         String read = "select * from comunidade where idComunidade = ?";
-        try(Connection con = conectar()) {
+        try (Connection con = conectar()) {
             PreparedStatement preparedStatement = con.prepareStatement(read);
             preparedStatement.setString(1, String.valueOf(comunidade.getIdComunidade()));
             ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()){
+            while (rs.next()) {
                 comunidade.setIdComunidade(Integer.parseInt(rs.getString(1)));
                 comunidade.setNome(rs.getString(2));
                 comunidade.setIdCriador(Integer.parseInt(rs.getString(3)));
@@ -246,17 +232,18 @@ public class ComunidadeDAO {
                 comunidade.setDescricao(rs.getString(6));
             }
             con.close();
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-    public ArrayList<Comunidade> comunidades(){
-        try (Connection con = conectar()){
+
+    public ArrayList<Comunidade> comunidades() {
+        try (Connection con = conectar()) {
             String read = "SELECT idComunidade FROM comunidade";
-            try (PreparedStatement preparedStatement = con.prepareStatement(read)){
+            try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
                 ResultSet rs = preparedStatement.executeQuery();
                 ArrayList<Comunidade> comunidades = new ArrayList<>();
-                while (rs.next()){
+                while (rs.next()) {
                     comunidades.add(retornaComunidade(rs.getInt(1)));
                 }
                 return comunidades;
@@ -264,5 +251,33 @@ public class ComunidadeDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+
+
+    public void sairComunidade(int idComunidade, int idParticipante) {
+        try (Connection con = conectar()) {
+            String delete = "DELETE FROM participante_comunidade WHERE idComunidade = ? AND idParticipante = ?";
+            try (PreparedStatement preparedStatement = con.prepareStatement(delete)) {
+                preparedStatement.setInt(1, idComunidade);
+                preparedStatement.setInt(2, idParticipante);
+                preparedStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void excluirComunidade(int idComunidade) {
+        try (Connection con = conectar()) {
+            String delete = "DELETE FROM comunidade WHERE idComunidade = ?";
+            try (PreparedStatement preparedStatement = con.prepareStatement(delete)) {
+                preparedStatement.setInt(1, idComunidade);
+                preparedStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

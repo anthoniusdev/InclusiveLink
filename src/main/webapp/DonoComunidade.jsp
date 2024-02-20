@@ -38,9 +38,14 @@
     <link
             href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
             rel="stylesheet">
+    <script src="scripts/js/jquery-3.7.1.js"></script>
+    <script src="scripts/participarComunidade.js"></script>
+    <script src="scripts/sairComunidade.js"></script>
+    <script src="scripts/comunidade.js"></script>
+    <link rel="stylesheet" href="styles/barra-lateral.css">
 </head>
 
-<body>
+<body id="body">
 <div class="container">
     <div class="row">
         <div class="col-8 mt-5">
@@ -49,7 +54,7 @@
                           box-shadow: 5px 5px 7px rgba(0, 0, 0, 0.5); border-bottom: 4px solid #164863;">
                 <div>
                     <div style="padding-top: 15px;">
-                        <i class="bi bi-arrow-left fs-4 ms-3 icone-voltar" onclick="window.history.back()"> </i>
+                        <i class="bi bi-arrow-left fs-4 ms-3 icone-voltar" onclick="window.history.back();"> </i>
                         <span class="h4">COMUNIDADE</span>
                     </div>
                     <div style="margin-top: 10px;">
@@ -59,7 +64,7 @@
                         <%
                             boolean temModeradores = comunidade.getIdModeradores() != null;
 
-                            if (comunidade.getIdCriador() == usuario.getIdPessoa() || (temModeradores && comunidade.getIdModeradores().contains(usuario.getIdPessoa()))) {
+                            if (temModeradores && comunidade.getIdModeradores().contains(usuario.getIdPessoa())) {
 
 
                         %>
@@ -69,63 +74,71 @@
                                     style="margin-right: 10px;"><i
                                     class="bi bi-list" onclick="ativarOpcoes()"></i></button>
                         </div>
-                        <div
-                                id="opcoes" class="container-xm d-flex justify-content-end align-items-center d-none"
-                                style="height: 15px; margin-top: -15px">
+                        <div id="opcoes" class="container-xm d-flex justify-content-end align-items-center d-none"
+                             style="height: 15px; margin-top: -15px">
                             <div class="menu">
                                 <div class="row"
                                      style="border-radius: 20px">
                                     <div class="col-lg-12 col-sm-6 col-md-4">
-                                        <button
-                                                type="button" class="btn btn-extra-small">ADICIONAR
+                                        <button id="adicionar-moderador" type="button" class="btn btn-extra-small">
+                                            ADICIONAR
                                             MODERADOR
                                         </button>
                                     </div>
                                     <div class="col-lg-12 col-sm-6 ">
-                                        <button
-                                                type="button" class="btn btn-extra-small">ACEITAR
+                                        <button type="button" class="btn btn-extra-small">ACEITAR
                                             PARTICIPANTE
                                         </button>
                                     </div>
                                     <div class="col-lg-12 col-sm-6">
-                                        <button
-                                                type="button" class="btn btn-extra-small">EXCLUIR
+                                        <button id="excluir-comunidade" type="button" class="btn btn-extra-small"
+                                                onclick="">EXCLUIR
                                             COMUNIDADE
                                         </button>
                                     </div>
                                     <div class="col-lg-12 col-sm-6">
                                         <button
-                                                type="button" class="btn btn-extra-small" id="editarPerfil" onclick="ativarEditarPerfil()"()>EDITAR
+                                                type="button" class="btn btn-extra-small" id="editarPerfil"
+                                                onclick="ativarEditarPerfil()" ()>EDITAR
                                             PERFIL
                                         </button>
                                     </div>
-                                    <div class="fundo-escuro" name="EditandoPerfil" id="fundo-escuro-editar-perfil" style="display: none">
+                                    <div class="fundo-escuro" name="EditandoPerfil" id="fundo-escuro-editar-perfil"
+                                         style="display: none">
                                         <div class="pop-up-editar-perfil">
                                             <div class="cabecalho">
-                                                <span class="close" id="close-editar-perfil"><img src="images/octicon_x-12.svg" alt=""></span>
+                                                <span class="close" id="close-editar-perfil"><img
+                                                        src="images/octicon_x-12.svg" alt=""></span>
                                                 <p>EDITANDO PERFIL</p>
                                                 <button onclick="editarPerfil()" id="btnSave">SALVAR ALTERAÇÕES</button>
                                             </div>
                                             <div class="foto-fundo-usuario">
-                                                <img id="foto-fundo-usuario" src="<%=fotoFundo%>" alt="Foto de fundo de <%=comunidade.getNome()%>">
+                                                <img id="foto-fundo-usuario" src="<%=fotoFundo%>"
+                                                     alt="Foto de fundo de <%=comunidade.getNome()%>">
                                                 <div class="icone-editar-foto" id="icone-editar-foto-fundo-usuario">
-                                                    <img src="images/ri_edit-fill.svg" id="img-icone-editar-foto-fundo-usuario"
+                                                    <img src="images/ri_edit-fill.svg"
+                                                         id="img-icone-editar-foto-fundo-usuario"
                                                          alt="Ícone de alterar foto perfil">
                                                 </div>
-                                                <input type="file" id="editarFotoFundoUsuario" name="fotoFundoUsuario" accept="image/*">
+                                                <input type="file" id="editarFotoFundoUsuario" name="fotoFundoUsuario"
+                                                       accept="image/*">
                                             </div>
                                             <div class="foto-perfil-usuario">
-                                                <img id="foto-perfil-usuario" src="<%=fotoPerfil%>" alt="Foto do perfil de <%=comunidade.getNome()%>">
+                                                <img id="foto-perfil-usuario" src="<%=fotoPerfil%>"
+                                                     alt="Foto do perfil de <%=comunidade.getNome()%>">
                                                 <div class="icone-editar-foto" id="icone-editar-foto-perfil-usuario">
-                                                    <img src="images/ri_edit-fill.svg" id="img-icone-editar-foto-perfil-usuario"
+                                                    <img src="images/ri_edit-fill.svg"
+                                                         id="img-icone-editar-foto-perfil-usuario"
                                                          alt="Ícone de alterar foto perfil">
                                                 </div>
-                                                <input type="file" id="editarFotoPerfilUsuario" name="fotoPerfilUsuario" accept="image/*">
+                                                <input type="file" id="editarFotoPerfilUsuario" name="fotoPerfilUsuario"
+                                                       accept="image/*">
                                             </div>
                                             <div class="inputs">
                                                 <label for="nome-usuario" id="label-nome-usuario">
                                                     <small>Nome</small>
-                                                    <input type="text" id="nome-usuario" name="nome-usuario" value="<%=comunidade.getNome()%>"
+                                                    <input type="text" id="nome-usuario" name="nome-usuario"
+                                                           value="<%=comunidade.getNome()%>"
                                                            required>
                                                 </label>
                                                 <label for="descricao-usuario" id="label-descricao-usuario">
@@ -141,17 +154,23 @@
                             </div>
                         </div>
                         <%
-                        } else {
+                        } else if (!comunidade.getIdParticipantes().contains(usuario.getIdPessoa())) {
                         %>
                         <div class="d-flex justify-content-end pt-3">
                             <button type="button" class="btn icone"
-                                    style="margin-right: 10px;">PARTICIPAR
+                                    style="margin-right: 10px;"
+                                    onclick="participarComunidade(<%=comunidade.getIdComunidade()%>)">PARTICIPAR
                             </button>
                         </div>
                         <%
-                            }
+                        } else {
                         %>
-
+                        <div class="d-flex justify-content-end pt-3">
+                            <button type="button" onclick="sairComunidade(<%=comunidade.getIdComunidade()%>)"
+                                    class="btn icone sair-comunidade">SAIR
+                            </button>
+                        </div>
+                        <%}%>
                         <div
                                 style="margin-left: 30px; margin-top: -140px;">
                             <img src="<%=fotoPerfil%>"
@@ -276,7 +295,49 @@
         </div>
     </div>
 </div>
-
+<div class="fundo-escuro" id="fundo-escuro-adicionar-moderador">
+    <div class="pop-up-adicionar-moderador">
+        <div class="cabecalho">
+            <span class="close" id="close-adicionar-moderador"><img src="images/octicon_x-12.svg" alt=""></span>
+            <p>ADICIONAR MODERADOR</p>
+        </div>
+        <div class="lista-participantes">
+            <%
+                for (int id : comunidade.getIdParticipantes()) {
+                    if (id != usuario.getIdPessoa() && !comunidade.getIdModeradores().contains(id)) {
+                        Membro membro = new Membro(id);
+                        if (membro.getFotoPerfil() == null) {
+                            membro.setFotoPerfil("images/person_foto.svg");
+                        }
+            %>
+            <div class="caixa-perfil" id="<%=membro.getNomeUsuario()%>">
+                <div class="foto-perfil">
+                    <img src="<%=membro.getFotoPerfil()%>" alt="foto de perfil de <%=membro.getNome()%>">
+                </div>
+                <p class="nome"><%=membro.getNome()%>
+                </p>
+                <button id="btn-am<%=membro.getIdPessoa()%>" class="btn-adicionar-moderador"
+                        onclick="adicionarModerador(<%=membro.getIdPessoa()%>);">PROMOVER
+                </button>
+            </div>
+            <%
+                    }
+                }
+            %>
+        </div>
+    </div>
+</div>
+<div class="fundo-escuro" id="fundo-escuro-answer">
+    <div class="pop-up-answer">
+        <div class="pergunta">
+            <small>DESEJA REALMENTE EXCLUIR A COMUNIDADE <%=comunidade.getNome()%>?</small>
+        </div>
+        <div class="botoes">
+            <button id="answer-yes">SIM</button>
+            <button id="answer-no">NÃO</button>
+        </div>
+    </div>
+</div>
 <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
@@ -288,8 +349,8 @@
         var minhaDiv = document.getElementsByName("EditandoPerfil");
         if (minhaDiv.classList.contains("d-none")) {
 
-        minhaDiv.classList.remove("d-none");
-        minhaDiv.classList.add("d-block");
+            minhaDiv.classList.remove("d-none");
+            minhaDiv.classList.add("d-block");
         }
     }
 </script>
