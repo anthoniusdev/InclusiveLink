@@ -701,3 +701,10 @@ input::placeholder {
 .lista-pesquisa-comunidade {
     background-color: var(--COR-03);
 }
+
+.nome-comunidade {
+    margin-bottom: 0px;
+    margin-left: 3rem;
+    font-size: 1.7rem;
+    color: #DDF2FD;
+}
