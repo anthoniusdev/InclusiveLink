@@ -33,4 +33,16 @@ public class ModeradorComunidadeDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public void excluirParticipante(int idParticipante) {
+        try (Connection con = conectar()) {
+            String delete = "DELETE FROM comunidade WHERE idParticipante = ?";
+            try (PreparedStatement preparedStatement = con.prepareStatement(delete)) {
+                preparedStatement.setInt(1, idParticipante);
+                preparedStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
