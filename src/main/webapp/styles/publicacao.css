@@ -38,6 +38,7 @@ html, body, footer {
     margin-top: 20px;
     border-radius: 20px;
     margin-right: 30px;
+    height: fit-content;
 }
 
 .cabecalho-post {
@@ -323,4 +324,13 @@ html, body, footer {
 .curtida-comentario{
     display: flex;
     margin-bottom: 10px;
+}
+
+.container{
+    display: flex;
+    height: 100%;
+}
+.containerSide{
+    display: flex;
+    flex-direction: column;
 }
