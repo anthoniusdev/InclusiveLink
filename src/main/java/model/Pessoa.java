@@ -1,41 +1,13 @@
 package model;
 
-import dao.PessoaDAO;
-
 import java.io.Serializable;
 
-public class Pessoa implements Serializable {
+public abstract class Pessoa implements Serializable {
     private int idPessoa;
     private String nome;
     private String dataNascimento;
     private String email;
     private String senha;
-
-    public Pessoa(int idPessoa, String nome, String dataNascimento, String email, String senha) {
-        this.idPessoa = idPessoa;
-        this.nome = nome;
-        this.dataNascimento = dataNascimento;
-        this.email = email;
-        this.senha = senha;
-    }
-
-    public Pessoa(String nome, String dataNascimento, String email, String senha) {
-        this.nome = nome;
-        this.dataNascimento = dataNascimento;
-        this.email = email;
-        this.senha = senha;
-    }
-
-    public Pessoa(){}
-
-    public Pessoa(int idPessoa) {
-        Pessoa pessoaEncontrada = new PessoaDAO().retornaPessoa(idPessoa);
-        this.idPessoa = pessoaEncontrada.getIdPessoa();
-        this.nome = pessoaEncontrada.getNome();
-        this.dataNascimento = pessoaEncontrada.getDataNascimento();
-        this.email = pessoaEncontrada.getEmail();
-        this.senha = pessoaEncontrada.getSenha();
-    }
 
     public int getIdPessoa() {
         return idPessoa;
@@ -76,8 +48,6 @@ public class Pessoa implements Serializable {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-    public boolean isEmailUnique(String email){
-        return new PessoaDAO().isEmailUnique(email);
-    }
+    public abstract boolean isEmailUnique(String email);
 
 }

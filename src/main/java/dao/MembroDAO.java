@@ -13,6 +13,39 @@ public class MembroDAO {
         Conexao conexao = new Conexao();
         return conexao.conectar();
     }
+    public boolean isEmailUnique(String email){
+        return !emails().contains(email);
+    }
+//    public Pessoa retornaPessoa(int idPessoa){
+//        try (Connection con = conectar()){
+//            String read = "SELECT * FROM pessoa WHERE idPessoa = ?";
+//            try (PreparedStatement preparedStatement = con.prepareStatement(read)){
+//                preparedStatement.setInt(1, idPessoa);
+//                ResultSet rs = preparedStatement.executeQuery();
+//                if (rs.next()){
+//                    return new Pessoa(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
+//                }
+//            }
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//        return null;
+//    }
+    public ArrayList<String> emails(){
+        String read = "select email from pessoa";
+        ArrayList<String> emails = new ArrayList<>();
+        try(Connection con = conectar()){
+            try(PreparedStatement preparedStatement = con.prepareStatement(read)) {
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    emails.add(resultSet.getString(1));
+                }
+                return emails;
+            }
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+    }
 
     // CRUD - - - CREATE - - -
     // <-- Realizando cadastro de uma nova pessoa e membro no banco de dados-->
