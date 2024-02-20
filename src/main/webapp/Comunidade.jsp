@@ -129,7 +129,7 @@
                 </div>
             </div>
         </div>
-        <!--
+
             <div class="fundo-escuro" id="fundo-escuro-comunidade">
                 <div id="popup-nova-comunidade" class="popup-nova-comunidade">
                     <div class="popup-content">
@@ -286,7 +286,7 @@
                         %>
                     </div>
                 </div>
-            </div>-->
+            </div>
     </div>
 </main>
 </body>
