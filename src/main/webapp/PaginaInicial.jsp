@@ -83,7 +83,7 @@
             </div>
             <div class="postagens" id="postagens"></div>
         </div>
-        <div class="container">
+        <div class="containerSide">
             <div class="pesquisar-amigo">
                 <label>
                     <img src="images/search.svg" alt="search">

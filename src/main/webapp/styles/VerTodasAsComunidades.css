@@ -95,9 +95,10 @@ html, body, footer {
     border-radius: 100%;
 }
 
-.caixa-comunidade h3 {
+.caixa-comunidade span {
     width: 500px;
-    margin-left: 50px;
+    margin-bottom: 15px;
+    margin-left: 25px;
     margin-right: 50px;
     color: var(--COR-01);
     align-self: center;
@@ -114,12 +115,11 @@ html, body, footer {
     border: none;
     border-radius: 20px;
     font-family: var(--FONTE);
-    font-size: 30px;
+    font-size: 20px;
 }
 .participar-comunidade:hover{
     cursor: pointer;
-    border: 1px solid #00ff79;
-    background-color: var(--COR-03);
+    background-color: var(--COR-05);
     transition: 0.5s;
     color: #00ff79;
 }
@@ -134,13 +134,16 @@ html, body, footer {
     border: none;
     border-radius: 20px;
     font-family: var(--FONTE);
-    font-size: 30px;
+    font-size: 20px;
 }
-
 .sair-comunidade:hover {
     cursor: pointer;
+<<<<<<< HEAD
     border: 1px solid #ffa15e;
     background-color: var(--COR-03);
+=======
+    background-color: var(--COR-05);
+>>>>>>> 138d02f52e1d69fec4955503b7b31bf770ee4ead
     transition: 0.5s;
     color: #ffa15e;
 }
@@ -179,13 +182,11 @@ html, body, footer {
     right: 80px;
 }
 
-.icone-caret-right {
-    width: 40px;
-    height: 65px;
-    background-image: url("../images/caret-right-solid.svg");
-    background-size: 35px;
-    filter: invert(1);
-    position: absolute;
-    right: 15px;
-    margin-top: 5px;
+.container{
+    display: flex;
+    height: 100%;
+}
+.containerSide{
+    display: flex;
+    flex-direction: column;
 }

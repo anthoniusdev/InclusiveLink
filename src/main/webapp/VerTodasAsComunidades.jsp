@@ -41,100 +41,112 @@
 </head>
 <body>
 <main>
-    <div class="principal">
-        <div class="todas-comunidades">
-            <div class="cabecalho">
-                <a href="verComunidades">COMUNIDADES PARTICIPANTES</a>
-                <div class="selecionado">
-                    COMUNIDADES
-                    <span id="linhaSelecionado"></span></div>
-            </div>
-            <%
-                if (!comunidades.isEmpty()) {
-                    for (Comunidade comunidade : comunidades) {
-                        if (comunidade.getFotoPerfil() == null) {
-                            comunidade.setFotoPerfil("images/people-group-solid.svg");
-                        }
-            %>
-            <div class="caixa-comunidade" id="caixa-comunidade<%=comunidades.indexOf(comunidade) + 1%>">
-                <a href="minhasComunidades?idComunidade=<%= comunidade.getIdComunidade()%>">
-                    <div class="imagem-foto-perfil-comunidade">
-                        <img src="<%=comunidade.getFotoPerfil()%>" alt="Foto de perfil de <%=comunidade.getNome()%>">
-                    </div>
-                    <h3><%=comunidade.getNome()%>
-                    </h3>
-                </a>
+    <div class="container">
+        <div class="principal">
+            <div class="todas-comunidades">
+                <div class="cabecalho">
+                    <a href="verComunidades">COMUNIDADES PARTICIPANTES</a>
+                    <div class="selecionado">
+                        COMUNIDADES
+                        <span id="linhaSelecionado"></span></div>
+                </div>
                 <%
-                    if (comunidade.getIdParticipantes().contains(membro.getIdPessoa())) {
+                    if (!comunidades.isEmpty()) {
+                        for (Comunidade comunidade : comunidades) {
+                            if (comunidade.getFotoPerfil() == null) {
+                                comunidade.setFotoPerfil("images/people-group-solid.svg");
+                            }
                 %>
-                <button id="btnSair<%=comunidades.indexOf(comunidade) + 1%>" onclick="sairComunidade(<%=comunidade.getIdComunidade()%>, null, 'botao', <%=comunidades.indexOf(comunidade) + 1%>)"
-                        class="sair-comunidade">SAIR
-                </button>
-                <%} else {%>
-                <button onclick="participarComunidade(<%=comunidade.getIdComunidade()%>, <%=comunidades.indexOf(comunidade) + 1%>)"
-                        class="participar-comunidade" id="btnParticipar<%=comunidades.indexOf(comunidade) + 1%>">
-                    PARTICIPAR
-                </button>
+                <div class="caixa-comunidade" id="caixa-comunidade<%=comunidades.indexOf(comunidade) + 1%>">
+                    <a href="minhasComunidades?idComunidade=<%= comunidade.getIdComunidade()%>">
+                        <div class="imagem-foto-perfil-comunidade">
+                            <img src="<%=comunidade.getFotoPerfil()%>"
+                                 alt="Foto de perfil de <%=comunidade.getNome()%>">
+                        </div>
+                        <span><%=comunidade.getNome()%>
+                    </span>
+                    </a>
+                    <%
+                        if (comunidade.getIdParticipantes().contains(membro.getIdPessoa())) {
+                    %>
+                    <button id="btnSair<%=comunidades.indexOf(comunidade) + 1%>"
+                            onclick="sairComunidade(<%=comunidade.getIdComunidade()%>, null, 'botao', <%=comunidades.indexOf(comunidade) + 1%>)"
+                            class="sair-comunidade">SAIR
+                    </button>
+                    <%} else {%>
+                    <button onclick="participarComunidade(<%=comunidade.getIdComunidade()%>, <%=comunidades.indexOf(comunidade) + 1%>)"
+                            class="participar-comunidade" id="btnParticipar<%=comunidades.indexOf(comunidade) + 1%>">
+                        PARTICIPAR
+                    </button>
+                </div>
+                <%
+                        }
+                    }
+                } else {
+                %>
+                <small class="sem-comunidades">Não há comunidades.</small>
                 <%}%>
             </div>
-            <%
-                }
-            } else {
-            %>
-            <small class="sem-comunidades">Não há comunidades.</small>
-            <%}%>
+        </div>
+
+        <div class="containerSide">
+            <div class="pesquisar-amigo">
+                <label>
+                    <img src="images/search.svg" alt="search">
+                    <input type="search" placeholder="PESQUISAR PERFIL" id="pesquisarPerfil">
+                </label>
+                <div class="lista-pesquisa-perfil" id="listaPesquisaPerfil"></div>
+            </div>
+            <div class="perfis-sugeridos" id="perfisSugeridos">
+                <%
+                    for (Membro membroSugerido : membrosRede) {
+                        if (!membroSugerido.getMembrosSeguidores().contains(membro.getIdPessoa())) {
+                %>
+                <div class="caixa-usuario" id="caixa-usuario">
+                    <a href="perfil?nome_usuario=<%=membroSugerido.getNomeUsuario()%>">
+                        <%
+                            if (membroSugerido.getFotoPerfil() == null) {
+                                membroSugerido.setFotoPerfil("images/person_foto.svg");
+                            }
+                        %>
+                        <img src="<%=membroSugerido.getFotoPerfil()%>"
+                             alt="Foto de perfil de <%=membroSugerido.getNome()%>">
+                        <p class="nomeUsuario"><%=membroSugerido.getNome()%>
+                        </p>
+                    </a>
+                    <button onclick="seguirUsuario(<%=membro.getIdPessoa()%>, <%=membroSugerido.getIdPessoa()%>, <%=membrosRede.indexOf(membroSugerido) + 1%>)"
+                            class="botaoSeguir" id="botaoSeguir<%=membrosRede.indexOf(membroSugerido) + 1%>">
+                        SEGUIR
+                    </button>
+                </div>
+                <%
+                        }
+                    }
+                %>
+            </div>
+            <div class="pesquisar-comunidade">
+                <label>
+                    <img src="images/search.svg" alt="search">
+                    <input type="search" placeholder="PESQUISAR COMUNIDADE" id="pesquisarComunidade">
+                </label>
+                <div class="lista-pesquisa-comunidade" id="lista-pesquisa-comunidade"></div>
+            </div>
+            <div class="comunidades-sugeridas" id="comunidades-sugeridas">
+                <div class="criar-comunidade" id="criar-comunidade">
+                    <button id="botaoCriarNovaComunidade">
+                        <div class="imagem"><img src="images/gravity-ui_circle-plus-fill.svg" alt=""></div>
+                        CRIAR NOVA COMUNIDADE
+                    </button>
+                </div>
+                <span id="linhaCriarComunidade"></span>
+                <div class="ver-comunidades" id="ver-comunidades">
+                    <a href="verComunidades">VER COMUNIDADES PARTICIPANTES</a>
+                    <div class="icone-caret-right"></div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="pesquisar-amigo">
-        <label>
-            <img src="images/search.svg" alt="search">
-            <input type="search" placeholder="PESQUISAR PERFIL" id="pesquisarPerfil">
-        </label>
-        <div class="lista-pesquisa-perfil" id="listaPesquisaPerfil"></div>
-    </div>
-    <div class="perfis-sugeridos" id="perfisSugeridos">
-        <%
-            for (Membro membroSugerido : membrosRede) {
-                if (!membroSugerido.getMembrosSeguidores().contains(membro.getIdPessoa())) {
-        %>
-        <div class="caixa-usuario" id="caixa-usuario">
-            <%
-                if (membroSugerido.getFotoPerfil() == null) {
-                    membroSugerido.setFotoPerfil("images/person_foto.svg");
-                }
-            %>
-            <img src="<%=membroSugerido.getFotoPerfil()%>" alt="Foto de perfil de <%=membroSugerido.getNome()%>">
-            <p class="nomeUsuario"><%=membroSugerido.getNome()%>
-            </p>
-            <button onclick="seguirUsuario(<%=membro.getIdPessoa()%>, <%=membroSugerido.getIdPessoa()%>, <%=membrosRede.indexOf(membroSugerido)%>)"
-                    class="botaoSeguir" id="botaoSeguir<%=membrosRede.indexOf(membroSugerido)%>">
-                SEGUIR
-            </button>
-        </div>
-        <%
-                }
-            }
-        %>
-    </div>
-    <div class="pesquisar-comunidade">
-        <label>
-            <img src="images/search.svg" alt="search">
-            <input type="search" placeholder="PESQUISAR COMUNIDADE" id="pesquisarComunidade">
-        </label>
-    </div>
-    <div class="comunidades-sugeridas" id="comunidades-sugeridas">
-        <div class="criar-comunidade" id="criar-comunidade">
-            <button id="botaoCriarNovaComunidade">
-                <div class="imagem"><img src="images/gravity-ui_circle-plus-fill.svg" alt=""></div>
-                CRIAR NOVA COMUNIDADE
-            </button>
-        </div>
-        <span id="linhaCriarComunidade"></span>
-        <div class="pagina-incial" id="pagina-inicial">
-            <a href="paginaInicial">PÁGINA INICIAL</a>
-            <div class="icone-caret-right"></div>
-        </div>
-    </div>
+
     <div class="fundo-escuro" id="fundo-escuro-comunidade">
         <div id="popup-nova-comunidade" class="popup-nova-comunidade">
             <div class="popup-content">
@@ -145,7 +157,7 @@
                     </button>
                 </div>
                 <div class="foto-fundo" id="foto-fundo">
-                    <img id="img-foto-fundo" src="images/img-foto-fundo.png" alt="foto fundo da comunidade">
+                    <img id="img-foto-fundo" src="images/DefaultFundoPerfil.png" alt="foto fundo da comunidade">
                     <div class="icone-editar-foto" id="icone-editar-foto-fundo">
                         <img src="images/ri_edit-fill.svg" id="img-icone-editar-foto-fundo"
                              alt="Ícone de alterar foto-fundo">
@@ -153,7 +165,8 @@
                     <input type="file" id="editarFotoFundo" name="fotoFundo" accept="image/*">
                 </div>
                 <div class="foto-perfil-comunidade">
-                    <img src="" id="img-foto-perfil-comunidade" alt="foto de perfil da comunidade">
+                    <img src="images/FOTO-defaultComunidade.png" id="img-foto-perfil-comunidade"
+                         alt="foto de perfil da comunidade">
                     <div class="icone-editar-foto" id="icone-editar-foto-perfil">
                         <img src="images/ri_edit-fill.svg" id="img-icone-editar-foto-perfil"
                              alt="Ícone de alterar foto-perfil">

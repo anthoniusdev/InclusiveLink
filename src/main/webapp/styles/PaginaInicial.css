@@ -34,10 +34,11 @@ html, body, footer {
     display: flex;
     flex-direction: column;
     width: 960px;
+    border-radius: 20px;
     margin-left: 35px;
     margin-top: 20px;
-    border-radius: 20px;
     margin-right: 30px;
+    height: fit-content;
 }
 
 .cabecalho {
@@ -306,15 +307,19 @@ html, body, footer {
     padding: 25px;
     background-color: var(--COR-04);
     border-radius: 20px;
-    box-shadow: 0 0 20px 17px;
+    box-shadow: 0 0 20px 5px;
     color: var(--COR-TEXTO-04);
-    right: 43%;
+    right: 55%;
     font-size: 20px;
     font-synthesis: none;
     transition: 1s;
     display: none;
 }
-
 .container{
     display: flex;
+    height: 100%;
+}
+.containerSide{
+    display: flex;
+    flex-direction: column;
 }
