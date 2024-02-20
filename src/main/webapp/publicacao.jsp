@@ -159,7 +159,7 @@
                     }
                 %>
             </div>
-            <div class="pesquisar-comunidade">
+            <div class="pesquisar-comunidade" id="pesqComunidade">
                 <label>
                     <img src="images/search.svg" alt="search">
                     <input type="search" placeholder="PESQUISAR COMUNIDADE" id="pesquisarComunidade">
@@ -193,7 +193,7 @@
                     </button>
                 </div>
                 <div class="foto-fundo" id="foto-fundo">
-                    <img id="img-foto-fundo" src="images/img-foto-fundo.png" alt="foto fundo da comunidade">
+                    <img id="img-foto-fundo" src="images/DefaultFundoPerfil.png.png" alt="foto fundo da comunidade">
                     <div class="icone-editar-foto" id="icone-editar-foto-fundo">
                         <img src="images/ri_edit-fill.svg" id="img-icone-editar-foto-fundo"
                              alt="Ícone de alterar foto-fundo">
