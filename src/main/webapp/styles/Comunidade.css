@@ -35,44 +35,32 @@ body {
     margin-top: 20px;
     border-radius: 20px;
     margin-right: 30px;
+    margin-bottom: 20px;
 }
 
 .header {
-    margin-right: 44rem;
-    width: 250px;
-    height: 40px;
     display: flex;
 }
 
-.header a {
-    text-decoration: none;
-    height: 40px;
+.icone-voltar img{
+    margin-top: 8px;
+    margin-left: 20px;
+    height: 45px;
+    width: 45px;
+    transition: 0.5s;
 }
-
-.homePage {
-    font-size: 16px;
-    color: rgba(221, 242, 253, 0.60);
+.icone-voltar img:hover {
     cursor: pointer;
-    margin-right: 70px;
-    margin-top: 0.5rem;
-    margin-left: 3rem;
-    text-decoration: none;
+    width: 48px;
 }
 
-.perfil {
-    margin-top: 0.5rem;
-    font-size: 16px;
-    color: #DDF2FD;
-    cursor: default;
-}
-
-.perfil::after {
-    content: '';
-    display: block;
-    width: 100%;
-    height: 6px;
-    background-color: #DDF2FD;
-    border-radius: 20px;
+.voltar {
+    font-size: 25px;
+    color: var(--COR-01);
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-bottom: 0px;
 }
 
 .fundoPerfil {
@@ -92,24 +80,19 @@ body {
     margin-left: 3rem;
     border: 6px solid #427D9D;
 }
-
 .nome-usuario {
     margin-bottom: 0px;
     margin-left: 3rem;
     font-size: 1.7rem;
     color: #DDF2FD;
 }
-
 .profile-description {
-    margin-right: 9.5rem;
     min-width: 700px;
     max-width: 900px;
     text-align: justify;
-    text-justify: distribute-all-lines;
     line-height: 1.5;
     background: rgba(120, 33, 33, 0);
 }
-
 .descricao {
     word-wrap: break-word;
     margin-bottom: 0px;
@@ -117,32 +100,17 @@ body {
     font-size: 1.4rem;
     color: #DDF2FD;
 }
-
-.seguindoSeguidores {
+.divParticipantes {
     margin-left: 3rem;
     width: 300px;
     display: flex;
     align-items: center;
 }
-
-.numSeguindo {
+.numParticipantes{
     font-size: 1.4rem;
     color: #DDF2FD;
 }
-
-.seguindo {
-    margin-left: 5px;
-    font-size: 1.4rem;
-    color: rgba(221, 242, 253, 0.60);
-}
-
-.numSeguidores {
-    margin-left: 30px;
-    font-size: 1.4rem;
-    color: #DDF2FD;
-}
-
-.seguidores {
+.participantes {
     margin-left: 5px;
     font-size: 1.4rem;
     color: rgba(221, 242, 253, 0.60);
@@ -366,10 +334,10 @@ body {
 
 .botao-acao-perfil {
     margin-top: 1rem;
+    margin-left: 54rem;
 }
 
 .botao-acao-perfil button {
-    margin-left: 50rem;
     font-size: 1.2rem;
     padding: 13px;
     background-color: var(--COR-04);
@@ -379,6 +347,7 @@ body {
     border-radius: 20px;
     font-family: 'Monomaniac One', sans-serif;
     justify-content: end;
+    transition: 1s;
 }
 .botao-acao-perfil button:hover {
     background-color: var(--COR-05);
@@ -432,7 +401,7 @@ body {
     background-color: var(--COR-05);
 }
 .caixa-publicacao{
- border-top: 4px solid #164863;
+    border-top: 4px solid #164863;
 }
 .texto-publicacao p{
     margin-bottom: 5px;
