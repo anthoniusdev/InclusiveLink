@@ -30,7 +30,7 @@ function carregarPublicacoes(tipo) {
         dataType: "json",
         cache: false,
         success: function (publicacoesEncontradas) {
-            proximo_intervalo += 5;
+            proximo_intervalo += 4;
             let confirmacao = $('<div>', {
                 class: 'confirmacao-exclusao',
             });
