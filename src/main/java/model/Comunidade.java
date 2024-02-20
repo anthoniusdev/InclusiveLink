@@ -15,9 +15,8 @@ public class Comunidade implements Serializable {
     private ArrayList<Integer> idPublicacoes = new ArrayList<>();
     private ArrayList<Integer> idModeradores = new ArrayList<>();
     private ArrayList<Integer> idParticipantes = new ArrayList<>();
-    private ArrayList<Integer> idSeguidores = new ArrayList<>();
 
-    public Comunidade(int idComunidade, String nome, int idCriador, String fotoPerfil, String fotoFundo, String descricao, ArrayList<Integer> idPublicacoes, ArrayList<Integer> idModeradores, ArrayList<Integer> idParticipantes, ArrayList<Integer> idSeguidores) {
+    public Comunidade(int idComunidade, String nome, int idCriador, String fotoPerfil, String fotoFundo, String descricao, ArrayList<Integer> idPublicacoes, ArrayList<Integer> idModeradores, ArrayList<Integer> idParticipantes) {
         this.idComunidade = idComunidade;
         this.nome = nome;
         this.idCriador = idCriador;
@@ -27,12 +26,12 @@ public class Comunidade implements Serializable {
         this.idPublicacoes = idPublicacoes;
         this.idModeradores = idModeradores;
         this.idParticipantes = idParticipantes;
-        this.idSeguidores = idSeguidores;
     }
 
     public Comunidade() {
     }
-    public Comunidade(int idComunidade){
+
+    public Comunidade(int idComunidade) {
         Comunidade comunidade = new ComunidadeDAO().retornaComunidade(idComunidade);
         this.setIdComunidade(idComunidade);
         this.nome = comunidade.getNome();
@@ -43,31 +42,6 @@ public class Comunidade implements Serializable {
         this.idPublicacoes = comunidade.getIdPublicacoes();
         this.idModeradores = comunidade.getIdModeradores();
         this.idParticipantes = comunidade.getIdParticipantes();
-        this.idSeguidores = comunidade.getIdSeguidores();
-    }
-    public ParticipanteComunidade participarComunidade(Membro membro) {
-        if (membro.isSeguidor(this)) {
-            ParticipanteComunidade novoParticipante = new ParticipanteComunidade((SeguidorComunidade) membro);
-            idParticipantes.add(novoParticipante.getIdPessoa());
-            return novoParticipante;
-        } else {
-            return null;
-        }
-
-    }
-
-    public ModeradorComunidade definirModerador(ParticipanteComunidade participanteComunidade) {
-        ModeradorComunidade novoModerador = null;
-        try {
-            novoModerador = new ModeradorComunidade(participanteComunidade);
-            idModeradores.add(novoModerador.getIdPessoa());
-        } catch (Exception e) {
-            System.out.println(e);
-            novoModerador = null;
-        }
-
-        return novoModerador;
-
     }
 
 
@@ -143,14 +117,6 @@ public class Comunidade implements Serializable {
         this.idParticipantes = idParticipantes;
     }
 
-    public ArrayList<Integer> getIdSeguidores() {
-        return idSeguidores;
-    }
-
-    public void setSeguidor(ArrayList<Integer> seguidor) {
-        this.idSeguidores = seguidor;
-    }
-
     public boolean criarComunidade() {
         Comunidade novaComunidade;
         try {
@@ -172,22 +138,6 @@ public class Comunidade implements Serializable {
         return false;
     }
 
-    public boolean seguirComunidade(Membro membroSeguir) {
-        boolean verificacaoSeguindo = true;
-        for (int idMembroSeguindo : idSeguidores) {
-            if (idMembroSeguindo == membroSeguir.getIdPessoa()) {
-                verificacaoSeguindo = false;
-                break;
-            }
-        }
-        if (verificacaoSeguindo) {
-            idSeguidores.add(membroSeguir.getIdPessoa());
-            return true;
-        }
-        return false;
-
-    }
-
     public ArrayList<Comunidade> listarComunidadesParticipantes(int idMembro) {
         return new ComunidadeDAO().listarComunidadesUsuario(idMembro);
     }
@@ -196,39 +146,11 @@ public class Comunidade implements Serializable {
         return new ComunidadeDAO().listarComunidades(limit);
     }
 
-    public void excluirComunidade(model.Comunidade comunidade) {
-        comunidade = null;
-    }
-
-    public void removerParticipanteComunidade(ParticipanteComunidade participante) {
-        idParticipantes.remove(participante.getIdPessoa());
-    }
-
-    public void excluirPublicacao(Publicacao publicacao) {
-        idPublicacoes.remove(publicacao.getIdPublicacao());
-    }
-
-    public void criarPublicacao(Publicacao publicacao) {
-        Publicacao novaPublicacao = null;
-
-        try {
-            novaPublicacao = new Publicacao();
-            idPublicacoes.add(novaPublicacao.getIdPublicacao());
-        } catch (Exception e) {
-            System.out.println(e);
-            novaPublicacao = null;
-        }
-
-    }
-
-    public void removerSeguidorComunidade(SeguidorComunidade seguidor) {
-        idSeguidores.remove(seguidor.getIdPessoa());
-    }
-
     public ArrayList<Comunidade> pesquisarComunidade(String query) {
         return new ComunidadeDAO().pesquisarComunidade(query);
     }
-    public ArrayList<Comunidade> obterTodasComunidades(){
+
+    public ArrayList<Comunidade> obterTodasComunidades() {
         return new ComunidadeDAO().comunidades();
     }
 }

@@ -83,7 +83,6 @@
             </div>
             <div class="postagens" id="postagens"></div>
         </div>
-        <-- Aqui Bima->
         <div class="container">
             <div class="pesquisar-amigo">
                 <label>

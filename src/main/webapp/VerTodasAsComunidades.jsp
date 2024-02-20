@@ -32,8 +32,8 @@
     <link rel="stylesheet" href="styles/barra-lateral.css">
     <link rel="icon" href="images/LOGO.ico">
     <script src="scripts/js/jquery-3.7.1.js"></script>
-    <script src="scripts/verTodasAsComunidades.js"></script>
-    <script src="scripts/verComunidades.js"></script>
+    <script src="scripts/participarComunidade.js"></script>
+    <script src="scripts/sairComunidade.js"></script>
     <script src="scripts/barra-lateral-amigo/pesquisarPerfil.js"></script>
     <script src="scripts/barra-lateral-comunidade/criarComunidade.js"></script>
     <script src="scripts/barra-lateral-comunidade/pesquisarComunidade.js"></script>
@@ -67,12 +67,13 @@
                 <%
                     if (comunidade.getIdParticipantes().contains(membro.getIdPessoa())) {
                 %>
-                <button onclick="sairComunidade(<%=comunidade.getIdComunidade()%>, <%=comunidades.indexOf(comunidade) + 1%>)"
+                <button id="btnSair<%=comunidades.indexOf(comunidade) + 1%>" onclick="sairComunidade(<%=comunidade.getIdComunidade()%>, null, 'botao', <%=comunidades.indexOf(comunidade) + 1%>)"
                         class="sair-comunidade">SAIR
                 </button>
                 <%} else {%>
                 <button onclick="participarComunidade(<%=comunidade.getIdComunidade()%>, <%=comunidades.indexOf(comunidade) + 1%>)"
-                        class="participar-comunidade" id="btnParticipar<%=comunidades.indexOf(comunidade) + 1%>">PARTICIPAR
+                        class="participar-comunidade" id="btnParticipar<%=comunidades.indexOf(comunidade) + 1%>">
+                    PARTICIPAR
                 </button>
                 <%}%>
             </div>

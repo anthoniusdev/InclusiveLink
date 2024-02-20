@@ -100,3 +100,24 @@ input::placeholder {
     cursor: pointer;
     width: 55px;
 }
+.sair-comunidade {
+    width: 100px;
+    height: 50px;
+    align-self: center;
+    background-color: var(--COR-04);
+    color: var(--COR-TEXTO-04);
+    margin-right: 50px;
+    margin-left: 75px;
+    border: none;
+    border-radius: 20px;
+    font-family: var(--FONTE);
+    font-size: 30px;
+}
+
+.sair-comunidade:hover {
+    cursor: pointer;
+    border: 1px solid #FF0000;
+    background-color: var(--COR-03);
+    transition: 0.5s;
+    color: #FF0000;
+}

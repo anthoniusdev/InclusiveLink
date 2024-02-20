@@ -17,7 +17,6 @@ public class Membro extends Pessoa implements Serializable {
     private String nomeUsuario;
     private ArrayList<Integer> idMembrosSeguidores;
     private ArrayList<Integer> idMembrosSeguindos;
-    private ArrayList<Integer> idComunidadesSeguindos;
     private ArrayList<Integer> idComunidadesParticipantes;
     private String descricao;
     private ArrayList<Integer> idPublicacaoCurtidas;
@@ -37,18 +36,16 @@ public class Membro extends Pessoa implements Serializable {
         this.idMembrosSeguindos = null;
         this.idMembrosSeguidores = null;
         this.idComunidadesParticipantes = null;
-        this.idComunidadesSeguindos = null;
         this.idComentarios = null;
     }
 
-    public Membro(int idPessoa, String nome, String dataNascimento, String email, String senha, String fotoPerfil, String fotoFundo, String nomeUsuario, ArrayList<Integer> idMembrosSeguidores, ArrayList<Integer> idMembrosSeguindos, ArrayList<Integer> idComunidadesSeguindos, ArrayList<Integer> idComunidadesParticipantes, String descricao, ArrayList<Integer> idPublicacaoCurtidas, ArrayList<Integer> idPublicacoes, boolean perfilVisivel, ArrayList<Integer> idComentarios) {
+    public Membro(int idPessoa, String nome, String dataNascimento, String email, String senha, String fotoPerfil, String fotoFundo, String nomeUsuario, ArrayList<Integer> idMembrosSeguidores, ArrayList<Integer> idMembrosSeguindos, ArrayList<Integer> idComunidadesParticipantes, String descricao, ArrayList<Integer> idPublicacaoCurtidas, ArrayList<Integer> idPublicacoes, boolean perfilVisivel, ArrayList<Integer> idComentarios) {
         super(idPessoa, nome, dataNascimento, email, senha);
         this.fotoPerfil = fotoPerfil;
         this.fotoFundo = fotoFundo;
         this.nomeUsuario = nomeUsuario;
         this.idMembrosSeguidores = idMembrosSeguidores;
         this.idMembrosSeguindos = idMembrosSeguindos;
-        this.idComunidadesSeguindos = idComunidadesSeguindos;
         this.idComunidadesParticipantes = idComunidadesParticipantes;
         this.descricao = descricao;
         this.idPublicacaoCurtidas = idPublicacaoCurtidas;
@@ -69,7 +66,6 @@ public class Membro extends Pessoa implements Serializable {
         setMembrosSeguidores(null);
         setMembrosSeguindo(null);
         setComunidadesParticipantes(null);
-        setComunidadesSeguindos(null);
         setComentarios(null);
     }
 
@@ -85,7 +81,6 @@ public class Membro extends Pessoa implements Serializable {
         this.idMembrosSeguindos = membro.getMembrosSeguindo();
         this.idMembrosSeguidores = membro.getMembrosSeguidores();
         this.idComunidadesParticipantes = membro.getComunidadesParticipantes();
-        this.idComunidadesSeguindos = membro.getComunidadesSeguindo();
         this.idComentarios = membro.getComentarios();
     }
 
@@ -104,7 +99,6 @@ public class Membro extends Pessoa implements Serializable {
         this.idMembrosSeguindos = membro.getMembrosSeguindo();
         this.idMembrosSeguidores = membro.getMembrosSeguidores();
         this.idComunidadesParticipantes = membro.getComunidadesParticipantes();
-        this.idComunidadesSeguindos = membro.getComunidadesSeguindo();
         this.idComentarios = membro.getComentarios();
     }
 
@@ -120,7 +114,6 @@ public class Membro extends Pessoa implements Serializable {
         this.idMembrosSeguindos = membro.getMembrosSeguindo();
         this.idMembrosSeguidores = membro.getMembrosSeguidores();
         this.idComunidadesParticipantes = membro.getComunidadesParticipantes();
-        this.idComunidadesSeguindos = membro.getComunidadesSeguindo();
         this.idComentarios = membro.getComentarios();
     }
 
@@ -158,14 +151,6 @@ public class Membro extends Pessoa implements Serializable {
 
     public void setMembrosSeguindo(ArrayList<Integer> membrosSeguindos) {
         this.idMembrosSeguindos = membrosSeguindos;
-    }
-
-    public ArrayList<Integer> getComunidadesSeguindo() {
-        return idComunidadesSeguindos;
-    }
-
-    public void setComunidadesSeguindos(ArrayList<Integer> comunidadesSeguindos) {
-        this.idComunidadesSeguindos = comunidadesSeguindos;
     }
 
     public ArrayList<Integer> getComunidadesParticipantes() {
@@ -251,9 +236,9 @@ public class Membro extends Pessoa implements Serializable {
             } else {
                 return false;
             }
-        } catch (Exception e) {
-            System.out.println(e);
-            return false;
+        } catch (Exception e){
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
@@ -262,29 +247,6 @@ public class Membro extends Pessoa implements Serializable {
         return idMembrosSeguindos;
     }
 
-    // --------------------------------------------------------------------------------------------------------
-    public boolean seguirComunidade(Comunidade comunidadeSeguida) {
-        SeguidorComunidade seguidorComunidade = new SeguidorComunidade(this);
-        boolean comunidadeJaSeguida = false;
-        try {
-            for (Integer idComunidade : seguidorComunidade.getComunidadesSeguindo()) {
-                if (comunidadeSeguida.getIdComunidade() == idComunidade) {
-                    comunidadeJaSeguida = true;
-                    break;
-                }
-            }
-            if (!comunidadeJaSeguida) {
-                comunidadeSeguida.seguirComunidade(this);
-                return seguidorComunidade.seguirComunidade(comunidadeSeguida);
-            } else {
-                return false;
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-            return false;
-        }
-    }
-    // --------------------------------------------------------------------------------------------------------
 
 
     public String getHashSenha() {
@@ -305,10 +267,6 @@ public class Membro extends Pessoa implements Serializable {
         return idMembrosSeguidores.size() + idMembrosSeguidores.size();
     }
 
-    public int getNumeroSeguindos() {
-        return idMembrosSeguindos.size() + idComunidadesSeguindos.size();
-    }
-
     public boolean isParticipante(Comunidade comunidade) {
         boolean isParticipante = false;
         for (int idParticipanteComunidade : comunidade.getIdParticipantes()) {
@@ -318,17 +276,6 @@ public class Membro extends Pessoa implements Serializable {
             }
         }
         return isParticipante;
-    }
-
-    public boolean isSeguidor(Comunidade comunidade) {
-        boolean isSeguidor = false;
-        for (int idSeguidorComunidade : comunidade.getIdSeguidores()) {
-            if (idSeguidorComunidade == this.getIdPessoa()) {
-                isSeguidor = true;
-                break;
-            }
-        }
-        return isSeguidor;
     }
 
     public boolean isModerador(Comunidade comunidade) {

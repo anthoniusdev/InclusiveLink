@@ -1,7 +1,7 @@
 package model;
 
-public class ModeradorComunidade extends ParticipanteComunidade{
-    public ModeradorComunidade(ParticipanteComunidade participanteParaModerador) {
-        super(participanteParaModerador);
+public class ModeradorComunidade extends ParticipanteComunidade {
+    public ModeradorComunidade(int idMembro, int idComunidade) {
+        super(idMembro, idComunidade);
     }
 }

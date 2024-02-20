@@ -117,10 +117,10 @@ html, body, footer {
 
 .sair-comunidade:hover {
     cursor: pointer;
-    border: 1px solid #FF0000;
+    border: 1px solid #ffa15e;
     background-color: var(--COR-03);
     transition: 0.5s;
-    color: #FF0000;
+    color: #ffa15e;
 }
 
 .pesquisar-amigo {
