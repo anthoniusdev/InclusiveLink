@@ -234,7 +234,6 @@
                             }
                     %>
                     <div style="border-top: 4px solid #164863;  padding-left: 40px; padding-top: 20px; margin-bottom: 15px;">
-                        <a id="lp" href="verPublicacao?username=<%=publicacao.getAutor().getNomeUsuario()%>&idPublicacao=<%=publicacao.getIdPublicacao()%>">
                         <div class="row">
                             <div class="col-md-10">
                                 <img src="<%=ftPer%>"
@@ -273,7 +272,6 @@
                                style=" size: 50px; cursor: pointer; padding-left: 10px;"></i>
                             <span><%=publicacao.getNumeroComentarios()%></span>
                         </div>
-                        </a>
                     </div>
                     <%}%>
                 </div>
