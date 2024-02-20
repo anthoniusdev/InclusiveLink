@@ -25,7 +25,7 @@ function carregarPublicacoes(tipo) {
     if (tipo === "perfil" && perfil !== null) {
         dados = {intervalo: parseInt(proximo_intervalo), nomeUsuario: perfil};
     } else if (tipo === "comunidade" && comunidade !== null) {
-        dados = {intervalo: parseInt(proximo_intervalo), idComunidade: idComunidade};
+        dados = {intervalo: parseInt(proximo_intervalo), idComunidade: comunidade};
         url = 'verPublicacoesComunidade';
     } else {
         dados = {intervalo: parseInt(proximo_intervalo)};
