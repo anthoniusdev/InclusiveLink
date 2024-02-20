@@ -204,8 +204,4 @@ public class ComunidadeController extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
-
-
-
-
 }

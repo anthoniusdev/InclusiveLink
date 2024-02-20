@@ -348,7 +348,7 @@ public class MembroDAO {
 
     public ArrayList<Membro> pesquisarPerfil(String query, int id) {
         try (Connection con = conectar()) {
-            String read = "SELECT idPessoa FROM pessoa WHERE nome LIKE ? AND idPessoa <> ?";
+            String read = "SELECT idPessoa FROM pessoa WHERE nome LIKE ? AND idPessoa <> ? LIMIT 4";
             try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
                 preparedStatement.setString(1, "%" + query + "%");
                 preparedStatement.setInt(2, id);

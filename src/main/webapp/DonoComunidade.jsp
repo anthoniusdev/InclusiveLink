@@ -42,9 +42,10 @@
     <script src="scripts/participarComunidade.js"></script>
     <script src="scripts/sairComunidade.js"></script>
     <script src="scripts/comunidade.js"></script>
+    <link rel="stylesheet" href="styles/barra-lateral.css">
 </head>
 
-<body>
+<body id="body">
 <div class="container">
     <div class="row">
         <div class="col-8 mt-5">
@@ -73,27 +74,25 @@
                                     style="margin-right: 10px;"><i
                                     class="bi bi-list" onclick="ativarOpcoes()"></i></button>
                         </div>
-                        <div
-                                id="opcoes" class="container-xm d-flex justify-content-end align-items-center d-none"
-                                style="height: 15px; margin-top: -15px">
+                        <div id="opcoes" class="container-xm d-flex justify-content-end align-items-center d-none"
+                             style="height: 15px; margin-top: -15px">
                             <div class="menu">
                                 <div class="row"
                                      style="border-radius: 20px">
                                     <div class="col-lg-12 col-sm-6 col-md-4">
-                                        <button
-                                                type="button" class="btn btn-extra-small">ADICIONAR
+                                        <button id="adicionar-moderador" type="button" class="btn btn-extra-small">
+                                            ADICIONAR
                                             MODERADOR
                                         </button>
                                     </div>
                                     <div class="col-lg-12 col-sm-6 ">
-                                        <button
-                                                type="button" class="btn btn-extra-small">ACEITAR
+                                        <button type="button" class="btn btn-extra-small">ACEITAR
                                             PARTICIPANTE
                                         </button>
                                     </div>
                                     <div class="col-lg-12 col-sm-6">
-                                        <button
-                                                type="button" class="btn btn-extra-small">EXCLUIR
+                                        <button id="excluir-comunidade" type="button" class="btn btn-extra-small"
+                                                onclick="">EXCLUIR
                                             COMUNIDADE
                                         </button>
                                     </div>
@@ -160,7 +159,7 @@
                         <div class="d-flex justify-content-end pt-3">
                             <button type="button" class="btn icone"
                                     style="margin-right: 10px;"
-                                    onclick="pc(<%=comunidade.getIdComunidade()%>)">PARTICIPAR
+                                    onclick="participarComunidade(<%=comunidade.getIdComunidade()%>)">PARTICIPAR
                             </button>
                         </div>
                         <%
@@ -296,7 +295,49 @@
         </div>
     </div>
 </div>
-
+<div class="fundo-escuro" id="fundo-escuro-adicionar-moderador">
+    <div class="pop-up-adicionar-moderador">
+        <div class="cabecalho">
+            <span class="close" id="close-adicionar-moderador"><img src="images/octicon_x-12.svg" alt=""></span>
+            <p>ADICIONAR MODERADOR</p>
+        </div>
+        <div class="lista-participantes">
+            <%
+                for (int id : comunidade.getIdParticipantes()) {
+                    if (id != usuario.getIdPessoa() && !comunidade.getIdModeradores().contains(id)) {
+                        Membro membro = new Membro(id);
+                        if (membro.getFotoPerfil() == null) {
+                            membro.setFotoPerfil("images/person_foto.svg");
+                        }
+            %>
+            <div class="caixa-perfil" id="<%=membro.getNomeUsuario()%>">
+                <div class="foto-perfil">
+                    <img src="<%=membro.getFotoPerfil()%>" alt="foto de perfil de <%=membro.getNome()%>">
+                </div>
+                <p class="nome"><%=membro.getNome()%>
+                </p>
+                <button id="btn-am<%=membro.getIdPessoa()%>" class="btn-adicionar-moderador"
+                        onclick="adicionarModerador(<%=membro.getIdPessoa()%>);">PROMOVER
+                </button>
+            </div>
+            <%
+                    }
+                }
+            %>
+        </div>
+    </div>
+</div>
+<div class="fundo-escuro" id="fundo-escuro-answer">
+    <div class="pop-up-answer">
+        <div class="pergunta">
+            <small>DESEJA REALMENTE EXCLUIR A COMUNIDADE <%=comunidade.getNome()%>?</small>
+        </div>
+        <div class="botoes">
+            <button id="answer-yes">SIM</button>
+            <button id="answer-no">NÃO</button>
+        </div>
+    </div>
+</div>
 <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"

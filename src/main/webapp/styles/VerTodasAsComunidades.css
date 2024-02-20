@@ -138,14 +138,9 @@ html, body, footer {
 }
 .sair-comunidade:hover {
     cursor: pointer;
-<<<<<<< HEAD
-    border: 1px solid #ffa15e;
-    background-color: var(--COR-03);
-=======
     background-color: var(--COR-05);
->>>>>>> 138d02f52e1d69fec4955503b7b31bf770ee4ead
     transition: 0.5s;
-    color: #ffa15e;
+    color: #FF0000;
 }
 
 .pagina-incial {

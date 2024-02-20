@@ -60,17 +60,15 @@
                 <div class="caixa-comunidade" id="caixa-comunidade<%=comunidades.indexOf(comunidade) + 1%>">
                     <a href="minhasComunidades?idComunidade=<%= comunidade.getIdComunidade()%>">
                         <div class="imagem-foto-perfil-comunidade">
-                            <img src="<%=comunidade.getFotoPerfil()%>"
-                                 alt="Foto de perfil de <%=comunidade.getNome()%>">
+                            <img src="<%=comunidade.getFotoPerfil()%>" alt="Foto de perfil de <%=comunidade.getNome()%>">
                         </div>
                         <span><%=comunidade.getNome()%>
-                    </span>
+                        </span>
                     </a>
                     <%
                         if (comunidade.getIdParticipantes().contains(membro.getIdPessoa())) {
                     %>
-                    <button id="btnSair<%=comunidades.indexOf(comunidade) + 1%>"
-                            onclick="sairComunidade(<%=comunidade.getIdComunidade()%>, null, 'botao', <%=comunidades.indexOf(comunidade) + 1%>)"
+                    <button id="btnSair<%=comunidades.indexOf(comunidade) + 1%>" onclick="sairComunidade(<%=comunidade.getIdComunidade()%>, null, 'botao', <%=comunidades.indexOf(comunidade) + 1%>)"
                             class="sair-comunidade">SAIR
                     </button>
                     <%} else {%>
@@ -78,9 +76,9 @@
                             class="participar-comunidade" id="btnParticipar<%=comunidades.indexOf(comunidade) + 1%>">
                         PARTICIPAR
                     </button>
+                    <%}%>
                 </div>
                 <%
-                        }
                     }
                 } else {
                 %>
@@ -88,7 +86,6 @@
                 <%}%>
             </div>
         </div>
-
         <div class="containerSide">
             <div class="pesquisar-amigo">
                 <label>
