@@ -295,7 +295,7 @@ function submeterFormulario() {
     })
 }
 
-<<<<<<< HEAD
+
 function abrirPopUpE(){
     $('#body').css({
         overflow: 'hidden'
@@ -322,9 +322,8 @@ $('#close-editar-comunidade').on('click', function (){
     fecharPopUpE();
 })
 
-=======
+
 function abrirSeletorArquivo() {
     const inputImagem = document.getElementById('input-imagem');
     inputImagem.click();
 }
->>>>>>> 1193fc5dbb7ab1a7dfc7c7f5965f311eaa0147f7

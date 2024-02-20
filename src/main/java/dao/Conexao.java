@@ -10,9 +10,9 @@ public class Conexao {
             String driver = "com.mysql.cj.jdbc.Driver";
             Class.forName(driver);
 
-            String url = "jdbc:mysql://localhost:3306/db_infinitylink";
+            String url = "jdbc:mysql://localhost:3308/db_infinitylink";
             String user = "root";
-            String password = "#Tony17#";
+            String password = "988689092";
 
             return DriverManager.getConnection(url, user, password);
         } catch (Exception e) {
