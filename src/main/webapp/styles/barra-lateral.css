@@ -70,6 +70,11 @@
     margin-left: 20px;
     margin-top: 10px;
     margin-bottom: 50px;
+    border-radius: 100%;
+    padding: 0;
+}
+.lista-pesquisa-perfil img {
+    border-radius: 100%;
 }
 
 .pesquisar-amigo .lista-pesquisa-perfil p {

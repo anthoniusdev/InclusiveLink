@@ -110,10 +110,10 @@ document.addEventListener("DOMContentLoaded", function () {
             overflow: 'hidden'
         })
         if (fotoPerfilComunidade.src == null) {
-            fotoPerfilComunidade.attr('src', "images/img-foto-perfil.png");
+            fotoPerfilComunidade.attr('src', "images/FOTO-defaultComunidade.png");
         }
         if (fotoFundoComunidade.src == null) {
-            fotoFundoComunidade.attr('src', "images/img-foto-fundo.png");
+            fotoFundoComunidade.attr('src', "images/DefaultFundoPerfil.png");
         }
     }
 

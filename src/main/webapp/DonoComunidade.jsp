@@ -233,8 +233,8 @@
                                 ftPer = "images/person_foto.svg";
                             }
                     %>
-                    <div
-                            style="border-top: 4px solid #164863;  padding-left: 40px; padding-top: 20px; margin-bottom: 15px;">
+                    <div style="border-top: 4px solid #164863;  padding-left: 40px; padding-top: 20px; margin-bottom: 15px;">
+                        <a id="lp" href="verPublicacao?username=<%=publicacao.getAutor().getNomeUsuario()%>&idPublicacao=<%=publicacao.getIdPublicacao()%>">
                         <div class="row">
                             <div class="col-md-10">
                                 <img src="<%=ftPer%>"
@@ -244,10 +244,12 @@
                                       style="margin-left: 10px;"><%=publicacao.getAutor().getNome()%></span>
                             </div>
                             <div class="col-md-2">
-                                <%if (publicacao.getAutor().getIdPessoa() == usuario.getIdPessoa()){%>
+                                <%if (publicacao.getAutor().getIdPessoa() == usuario.getIdPessoa()) {%>
                                 <button type="button" class="btn post"
-                                        style="width: 50px; padding-top: 10px;" onclick="excluirPublicacao(<%=publicacao.getIdPublicacao()%>); this.parentNode.parentNode.parentNode.parentNode.style.display = 'none';"><i
-                                        class="bi bi-trash-fill"></i></button>
+                                        style="width: 50px; padding-top: 10px;"
+                                        onclick="excluirPublicacao(<%=publicacao.getIdPublicacao()%>); this.parentNode.parentNode.parentNode.parentNode.style.display = 'none';">
+                                    <i
+                                            class="bi bi-trash-fill"></i></button>
                                 <%}%>
                             </div>
                         </div>
@@ -271,6 +273,7 @@
                                style=" size: 50px; cursor: pointer; padding-left: 10px;"></i>
                             <span><%=publicacao.getNumeroComentarios()%></span>
                         </div>
+                        </a>
                     </div>
                     <%}%>
                 </div>

@@ -136,7 +136,7 @@
                     }
                 %>
             </div>
-            <div class="pesquisar-comunidade">
+            <div class="pesquisar-comunidade" id="pesqComunidade">
                 <label>
                     <img src="images/search.svg" alt="search">
                     <input type="search" placeholder="PESQUISAR COMUNIDADE" id="pesquisarComunidade">
