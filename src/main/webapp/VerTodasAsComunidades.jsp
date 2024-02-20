@@ -32,8 +32,8 @@
     <link rel="stylesheet" href="styles/barra-lateral.css">
     <link rel="icon" href="images/LOGO.ico">
     <script src="scripts/js/jquery-3.7.1.js"></script>
-    <script src="scripts/verTodasAsComunidades.js"></script>
-    <script src="scripts/verComunidades.js"></script>
+    <script src="scripts/participarComunidade.js"></script>
+    <script src="scripts/sairComunidade.js"></script>
     <script src="scripts/barra-lateral-amigo/pesquisarPerfil.js"></script>
     <script src="scripts/barra-lateral-comunidade/criarComunidade.js"></script>
     <script src="scripts/barra-lateral-comunidade/pesquisarComunidade.js"></script>
@@ -63,17 +63,18 @@
                             <img src="<%=comunidade.getFotoPerfil()%>" alt="Foto de perfil de <%=comunidade.getNome()%>">
                         </div>
                         <span><%=comunidade.getNome()%>
-                    </span>
+                        </span>
                     </a>
                     <%
                         if (comunidade.getIdParticipantes().contains(membro.getIdPessoa())) {
                     %>
-                    <button onclick="sairComunidade(<%=comunidade.getIdComunidade()%>, <%=comunidades.indexOf(comunidade) + 1%>)"
+                    <button id="btnSair<%=comunidades.indexOf(comunidade) + 1%>" onclick="sairComunidade(<%=comunidade.getIdComunidade()%>, null, 'botao', <%=comunidades.indexOf(comunidade) + 1%>)"
                             class="sair-comunidade">SAIR
                     </button>
                     <%} else {%>
                     <button onclick="participarComunidade(<%=comunidade.getIdComunidade()%>, <%=comunidades.indexOf(comunidade) + 1%>)"
-                            class="participar-comunidade" id="btnParticipar<%=comunidades.indexOf(comunidade) + 1%>">PARTICIPAR
+                            class="participar-comunidade" id="btnParticipar<%=comunidades.indexOf(comunidade) + 1%>">
+                        PARTICIPAR
                     </button>
                     <%}%>
                 </div>
@@ -85,7 +86,6 @@
                 <%}%>
             </div>
         </div>
-
         <div class="containerSide">
             <div class="pesquisar-amigo">
                 <label>
@@ -162,7 +162,8 @@
                     <input type="file" id="editarFotoFundo" name="fotoFundo" accept="image/*">
                 </div>
                 <div class="foto-perfil-comunidade">
-                    <img src="images/DefaultFotoPerfil.png" id="img-foto-perfil-comunidade" alt="foto de perfil da comunidade">
+                    <img src="images/FOTO-defaultComunidade.png" id="img-foto-perfil-comunidade"
+                         alt="foto de perfil da comunidade">
                     <div class="icone-editar-foto" id="icone-editar-foto-perfil">
                         <img src="images/ri_edit-fill.svg" id="img-icone-editar-foto-perfil"
                              alt="Ícone de alterar foto-perfil">

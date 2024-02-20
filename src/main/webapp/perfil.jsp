@@ -91,7 +91,7 @@
 
             <div class="seguindoSeguidores">
                 <p class="numSeguindo"
-                   id="numSeguindos"><%=perfilVisitado.getMembrosSeguindo().size() + perfilVisitado.getComunidadesSeguindo().size()%>
+                   id="numSeguindos"><%=perfilVisitado.getMembrosSeguindo().size()%>
                 </p>
                 <p class="seguindo">Seguindo</p>
 

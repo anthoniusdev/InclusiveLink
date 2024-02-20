@@ -1,9 +1,10 @@
 package controller;
 
-import model.Comunidade;
 import model.Membro;
 import model.ParticipanteComunidade;
-import org.json.JSONObject;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,45 +15,44 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 
-@WebServlet(urlPatterns = {"/sairComunidade"})
+@WebServlet(urlPatterns = {"/sairComunidade", "/participarComunidade", "/novaPublicacaoComunidade"})
 public class ParticipanteComunidadeController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("Served at: " + request.getContextPath() + request.getServletPath());
         String action = request.getServletPath();
         System.out.println(action);
-        switch (action){
+        switch (action) {
             case "/sairComunidade" -> sairComunidade(request, response);
+            case "/participarComunidade" -> participarComunidade(request, response);
+            case "/novaPublicacaoComunidade" -> novaPublicacaoComunidade(request, response);
         }
     }
     private void sairComunidade(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             HttpSession httpSession = request.getSession(false);
-            if (httpSession == null || httpSession.getAttribute("authenticated") == null) {
-                response.sendRedirect("index.html");
-                return;
-            }
             Membro membro = (Membro) httpSession.getAttribute("usuario");
-            int idComunidade = Integer.parseInt(request.getParameter("id"));
-            System.out.println("idComunidade = " + idComunidade);
-            response.setContentType("application/json");
-
-            JSONObject jsonResponse = new JSONObject();
-            ParticipanteComunidade participanteComunidade = new ParticipanteComunidade(membro.getIdPessoa(), idComunidade);
-            if (participanteComunidade.sairComunidade()) {
-                System.out.println("retornou que removeu");
-                jsonResponse.put("status", "success");
-                jsonResponse.put("message", "Usuário removido da comunidade com sucesso.");
-                ArrayList<Comunidade> comunidades_usuario = new Comunidade().listarComunidadesParticipantes(membro.getIdPessoa());
-                httpSession.setAttribute("comunidades-participantes-usuario", comunidades_usuario);
-            } else {
-                System.out.println("retornou poha nenhuma");
-                jsonResponse.put("status", "error");
-                jsonResponse.put("message", "Falha ao remover o usuário da comunidade.");
-            }
-
-            response.getWriter().println(jsonResponse);
-        } catch (IOException e) {
+            new ParticipanteComunidade(membro.getIdPessoa(), Integer.parseInt(request.getParameter("idComunidade"))).sairComunidade();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private void participarComunidade(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            HttpSession httpSession = request.getSession(false);
+            Membro membro = (Membro) httpSession.getAttribute("usuario");
+            new ParticipanteComunidade(membro.getIdPessoa(), Integer.parseInt(request.getParameter("idComunidade"))).participarComunidade();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private void novaPublicacaoComunidade(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            Membro membro = (Membro) request.getSession(false).getAttribute("usuario");
+            ServletFileUpload upload = new ServletFileUpload(new DiskFileItemFactory());
+            ArrayList<FileItem> items = (ArrayList<FileItem>) upload.parseRequest(request);
+            new ParticipanteComunidade(membro.getIdPessoa()).publicarComunidade(items);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

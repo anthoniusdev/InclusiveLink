@@ -104,7 +104,8 @@ html, body, footer {
     align-self: center;
     font-size: 25px;
 }
-.participar-comunidade{
+
+.participar-comunidade {
     width: 150px;
     height: 50px;
     align-self: center;
@@ -117,12 +118,14 @@ html, body, footer {
     font-family: var(--FONTE);
     font-size: 20px;
 }
-.participar-comunidade:hover{
+
+.participar-comunidade:hover {
     cursor: pointer;
     background-color: var(--COR-05);
     transition: 0.5s;
     color: #00ff79;
 }
+
 .sair-comunidade {
     width: 100px;
     height: 50px;
@@ -136,6 +139,7 @@ html, body, footer {
     font-family: var(--FONTE);
     font-size: 20px;
 }
+
 .sair-comunidade:hover {
     cursor: pointer;
     background-color: var(--COR-05);
@@ -177,11 +181,12 @@ html, body, footer {
     right: 80px;
 }
 
-.container{
+.container {
     display: flex;
     height: 100%;
 }
-.containerSide{
+
+.containerSide {
     display: flex;
     flex-direction: column;
 }

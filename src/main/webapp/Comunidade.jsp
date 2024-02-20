@@ -33,18 +33,18 @@
     <script src="scripts/barra-lateral-comunidade/pesquisarComunidade.js"></script>
     <script src="scripts/curtirPublicacao.js"></script>
     <script src="scripts/excluirPublicacao.js"></script>
-    <script src="scripts/carregarPublicacoes.js"></script>
     <script src="scripts/obterUsuarioAutenticado.js"></script>
     <script src="scripts/perfil.js"></script>
     <script src="scripts/seguirUsuario.js"></script>
     <script src="scripts/verificaSeguindo.js"></script>
+    <title></title>
 </head>
 <body id="body">
 <main>
     <div class="container">
         <div class="retanguloPerfil">
             <div class="header">
-                <div class="icone-voltar">
+                <div class="icone-voltar" onclick="window.location.reload();">
                     <img src="images/ri_arrow-up-line.svg">
                 </div>
                 <p class="voltar">VOLTAR</p>
@@ -69,6 +69,37 @@
                 <p class="numParticipantes" id="numParticipantes">0</p>
                 <p class="participantes">Participantes</p>
             </div>
+
+            <div class="criarPublicacao">
+                <form action="novaPublicacao" method="post" id="formNovaPublicacao" enctype="multipart/form-data">
+                    <div class="foto-perfil">
+                        <img src="<%=fotoPerfil%>" alt="Foto de perfil">
+                    </div>
+                    <div class="areaInput">
+                        <label for="textoNovaPublicacao">
+                            <textarea name="inputTexto" id="textoNovaPublicacao" placeholder="O que está acontecendo?"
+                                      rows="1" maxlength="200"></textarea>
+                        </label>
+                        <div id="contagemCaracteresPublicacao">200</div>
+                        <span id="linhaAreaInput"></span>
+                        <label id="icone-escolher-imagem">
+                            <img src="images/gallery_img.svg" alt="">
+                        </label>
+                        <input type="file" id="input-imagem" name="imagem" accept="image/*">
+                    </div>
+                    <div class="im"></div>
+                    <div class="btnPostar">
+                        <button type="submit" id="btnPostar">POSTAR</button>
+                    </div>
+                </form>
+                <div class="imgPreview">
+                    <img id="imagem-preview" alt="" src="">
+                    <div class="remover-foto" id="remover-foto">
+                        <img src="images/octicon_x-12.svg" alt="ícone de remover a foto da publicação">
+                    </div>
+                </div>
+            </div>
+
             <div class="postagens" id="postagens"></div>
         </div>
         <div class="containerSide">
@@ -83,7 +114,7 @@
                 <div class="perfis-sugeridos" id="perfisSugeridos">
                     <%
                         for (Membro membroSugerido : membrosRede) {
-                            if (!membroSugerido.getMembrosSeguidores().contains(membro.getIdPessoa())) {
+                            if (!membroSugerido.getMembrosSeguidores().contains(usuario.getIdPessoa())) {
                     %>
                     <div class="caixa-usuario" id="caixa-usuario">
                         <a href="perfil?nome_usuario=<%=membroSugerido.getNomeUsuario()%>">
@@ -97,7 +128,7 @@
                             <p class="nomeUsuario"><%=membroSugerido.getNome()%>
                             </p>
                         </a>
-                        <button onclick="seguirUsuario(<%=membro.getIdPessoa()%>, <%=membroSugerido.getIdPessoa()%>, <%=membrosRede.indexOf(membroSugerido) + 1%>)"
+                        <button onclick="seguirUsuario(<%=usuario.getIdPessoa()%>, <%=membroSugerido.getIdPessoa()%>, <%=membrosRede.indexOf(membroSugerido) + 1%>)"
                                 class="botaoSeguir" id="botaoSeguir<%=membrosRede.indexOf(membroSugerido) + 1%>">
                             SEGUIR
                         </button>
@@ -129,165 +160,165 @@
                 </div>
             </div>
         </div>
-
-            <div class="fundo-escuro" id="fundo-escuro-comunidade">
-                <div id="popup-nova-comunidade" class="popup-nova-comunidade">
-                    <div class="popup-content">
-                        <div class="cabecalho">
-                            <span class="close" id="close"><img src="images/octicon_x-12.svg" alt=""></span>
-                            <p>NOVA COMUNIDADE</p>
-                            <button onclick="criarComunidade(<%=usuario.getIdPessoa()%>)" id="botaoCriarComunidade">CRIAR
-                            </button>
-                        </div>
-                        <div class="foto-fundo" id="foto-fundo">
-                            <img id="img-foto-fundo" src="images/img-foto-fundo.png" alt="foto fundo da comunidade">
-                            <div class="icone-editar-foto" id="icone-editar-foto-fundo">
-                                <img src="images/ri_edit-fill.svg" id="img-icone-editar-foto-fundo"
-                                     alt="Ícone de alterar foto-fundo">
-                            </div>
-                            <input type="file" id="editarFotoFundo" name="fotoFundo" accept="image/*">
-                        </div>
-                        <div class="foto-perfil-comunidade">
-                            <img src="" id="img-foto-perfil-comunidade" alt="foto de perfil da comunidade">
-                            <div class="icone-editar-foto" id="icone-editar-foto-perfil">
-                                <img src="images/ri_edit-fill.svg" id="img-icone-editar-foto-perfil"
-                                     alt="Ícone de alterar foto-perfil">
-                            </div>
-                            <input type="file" id="editarFotoPerfil" name="fotoPerfil" accept="image/*">
-                        </div>
-                        <div class="inputs">
-                            <label for="nomeComunidade" id="labelNomeComunidade">
-                                <small>Nome da comunidade</small>
-                                <input type="text" id="nomeComunidade" name="nomeComunidade">
-                            </label>
-                            <label for="descricaoComunidade" id="labelDescricaoComunidade">
-                                <small>Descrição da comunidade</small>
-                                <textarea id="descricaoComunidade" name="descricaoComunidade" rows="1"
-                                          maxlength="200"></textarea>
-                                <div id="contagem-caracteres-comunidade">200</div>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <%
-            if (paginaUsuario) {
-            %>
-            <%-- Fundo escuro para editar o perfil--%>
-            <div class="fundo-escuro" id="fundo-escuro-editar-perfil">
-                <div class="pop-up-editar-perfil">
+        <div class="fundo-escuro" id="fundo-escuro-comunidade">
+            <div id="popup-nova-comunidade" class="popup-nova-comunidade">
+                <div class="popup-content">
                     <div class="cabecalho">
-                        <span class="close" id="close-editar-perfil"><img src="images/octicon_x-12.svg" alt=""></span>
-                        <p>EDITANDO PERFIL</p>
-                        <button onclick="editarPerfil()" id="btnSave">SALVAR ALTERAÇÕES</button>
+                        <span class="close" id="close"><img src="images/octicon_x-12.svg" alt=""></span>
+                        <p>NOVA COMUNIDADE</p>
+                        <button onclick="criarComunidade(<%=usuario.getIdPessoa()%>)" id="botaoCriarComunidade">CRIAR
+                        </button>
                     </div>
-                    <div class="foto-fundo-usuario">
-                        <img id="foto-fundo-usuario" src="<%=fotoFundo%>" alt="Foto de fundo de <%=usuario.getNome()%>">
-                        <div class="icone-editar-foto" id="icone-editar-foto-fundo-usuario">
-                            <img src="images/ri_edit-fill.svg" id="img-icone-editar-foto-fundo-usuario"
-                                 alt="Ícone de alterar foto perfil">
+                    <div class="foto-fundo" id="foto-fundo">
+                        <img id="img-foto-fundo" src="images/img-foto-fundo.png" alt="foto fundo da comunidade">
+                        <div class="icone-editar-foto" id="icone-editar-foto-fundo">
+                            <img src="images/ri_edit-fill.svg" id="img-icone-editar-foto-fundo"
+                                 alt="Ícone de alterar foto-fundo">
                         </div>
-                        <input type="file" id="editarFotoFundoUsuario" name="fotoFundoUsuario" accept="image/*">
+                        <input type="file" id="editarFotoFundo" name="fotoFundo" accept="image/*">
                     </div>
-                    <div class="foto-perfil-usuario">
-                        <img id="foto-perfil-usuario" src="<%=fotoPerfil%>" alt="Foto do perfil de <%=usuario.getNome()%>">
-                        <div class="icone-editar-foto" id="icone-editar-foto-perfil-usuario">
-                            <img src="images/ri_edit-fill.svg" id="img-icone-editar-foto-perfil-usuario"
-                                 alt="Ícone de alterar foto perfil">
+                    <div class="foto-perfil-comunidade">
+                        <img src="" id="img-foto-perfil-comunidade" alt="foto de perfil da comunidade">
+                        <div class="icone-editar-foto" id="icone-editar-foto-perfil">
+                            <img src="images/ri_edit-fill.svg" id="img-icone-editar-foto-perfil"
+                                 alt="Ícone de alterar foto-perfil">
                         </div>
-                        <input type="file" id="editarFotoPerfilUsuario" name="fotoPerfilUsuario" accept="image/*">
+                        <input type="file" id="editarFotoPerfil" name="fotoPerfil" accept="image/*">
                     </div>
                     <div class="inputs">
-                        <label for="nome-usuario" id="label-nome-usuario">
-                            <small>Nome</small>
-                            <input type="text" id="nome-usuario" name="nome-usuario" value="<%=perfilVisitado.getNome()%>"
-                                   required>
+                        <label for="nomeComunidade" id="labelNomeComunidade">
+                            <small>Nome da comunidade</small>
+                            <input type="text" id="nomeComunidade" name="nomeComunidade">
                         </label>
-                        <label for="descricao-usuario" id="label-descricao-usuario">
-                            <small>Descrição</small>
-                            <textarea id="descricao-usuario" name="descricao-usuario" rows="1"
-                                      maxlength="200"><%if (perfilVisitado.getDescricao() != null) {%><%=perfilVisitado.getDescricao()%><%}%></textarea>
-                            <div id="contagem-caracteres-descricao-usuario">200</div>
+                        <label for="descricaoComunidade" id="labelDescricaoComunidade">
+                            <small>Descrição da comunidade</small>
+                            <textarea id="descricaoComunidade" name="descricaoComunidade" rows="1"
+                                      maxlength="200"></textarea>
+                            <div id="contagem-caracteres-comunidade">200</div>
                         </label>
                     </div>
                 </div>
             </div>
-            <%}%>
-            <%-- Fundo escuro para visualizar os seguindos--%>
-            <div class="fundo-escuro" id="fundo-escuro-seguindos">
-                <div class="pop-up-ver-seguindos">
-                    <div class="cabecalho">
-                        <span class="close" id="close-seguindos"><img src="images/octicon_x-12.svg" alt=""></span>
-                        <p>SEGUINDOS</p>
-                    </div>
-                    <div class="lista-seguindos">
-                        <%
-                        for (int idSeguindo : perfilVisitado.getMembrosSeguindo()) {
-                        Membro seguindo = new Membro(idSeguindo);
-                        String ftPer = seguindo.getFotoPerfil();
-                        if (ftPer == null) {
-                        ftPer = "images/person_foto.svg";
-                        }
-                        %>
-                        <div class="caixa-perfil" id="<%=seguindo.getNomeUsuario()%>">
-                            <div class="foto-perfil">
-                                <img src="<%=ftPer%>" alt="foto de perfil de <%=seguindo.getNome()%>">
-                            </div>
-                            <p class="nome"><%=seguindo.getNome()%>
-                            </p>
-                            <%
-                            if (paginaUsuario) {
-                            %>
-                            <button class="remover"
-                                    onclick="pararSeguir(<%=usuario.getIdPessoa()%>, <%=seguindo.getIdPessoa()%>, '<%=seguindo.getNomeUsuario()%>')">
-                                REMOVER
-                            </button>
-                            <%}%>
-                        </div>
-                        <%
-                        }
-                        %>
-                    </div>
-                </div>
-            </div>
-            <%-- Fundo escuro para visulizar os seguidores--%>
-            <div class="fundo-escuro" id="fundo-escuro-seguidores">
-                <div class="pop-up-seguidores">
-                    <div class="cabecalho">
-                        <span class="close" id="close-seguidores"><img src="images/octicon_x-12.svg" alt=""></span>
-                        <p>SEGUIDORES</p>
-                    </div>
-                    <div class="lista-seguidores">
-                        <%
-                        for (int idSeguidor : perfilVisitado.getMembrosSeguidores()) {
-                        Membro seguidor = new Membro(idSeguidor);
-                        String ftPer = seguidor.getFotoPerfil();
-                        if (ftPer == null) {
-                        ftPer = "images/person_foto.svg";
-                        }
-                        %>
-                        <div class="caixa-perfil" id="<%=seguidor.getNomeUsuario()%>">
-                            <div class="foto-perfil">
-                                <img src="<%=ftPer%>" alt="foto de perfil de <%=seguidor.getNome()%>">
-                            </div>
-                            <p class="nome"><%=seguidor.getNome()%>
-                            </p>
-                            <%
-                            if (paginaUsuario) {
-                            %>
-                            <button class="remover"
-                                    onclick="removerSeguidor(<%=seguidor.getIdPessoa()%>); this.parentNode.style.display='none'">
-                                REMOVER
-                            </button>
-                            <%}%>
-                        </div>
-                        <%
-                        }
-                        %>
-                    </div>
-                </div>
-            </div>
+        </div>
+        <%--        <%--%>
+        <%--            if (paginaUsuario) {--%>
+        <%--        %>--%>
+        <%--        &lt;%&ndash; Fundo escuro para editar o perfil&ndash;%&gt;--%>
+        <%--        <div class="fundo-escuro" id="fundo-escuro-editar-perfil">--%>
+        <%--            <div class="pop-up-editar-perfil">--%>
+        <%--                <div class="cabecalho">--%>
+        <%--                    <span class="close" id="close-editar-perfil"><img src="images/octicon_x-12.svg" alt=""></span>--%>
+        <%--                    <p>EDITANDO PERFIL</p>--%>
+        <%--                    <button onclick="editarPerfil()" id="btnSave">SALVAR ALTERAÇÕES</button>--%>
+        <%--                </div>--%>
+        <%--                <div class="foto-fundo-usuario">--%>
+        <%--                    <img id="foto-fundo-usuario" src="<%=fotoFundo%>" alt="Foto de fundo de <%=usuario.getNome()%>">--%>
+        <%--                    <div class="icone-editar-foto" id="icone-editar-foto-fundo-usuario">--%>
+        <%--                        <img src="images/ri_edit-fill.svg" id="img-icone-editar-foto-fundo-usuario"--%>
+        <%--                             alt="Ícone de alterar foto perfil">--%>
+        <%--                    </div>--%>
+        <%--                    <input type="file" id="editarFotoFundoUsuario" name="fotoFundoUsuario" accept="image/*">--%>
+        <%--                </div>--%>
+        <%--                <div class="foto-perfil-usuario">--%>
+        <%--                    <img id="foto-perfil-usuario" src="<%=fotoPerfil%>" alt="Foto do perfil de <%=usuario.getNome()%>">--%>
+        <%--                    <div class="icone-editar-foto" id="icone-editar-foto-perfil-usuario">--%>
+        <%--                        <img src="images/ri_edit-fill.svg" id="img-icone-editar-foto-perfil-usuario"--%>
+        <%--                             alt="Ícone de alterar foto perfil">--%>
+        <%--                    </div>--%>
+        <%--                    <input type="file" id="editarFotoPerfilUsuario" name="fotoPerfilUsuario" accept="image/*">--%>
+        <%--                </div>--%>
+        <%--                <div class="inputs">--%>
+        <%--                    <label for="nome-usuario" id="label-nome-usuario">--%>
+        <%--                        <small>Nome</small>--%>
+        <%--                        <input type="text" id="nome-usuario" name="nome-usuario" value="<%=perfilVisitado.getNome()%>"--%>
+        <%--                               required>--%>
+        <%--                    </label>--%>
+        <%--                    <label for="descricao-usuario" id="label-descricao-usuario">--%>
+        <%--                        <small>Descrição</small>--%>
+        <%--                        <textarea id="descricao-usuario" name="descricao-usuario" rows="1"--%>
+        <%--                                  maxlength="200"><%if (perfilVisitado.getDescricao() != null) {%><%=perfilVisitado.getDescricao()%><%}%></textarea>--%>
+        <%--                        <div id="contagem-caracteres-descricao-usuario">200</div>--%>
+        <%--                    </label>--%>
+        <%--                </div>--%>
+        <%--            </div>--%>
+        <%--        </div>--%>
+        <%--        <%}%>--%>
+        <%--        &lt;%&ndash; Fundo escuro para visualizar os seguindos&ndash;%&gt;--%>
+        <%--        <div class="fundo-escuro" id="fundo-escuro-seguindos">--%>
+        <%--            <div class="pop-up-ver-seguindos">--%>
+        <%--                <div class="cabecalho">--%>
+        <%--                    <span class="close" id="close-seguindos"><img src="images/octicon_x-12.svg" alt=""></span>--%>
+        <%--                    <p>SEGUINDOS</p>--%>
+        <%--                </div>--%>
+        <%--                <div class="lista-seguindos">--%>
+        <%--                    <%--%>
+        <%--                        for (int idSeguindo : perfilVisitado.getMembrosSeguindo()) {--%>
+        <%--                            Membro seguindo = new Membro(idSeguindo);--%>
+        <%--                            String ftPer = seguindo.getFotoPerfil();--%>
+        <%--                            if (ftPer == null) {--%>
+        <%--                                ftPer = "images/person_foto.svg";--%>
+        <%--                            }--%>
+        <%--                    %>--%>
+        <%--                    <div class="caixa-perfil" id="<%=seguindo.getNomeUsuario()%>">--%>
+        <%--                        <div class="foto-perfil">--%>
+        <%--                            <img src="<%=ftPer%>" alt="foto de perfil de <%=seguindo.getNome()%>">--%>
+        <%--                        </div>--%>
+        <%--                        <p class="nome"><%=seguindo.getNome()%>--%>
+        <%--                        </p>--%>
+        <%--                        <%--%>
+        <%--                            if (paginaUsuario) {--%>
+        <%--                        %>--%>
+        <%--                        <button class="remover"--%>
+        <%--                                onclick="pararSeguir(<%=usuario.getIdPessoa()%>, <%=seguindo.getIdPessoa()%>, '<%=seguindo.getNomeUsuario()%>')">--%>
+        <%--                            REMOVER--%>
+        <%--                        </button>--%>
+        <%--                        <%}%>--%>
+        <%--                    </div>--%>
+        <%--                    <%--%>
+        <%--                        }--%>
+        <%--                    %>--%>
+        <%--                </div>--%>
+        <%--            </div>--%>
+        <%--        </div>&lt;%&ndash;--%>
+        <%--        &lt;%&ndash; Fundo escuro para visulizar os seguidores&ndash;%&gt;--%>
+        <%--        <div class="fundo-escuro" id="fundo-escuro-seguidores">--%>
+        <%--            <div class="pop-up-seguidores">--%>
+        <%--                <div class="cabecalho">--%>
+        <%--                    <span class="close" id="close-seguidores"><img src="images/octicon_x-12.svg" alt=""></span>--%>
+        <%--                    <p>SEGUIDORES</p>--%>
+        <%--                </div>--%>
+        <%--                <div class="lista-seguidores">--%>
+        <%--                    <%--%>
+        <%--                        for (int idSeguidor : perfilVisitado.getMembrosSeguidores()) {--%>
+        <%--                            Membro seguidor = new Membro(idSeguidor);--%>
+        <%--                            String ftPer = seguidor.getFotoPerfil();--%>
+        <%--                            if (ftPer == null) {--%>
+        <%--                                ftPer = "images/person_foto.svg";--%>
+        <%--                            }--%>
+        <%--                    %>--%>
+        <%--                    <div class="caixa-perfil" id="<%=seguidor.getNomeUsuario()%>">--%>
+        <%--                        <div class="foto-perfil">--%>
+        <%--                            <img src="<%=ftPer%>" alt="foto de perfil de <%=seguidor.getNome()%>">--%>
+        <%--                        </div>--%>
+        <%--                        <p class="nome"><%=seguidor.getNome()%>--%>
+        <%--                        </p>--%>
+        <%--                        <%--%>
+        <%--                            if (paginaUsuario) {--%>
+        <%--                        %>--%>
+        <%--                        <button class="remover"--%>
+        <%--                                onclick="removerSeguidor(<%=seguidor.getIdPessoa()%>); this.parentNode.style.display='none'">--%>
+        <%--                            REMOVER--%>
+        <%--                        </button>--%>
+        <%--                        <%}%>--%>
+        <%--                    </div>--%>
+        <%--                    <%--%>
+        <%--                        }--%>
+        <%--                    %>--%>
+        <%--                </div>--%>
+        <%--            </div>--%>
+        <%--        </div>&ndash;%&gt;--%>
     </div>
 </main>
 </body>
 </html>
+<%}%>

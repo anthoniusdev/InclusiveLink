@@ -90,9 +90,11 @@ html, body, footer {
     display: flex;
     align-content: center;
 }
-.imagem-foto-perfil-comunidade img{
+
+.imagem-foto-perfil-comunidade img {
     border-radius: 100%;
 }
+
 .caixa-comunidade h3 {
     width: 500px;
     margin-left: 50px;
@@ -115,12 +117,14 @@ html, body, footer {
     font-family: var(--FONTE);
     font-size: 20px;
 }
+
 .sair-comunidade:hover {
     cursor: pointer;
     background-color: var(--COR-05);
     transition: 0.5s;
-    color: #FF0000;
+    color: #ffa15e;
 }
+
 .sem-comunidades {
     margin-top: 15px;
     margin-bottom: 15px;
@@ -128,6 +132,7 @@ html, body, footer {
     font-size: 2rem;
     color: var(--COR-01);
 }
+
 #linhaCriarComunidade {
     border: 2px solid var(--COR-01);
     width: 420px;
@@ -392,11 +397,13 @@ html, body, footer {
     position: absolute;
     right: 80px;
 }
-.container{
+
+.container {
     display: flex;
     height: 100%;
 }
-.containerSide{
+
+.containerSide {
     display: flex;
     flex-direction: column;
 }
@@ -405,4 +412,3 @@ html, body, footer {
     padding: 20px;
     border-bottom: 0;
 }
-

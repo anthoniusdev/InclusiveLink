@@ -30,7 +30,7 @@
     <title>Inclusive Link</title>
     <link rel="icon" href="images/LOGO.ico">
     <script src="scripts/js/jquery-3.7.1.js"></script>
-    <script src="scripts/verComunidades.js"></script>
+    <script src="scripts/sairComunidade.js"></script>
     <script src="scripts/barra-lateral-amigo/pesquisarPerfil.js"></script>
     <script src="scripts/barra-lateral-comunidade/criarComunidade.js"></script>
     <script src="scripts/barra-lateral-comunidade/pesquisarComunidade.js"></script>

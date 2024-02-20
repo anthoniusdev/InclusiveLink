@@ -1,7 +1,6 @@
 package controller;
 
 import com.google.gson.Gson;
-import dao.MembroDAO;
 import model.Membro;
 import model.Publicacao;
 import org.apache.commons.fileupload.FileItem;
@@ -69,9 +68,8 @@ public class MembroController extends HttpServlet {
         try {
             String nomeUsuario = request.getParameter("nomeUsuario");
             String senha = request.getParameter("senha");
-            Membro membro = new Membro();
+            Membro membro = new Membro(nomeUsuario);
             membro.setEmail(nomeUsuario);
-            membro.setNomeUsuario(nomeUsuario);
             String senhaArmazenada = membro.getHashSenha();
             int id = membro.retornaIdPorNomeUser();
             if (id != 0) {
@@ -194,6 +192,8 @@ public class MembroController extends HttpServlet {
         HttpSession session = request.getSession(false);
         Membro membro = (Membro) session.getAttribute("usuario");
         String jsonResponse;
+        System.out.println("membro autenticado:");
+        System.out.println(membro.getNome());
         jsonResponse = new Gson().toJson(membro);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");

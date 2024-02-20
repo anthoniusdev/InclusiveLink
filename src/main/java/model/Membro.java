@@ -17,7 +17,6 @@ public class Membro extends Pessoa implements Serializable {
     private String nomeUsuario;
     private ArrayList<Integer> idMembrosSeguidores;
     private ArrayList<Integer> idMembrosSeguindos;
-    private ArrayList<Integer> idComunidadesSeguindos;
     private ArrayList<Integer> idComunidadesParticipantes;
     private String descricao;
     private ArrayList<Integer> idPublicacaoCurtidas;
@@ -26,7 +25,11 @@ public class Membro extends Pessoa implements Serializable {
     private ArrayList<Integer> idComentarios;
 
     public Membro(int idPessoa, String nome, String dataNascimento, String nomeUsuario, String email, String senha, String fotoPerfil, String fotoFundo, String descricao, ArrayList<Integer> curtidas) {
-        super(idPessoa, nome, dataNascimento, email, senha);
+        this.setIdPessoa(idPessoa);
+        this.setNome(nome);
+        this.setSenha(senha);
+        this.setDataNascimento(dataNascimento);
+        this.setEmail(email);
         this.fotoPerfil = fotoPerfil;
         this.fotoFundo = fotoFundo;
         this.descricao = descricao;
@@ -37,18 +40,20 @@ public class Membro extends Pessoa implements Serializable {
         this.idMembrosSeguindos = null;
         this.idMembrosSeguidores = null;
         this.idComunidadesParticipantes = null;
-        this.idComunidadesSeguindos = null;
         this.idComentarios = null;
     }
 
-    public Membro(int idPessoa, String nome, String dataNascimento, String email, String senha, String fotoPerfil, String fotoFundo, String nomeUsuario, ArrayList<Integer> idMembrosSeguidores, ArrayList<Integer> idMembrosSeguindos, ArrayList<Integer> idComunidadesSeguindos, ArrayList<Integer> idComunidadesParticipantes, String descricao, ArrayList<Integer> idPublicacaoCurtidas, ArrayList<Integer> idPublicacoes, boolean perfilVisivel, ArrayList<Integer> idComentarios) {
-        super(idPessoa, nome, dataNascimento, email, senha);
+    public Membro(int idPessoa, String nome, String dataNascimento, String email, String senha, String fotoPerfil, String fotoFundo, String nomeUsuario, ArrayList<Integer> idMembrosSeguidores, ArrayList<Integer> idMembrosSeguindos, ArrayList<Integer> idComunidadesParticipantes, String descricao, ArrayList<Integer> idPublicacaoCurtidas, ArrayList<Integer> idPublicacoes, boolean perfilVisivel, ArrayList<Integer> idComentarios) {
+        this.setIdPessoa(idPessoa);
+        this.setNome(nome);
+        this.setSenha(senha);
+        this.setDataNascimento(dataNascimento);
+        this.setEmail(email);
         this.fotoPerfil = fotoPerfil;
         this.fotoFundo = fotoFundo;
         this.nomeUsuario = nomeUsuario;
         this.idMembrosSeguidores = idMembrosSeguidores;
         this.idMembrosSeguindos = idMembrosSeguindos;
-        this.idComunidadesSeguindos = idComunidadesSeguindos;
         this.idComunidadesParticipantes = idComunidadesParticipantes;
         this.descricao = descricao;
         this.idPublicacaoCurtidas = idPublicacaoCurtidas;
@@ -58,7 +63,10 @@ public class Membro extends Pessoa implements Serializable {
     }
 
     public Membro(String nome, String dataNascimento, String nomeUsuario, String email, String senha) {
-        super(nome, dataNascimento, email, senha);
+        this.setNome(nome);
+        this.setSenha(senha);
+        this.setDataNascimento(dataNascimento);
+        this.setEmail(email);
         setNomeUsuario(nomeUsuario);
         setFotoPerfil(null);
         setFotoFundo(null);
@@ -69,12 +77,14 @@ public class Membro extends Pessoa implements Serializable {
         setMembrosSeguidores(null);
         setMembrosSeguindo(null);
         setComunidadesParticipantes(null);
-        setComunidadesSeguindos(null);
         setComentarios(null);
     }
 
     public Membro(Membro membro) {
-        super(membro.getIdPessoa(), membro.getNome(), membro.getDataNascimento(), membro.getEmail(), membro.getSenha());
+        this.setNome(membro.getNome());
+        this.setSenha(membro.getSenha());
+        this.setDataNascimento(membro.getDataNascimento());
+        this.setEmail(membro.getEmail());
         this.fotoPerfil = membro.getFotoPerfil();
         this.fotoFundo = membro.getFotoFundo();
         this.descricao = membro.getDescricao();
@@ -85,16 +95,28 @@ public class Membro extends Pessoa implements Serializable {
         this.idMembrosSeguindos = membro.getMembrosSeguindo();
         this.idMembrosSeguidores = membro.getMembrosSeguidores();
         this.idComunidadesParticipantes = membro.getComunidadesParticipantes();
-        this.idComunidadesSeguindos = membro.getComunidadesSeguindo();
         this.idComentarios = membro.getComentarios();
+    }
+
+    public Membro(int idPessoa, String nome, String dataNascimento, String email, String senha) {
+        setIdPessoa(idPessoa);
+        setNome(nome);
+        setDataNascimento(dataNascimento);
+        setEmail(email);
+        setSenha(senha);
     }
 
     public Membro() {
     }
 
     public Membro(int idMembro) {
-        super(idMembro);
         Membro membro = new MembroDAO().retornaMembro(idMembro);
+        this.setIdPessoa(membro.getIdPessoa());
+        this.setNomeUsuario(membro.getNomeUsuario());
+        this.setNome(membro.getNome());
+        this.setSenha(membro.getSenha());
+        this.setDataNascimento(membro.getDataNascimento());
+        this.setEmail(membro.getEmail());
         this.fotoPerfil = membro.getFotoPerfil();
         this.fotoFundo = membro.getFotoFundo();
         this.descricao = membro.getDescricao();
@@ -104,13 +126,22 @@ public class Membro extends Pessoa implements Serializable {
         this.idMembrosSeguindos = membro.getMembrosSeguindo();
         this.idMembrosSeguidores = membro.getMembrosSeguidores();
         this.idComunidadesParticipantes = membro.getComunidadesParticipantes();
-        this.idComunidadesSeguindos = membro.getComunidadesSeguindo();
         this.idComentarios = membro.getComentarios();
     }
 
+    @Override
+    public boolean isEmailUnique(String email) {
+        return new MembroDAO().isEmailUnique(email);
+    }
+
     public Membro(String nomeUsuario) {
-        super(new MembroDAO().verificaId(nomeUsuario));
+        this.setIdPessoa(this.verificaId(nomeUsuario));
         Membro membro = new MembroDAO().retornaMembro(this.getIdPessoa());
+        this.setNomeUsuario(nomeUsuario);
+        this.setNome(membro.getNome());
+        this.setSenha(membro.getSenha());
+        this.setDataNascimento(membro.getDataNascimento());
+        this.setEmail(membro.getEmail());
         this.setFotoPerfil(membro.getFotoPerfil());
         this.fotoFundo = membro.getFotoFundo();
         this.descricao = membro.getDescricao();
@@ -120,7 +151,6 @@ public class Membro extends Pessoa implements Serializable {
         this.idMembrosSeguindos = membro.getMembrosSeguindo();
         this.idMembrosSeguidores = membro.getMembrosSeguidores();
         this.idComunidadesParticipantes = membro.getComunidadesParticipantes();
-        this.idComunidadesSeguindos = membro.getComunidadesSeguindo();
         this.idComentarios = membro.getComentarios();
     }
 
@@ -158,14 +188,6 @@ public class Membro extends Pessoa implements Serializable {
 
     public void setMembrosSeguindo(ArrayList<Integer> membrosSeguindos) {
         this.idMembrosSeguindos = membrosSeguindos;
-    }
-
-    public ArrayList<Integer> getComunidadesSeguindo() {
-        return idComunidadesSeguindos;
-    }
-
-    public void setComunidadesSeguindos(ArrayList<Integer> comunidadesSeguindos) {
-        this.idComunidadesSeguindos = comunidadesSeguindos;
     }
 
     public ArrayList<Integer> getComunidadesParticipantes() {
@@ -216,13 +238,11 @@ public class Membro extends Pessoa implements Serializable {
         this.idComentarios = comentarios;
     }
 
-    /* <-- Metodo pronto --> */
     public boolean realizarCadastro() {
         Membro novoMembro;
         try {
             MembroDAO membroDAO = new MembroDAO();
             if (!membroDAO.verificaMembro(this)) {
-
                 novoMembro = membroDAO.realizarCadastro(this);
                 this.setIdPessoa(novoMembro.getIdPessoa());
             }
@@ -233,58 +253,9 @@ public class Membro extends Pessoa implements Serializable {
         }
     }
 
-
-    // --------------------------------------------------------------------------------------------------------
-    public boolean seguirMembro(Membro membroSeguido) {
-        boolean membroJaSeguido = false;
-        try {
-            for (int id : getMembrosSeguindo()) {
-                if (membroSeguido.getIdPessoa() == id) {
-                    membroJaSeguido = true;
-                    break;
-                }
-            }
-            if (!membroJaSeguido) {
-                this.idMembrosSeguindos.add(membroSeguido.getIdPessoa());
-                membroSeguido.getMembrosSeguindo().add(this.getIdPessoa());
-                return true;
-            } else {
-                return false;
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-            return false;
-        }
-    }
-
-    // --------------------------------------------------------------------------------------------------------
     public ArrayList<Integer> getMembrosSeguindo() {
         return idMembrosSeguindos;
     }
-
-    // --------------------------------------------------------------------------------------------------------
-    public boolean seguirComunidade(Comunidade comunidadeSeguida) {
-        SeguidorComunidade seguidorComunidade = new SeguidorComunidade(this);
-        boolean comunidadeJaSeguida = false;
-        try {
-            for (Integer idComunidade : seguidorComunidade.getComunidadesSeguindo()) {
-                if (comunidadeSeguida.getIdComunidade() == idComunidade) {
-                    comunidadeJaSeguida = true;
-                    break;
-                }
-            }
-            if (!comunidadeJaSeguida) {
-                comunidadeSeguida.seguirComunidade(this);
-                return seguidorComunidade.seguirComunidade(comunidadeSeguida);
-            } else {
-                return false;
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-            return false;
-        }
-    }
-    // --------------------------------------------------------------------------------------------------------
 
 
     public String getHashSenha() {
@@ -298,48 +269,6 @@ public class Membro extends Pessoa implements Serializable {
 
     public int retornaIdPorNomeUser() {
         return new MembroDAO().verificaId(this.nomeUsuario);
-    }
-
-
-    public int getNumeroSeguidores() {
-        return idMembrosSeguidores.size() + idMembrosSeguidores.size();
-    }
-
-    public int getNumeroSeguindos() {
-        return idMembrosSeguindos.size() + idComunidadesSeguindos.size();
-    }
-
-    public boolean isParticipante(Comunidade comunidade) {
-        boolean isParticipante = false;
-        for (int idParticipanteComunidade : comunidade.getIdParticipantes()) {
-            if (idParticipanteComunidade == this.getIdPessoa()) {
-                isParticipante = true;
-                break;
-            }
-        }
-        return isParticipante;
-    }
-
-    public boolean isSeguidor(Comunidade comunidade) {
-        boolean isSeguidor = false;
-        for (int idSeguidorComunidade : comunidade.getIdSeguidores()) {
-            if (idSeguidorComunidade == this.getIdPessoa()) {
-                isSeguidor = true;
-                break;
-            }
-        }
-        return isSeguidor;
-    }
-
-    public boolean isModerador(Comunidade comunidade) {
-        boolean isModerador = false;
-        for (int idModeradorComunidade : comunidade.getIdModeradores()) {
-            if (idModeradorComunidade == this.getIdPessoa()) {
-                isModerador = true;
-                break;
-            }
-        }
-        return isModerador;
     }
 
     public void pararSeguir(int idSeguindo) {
@@ -439,7 +368,6 @@ public class Membro extends Pessoa implements Serializable {
 
     public boolean editarPerfil(ArrayList<FileItem> items) {
         try {
-
             String nome = null;
             String descricao = null;
             int idPerfil = 0;
@@ -479,8 +407,6 @@ public class Membro extends Pessoa implements Serializable {
                     fotoPerfil.write(new File(diretorioFotoPerfil, ("img-fotoperfil" + membro.getNomeUsuario() + randomName + "." + new ObterExtensaoArquivo().get(fotoPerfil.getName()))));
                     membro.setFotoPerfil(urlFotoPerfil + "img-fotoperfil" + membro.getNomeUsuario() + randomName + "." + new ObterExtensaoArquivo().get(fotoPerfil.getName()));
                 }
-            } else {
-                System.out.println("DIRETORIO NAO ENCONTRADO");
             }
             File diretorioFileFotoFundo = new File(diretorioFotoFundo);
             if (!diretorioFileFotoFundo.exists()) diretorioFileFotoFundo.mkdirs();
@@ -490,8 +416,6 @@ public class Membro extends Pessoa implements Serializable {
                     fotoFundo.write(new File(diretorioFotoFundo, ("img-fotofundo" + membro.getNomeUsuario() + randomName + "." + new ObterExtensaoArquivo().get(fotoFundo.getName()))));
                     membro.setFotoFundo(urlFotoFundo + "img-fotofundo" + membro.getNomeUsuario() + randomName + "." + new ObterExtensaoArquivo().get(fotoFundo.getName()));
                 }
-            } else {
-                System.out.println("DIRETORIO NAO ENCONTRADO linha 498");
             }
             return new MembroDAO().editarPerfil(membro.getIdPessoa(), membro.getNome(), membro.getDescricao(), membro.getFotoPerfil(), membro.getFotoFundo());
         } catch (Exception e) {
@@ -506,5 +430,9 @@ public class Membro extends Pessoa implements Serializable {
 
     public void removerSeguidor(int idSeguidor) {
         new MembroDAO().pararSeguir(idSeguidor, this.getIdPessoa());
+    }
+
+    public int verificaId(String nomeUsuario) {
+        return new MembroDAO().verificaId(nomeUsuario);
     }
 }
