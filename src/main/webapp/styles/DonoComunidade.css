@@ -100,3 +100,153 @@ input::placeholder {
     cursor: pointer;
     width: 55px;
 }
+
+.fundo-escuro{
+    margin-right: auto;
+}
+
+.pop-up-editar-perfil {
+    background-color: var(--COR-04);
+    width: 950px;
+    position: absolute;
+    top: 2rem;
+    left: 18rem;
+    border-radius: 20px;
+}
+
+.cabecalho {
+    display: flex;
+}
+
+.cabecalho img {
+    margin-top: 1rem;
+    margin-left: 1rem;
+}
+
+.cabecalho p {
+    color: var(--COR-TEXTO-04);
+    font-size: 25px;
+    padding-left: 20px;
+}
+
+.cabecalho button {
+    cursor: pointer;
+    position: absolute;
+    margin-left: 47.5rem;
+    align-self: center;
+    display: flex;
+    width: 11rem;
+    height: 3rem;
+    align-items: center;
+    background-color: var(--COR-03);
+    border: 0;
+    border-radius: 10px;
+    color: var(--COR-01);
+    font-family: var(--FONTE);
+    font-size: 100%;
+    justify-content: center;
+}
+
+.foto-fundo-usuario img {
+    max-width: 950px;
+    max-height: 270px;
+    width: 950px;
+    height: 270px;
+}
+
+#icone-editar-foto-fundo-usuario {
+    width: 77px;
+    height: 77px;
+    background-color: rgba(66, 125, 157, 0.70);
+    border-radius: 100%;
+    position: absolute;
+    right: 10px;
+    top: 240px;
+    padding: 0.5rem;
+}
+
+#img-icone-editar-foto-fundo-usuario {
+    width: 80%;
+    height: 80%;
+    padding: 0.5rem;
+}
+
+#foto-perfil-usuario {
+    border-radius: 100%;
+}
+
+.foto-perfil-usuario {
+    width: 205px;
+    height: 205px;
+    max-width: 205px;
+    max-height: 205px;
+    position: absolute;
+    top: 200px;
+    left: 60px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    border-radius: 110px;
+    border: 6px solid var(--COR-04);
+    background-color: #ffffff;
+}
+
+.foto-perfil-usuario img {
+    width: 100%;
+    height: 100%;
+}
+
+#icone-editar-foto-perfil-usuario {
+    height: 110px;
+    position: absolute;
+    left: 50px;
+    top: 50px;
+    width: 110px;
+    border-radius: 60px;
+}
+
+.nome-usuario {
+    margin-bottom: 0px;
+    margin-left: 3rem;
+    font-size: 1.7rem;
+    color: #DDF2FD;
+}
+
+#nome-usuario {
+    width: 90%;
+    height: 100%;
+    background-color: var(--COR-04);
+    border: none;
+    padding-left: 1rem;
+    font-size: 1.5rem;
+    font-family: var(--FONTE);
+    border-radius: 20px;
+    color: var(--COR-TEXTO-04);
+}
+
+#nome-usuario:focus {
+    outline: none;
+}
+
+#contagem-caracteres-descricao-usuario {
+    display: none;
+    flex-direction: row-reverse;
+    color: var(--COR-TEXTO-05);
+}
+
+#descricao-usuario {
+    height: auto;
+    background-color: var(--COR-04);
+    border: none;
+    font-family: var(--FONTE);
+    font-size: 30px;
+    border-radius: 20px;
+    color: var(--COR-TEXTO-04);
+    resize: none;
+    overflow-y: hidden;
+    padding-left: 20px;
+}
+
+#descricao-usuario:focus {
+    outline: none;
+}
