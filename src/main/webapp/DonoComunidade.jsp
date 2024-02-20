@@ -42,6 +42,7 @@
     <script src="scripts/participarComunidade.js"></script>
     <script src="scripts/sairComunidade.js"></script>
     <script src="scripts/comunidade.js"></script>
+    <script src="scripts/excluirPublicacao.js"></script>
     <link rel="stylesheet" href="styles/barra-lateral.css">
 </head>
 
@@ -188,27 +189,39 @@
                         <span style="opacity: 0.5;">Participantes</span>
                     </div>
                 </div>
-                <div class="postar"
-                     style="border-top: 4px solid #164863; padding-bottom: 10px;">
-                    <div
-                            style="padding-left: 40px; padding-top: 20px; margin-bottom: 15px;">
-                        <%
-                            String ftPer;
-                            ftPer = usuario.getFotoPerfil();
-                            if (ftPer == null) {
-                                ftPer = "images/person_foto.svg";
-                            }
-                        %>
-                        <img src="<%=ftPer%>"
-                             class="img-fluid"
-                             style="border-radius: 100%; width: 70px; height: 70px;">
-                        <i class="bi bi-image"
-                           style="padding-left: 10px; cursor: pointer;"></i>
-                        <input type="text"
-                               placeholder="Oque está acontecendo?">
-                        <button type="button" class="btn post"
-                                style="font-size: 1.2rem;">Postar
-                        </button>
+                <%
+                    String ftPer = usuario.getFotoPerfil();
+                    if (ftPer == null) {
+                        ftPer = "images/person_foto.svg";
+                    }
+                %>
+                <div class="criarPublicacao">
+                    <form action="novaPublicacao" method="post" id="formNovaPublicacao" enctype="multipart/form-data">
+                        <div class="foto-perfil">
+                            <img src="<%=ftPer%>" alt="Foto de perfil">
+                        </div>
+                        <div class="areaInput">
+                            <label for="textoNovaPublicacao">
+                            <textarea name="inputTexto" id="textoNovaPublicacao" placeholder="O que está acontecendo?"
+                                      rows="1" maxlength="200"></textarea>
+                            </label>
+                            <div id="contagemCaracteresPublicacao">200</div>
+                            <span id="linhaAreaInput"></span>
+                            <label id="icone-escolher-imagem">
+                                <img src="images/gallery_img.svg" alt="">
+                            </label>
+                            <input type="file" id="input-imagem" name="imagem" accept="image/*">
+                        </div>
+                        <div class="im"></div>
+                        <div class="btnPostar">
+                            <button type="submit" id="btnPostar">POSTAR</button>
+                        </div>
+                    </form>
+                    <div class="imgPreview">
+                        <img id="imagem-preview" alt="" src="">
+                        <div class="remover-foto" id="remover-foto">
+                            <img src="images/octicon_x-12.svg" alt="ícone de remover a foto da publicação">
+                        </div>
                     </div>
                 </div>
                 <div class="pots" style="padding-bottom: 10px;">
@@ -231,21 +244,25 @@
                                       style="margin-left: 10px;"><%=publicacao.getAutor().getNome()%></span>
                             </div>
                             <div class="col-md-2">
+                                <%if (publicacao.getAutor().getIdPessoa() == usuario.getIdPessoa()){%>
                                 <button type="button" class="btn post"
-                                        style="width: 50px; padding-top: 10px;"><i
+                                        style="width: 50px; padding-top: 10px;" onclick="excluirPublicacao(<%=publicacao.getIdPublicacao()%>); this.parentNode.parentNode.parentNode.parentNode.style.display = 'none';"><i
                                         class="bi bi-trash-fill"></i></button>
-                            </div>
-                        </div>
-                        <div style="padding-left: 80px;">
-                            <div
-                                    style="width: 90%; height: 300px; border-radius: 20px;">
-                                <img src="<%=publicacao.getMidia()%>"
-                                     class="img-fluid"
-                                     style="border-radius: 20px;">
+                                <%}%>
                             </div>
                         </div>
                         <p style="padding-left: 85px; width: 99%;"><%=publicacao.getTexto()%>
                         </p>
+                        <%if (publicacao.getMidia() != null) {%>
+                        <div style="padding-left: 80px;">
+                            <div
+                                    style="width: 90%; height: 300px; border-radius: 20px;">
+                                <img id="imgP" src="<%=publicacao.getMidia()%>"
+                                     class="img-fluid"
+                                     style="border-radius: 20px;">
+                            </div>
+                        </div>
+                        <%}%>
                         <div style="padding-left: 80px;">
                             <i class="bi bi-heart icon-custom-size"
                                style=" size: 50px; cursor: pointer;"></i>

@@ -386,7 +386,6 @@ public class Membro extends Pessoa implements Serializable {
 
     public boolean editarPerfil(ArrayList<FileItem> items) {
         try {
-
             String nome = null;
             String descricao = null;
             int idPerfil = 0;

@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
-@WebServlet(urlPatterns = {"/obterComunidades", "/verComunidades", "/criarComunidade", "/pesquisarComunidade", "/minhasComunidades", "/comunidades"})
+@WebServlet(urlPatterns = {"/obterComunidades", "/verComunidades", "/criarComunidade", "/pesquisarComunidade", "/minhasComunidades", "/comunidades", "/novaPublicacaoController"})
 public class ComunidadeController extends HttpServlet {
 
     @Override
@@ -204,4 +204,5 @@ public class ComunidadeController extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
+
 }
