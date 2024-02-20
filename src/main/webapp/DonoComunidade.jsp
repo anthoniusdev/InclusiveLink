@@ -260,37 +260,60 @@
             </div>
         </div>
 
-        <div class="col-4 mt-5">
-            <div class="row mb-3"
-                 style="background-color: #427D9D; border-radius: 20px; width: 100%; height: 50px;">
-                <div class="col-1 fs-5 mt-2 ms-2">
-                    <i class="bi bi-search"></i>
-                </div>
-                <div class="col-7 d-flex justify-content-start">
-                    <input type="text" class="form-control"
-                           style="color: #DDF2FD; padding-left: 0;"
-                           placeholder="PESQUISAR AMIGO">
-                </div>
-
+        <div class="containerSide">
+            <div class="pesquisar-amigo">
+                <label>
+                    <img src="images/search.svg" alt="search">
+                    <input type="search" placeholder="PESQUISAR PERFIL" id="pesquisarPerfil">
+                </label>
+                <div class="lista-pesquisa-perfil" id="listaPesquisaPerfil"></div>
             </div>
-            <div class="row mb-3"
-                 style="background-color: #427D9D; border-radius: 20px; width: 100%; height: 50px;">
-
-            </div>
-            <div class="row mb-3"
-                 style="background-color: #427D9D; border-radius: 20px; width: 100%; height: 50px;">
-                <div class="col-1 fs-5 mt-2 ms-2">
-                    <i class="bi bi-search"></i>
+            <div class="perfis-sugeridos" id="perfisSugeridos">
+                <%
+                    for (Membro membroSugerido : membrosRede) {
+                        if (!membroSugerido.getMembrosSeguidores().contains(usuario.getIdPessoa())) {
+                %>
+                <div class="caixa-usuario" id="caixa-usuario">
+                    <a href="perfil?nome_usuario=<%=membroSugerido.getNomeUsuario()%>">
+                        <%
+                            if (membroSugerido.getFotoPerfil() == null) {
+                                membroSugerido.setFotoPerfil("images/person_foto.svg");
+                            }
+                        %>
+                        <img src="<%=membroSugerido.getFotoPerfil()%>"
+                             alt="Foto de perfil de <%=membroSugerido.getNome()%>">
+                        <p class="nomeUsuario"><%=membroSugerido.getNome()%>
+                        </p>
+                    </a>
+                    <button onclick="seguirUsuario(<%=usuario.getIdPessoa()%>, <%=membroSugerido.getIdPessoa()%>, <%=membrosRede.indexOf(membroSugerido)%>)"
+                            class="botaoSeguir" id="botaoSeguir<%=membrosRede.indexOf(membroSugerido)%>">
+                        SEGUIR
+                    </button>
                 </div>
-                <div class="col-7 d-flex justify-content-start">
-                    <input type="text" class="form-control"
-                           style="color: #DDF2FD; padding-left: 0;"
-                           placeholder="PESQUISAR COMUNIDADE">
-                </div>
+                <%
+                        }
+                    }
+                %>
             </div>
-            <div class="row mb-3"
-                 style="background-color: #427D9D; border-radius: 20px; width: 100%; height: 50px;">
-
+            <div class="pesquisar-comunidade">
+                <label>
+                    <img src="images/search.svg" alt="search">
+                    <input type="search" placeholder="PESQUISAR COMUNIDADE" id="pesquisarComunidade">
+                </label>
+                <div class="lista-pesquisa-comunidade" id="lista-pesquisa-comunidade"></div>
+            </div>
+            <div class="comunidades-sugeridas" id="comunidades-sugeridas">
+                <div class="criar-comunidade" id="criar-comunidade">
+                    <button id="botaoCriarNovaComunidade">
+                        <div class="imagem"><img src="images/gravity-ui_circle-plus-fill.svg" alt=""></div>
+                        CRIAR NOVA COMUNIDADE
+                    </button>
+                </div>
+                <span id="linhaCriarComunidade"></span>
+                <div class="ver-comunidades" id="ver-comunidades">
+                    <a href="verComunidades">VER COMUNIDADES PARTICIPANTES</a>
+                    <div class="icone-caret-right"></div>
+                </div>
             </div>
         </div>
     </div>
