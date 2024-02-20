@@ -500,3 +500,8 @@ body {
     display: flex;
     flex-direction: column;
 }
+
+#popup-nova-comunidade .cabecalho {
+    padding: 20px;
+    border-bottom: 0;
+}
