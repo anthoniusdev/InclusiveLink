@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
-@WebServlet(urlPatterns = {"/obterComunidades", "/verComunidades", "/criarComunidade", "/pesquisarComunidade", "/minhasComunidades", "/comunidades", "/novaPublicacaoController"})
+@WebServlet(urlPatterns = {"/obterComunidades", "/verComunidades", "/criarComunidade", "/pesquisarComunidade", "/minhasComunidades", "/comunidades"})
 public class ComunidadeController extends HttpServlet {
 
     @Override
@@ -187,7 +187,7 @@ public class ComunidadeController extends HttpServlet {
             request.setAttribute("comunidade", comunidade);
             HttpSession httpSession = request.getSession(false);
             httpSession.setAttribute("previousPage", request.getHeader("referer"));
-            RequestDispatcher rd = request.getRequestDispatcher("DonoComunidade.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("Comunidade.jsp");
             rd.forward(request, response);
         } catch (Exception e) {
             throw new RuntimeException(e);

@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
-@WebServlet(urlPatterns = {"/novaPublicacao", "/verPublicacoes", "/excluirPublicacao", "/verPublicacao", "/obterIdPublicacao", "/curtidasPublicacao", "/comentariosPublicacao"})
+@WebServlet(urlPatterns = {"/novaPublicacao", "/verPublicacoes", "/excluirPublicacao", "/verPublicacao", "/obterIdPublicacao", "/curtidasPublicacao", "/comentariosPublicacao", "/verPublicacoesComunidade"})
 public class PublicacaoController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
