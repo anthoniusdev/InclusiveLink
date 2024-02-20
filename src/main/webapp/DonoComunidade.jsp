@@ -43,6 +43,7 @@
     <script src="scripts/participarComunidade.js"></script>
     <script src="scripts/sairComunidade.js"></script>
     <script src="scripts/comunidade.js"></script>
+    <script src="scripts/excluirPublicacao.js"></script>
     <link rel="stylesheet" href="styles/barra-lateral.css">
 </head>
 
@@ -189,27 +190,39 @@
                         <span style="opacity: 0.5;">Participantes</span>
                     </div>
                 </div>
-                <div class="postar"
-                     style="border-top: 4px solid #164863; padding-bottom: 10px;">
-                    <div
-                            style="padding-left: 40px; padding-top: 20px; margin-bottom: 15px;">
-                        <%
-                            String ftPer;
-                            ftPer = usuario.getFotoPerfil();
-                            if (ftPer == null) {
-                                ftPer = "images/person_foto.svg";
-                            }
-                        %>
-                        <img src="<%=ftPer%>"
-                             class="img-fluid"
-                             style="border-radius: 100%; width: 70px; height: 70px;">
-                        <i class="bi bi-image"
-                           style="padding-left: 10px; cursor: pointer;"></i>
-                        <input type="text"
-                               placeholder="Oque está acontecendo?">
-                        <button type="button" class="btn post"
-                                style="font-size: 1.2rem;">Postar
-                        </button>
+                <%
+                    String ftPer = usuario.getFotoPerfil();
+                    if (ftPer == null) {
+                        ftPer = "images/person_foto.svg";
+                    }
+                %>
+                <div class="criarPublicacao">
+                    <form action="novaPublicacao" method="post" id="formNovaPublicacao" enctype="multipart/form-data">
+                        <div class="foto-perfil">
+                            <img src="<%=ftPer%>" alt="Foto de perfil">
+                        </div>
+                        <div class="areaInput">
+                            <label for="textoNovaPublicacao">
+                            <textarea name="inputTexto" id="textoNovaPublicacao" placeholder="O que está acontecendo?"
+                                      rows="1" maxlength="200"></textarea>
+                            </label>
+                            <div id="contagemCaracteresPublicacao">200</div>
+                            <span id="linhaAreaInput"></span>
+                            <label id="icone-escolher-imagem">
+                                <img src="images/gallery_img.svg" alt="">
+                            </label>
+                            <input type="file" id="input-imagem" name="imagem" accept="image/*">
+                        </div>
+                        <div class="im"></div>
+                        <div class="btnPostar">
+                            <button type="submit" id="btnPostar">POSTAR</button>
+                        </div>
+                    </form>
+                    <div class="imgPreview">
+                        <img id="imagem-preview" alt="" src="">
+                        <div class="remover-foto" id="remover-foto">
+                            <img src="images/octicon_x-12.svg" alt="ícone de remover a foto da publicação">
+                        </div>
                     </div>
                 </div>
                 <div class="pots" style="padding-bottom: 10px;">
@@ -221,8 +234,7 @@
                                 ftPer = "images/person_foto.svg";
                             }
                     %>
-                    <div
-                            style="border-top: 4px solid #164863;  padding-left: 40px; padding-top: 20px; margin-bottom: 15px;">
+                    <div style="border-top: 4px solid #164863;  padding-left: 40px; padding-top: 20px; margin-bottom: 15px;">
                         <div class="row">
                             <div class="col-md-10">
                                 <img src="<%=ftPer%>"
@@ -232,21 +244,27 @@
                                       style="margin-left: 10px;"><%=publicacao.getAutor().getNome()%></span>
                             </div>
                             <div class="col-md-2">
+                                <%if (publicacao.getAutor().getIdPessoa() == usuario.getIdPessoa()) {%>
                                 <button type="button" class="btn post"
-                                        style="width: 50px; padding-top: 10px;"><i
-                                        class="bi bi-trash-fill"></i></button>
-                            </div>
-                        </div>
-                        <div style="padding-left: 80px;">
-                            <div
-                                    style="width: 90%; height: 300px; border-radius: 20px;">
-                                <img src="<%=publicacao.getMidia()%>"
-                                     class="img-fluid"
-                                     style="border-radius: 20px;">
+                                        style="width: 50px; padding-top: 10px;"
+                                        onclick="excluirPublicacao(<%=publicacao.getIdPublicacao()%>); this.parentNode.parentNode.parentNode.parentNode.style.display = 'none';">
+                                    <i
+                                            class="bi bi-trash-fill"></i></button>
+                                <%}%>
                             </div>
                         </div>
                         <p style="padding-left: 85px; width: 99%;"><%=publicacao.getTexto()%>
                         </p>
+                        <%if (publicacao.getMidia() != null) {%>
+                        <div style="padding-left: 80px;">
+                            <div
+                                    style="width: 90%; height: 300px; border-radius: 20px;">
+                                <img id="imgP" src="<%=publicacao.getMidia()%>"
+                                     class="img-fluid"
+                                     style="border-radius: 20px;">
+                            </div>
+                        </div>
+                        <%}%>
                         <div style="padding-left: 80px;">
                             <i class="bi bi-heart icon-custom-size"
                                style=" size: 50px; cursor: pointer;"></i>
@@ -260,69 +278,70 @@
                 </div>
             </div>
         </div>
-
-        <div class="containerSide">
-            <div class="pesquisar-amigo">
-                <label>
-                    <img src="images/search.svg" alt="search">
-                    <input type="search" placeholder="PESQUISAR PERFIL" id="pesquisarPerfil">
-                </label>
-                <div class="lista-pesquisa-perfil" id="listaPesquisaPerfil"></div>
-            </div>
-            <div class="perfis-sugeridos" id="perfisSugeridos">
+    </div>
+</div>
+<div class="containerSide">
+    <div class="pesquisar-amigo">
+        <label>
+            <img src="images/search.svg" alt="search">
+            <input type="search" placeholder="PESQUISAR PERFIL" id="pesquisarPerfil">
+        </label>
+        <div class="lista-pesquisa-perfil" id="listaPesquisaPerfil"></div>
+    </div>
+    <div class="perfis-sugeridos" id="perfisSugeridos">
+        <%
+            for (Membro membroSugerido : membrosRede) {
+                if (!membroSugerido.getMembrosSeguidores().contains(usuario.getIdPessoa())) {
+        %>
+        <div class="caixa-usuario" id="caixa-usuario">
+            <a href="perfil?nome_usuario=<%=membroSugerido.getNomeUsuario()%>">
                 <%
-                    for (Membro membroSugerido : membrosRede) {
-                        if (!membroSugerido.getMembrosSeguidores().contains(usuario.getIdPessoa())) {
-                %>
-                <div class="caixa-usuario" id="caixa-usuario">
-                    <a href="perfil?nome_usuario=<%=membroSugerido.getNomeUsuario()%>">
-                        <%
-                            if (membroSugerido.getFotoPerfil() == null) {
-                                membroSugerido.setFotoPerfil("images/person_foto.svg");
-                            }
-                        %>
-                        <img src="<%=membroSugerido.getFotoPerfil()%>"
-                             alt="Foto de perfil de <%=membroSugerido.getNome()%>">
-                        <p class="nomeUsuario"><%=membroSugerido.getNome()%>
-                        </p>
-                    </a>
-                    <button onclick="seguirUsuario(<%=usuario.getIdPessoa()%>, <%=membroSugerido.getIdPessoa()%>, <%=membrosRede.indexOf(membroSugerido)%>)"
-                            class="botaoSeguir" id="botaoSeguir<%=membrosRede.indexOf(membroSugerido)%>">
-                        SEGUIR
-                    </button>
-                </div>
-                <%
-                        }
+                    if (membroSugerido.getFotoPerfil() == null) {
+                        membroSugerido.setFotoPerfil("images/person_foto.svg");
                     }
                 %>
-            </div>
-            <div class="pesquisar-comunidade">
-                <label>
-                    <img src="images/search.svg" alt="search">
-                    <input type="search" placeholder="PESQUISAR COMUNIDADE" id="pesquisarComunidade">
-                </label>
-                <div class="lista-pesquisa-comunidade" id="lista-pesquisa-comunidade"></div>
-            </div>
-            <div class="comunidades-sugeridas" id="comunidades-sugeridas">
-                <div class="criar-comunidade" id="criar-comunidade">
-                    <button id="botaoCriarNovaComunidade">
-                        <div class="imagem"><img src="images/gravity-ui_circle-plus-fill.svg" alt=""></div>
-                        CRIAR NOVA COMUNIDADE
-                    </button>
-                </div>
-                <span id="linhaCriarComunidade"></span>
-                <div class="ver-comunidades" id="ver-comunidades">
-                    <a href="verComunidades">VER COMUNIDADES PARTICIPANTES</a>
-                    <div class="icone-caret-right"></div>
-                </div>
-            </div>
+                <img src="<%=membroSugerido.getFotoPerfil()%>"
+                     alt="Foto de perfil de <%=membroSugerido.getNome()%>">
+                <p class="nomeUsuario"><%=membroSugerido.getNome()%>
+                </p>
+            </a>
+            <button onclick="seguirUsuario(<%=usuario.getIdPessoa()%>, <%=membroSugerido.getIdPessoa()%>, <%=membrosRede.indexOf(membroSugerido) + 1%>)"
+                    class="botaoSeguir" id="botaoSeguir<%=membrosRede.indexOf(membroSugerido) + 1%>">
+                SEGUIR
+            </button>
+        </div>
+        <%
+                }
+            }
+        %>
+    </div>
+    <div class="pesquisar-comunidade" id="pesqComunidade">
+        <label>
+            <img src="images/search.svg" alt="search">
+            <input type="search" placeholder="PESQUISAR COMUNIDADE" id="pesquisarComunidade">
+        </label>
+        <div class="lista-pesquisa-comunidade" id="lista-pesquisa-comunidade"></div>
+    </div>
+    <div class="comunidades-sugeridas" id="comunidades-sugeridas">
+        <div class="criar-comunidade" id="criar-comunidade">
+            <button id="botaoCriarNovaComunidade">
+                <div class="imagem"><img src="images/gravity-ui_circle-plus-fill.svg" alt=""></div>
+                CRIAR NOVA COMUNIDADE
+            </button>
+        </div>
+        <span id="linhaCriarComunidade"></span>
+        <div class="ver-comunidades" id="ver-comunidades">
+            <a href="verComunidades">VER COMUNIDADES PARTICIPANTES</a>
+            <div class="icone-caret-right"></div>
         </div>
     </div>
+</div>
 </div>
 <div class="fundo-escuro" id="fundo-escuro-adicionar-moderador">
     <div class="pop-up-adicionar-moderador">
         <div class="cabecalho">
-            <span class="close" id="close-adicionar-moderador"><img src="images/octicon_x-12.svg" alt=""></span>
+                        <span class="close" id="close-adicionar-moderador"><img src="images/octicon_x-12.svg"
+                                                                                alt=""></span>
             <p>ADICIONAR MODERADOR</p>
         </div>
         <div class="lista-participantes">

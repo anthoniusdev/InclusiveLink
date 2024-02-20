@@ -32,4 +32,16 @@ public class ParticipanteComunidadeDAO {
             throw new RuntimeException(e);
         }
     }
+    public void publicarComunidade(int idComunidade, int idPublicacao){
+        try (Connection con = conectar()) {
+            String create = "INSERT INTO publicacao_comunidade(idComunidade, idPublicacao) VALUES (?, ?);";
+            try (PreparedStatement preparedStatement = con.prepareStatement(create)) {
+                preparedStatement.setInt(1, idComunidade);
+                preparedStatement.setInt(2, idPublicacao);
+                preparedStatement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

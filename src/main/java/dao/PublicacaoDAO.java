@@ -137,7 +137,7 @@ public class PublicacaoDAO {
 
     public ArrayList<Publicacao> feed(int idUsuario, int indice_inicial, int quantidade_publicacoes) {
         try (Connection con = conectar()) {
-            String read = "SELECT idPublicacao FROM publicacao WHERE id_autor IN (SELECT idSeguindo FROM membro_seguindo WHERE idMembro = ?) OR id_autor = ? ORDER BY data DESC, hora DESC LIMIT ?, ?";
+            String read = "SELECT idPublicacao FROM publicacao WHERE id_autor IN (SELECT idSeguindo FROM membro_seguindo WHERE idMembro = ?) OR id_autor = ? AND idPublicacao NOT IN (SELECT idPublicacao FROM publicacao_comunidade) ORDER BY data DESC, hora DESC LIMIT ?, ?";
             try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
                 preparedStatement.setInt(1, idUsuario);
                 preparedStatement.setInt(2, idUsuario);
