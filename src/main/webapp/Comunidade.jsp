@@ -34,7 +34,7 @@
     <script src="scripts/curtirPublicacao.js"></script>
     <script src="scripts/excluirPublicacao.js"></script>
     <script src="scripts/obterUsuarioAutenticado.js"></script>
-    <script src="scripts/perfil.js"></script>
+    <script src="scripts/comunidade.js"></script>
     <script src="scripts/seguirUsuario.js"></script>
     <script src="scripts/verificaSeguindo.js"></script>
     <title></title>
@@ -44,29 +44,33 @@
     <div class="container">
         <div class="retanguloPerfil">
             <div class="header">
-                <div class="icone-voltar" onclick="window.location.reload();">
+                <div class="icone-voltar" onclick="window.history.back();">
                     <img src="images/ri_arrow-up-line.svg">
                 </div>
                 <p class="voltar">VOLTAR</p>
             </div>
-            <img src="images/DefaultFundoPerfil.png" class="fundoPerfil" alt="Foto de fundo do usuário">
+            <% if (comunidade.getFotoFundo() == null) {
+                comunidade.setFotoFundo("images/DefaultFundoPerfil.png");
+            }%>
+            <img src="<%=comunidade.getFotoFundo()%>" class="fundoPerfil"
+                 alt="Foto de fundo da comunidade <%=comunidade.getNome()%>">
             <div class="botao-acao-perfil">
                 <button id="editar-perfil">AÇÕES</button>
             </div>
-            <img src="images/FOTO-defaultComunidade.png" class="fotoPerfil" alt="Foto de perfil do usuário">
-            <p class="nome-usuario">Nome Usuário</p>
+            <% if (comunidade.getFotoPerfil() == null) {
+                comunidade.setFotoPerfil("images/DefaultFundoPerfil.png");
+            }%>
+            <img src="<%=comunidade.getFotoPerfil()%>" class="fotoPerfil"
+                 alt="Foto de perfil da comunidade <%=comunidade.getNome()%>">
+            <p class="nome-usuario"><%=comunidade.getNome()%>
+            </p>
             <div class="profile-description">
-                <p class="descricao">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                    voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-                    Excepteur sint occaecat cupidatat non proident,
-                    sunt in culpa qui officia deserunt mollit anim id est laborum.
-                </p>
+                <%if (comunidade.getDescricao() != null) {%>
+                <p class="descricao"><%=comunidade.getDescricao()%></p>
+                <%}%>
             </div>
             <div class="divParticipantes">
-                <p class="numParticipantes" id="numParticipantes">0</p>
+                <p class="numParticipantes" id="numParticipantes"><%=comunidade.getIdParticipantes().size()%></p>
                 <p class="participantes">Participantes</p>
             </div>
 

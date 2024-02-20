@@ -44,6 +44,7 @@ public class PublicacaoController extends HttpServlet {
             case "/obterIdPublicacao" -> obterId(request, response);
             case "/curtidasPublicacao" -> curtidasPublicacao(request, response);
             case "/comentariosPublicacao" -> comentariosPublicacao(request, response);
+            case "/verPublicacoesComunidade" -> verPublicacoesComunidade(request, response);
         }
     }
 
@@ -186,6 +187,20 @@ public class PublicacaoController extends HttpServlet {
             response.getWriter().write(jsonResponse);
         } catch (Exception e) {
             e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+    private void verPublicacoesComunidade(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try{
+            int intervalo = Integer.parseInt(request.getParameter("intervalo"));
+            ArrayList<Publicacao> publicacaos;
+            int idComunidade = Integer.parseInt(request.getParameter("idComunidade"));
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            publicacaos = new Publicacao().feedComunidade(idComunidade, intervalo, 5);
+            String json = new Gson().toJson(publicacaos);
+            response.getWriter().write(json);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
