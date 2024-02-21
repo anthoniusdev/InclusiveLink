@@ -218,4 +218,7 @@ public class Comunidade implements Serializable {
             throw new RuntimeException(e);
         }
     }
+    public boolean verificaId(int idComunidade){
+        return new ComunidadeDAO().verificaComunidade(idComunidade);
+    }
 }
