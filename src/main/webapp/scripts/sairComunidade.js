@@ -8,7 +8,6 @@ function sairComunidade(i, ii, tipo, iii) {
             color: '#fff'
         });
         btn.text('SAIU');
-
     }else {
         if (ii) {
             let caixa_comunidade = document.getElementById('caixa-comunidade' + ii);

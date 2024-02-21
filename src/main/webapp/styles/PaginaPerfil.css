@@ -443,6 +443,7 @@ body {
     margin-top: 20px;
     font-size: 1.2rem;
     color: var(--COR-TEXTO-04);
+    line-break: anywhere;
 }
 .inshights-publicacao{
     margin-left: -13px;
