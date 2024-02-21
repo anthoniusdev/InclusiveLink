@@ -336,6 +336,42 @@ input::placeholder {
     display: flex;
 }
 
+<<<<<<< HEAD
+.ver-comunidades img {
+    width: 30px;
+    position: absolute;
+    right: 80px;
+}
+
+.icone-caret-right {
+    width: 40px;
+    height: 65px;
+    background-image: url("../images/caret-right-solid.svg");
+    background-size: 35px;
+    filter: invert(1);
+    margin-left: -90px;
+    margin-top: 5px;
+}
+
+.resultados-pesquisa-comunidade {
+    display: flex;
+    flex-direction: row;
+    background-color: var(--COR-03);
+    transition: 0.5s;
+    border-top: 2px solid var(--COR-04);
+}
+
+.lista-pesquisa-comunidade {
+    background-color: var(--COR-03);
+}
+
+.nome-comunidade {
+    margin-bottom: 0px;
+    margin-left: 3rem;
+    font-size: 1.7rem;
+    color: #DDF2FD;
+=======
 #imgP {
     max-width: 280px;
+>>>>>>> 1193fc5dbb7ab1a7dfc7c7f5965f311eaa0147f7
 }

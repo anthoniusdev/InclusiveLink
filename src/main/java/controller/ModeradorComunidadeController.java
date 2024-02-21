@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = {"/adicionarModerador", "/excluirComunidade"})
+@WebServlet(urlPatterns = {"/adicionarModerador", "/excluirComunidade", "/excluirParticipante"})
 public class ModeradorComunidadeController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -21,6 +21,7 @@ public class ModeradorComunidadeController extends HttpServlet {
         switch (action) {
             case "/adicionarModerador" -> adicionarModerador(request, response);
             case "/excluirComunidade" -> excluirComunidade(request, response);
+            case "/excluirParticipante" -> excluirParticipante(request, response);
         }
     }
 
@@ -41,6 +42,19 @@ public class ModeradorComunidadeController extends HttpServlet {
             int idComunidade = Integer.parseInt(request.getParameter("idComunidade"));
             new ModeradorComunidade(membro.getIdPessoa(), idComunidade).excluirComunidade();
         } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void excluirParticipante(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try{
+            HttpSession httpSession = request.getSession(false);
+
+            int idParticipante = Integer.parseInt(request.getParameter("idParticipante"));
+            int idComunidade = Integer.parseInt(request.getParameter("idComunidade"));
+            Membro membro = (Membro) httpSession.getAttribute("usuario");
+            new ModeradorComunidade(membro.getIdPessoa(), idComunidade).excluirParticipante(idParticipante, idComunidade);
+        }catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

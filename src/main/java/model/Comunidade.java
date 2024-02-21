@@ -121,6 +121,10 @@ public class Comunidade implements Serializable {
         return idParticipantes;
     }
 
+    public void setIdParticipantes(ArrayList<Integer> participantes) {
+        this.idParticipantes = participantes;
+    }
+
     public void setParticipantes(ArrayList<Integer> idParticipantes) {
         this.idParticipantes = idParticipantes;
     }
