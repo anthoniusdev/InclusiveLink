@@ -73,10 +73,11 @@
                 String txt = "SEGUIR";
                 if (usuario.segue(perfilVisitado.getIdPessoa())) {
                     txt = "SEGUINDO";
+
                 }
             %>
             <div class="botao-acao-perfil">
-                <button style="margin-left: 54rem;" id="botao-seguir-perfil"
+                <button class="<%=txt%>" style="margin-left: 52rem;" id="botao-seguir-perfil"
                         onclick="seguirUsuario(<%=usuario.getIdPessoa()%>, <%=perfilVisitado.getIdPessoa()%>, false)"><%=txt%>
                 </button>
             </div>

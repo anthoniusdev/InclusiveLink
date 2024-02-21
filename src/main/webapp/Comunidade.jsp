@@ -64,12 +64,13 @@
                 <button class="sair-comunidade"
                         onclick="sairComunidade(<%=comunidade.getIdComunidade()%>); window.location.reload(true)">SAIR
                 </button>
-
+                <%if(!comunidade.getIdModeradores().contains(usuario.getIdPessoa())){%>
                 <style>
                     .fotoPerfil{
                         margin-top: -9rem;
                     }
                 </style>
+                <%}%>
 
                 <%} else {%>
                 <button class="participar-comunidade"
@@ -77,11 +78,13 @@
                     PARTICIPAR
                 </button>
 
+                <%if(!comunidade.getIdModeradores().contains(usuario.getIdPessoa())){%>
                 <style>
                     .fotoPerfil{
                         margin-top: -9rem;
                     }
                 </style>
+                <%}%>
 
                 <%}%>
             </div>

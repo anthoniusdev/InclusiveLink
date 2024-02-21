@@ -510,3 +510,6 @@ body {
     padding: 10px;
     border-bottom: 0;
 }
+#botao-seguir-perfil{
+    transition: 0.25s;
+}

@@ -58,7 +58,7 @@ body {
     border-radius: 100%;
     width: 150px;
     height: 150px;
-    margin-top: -14rem;
+    margin-top: -16rem;
     margin-left: 3rem;
     border: 6px solid #427D9D;
 }
@@ -373,6 +373,8 @@ body {
 
 .editar-perfil {
     margin-left: 51.5rem;
+    white-space: nowrap;
+    margin-bottom: 0.5rem;
 }
 
 #numSeguidores:hover, #numSeguindos:hover {
@@ -701,6 +703,7 @@ body {
     width: 40px;
     height: 40px;
 }
+
 .pop-up-adicionar-moderador {
     display: flex;
     background-color: var(--COR-04);
@@ -712,6 +715,7 @@ body {
     border-radius: 20px;
     flex-direction: column;
 }
+
 .pop-up-answer {
     padding: 30px;
     background-color: var(--COR-04);
@@ -722,16 +726,19 @@ body {
     left: 35%;
     border-radius: 20px;
 }
-.pop-up-answer small{
+
+.pop-up-answer small {
     font-size: 1.5rem;
     color: var(--COR-01);
 }
-.pergunta{
+
+.pergunta {
     padding-top: 25px;
     padding-bottom: 25px;
     border-bottom: 3px solid var(--COR-01);
 }
-.pop-up-answer button{
+
+.pop-up-answer button {
     margin-right: 30px;
     font-size: 1.2rem;
     padding: 15px;
@@ -744,16 +751,21 @@ body {
     font-family: 'Monomaniac One', sans-serif;
     transition: 0.5s;
 }
-.pop-up-answer button:hover{
+
+.pop-up-answer button:hover {
     background-color: var(--COR-02);
 }
-.botoes{
+
+.botoes {
     padding-top: 20px;
     padding-left: 60px;
 }
-.sair-comunidade{
+
+.sair-comunidade {
     margin-left: 55rem;
 }
-.participar-comunidade{
+
+.participar-comunidade {
     margin-left: 53rem;
 }
+

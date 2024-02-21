@@ -337,5 +337,7 @@ html, body, footer {
 #popup-nova-comunidade .cabecalho .close img {
     margin-left: 10px;
 }
-
+.icone-voltar:hover{
+    cursor: pointer;
+}
 

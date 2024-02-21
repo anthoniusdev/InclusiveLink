@@ -10,7 +10,7 @@ public class ModeradorComunidade extends ParticipanteComunidade {
     public void novoModerador() {
         try {
             Comunidade comunidade = new Comunidade(this.getIdComunidade());
-            if (comunidade.getIdModeradores().contains(this.getIdPessoa())) {
+            if (!comunidade.getIdModeradores().contains(this.getIdPessoa())) {
                 new ModeradorComunidadeDAO().novoModerador(this.getIdPessoa(), this.getIdComunidade());
             }
         }catch (Exception e){
