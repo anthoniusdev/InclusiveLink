@@ -91,12 +91,13 @@
                                 membroSugerido.setFotoPerfil("images/person_foto.svg");
                             }
                         %>
-                        <img src="<%=membroSugerido.getFotoPerfil()%>" alt="Foto de perfil de <%=membroSugerido.getNome()%>">
+                        <img src="<%=membroSugerido.getFotoPerfil()%>"
+                             alt="Foto de perfil de <%=membroSugerido.getNome()%>">
                         <p class="nomeUsuario"><%=membroSugerido.getNome()%>
                         </p>
                     </a>
-                    <button onclick="seguirUsuario(<%=membro.getIdPessoa()%>, <%=membroSugerido.getIdPessoa()%>, <%=membrosRede.indexOf(membroSugerido)%>)"
-                            class="botaoSeguir" id="botaoSeguir<%=membrosRede.indexOf(membroSugerido)%>">
+                    <button onclick="seguirUsuario(<%=membro.getIdPessoa()%>, <%=membroSugerido.getIdPessoa()%>, <%=membrosRede.indexOf(membroSugerido) + 1%>)"
+                            class="botaoSeguir" id="botaoSeguir<%=membrosRede.indexOf(membroSugerido) + 1%>">
                         SEGUIR
                     </button>
                 </div>
@@ -110,6 +111,7 @@
                     <img src="images/search.svg" alt="search">
                     <input type="search" placeholder="PESQUISAR COMUNIDADE" id="pesquisarComunidade">
                 </label>
+                <div class="lista-pesquisa-comunidade" id="lista-pesquisa-comunidade"></div>
             </div>
             <div class="comunidades-sugeridas" id="comunidades-sugeridas">
                 <div class="criar-comunidade" id="criar-comunidade">
@@ -119,14 +121,13 @@
                     </button>
                 </div>
                 <span id="linhaCriarComunidade"></span>
-                <div class="pagina-incial" id="pagina-inicial">
-                    <a href="paginaInicial">PÁGINA INICIAL</a>
+                <div class="ver-comunidades" id="ver-comunidades">
+                    <a href="home">PÁGINA INICIAL</a>
                     <div class="icone-caret-right"></div>
                 </div>
             </div>
         </div>
     </div>
-
     <div class="fundo-escuro" id="fundo-escuro-comunidade">
         <div id="popup-nova-comunidade" class="popup-nova-comunidade">
             <div class="popup-content">
