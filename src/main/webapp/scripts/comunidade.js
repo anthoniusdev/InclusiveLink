@@ -1,5 +1,5 @@
 let carregando = false, usuarioAutenticado, alteracaoSalva = false, ftFunURL, ftPerURL, ftPerCom, ftFunCom;
-let p = new URLSearchParams(new URL(window.location).search);
+let p = new URLSearchParams(new URL(window.location).search), alteracaoParticipante = false;
 let idComunidade = p.get("idComunidade");
 
 obterUsuarioAutenticado().then(function (usuario) {
@@ -75,7 +75,6 @@ document.addEventListener('DOMContentLoaded', function () {
             botaoPostar.style.backgroundColor = "#164863";
             botaoPostar.style.cursor = "pointer";
         }
-        console.log('Arquivo selecionado:', this.files[0]);
     });
     xFt.addEventListener('click', function () {
         file = null;
@@ -141,30 +140,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     botaoFecharEditarComunidade.on('click', function () {
         window.location.reload();
-        // if (alteracaoSalva === true) {
-        //     window.location.reload();
-        // } else if (alteracaoSalva === false) {
-        //     if (ftpChange) {
-        //         let fp = 'images/person_foto.svg';
-        //         if (usuarioAutenticado.fotoPerfil !== undefined && usuarioAutenticado.fotoPerfil !== '') {
-        //             fp = usuarioAutenticado.fotoPerfil;
-        //         }
-        //         $('#foto-perfil-usuario').attr('src', fp);
-        //     }
-        //     if (ftfChange) {
-        //         let ff = 'images/DefaultFundoPerfil.png';
-        //         if (usuarioAutenticado.fotoFundo !== undefined && usuarioAutenticado.fotoFundo !== '') {
-        //             ff = usuarioAutenticado.fotoFundo;
-        //         }
-        //         $('#foto-fundo-usuario').attr('src', ff);
-        //     }
-        //     if (usuarioAutenticado.descricao !== null) {
-        //         inputDescricao.text(usuarioAutenticado.descricao);
-        //     } else {
-        //         inputDescricao.text('');
-        //     }
-        //     inputNomeUsuario.val(usuarioAutenticado.nome);
-        // }
         $('#fundo-escuro-editar-perfil').css({
             display: 'none',
             overflow: 'hidden'
@@ -220,7 +195,6 @@ document.addEventListener('DOMContentLoaded', function () {
             ftFunCom = file;
             ftfChange = true;
         }
-        console.log('Arquivo selecionado:', this.files[0]);
     })
     editarFtPer.on('change', function () {
         const file = this.files[0];
@@ -230,8 +204,31 @@ document.addEventListener('DOMContentLoaded', function () {
             ftPerCom = file;
             ftpChange = true;
         }
-        console.log('Arquivo selecionado:', this.files[0]);
     });
+    // --------------------- POP-UP PARTICIPANTES ----------------------------
+    let fundoEscuroParticipantes = $('#fundo-escuro-participantes');
+    // abrir pop-up
+    $('#numParticipantes').on('click', function (){
+        fundoEscuroParticipantes.css({
+            display: 'block'
+        });
+        $('#body').css({
+            overflow: 'hidden'
+        })
+    })
+    // fechar pop-up
+    $('#close-participantes').on('click', function (){
+        if (alteracaoParticipante === true){
+            window.location.reload();
+        }else{
+            fundoEscuroParticipantes.css({
+                display: 'none'
+            });
+            $('#body').css({
+                overflow: 'auto'
+            })
+        }
+    })
 });
 
 function editarComunidade() {
@@ -257,4 +254,12 @@ function editarComunidade() {
         transition: '0.5s'
     });
     alteracaoSalva = true;
+}
+function removerParticipante(i){
+    $.ajax({
+        type: 'POST',
+        url: 'excluirParticipante',
+        data: {idParticipante: i, idComunidade: idComunidade}
+    });
+    alteracaoParticipante = true;
 }

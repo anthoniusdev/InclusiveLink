@@ -34,11 +34,12 @@ public class ModeradorComunidadeDAO {
         }
     }
 
-    public void excluirParticipante(int idParticipante) {
+    public void excluirParticipante(int idComunidade, int idParticipante) {
         try (Connection con = conectar()) {
-            String delete = "DELETE FROM comunidade WHERE idParticipante = ?";
+            String delete = "DELETE FROM participante_comunidade WHERE idParticipante = ? AND idComunidade = ?";
             try (PreparedStatement preparedStatement = con.prepareStatement(delete)) {
                 preparedStatement.setInt(1, idParticipante);
+                preparedStatement.setInt(2, idComunidade);
                 preparedStatement.executeUpdate();
             }
         } catch (SQLException e) {

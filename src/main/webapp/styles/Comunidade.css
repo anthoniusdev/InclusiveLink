@@ -114,7 +114,7 @@ body {
 }
 
 .descricao {
-    margin-bottom: 0px;
+    margin-bottom: 0;
     margin-left: 3rem;
     font-size: 1.4rem;
     color: #DDF2FD;
@@ -701,3 +701,15 @@ body {
 .icone-voltar:hover{
     cursor: pointer;
 }
+.pop-up-ver-participantes{
+    display: flex;
+    background-color: var(--COR-04);
+    width: 700px;
+    height: auto;
+    position: absolute;
+    top: 2rem;
+    left: 18rem;
+    border-radius: 20px;
+    flex-direction: column;
+}
+.po
