@@ -13,6 +13,7 @@
         ArrayList<Membro> membrosRede = (ArrayList<Membro>) httpSession.getAttribute("perfis");
         Membro usuario = (Membro) httpSession.getAttribute("usuario");
         Comunidade comunidade = (Comunidade) request.getAttribute("comunidade");
+        if (comunidade != null) {
 %>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -56,7 +57,10 @@
                 <button class="adicionar-moderador" id="adicionar-moderador">ADICIONAR MODERADOR</button>
                 <button class="excluir-comunidade" id="excluir-comunidade">EXCLUIR COMUNIDADE</button>
                 <button class="editar-perfil" id="editar-perfil">EDITAR PERFIL</button>
-                <%} else if (comunidade.getIdParticipantes().contains(usuario.getIdPessoa())) {%>
+                <%
+                    }
+                    if (comunidade.getIdParticipantes().contains(usuario.getIdPessoa())) {
+                %>
                 <button class="sair-comunidade"
                         onclick="sairComunidade(<%=comunidade.getIdComunidade()%>); window.location.reload(true)">SAIR
                 </button>
@@ -362,4 +366,9 @@
 </main>
 </body>
 </html>
-<%}%>
+<%
+        }else{
+            response.sendRedirect("verComunidades");
+        }
+    }
+%>
