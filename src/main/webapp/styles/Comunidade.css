@@ -713,10 +713,41 @@ body {
     flex-direction: column;
 }
 .pop-up-answer {
+    padding: 30px;
     background-color: var(--COR-04);
     width: 450px;
+    height: 200px;
     top: 40%;
     position: absolute;
-    left: 40%;
+    left: 35%;
     border-radius: 20px;
+}
+.pop-up-answer small{
+    font-size: 1.5rem;
+    color: var(--COR-01);
+}
+.pergunta{
+    padding-top: 25px;
+    padding-bottom: 25px;
+    border-bottom: 3px solid var(--COR-01);
+}
+.pop-up-answer button{
+    margin-right: 30px;
+    font-size: 1.2rem;
+    padding: 15px;
+    width: 150px;
+    background-color: var(--COR-03);
+    color: var(--COR-TEXTO-04);
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: 'Monomaniac One', sans-serif;
+    transition: 0.5s;
+}
+.pop-up-answer button:hover{
+    background-color: var(--COR-05);
+}
+.botoes{
+    padding-top: 20px;
+    padding-left: 60px;
 }
