@@ -429,8 +429,7 @@ body {
     margin-right: 1rem;
     height: 2rem;
     font-size: 1.2rem;
-    padding: 10px;
-    padding-bottom: 40px;
+    padding: 10px 10px 40px;
     background-color: var(--COR-04);
     color: var(--COR-TEXTO-04);
     border: none;
@@ -452,6 +451,7 @@ body {
     margin-top: 20px;
     font-size: 1.2rem;
     color: var(--COR-TEXTO-04);
+    line-break: anywhere;
 }
 
 .inshights-publicacao {
@@ -556,11 +556,148 @@ body {
     left: 9rem;
     top: 1rem;
 }
-#img-icone-editar-foto-perfil-comunidade{
+
+#img-icone-editar-foto-perfil-comunidade {
     left: 0;
     top: 0;
 }
-#img-icone-editar-foto-fundo-usuario{
+
+#img-icone-editar-foto-fundo-usuario {
     width: 4.5rem;
     height: 5rem;
+}
+
+#imgP {
+    max-width: 280px;
+}
+
+.criarPublicacao {
+    border-top: 3px solid var(--COR-04);
+}
+
+.criarPublicacao form {
+    display: flex;
+    flex-direction: row;
+    padding-top: 20px;
+}
+
+.criarPublicacao textarea {
+    border: none;
+    background-color: var(--COR-03);
+    width: 100%;
+    color: var(--COR-TEXTO-04);
+    font-size: 25px;
+    font-family: var(--FONTE);
+    resize: none;
+    overflow-y: hidden;
+}
+
+.criarPublicacao textarea:focus {
+    outline: none;
+}
+
+.criarPublicacao .foto-perfil {
+    width: 83px;
+    height: 83px;
+    border-radius: 100%;
+    margin-left: 3.5rem
+}
+
+.criarPublicacao .foto-perfil img {
+    width: 64px;
+    height: 64px;
+    border-radius: 100%;
+    background-color: #ffffff;
+}
+
+.criarPublicacao .areaInput {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    width: 580px;
+}
+
+#textoNovaPublicacao::placeholder {
+    font-family: var(--FONTE);
+    color: var(--COR-TEXTO-05);
+    font-size: 25px;
+}
+
+#linhaAreaInput {
+    height: 2px;
+    background-color: var(--COR-TEXTO-05);
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+#imagemPublicacao {
+    width: 30px;
+}
+
+.btnPostar {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 25px;
+    margin-left: 40px;
+}
+
+.btnPostar button {
+    background-color: #0c202a1f;
+    color: var(--COR-01);
+    border-radius: 20px;
+    height: 75px;
+    width: 160px;
+    border: none;
+    font-family: var(--FONTE);
+    font-size: 25px;
+    box-sizing: border-box;
+}
+
+#contagemCaracteresPublicacao {
+    display: none;
+    flex-direction: row-reverse;
+    color: var(--COR-TEXTO-05);
+}
+
+#icone-escolher-imagem {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    width: 30px;
+}
+
+#icone-escolher-imagem svg {
+    width: 24px;
+    height: 24px;
+}
+
+#input-imagem {
+    display: none;
+}
+
+#imagem-preview {
+    max-width: 300px;
+    max-height: 300px;
+    margin-left: 150px;
+    margin-bottom: 30px;
+    border-radius: 20px;
+}
+
+.remover-foto {
+    display: none;
+    width: auto;
+    height: 50px;
+    position: relative;
+}
+
+.remover-foto:hover {
+    cursor: pointer;
+}
+
+.imgPreview {
+    display: flex;
+}
+.icone-voltar:hover{
+    cursor: pointer;
 }

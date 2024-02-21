@@ -71,6 +71,35 @@
                 </p>
                 <p class="participantes">Participantes</p>
             </div>
+            <div class="criarPublicacao">
+                <form action="novaPublicacao" method="post" id="formNovaPublicacao" enctype="multipart/form-data">
+                    <div class="foto-perfil">
+                        <img src="<%=usuario.getFotoPerfil()%>" alt="Foto de perfil">
+                    </div>
+                    <div class="areaInput">
+                        <label for="textoNovaPublicacao">
+                            <textarea name="inputTexto" id="textoNovaPublicacao" placeholder="O que está acontecendo?"
+                                      rows="1" maxlength="200"></textarea>
+                        </label>
+                        <div id="contagemCaracteresPublicacao">200</div>
+                        <span id="linhaAreaInput"></span>
+                        <label id="icone-escolher-imagem">
+                            <img src="images/gallery_img.svg" alt="">
+                        </label>
+                        <input type="file" id="input-imagem" name="imagem" accept="image/*">
+                    </div>
+                    <div class="im"></div>
+                    <div class="btnPostar">
+                        <button type="submit" id="btnPostar">POSTAR</button>
+                    </div>
+                </form>
+                <div class="imgPreview">
+                    <img id="imagem-preview" alt="" src="">
+                    <div class="remover-foto" id="remover-foto">
+                        <img src="images/octicon_x-12.svg" alt="ícone de remover a foto da publicação">
+                    </div>
+                </div>
+            </div>
             <div class="postagens" id="postagens"></div>
         </div>
         <div class="containerSide">
@@ -183,7 +212,8 @@
                     <button onclick="editarComunidade()" id="btnSave">SALVAR ALTERAÇÕES</button>
                 </div>
                 <div class="foto-fundo-comunidade">
-                    <img id="foto-fundo-comunidade" src="<%=comunidade.getFotoFundo()%>" alt="Foto de fundo de <%=comunidade.getNome()%>">
+                    <img id="foto-fundo-comunidade" src="<%=comunidade.getFotoFundo()%>"
+                         alt="Foto de fundo de <%=comunidade.getNome()%>">
                     <div class="icone-editar-foto" id="icone-editar-foto-fundo-comunidade">
                         <img src="images/ri_edit-fill.svg" id="img-icone-editar-foto-fundo-usuario"
                              alt="Ícone de alterar foto de fundo">
@@ -191,7 +221,8 @@
                     <input type="file" id="editarFotoFundoComunidade" name="fotoFundoComunidade" accept="image/*">
                 </div>
                 <div class="foto-perfil-comunidade">
-                    <img id="foto-perfil-comunidade" src="<%=comunidade.getFotoPerfil()%>" alt="Foto do perfil de <%=comunidade.getNome()%>">
+                    <img id="foto-perfil-comunidade" src="<%=comunidade.getFotoPerfil()%>"
+                         alt="Foto do perfil de <%=comunidade.getNome()%>">
                     <div class="icone-editar-foto" id="icone-editar-foto-perfil-comunidade">
                         <img src="images/ri_edit-fill.svg" id="img-icone-editar-foto-perfil-comunidade"
                              alt="Ícone de alterar foto perfil">
@@ -207,7 +238,7 @@
                     <label for="descricao-comunidade" id="label-descricao-comunidade">
                         <small>Descrição</small>
                         <textarea id="descricao-comunidade" name="descricao-comunidade" rows="1"
-                                  maxlength="200"><%if(comunidade.getDescricao() != null){%><%=comunidade.getDescricao()%><%}%></textarea>
+                                  maxlength="200"><%if (comunidade.getDescricao() != null) {%><%=comunidade.getDescricao()%><%}%></textarea>
                         <div id="contagem-caracteres-descricao-comunidade">200</div>
                     </label>
                 </div>

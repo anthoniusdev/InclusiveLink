@@ -336,7 +336,6 @@ input::placeholder {
     display: flex;
 }
 
-<<<<<<< HEAD
 .ver-comunidades img {
     width: 30px;
     position: absolute;
@@ -370,8 +369,4 @@ input::placeholder {
     margin-left: 3rem;
     font-size: 1.7rem;
     color: #DDF2FD;
-=======
-#imgP {
-    max-width: 280px;
->>>>>>> 1193fc5dbb7ab1a7dfc7c7f5965f311eaa0147f7
 }

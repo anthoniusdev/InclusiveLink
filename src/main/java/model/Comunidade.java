@@ -161,7 +161,7 @@ public class Comunidade implements Serializable {
     public ArrayList<Comunidade> obterTodasComunidades() {
         return new ComunidadeDAO().comunidades();
     }
-    public boolean editarComunidade(ArrayList<FileItem> items){
+    public boolean editarComunidade(ArrayList<FileItem> items) {
         try {
             String nome = null;
             String descricao = null;
@@ -213,7 +213,7 @@ public class Comunidade implements Serializable {
                 }
             }
             return new ComunidadeDAO().editar(comunidade.getIdComunidade(), comunidade.getNome(), comunidade.getDescricao(), comunidade.getFotoPerfil(), comunidade.getFotoFundo());
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }

@@ -265,35 +265,6 @@ xFt.addEventListener('click', function () {
         botaoPostar.style.cursor = "default";
     }
 })
-function submeterFormulario() {
-    let formData = new FormData(formNovaPublicacao);
-    formData.append("idComunidade", idComunidade);
-    textoPublicacao.value = "";
-    imagemPreview.src = "";
-    elementoContagemPublicacao.textContent = (200).toString();
-    elementoContagemPublicacao.style.display = "none";
-    botaoPostar.style.backgroundColor = "#0c202a1f"
-    botaoPostar.style.cursor = "default";
-    xFt.style.display = 'none';
-    fetch("novaPublicacaoComunidade", {
-        method: "POST",
-        body: formData
-    }).then(response => {
-        if (!response.ok) {
-            throw new Error("Erro na requisicição: " + response.status);
-        }
-        return response.text();
-    }).then(data => {
-        console.log(data);
-        location.reload();
-    }).catch(error => {
-        console.error("Erro na requisição:", error)
-    }).finally(() => {
-        textoPublicacao.value = "";
-        imageURL = null;
-        imagemPreview.src = '';
-    })
-}
 
 
 function abrirPopUpE(){
