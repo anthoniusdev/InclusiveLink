@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
-@WebServlet(urlPatterns = {"/RealizarCadastro", "/Cadastrar", "/Login", "/home", "/perfil", "/seguirMembro", "/pesquisarPerfil", "/paginaInicial", "/curtirPublicacao", "/obterUsuarioAutenticado", "/curtirComentario", "/editarPerfil", "/removerSeguidor"})
+@WebServlet(urlPatterns = {"/RealizarCadastro", "/Cadastrar", "/Login", "/logout", "/home", "/perfil", "/seguirMembro", "/pesquisarPerfil", "/paginaInicial", "/curtirPublicacao", "/obterUsuarioAutenticado", "/curtirComentario", "/editarPerfil", "/removerSeguidor"})
 public class MembroController extends HttpServlet {
 
 
@@ -57,6 +57,7 @@ public class MembroController extends HttpServlet {
             case "/perfil" -> perfil(request, response);
             case "/pesquisarPerfil" -> pesquisarPerfil(request, response);
             case "/obterUsuarioAutenticado" -> obterUsuarioAutenticado(request, response);
+            case "/logout" -> logout(request, response);
         }
     }
 
@@ -96,8 +97,7 @@ public class MembroController extends HttpServlet {
                         session.setAttribute("authenticated", true);
                         session.setAttribute("usuario", membro);
                         session.setAttribute("perfis", membro.listarMembros(3));
-                        session.setAttribute("feed", new Publicacao().listarPublicacoes(membro.getIdPessoa()));
-                        response.sendRedirect("PaginaInicial.jsp");
+                        response.sendRedirect("home");
                     } else {
                         response.sendRedirect(request.getContextPath() + "/index.html?erro=1");
                     }
@@ -125,7 +125,16 @@ public class MembroController extends HttpServlet {
         String dataNascimento = dataNascimentoToString(mes, dia, ano);
         Membro membro = new Membro(nome, dataNascimento, nomeUsuario, email, senha);
         if (membro.realizarCadastro()) {
-            response.sendRedirect("index.html");
+            String sessionID = gerarTokenSessao();
+            int maxAge = 24 * 60 * 60;
+            Cookie cookie = new Cookie("sessionID", sessionID);
+            cookie.setMaxAge(maxAge);
+            response.addCookie(cookie);
+            HttpSession session = request.getSession();
+            session.setAttribute("authenticated", true);
+            session.setAttribute("usuario", membro);
+            session.setAttribute("perfis", membro.listarMembros(3));
+            response.sendRedirect("perfil?nome_usuario="+membro.getNomeUsuario());
         }
     }
 
@@ -239,5 +248,11 @@ public class MembroController extends HttpServlet {
         HttpSession httpSession = request.getSession(false);
         Membro usuario = (Membro) httpSession.getAttribute("usuario");
         usuario.removerSeguidor(Integer.parseInt(request.getParameter("idSeguidor")));
+    }
+
+    private void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession(false);
+        session.invalidate();
+        response.sendRedirect("index.html");
     }
 }

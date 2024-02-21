@@ -66,7 +66,7 @@
                 <button class="btn-editar-perfil" id="editar-perfil">EDITAR PERFIL</button>
             </div>
             <div class="botao-acao-perfil">
-                <button style="margin-left: 53rem" id="logout">LOGOUT</button>
+                <button style="margin-left: 53rem" id="logout" onclick="window.location.href='logout'">LOGOUT</button>
             </div>
             <%
             } else {
