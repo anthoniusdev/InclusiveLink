@@ -60,11 +60,25 @@
                 <button class="sair-comunidade"
                         onclick="sairComunidade(<%=comunidade.getIdComunidade()%>); window.location.reload(true)">SAIR
                 </button>
+
+                <style>
+                    .fotoPerfil{
+                        margin-top: -9rem;
+                    }
+                </style>
+
                 <%} else {%>
                 <button class="participar-comunidade"
                         onclick="participarComunidade(<%=comunidade.getIdComunidade()%>); window.location.reload(true)">
                     PARTICIPAR
                 </button>
+
+                <style>
+                    .fotoPerfil{
+                        margin-top: -9rem;
+                    }
+                </style>
+
                 <%}%>
             </div>
             <% if (comunidade.getFotoPerfil() == null) {
