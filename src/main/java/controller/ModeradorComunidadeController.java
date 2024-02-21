@@ -49,11 +49,10 @@ public class ModeradorComunidadeController extends HttpServlet {
     private void excluirParticipante(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try{
             HttpSession httpSession = request.getSession(false);
-
             int idParticipante = Integer.parseInt(request.getParameter("idParticipante"));
             int idComunidade = Integer.parseInt(request.getParameter("idComunidade"));
             Membro membro = (Membro) httpSession.getAttribute("usuario");
-            new ModeradorComunidade(membro.getIdPessoa(), idComunidade).excluirParticipante(idParticipante, idComunidade);
+            new ModeradorComunidade(membro.getIdPessoa(), idComunidade).excluirParticipante(idParticipante);
         }catch (Exception e) {
             throw new RuntimeException(e);
         }

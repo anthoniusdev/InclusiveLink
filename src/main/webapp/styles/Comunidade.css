@@ -82,7 +82,7 @@ body {
 }
 
 .descricao {
-    margin-bottom: 0px;
+    margin-bottom: 0;
     margin-left: 3rem;
     font-size: 1.4rem;
     color: #DDF2FD;
@@ -354,20 +354,24 @@ body {
     font-family: 'Monomaniac One', sans-serif;
     justify-content: end;
 }
+
 .botao-acao-perfil button:hover {
     background-color: var(--COR-05);
 }
-.adicionar-moderador{
+
+.adicionar-moderador {
     margin-left: 48rem;
     white-space: nowrap;
     margin-bottom: 0.5rem;
 }
-.excluir-comunidade{
+
+.excluir-comunidade {
     margin-left: 48.7rem;
     white-space: nowrap;
     margin-bottom: 0.5rem;
 }
-.editar-perfil{
+
+.editar-perfil {
     margin-left: 51.5rem;
 }
 
@@ -676,10 +680,43 @@ body {
     padding-left: 10px;
     font-size: 25px;
 }
-.icone-voltar:hover{
+
+.icone-voltar:hover {
     cursor: pointer;
 }
-.icone-voltar img{
+
+.pop-up-ver-participantes {
+    display: flex;
+    background-color: var(--COR-04);
+    width: 700px;
+    height: auto;
+    position: absolute;
+    top: 2rem;
+    left: 18rem;
+    border-radius: 20px;
+    flex-direction: column;
+}
+
+.icone-voltar img {
     width: 40px;
     height: 40px;
+}
+.pop-up-adicionar-moderador {
+    display: flex;
+    background-color: var(--COR-04);
+    width: 700px;
+    height: auto;
+    position: absolute;
+    top: 2rem;
+    left: 18rem;
+    border-radius: 20px;
+    flex-direction: column;
+}
+.pop-up-answer {
+    background-color: var(--COR-04);
+    width: 450px;
+    top: 40%;
+    position: absolute;
+    left: 40%;
+    border-radius: 20px;
 }

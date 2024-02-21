@@ -627,50 +627,8 @@
     </div>
 </div>
 </div>
-<div class="fundo-escuro" id="fundo-escuro-adicionar-moderador">
-    <div class="pop-up-adicionar-moderador">
-        <div class="cabecalho">
-                        <span class="close" id="close-adicionar-moderador"><img src="images/octicon_x-12.svg"
-                                                                                alt=""></span>
-            <p>ADICIONAR MODERADOR</p>
-        </div>
-        <div class="lista-participantes">
-            <%
-                for (int id : comunidade.getIdParticipantes()) {
-                    if (id != usuario.getIdPessoa() && !comunidade.getIdModeradores().contains(id)) {
-                        Membro membro = new Membro(id);
-                        if (membro.getFotoPerfil() == null) {
-                            membro.setFotoPerfil("images/person_foto.svg");
-                        }
-            %>
-            <div class="caixa-perfil" id="<%=membro.getNomeUsuario()%>">
-                <div class="foto-perfil">
-                    <img src="<%=membro.getFotoPerfil()%>" alt="foto de perfil de <%=membro.getNome()%>">
-                </div>
-                <p class="nome"><%=membro.getNome()%>
-                </p>
-                <button id="btn-am<%=membro.getIdPessoa()%>" class="btn-adicionar-moderador"
-                        onclick="adicionarModerador(<%=membro.getIdPessoa()%>);">PROMOVER
-                </button>
-            </div>
-            <%
-                    }
-                }
-            %>
-        </div>
-    </div>
-</div>
-<div class="fundo-escuro" id="fundo-escuro-answer">
-    <div class="pop-up-answer">
-        <div class="pergunta">
-            <small>DESEJA REALMENTE EXCLUIR A COMUNIDADE <%=comunidade.getNome()%>?</small>
-        </div>
-        <div class="botoes">
-            <button id="answer-yes">SIM</button>
-            <button id="answer-no">NÃO</button>
-        </div>
-    </div>
-</div>
+
+
 <div class="fundo-escuro" id="fundo-escuro-editar-comunidade">
     <div class="pop-up-editar-comunidade">
         <div class="cabecalho">

@@ -132,17 +132,6 @@ input::placeholder {
     color: #FF0000;
 }
 
-.pop-up-adicionar-moderador {
-    display: flex;
-    background-color: var(--COR-04);
-    width: 700px;
-    height: auto;
-    position: absolute;
-    top: 2rem;
-    left: 18rem;
-    border-radius: 20px;
-    flex-direction: column;
-}
 
 .caixa-perfil {
     width: 100%;
@@ -183,14 +172,6 @@ input::placeholder {
     text-align: center;
 }
 
-.pop-up-answer {
-    background-color: var(--COR-04);
-    width: 450px;
-    top: 40%;
-    position: absolute;
-    left: 40%;
-    border-radius: 20px;
-}
 
 .containerSide {
     display: flex;

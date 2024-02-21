@@ -75,6 +75,11 @@
             <div class="criarPublicacao">
                 <form action="novaPublicacao" method="post" id="formNovaPublicacao" enctype="multipart/form-data">
                     <div class="foto-perfil">
+                        <%
+                            if (usuario.getFotoPerfil() == null) {
+                                usuario.setFotoPerfil("images/person_foto.svg");
+                            }
+                        %>
                         <img src="<%=usuario.getFotoPerfil()%>" alt="Foto de perfil">
                     </div>
                     <div class="areaInput">
@@ -246,80 +251,88 @@
             </div>
         </div>
         <%}%>
-        <%-- Fundo escuro para visualizar os seguindos--%>
-        <%--        <div class="fundo-escuro" id="fundo-escuro-seguindos">--%>
-        <%--            <div class="pop-up-ver-seguindos">--%>
-        <%--                <div class="cabecalho">--%>
-        <%--                    <span class="close" id="close-seguindos"><img src="images/octicon_x-12.svg" alt=""></span>--%>
-        <%--                    <p>SEGUINDOS</p>--%>
-        <%--                </div>--%>
-        <%--                <div class="lista-seguindos">--%>
-        <%--                    &lt;%&ndash;%>
-        <%--                        for (int idSeguindo : perfilVisitado.getMembrosSeguindo()) {--%>
-        <%--                            Membro seguindo = new Membro(idSeguindo);--%>
-        <%--                            String ftPer = seguindo.getFotoPerfil();--%>
-        <%--                            if (ftPer == null) {--%>
-        <%--                                ftPer = "images/person_foto.svg";--%>
-        <%--                            }--%>
-        <%--                    %>--%>
-        <%--                    <div class="caixa-perfil" id="<%=seguindo.getNomeUsuario()%>">--%>
-        <%--                        <div class="foto-perfil">--%>
-        <%--                            <img src="<%=ftPer%>" alt="foto de perfil de <%=seguindo.getNome()%>">--%>
-        <%--                        </div>--%>
-        <%--                        <p class="nome"><%=seguindo.getNome()%>--%>
-        <%--                        </p>--%>
-        <%--                        &lt;%&ndash;%>
-        <%--                            if (paginaUsuario) {--%>
-        <%--                        %>--%>
-        <%--                        <button class="remover"--%>
-        <%--                                onclick="pararSeguir(<%=usuario.getIdPessoa()%>, <%=seguindo.getIdPessoa()%>, '<%=seguindo.getNomeUsuario()%>')">--%>
-        <%--                            REMOVER--%>
-        <%--                        </button>--%>
-        <%--                        <%}%>--%>
-        <%--                    </div>--%>
-        <%--                    &lt;%&ndash;%>
-        <%--                        }--%>
-        <%--                    %>--%>
-        <%--                </div>--%>
-        <%--            </div>--%>
-        <%--        </div>&lt;%&ndash;--%>
-        <%--        &lt;%&ndash; Fundo escuro para visulizar os seguidores&ndash;%&gt;--%>
-        <%--        <div class="fundo-escuro" id="fundo-escuro-seguidores">--%>
-        <%--            <div class="pop-up-seguidores">--%>
-        <%--                <div class="cabecalho">--%>
-        <%--                    <span class="close" id="close-seguidores"><img src="images/octicon_x-12.svg" alt=""></span>--%>
-        <%--                    <p>SEGUIDORES</p>--%>
-        <%--                </div>--%>
-        <%--                <div class="lista-seguidores">--%>
-        <%--                    &lt;%&ndash;%>
-        <%--                        for (int idSeguidor : perfilVisitado.getMembrosSeguidores()) {--%>
-        <%--                            Membro seguidor = new Membro(idSeguidor);--%>
-        <%--                            String ftPer = seguidor.getFotoPerfil();--%>
-        <%--                            if (ftPer == null) {--%>
-        <%--                                ftPer = "images/person_foto.svg";--%>
-        <%--                            }--%>
-        <%--                    %>--%>
-        <%--                    <div class="caixa-perfil" id="<%=seguidor.getNomeUsuario()%>">--%>
-        <%--                        <div class="foto-perfil">--%>
-        <%--                            <img src="<%=ftPer%>" alt="foto de perfil de <%=seguidor.getNome()%>">--%>
-        <%--                        </div>--%>
-        <%--                        <p class="nome"><%=seguidor.getNome()%>--%>
-        <%--                        </p>--%>
-        <%--                        &lt;%&ndash;%>
-        <%--                            if (paginaUsuario) {--%>
-        <%--                        %>--%>
-        <%--                        <button class="remover"--%>
-        <%--                                onclick="removerSeguidor(<%=seguidor.getIdPessoa()%>); this.parentNode.style.display='none'">--%>
-        <%--                            REMOVER--%>
-        <%--                        </button>--%>
-        <%--                        <%}%>--%>
-        <%--                    </div>--%>
-        <%--                    &lt;%&ndash;%>
-        <%--                        }--%>
-        <%--                    %>--%>
-        <%--                </div>--%>
-        <%--            </div>--%>
-        <%--        </div>&ndash;%&gt;--%>
+        <%-- Fundo escuro para mostrar participantes--%>
+        <div class="fundo-escuro" id="fundo-escuro-participantes">
+            <div class="pop-up-ver-participantes">
+                <div class="cabecalho">
+                    <span class="close" id="close-participantes"><img src="images/octicon_x-12.svg" alt=""></span>
+                    <p>PARTICIPANTES</p>
+                </div>
+                <div class="lista-participantes">
+                    <%
+                        for (int idParticipante : comunidade.getIdParticipantes()) {
+                            Membro participante = new Membro(idParticipante);
+                            String ftPer = participante.getFotoPerfil();
+                            if (ftPer == null) {
+                                ftPer = "images/person_foto.svg";
+                            }
+                    %>
+                    <div class="caixa-perfil" id="<%=participante.getNomeUsuario()%>">
+                        <div class="foto-perfil">
+                            <img src="<%=ftPer%>" alt="foto de perfil de <%=participante.getNome()%>">
+                        </div>
+                        <p class="nome"><%=participante.getNome()%>
+                        </p>
+                        <%
+                            if (comunidade.getIdModeradores().contains(usuario.getIdPessoa()) && participante.getIdPessoa() != usuario.getIdPessoa()) {
+                        %>
+                        <button class="remover"
+                                onclick="removerParticipante(<%=participante.getIdPessoa()%>, '<%=participante.getNomeUsuario()%>'); this.parentNode.style='none'">
+                            REMOVER
+                        </button>
+                        <%}%>
+                    </div>
+                    <%}%>
+                </div>
+            </div>
+        </div>
+        <%if (comunidade.getIdModeradores().contains(usuario.getIdPessoa())) {%>
+        <%-- Fundo escuro para adicionar moderador--%>
+        <div class="fundo-escuro" id="fundo-escuro-adicionar-moderador">
+            <div class="pop-up-adicionar-moderador">
+                <div class="cabecalho">
+                        <span class="close" id="close-adicionar-moderador"><img src="images/octicon_x-12.svg"
+                                                                                alt=""></span>
+                    <p>ADICIONAR MODERADOR</p>
+                </div>
+                <div class="lista-participantes">
+                    <%
+                        for (int id : comunidade.getIdParticipantes()) {
+                            if (id != usuario.getIdPessoa() && !comunidade.getIdModeradores().contains(id)) {
+                                Membro membro = new Membro(id);
+                                if (membro.getFotoPerfil() == null) {
+                                    membro.setFotoPerfil("images/person_foto.svg");
+                                }
+                    %>
+                    <div class="caixa-perfil" id="<%=membro.getNomeUsuario()%>">
+                        <div class="foto-perfil">
+                            <img src="<%=membro.getFotoPerfil()%>" alt="foto de perfil de <%=membro.getNome()%>">
+                        </div>
+                        <p class="nome"><%=membro.getNome()%>
+                        </p>
+                        <button id="btn-am<%=membro.getIdPessoa()%>" class="btn-adicionar-moderador"
+                                onclick="adicionarModerador(<%=membro.getIdPessoa()%>);">PROMOVER
+                        </button>
+                    </div>
+                    <%
+                            }
+                        }
+                    %>
+                </div>
+            </div>
+        </div>
+        <div class="fundo-escuro" id="fundo-escuro-answer">
+            <div class="pop-up-answer">
+                <div class="pergunta">
+                    <small>DESEJA REALMENTE EXCLUIR A COMUNIDADE <%=comunidade.getNome()%>?</small>
+                </div>
+                <div class="botoes">
+                    <button id="answer-yes">SIM</button>
+                    <button id="answer-no">NÃO</button>
+                </div>
+            </div>
+        </div>
+        <%}%>
     </div>
 </main>
 </body>
