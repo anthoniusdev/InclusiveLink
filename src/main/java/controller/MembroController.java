@@ -224,10 +224,10 @@ public class MembroController extends HttpServlet {
             JSONObject jsonResponse = new JSONObject();
             if (new Membro().editarPerfil(items)) {
                 jsonResponse.put("success", true);
-                jsonResponse.put("message", "Comunidade criada com sucesso.");
+                jsonResponse.put("message", "Perfil editado com sucesso.");
             } else {
                 jsonResponse.put("success", false);
-                jsonResponse.put("message", "Erro ao criar a comunidade.");
+                jsonResponse.put("message", "Erro ao editar o comunidade.");
             }
             response.getWriter().write(jsonResponse.toString());
         } catch (Exception e) {

@@ -3,7 +3,6 @@
 <%@ page import="model.Membro" %>
 <%@ page import="model.Comunidade" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="model.Publicacao" %>
 <%
     HttpSession httpSession = request.getSession(false);
     if (httpSession == null || httpSession.getAttribute("authenticated") == null || httpSession.getAttribute("usuario") == null) {
@@ -14,10 +13,6 @@
         ArrayList<Membro> membrosRede = (ArrayList<Membro>) httpSession.getAttribute("perfis");
         Membro usuario = (Membro) httpSession.getAttribute("usuario");
         Comunidade comunidade = (Comunidade) request.getAttribute("comunidade");
-        String fotoPerfil = comunidade.getFotoPerfil();
-        String fotoFundo = comunidade.getFotoFundo();
-        String nome = comunidade.getNome();
-        String descricao = comunidade.getDescricao();
 %>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -55,22 +50,25 @@
             <img src="<%=comunidade.getFotoFundo()%>" class="fundoPerfil"
                  alt="Foto de fundo da comunidade <%=comunidade.getNome()%>">
             <div class="botao-acao-perfil">
-                <button id="editar-perfil">AÇÕES</button>
+                <button id="editar-perfil">EDITAR PERFIL</button>
+                <button id="">AÇÕES</button>
             </div>
             <% if (comunidade.getFotoPerfil() == null) {
                 comunidade.setFotoPerfil("images/DefaultFundoPerfil.png");
             }%>
             <img src="<%=comunidade.getFotoPerfil()%>" class="fotoPerfil"
                  alt="Foto de perfil da comunidade <%=comunidade.getNome()%>">
-            <p class="nome-usuario"><%=comunidade.getNome()%>
+            <p class="nome-comunidade"><%=comunidade.getNome()%>
             </p>
             <div class="profile-description">
                 <%if (comunidade.getDescricao() != null) {%>
-                <p class="descricao"><%=comunidade.getDescricao()%></p>
+                <p class="descricao"><%=comunidade.getDescricao()%>
+                </p>
                 <%}%>
             </div>
             <div class="divParticipantes">
-                <p class="numParticipantes" id="numParticipantes"><%=comunidade.getIdParticipantes().size()%></p>
+                <p class="numParticipantes" id="numParticipantes"><%=comunidade.getIdParticipantes().size()%>
+                </p>
                 <p class="participantes">Participantes</p>
             </div>
             <div class="postagens" id="postagens"></div>
@@ -173,50 +171,50 @@
                 </div>
             </div>
         </div>
-        <%--        <%--%>
-        <%--            if (paginaUsuario) {--%>
-        <%--        %>--%>
-        <%--        &lt;%&ndash; Fundo escuro para editar o perfil&ndash;%&gt;--%>
-        <%--        <div class="fundo-escuro" id="fundo-escuro-editar-perfil">--%>
-        <%--            <div class="pop-up-editar-perfil">--%>
-        <%--                <div class="cabecalho">--%>
-        <%--                    <span class="close" id="close-editar-perfil"><img src="images/octicon_x-12.svg" alt=""></span>--%>
-        <%--                    <p>EDITANDO PERFIL</p>--%>
-        <%--                    <button onclick="editarPerfil()" id="btnSave">SALVAR ALTERAÇÕES</button>--%>
-        <%--                </div>--%>
-        <%--                <div class="foto-fundo-usuario">--%>
-        <%--                    <img id="foto-fundo-usuario" src="<%=fotoFundo%>" alt="Foto de fundo de <%=usuario.getNome()%>">--%>
-        <%--                    <div class="icone-editar-foto" id="icone-editar-foto-fundo-usuario">--%>
-        <%--                        <img src="images/ri_edit-fill.svg" id="img-icone-editar-foto-fundo-usuario"--%>
-        <%--                             alt="Ícone de alterar foto perfil">--%>
-        <%--                    </div>--%>
-        <%--                    <input type="file" id="editarFotoFundoUsuario" name="fotoFundoUsuario" accept="image/*">--%>
-        <%--                </div>--%>
-        <%--                <div class="foto-perfil-usuario">--%>
-        <%--                    <img id="foto-perfil-usuario" src="<%=fotoPerfil%>" alt="Foto do perfil de <%=usuario.getNome()%>">--%>
-        <%--                    <div class="icone-editar-foto" id="icone-editar-foto-perfil-usuario">--%>
-        <%--                        <img src="images/ri_edit-fill.svg" id="img-icone-editar-foto-perfil-usuario"--%>
-        <%--                             alt="Ícone de alterar foto perfil">--%>
-        <%--                    </div>--%>
-        <%--                    <input type="file" id="editarFotoPerfilUsuario" name="fotoPerfilUsuario" accept="image/*">--%>
-        <%--                </div>--%>
-        <%--                <div class="inputs">--%>
-        <%--                    <label for="nome-usuario" id="label-nome-usuario">--%>
-        <%--                        <small>Nome</small>--%>
-        <%--                        <input type="text" id="nome-usuario" name="nome-usuario" value="<%=perfilVisitado.getNome()%>"--%>
-        <%--                               required>--%>
-        <%--                    </label>--%>
-        <%--                    <label for="descricao-usuario" id="label-descricao-usuario">--%>
-        <%--                        <small>Descrição</small>--%>
-        <%--                        <textarea id="descricao-usuario" name="descricao-usuario" rows="1"--%>
-        <%--                                  maxlength="200"><%if (perfilVisitado.getDescricao() != null) {%><%=perfilVisitado.getDescricao()%><%}%></textarea>--%>
-        <%--                        <div id="contagem-caracteres-descricao-usuario">200</div>--%>
-        <%--                    </label>--%>
-        <%--                </div>--%>
-        <%--            </div>--%>
-        <%--        </div>--%>
-        <%--        <%}%>--%>
-        <%--        &lt;%&ndash; Fundo escuro para visualizar os seguindos&ndash;%&gt;--%>
+        <%
+            if (comunidade.getIdModeradores().contains(usuario.getIdPessoa())) {
+        %>
+        <%-- Fundo escuro para editar a comunidade--%>
+        <div class="fundo-escuro" id="fundo-escuro-editar-comunidade">
+            <div class="pop-up-editar-perfil">
+                <div class="cabecalho">
+                    <span class="close" id="close-editar-comunidade"><img src="images/octicon_x-12.svg" alt=""></span>
+                    <p>EDITANDO COMUNIDADE</p>
+                    <button onclick="editarComunidade()" id="btnSave">SALVAR ALTERAÇÕES</button>
+                </div>
+                <div class="foto-fundo-comunidade">
+                    <img id="foto-fundo-comunidade" src="<%=comunidade.getFotoFundo()%>" alt="Foto de fundo de <%=comunidade.getNome()%>">
+                    <div class="icone-editar-foto" id="icone-editar-foto-fundo-comunidade">
+                        <img src="images/ri_edit-fill.svg" id="img-icone-editar-foto-fundo-usuario"
+                             alt="Ícone de alterar foto de fundo">
+                    </div>
+                    <input type="file" id="editarFotoFundoComunidade" name="fotoFundoComunidade" accept="image/*">
+                </div>
+                <div class="foto-perfil-comunidade">
+                    <img id="foto-perfil-comunidade" src="<%=comunidade.getFotoPerfil()%>" alt="Foto do perfil de <%=comunidade.getNome()%>">
+                    <div class="icone-editar-foto" id="icone-editar-foto-perfil-comunidade">
+                        <img src="images/ri_edit-fill.svg" id="img-icone-editar-foto-perfil-comunidade"
+                             alt="Ícone de alterar foto perfil">
+                    </div>
+                    <input type="file" id="editarFotoPerfilComunidade" name="fotoPerfilComunidade" accept="image/*">
+                </div>
+                <div class="inputs">
+                    <label for="nome-comunidade" id="label-nome-comunidade">
+                        <small>Nome</small>
+                        <input type="text" id="nome-comunidade" name="nome-comunidade" value="<%=comunidade.getNome()%>"
+                               required>
+                    </label>
+                    <label for="descricao-comunidade" id="label-descricao-comunidade">
+                        <small>Descrição</small>
+                        <textarea id="descricao-comunidade" name="descricao-comunidade" rows="1"
+                                  maxlength="200"><%if(comunidade.getDescricao() != null){%><%=comunidade.getDescricao()%><%}%></textarea>
+                        <div id="contagem-caracteres-descricao-comunidade">200</div>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <%}%>
+        <%-- Fundo escuro para visualizar os seguindos--%>
         <%--        <div class="fundo-escuro" id="fundo-escuro-seguindos">--%>
         <%--            <div class="pop-up-ver-seguindos">--%>
         <%--                <div class="cabecalho">--%>
@@ -224,7 +222,7 @@
         <%--                    <p>SEGUINDOS</p>--%>
         <%--                </div>--%>
         <%--                <div class="lista-seguindos">--%>
-        <%--                    <%--%>
+        <%--                    &lt;%&ndash;%>
         <%--                        for (int idSeguindo : perfilVisitado.getMembrosSeguindo()) {--%>
         <%--                            Membro seguindo = new Membro(idSeguindo);--%>
         <%--                            String ftPer = seguindo.getFotoPerfil();--%>
@@ -238,7 +236,7 @@
         <%--                        </div>--%>
         <%--                        <p class="nome"><%=seguindo.getNome()%>--%>
         <%--                        </p>--%>
-        <%--                        <%--%>
+        <%--                        &lt;%&ndash;%>
         <%--                            if (paginaUsuario) {--%>
         <%--                        %>--%>
         <%--                        <button class="remover"--%>
@@ -247,7 +245,7 @@
         <%--                        </button>--%>
         <%--                        <%}%>--%>
         <%--                    </div>--%>
-        <%--                    <%--%>
+        <%--                    &lt;%&ndash;%>
         <%--                        }--%>
         <%--                    %>--%>
         <%--                </div>--%>
@@ -261,7 +259,7 @@
         <%--                    <p>SEGUIDORES</p>--%>
         <%--                </div>--%>
         <%--                <div class="lista-seguidores">--%>
-        <%--                    <%--%>
+        <%--                    &lt;%&ndash;%>
         <%--                        for (int idSeguidor : perfilVisitado.getMembrosSeguidores()) {--%>
         <%--                            Membro seguidor = new Membro(idSeguidor);--%>
         <%--                            String ftPer = seguidor.getFotoPerfil();--%>
@@ -275,7 +273,7 @@
         <%--                        </div>--%>
         <%--                        <p class="nome"><%=seguidor.getNome()%>--%>
         <%--                        </p>--%>
-        <%--                        <%--%>
+        <%--                        &lt;%&ndash;%>
         <%--                            if (paginaUsuario) {--%>
         <%--                        %>--%>
         <%--                        <button class="remover"--%>
@@ -284,7 +282,7 @@
         <%--                        </button>--%>
         <%--                        <%}%>--%>
         <%--                    </div>--%>
-        <%--                    <%--%>
+        <%--                    &lt;%&ndash;%>
         <%--                        }--%>
         <%--                    %>--%>
         <%--                </div>--%>
