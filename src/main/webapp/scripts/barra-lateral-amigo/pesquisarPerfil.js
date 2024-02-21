@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     const inputPesquisarPerfil = $('#pesquisarPerfil');
+    const inputPesquisarComunidade = $('#pesqComunidade');
     let listaPerfisPesquisa = $('#listaPesquisaPerfil');
     inputPesquisarPerfil.on('input change', function () {
         let valor = inputPesquisarPerfil.val();
@@ -16,6 +17,9 @@ document.addEventListener('DOMContentLoaded', function () {
         let perfisSugeridos = $('#perfisSugeridos');
 
         if (bool) {
+            inputPesquisarComunidade.css({
+                marginTop: "290px"
+            });
             inputPesquisarPerfil.css({
                 borderRadius: "0px",
                 borderTopLeftRadius: "20px",
@@ -29,6 +33,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 display: 'none'
             });
         } else {
+            inputPesquisarComunidade.css({
+                marginTop: "20px"
+            });
             inputPesquisarPerfil.css({
                 borderRadius: '20px'
             });

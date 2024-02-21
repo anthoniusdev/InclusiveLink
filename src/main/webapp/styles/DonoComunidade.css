@@ -7,6 +7,7 @@ body {
     background-color: #9BBEC8;
     color: #DDF2FD;
     font-family: 'Monomaniac One', sans-serif;
+    display: flex;
 }
 
 footer {
@@ -17,21 +18,25 @@ footer {
     padding: 15px;
     color: #DDF2FD;
 }
-span.h4{
+
+span.h4 {
     margin-left: 25px;
     cursor: pointer;
 }
-.icone{
+
+.icone {
     font-size: 1.5rem;
     border-radius: 20px;
     background-color: #164863;
     color: #DDF2FD;
     text-align: center;
 }
+
 button.btn:hover {
     background-color: #164863a2;
 }
-.post{
+
+.post {
     font-size: 1rem;
     width: 130px;
     height: 30px;
@@ -55,14 +60,16 @@ input {
     color: #DDF2FD;
     border-radius: 2px;
 }
+
 input::placeholder {
     color: #ddf2fdbb;
 }
+
 .icon-custom-size {
     font-size: 13px;
 }
 
-.form-control{
+.form-control {
     font-family: 'Monomaniac One', sans-serif;
     background-color: transparent !important;
     border: none;
@@ -72,11 +79,12 @@ input::placeholder {
     font-size: 20px;
     padding: 0px;
 }
-.form-control::placeholder{
+
+.form-control::placeholder {
     color: #DDF2FD;
 }
 
-.menu{
+.menu {
     border-radius: 20px;
     background-color: #164863;
     color: #DDF2FD;
@@ -90,5 +98,275 @@ input::placeholder {
 .btn-extra-small {
     padding: 1px;
     font-size: 12px;
+}
 
+.bi.bi-arrow-left.fs-4.ms-3.icone-voltar {
+    width: 40px;
+    transition: 0.5s;
+}
+
+.bi.bi-arrow-left.fs-4.ms-3.icone-voltar:hover {
+    cursor: pointer;
+    width: 55px;
+}
+
+.sair-comunidade {
+    width: 100px;
+    height: 50px;
+    align-self: center;
+    background-color: var(--COR-04);
+    color: var(--COR-TEXTO-04);
+    margin-right: 50px;
+    margin-left: 75px;
+    border: none;
+    border-radius: 20px;
+    font-family: var(--FONTE);
+    font-size: 30px;
+}
+
+.sair-comunidade:hover {
+    cursor: pointer;
+    border: 1px solid #FF0000;
+    background-color: var(--COR-03);
+    transition: 0.5s;
+    color: #FF0000;
+}
+
+.pop-up-adicionar-moderador {
+    display: flex;
+    background-color: var(--COR-04);
+    width: 700px;
+    height: auto;
+    position: absolute;
+    top: 2rem;
+    left: 18rem;
+    border-radius: 20px;
+    flex-direction: column;
+}
+
+.caixa-perfil {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+}
+
+.foto-perfil-autor img {
+    margin: 20px;
+    border-radius: 100%;
+    width: 100px;
+    height: 100px;
+    background-color: #ffffff;
+}
+
+.cabecalho {
+    display: flex;
+}
+
+.cabecalho img {
+    margin-left: 1rem;
+}
+
+.cabecalho p {
+    color: var(--COR-TEXTO-04);
+    font-size: 25px;
+    padding-left: 20px;
+    margin: 0;
+}
+
+.botoes {
+    display: flex;
+    justify-content: center;
+}
+
+.pergunta {
+    text-align: center;
+}
+
+.pop-up-answer {
+    background-color: var(--COR-04);
+    width: 450px;
+    top: 40%;
+    position: absolute;
+    left: 40%;
+    border-radius: 20px;
+}
+
+.containerSide {
+    display: flex;
+    flex-direction: column;
+}
+
+:root {
+    --COR-05: #335d7461;
+    --COR-04: #164863;
+    --COR-03: #427D9D;
+    --COR-02: #9BBEC8;
+    --COR-01: #DDF2FD;
+    --COR-TEXTO-01: rgba(22, 72, 99, 0.3);
+    --COR-TEXTO-02: rgba(22, 72, 99, 0.8);
+    --COR-TEXTO-03: rgba(221, 242, 253, 0.50);
+    --COR-TEXTO-04: #DDF2FD;
+    --COR-TEXTO-05: rgba(221, 242, 253, 0.70);
+    --FONTE: "Monomaniac One", sans-serif;
+    --TAMANHO-FONTE: 25px;
+}
+.criarPublicacao form {
+    display: flex;
+    flex-direction: row;
+    padding-top: 20px;
+}
+
+.criarPublicacao textarea {
+    border: none;
+    background-color: var(--COR-03);
+    width: 100%;
+    color: var(--COR-TEXTO-04);
+    font-size: 25px;
+    font-family: var(--FONTE);
+    resize: none;
+    overflow-y: hidden;
+}
+
+.criarPublicacao textarea:focus {
+    outline: none;
+}
+
+.criarPublicacao .foto-perfil {
+    padding-left: 10px;
+    padding-right: 35px;
+    width: 83px;
+    height: 83px;
+    border-radius: 100%;
+}
+
+.criarPublicacao .foto-perfil img {
+    width: 64px;
+    height: 64px;
+    border-radius: 100%;
+    background-color: #ffffff;
+}
+
+.criarPublicacao .areaInput {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    width: 580px;
+}
+
+#textoNovaPublicacao::placeholder {
+    font-family: var(--FONTE);
+    color: var(--COR-TEXTO-05);
+    font-size: 25px;
+}
+
+#linhaAreaInput {
+    height: 2px;
+    background-color: var(--COR-TEXTO-05);
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+#imagemPublicacao {
+    width: 30px;
+}
+
+.btnPostar {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 25px;
+    margin-left: 40px;
+}
+
+.btnPostar button {
+    background-color: #0c202a1f;
+    color: var(--COR-01);
+    border-radius: 20px;
+    height: 75px;
+    width: 160px;
+    border: none;
+    font-family: var(--FONTE);
+    font-size: 25px;
+    box-sizing: border-box;
+}
+
+#contagemCaracteresPublicacao {
+    display: none;
+    flex-direction: row-reverse;
+    color: var(--COR-TEXTO-05);
+}
+
+#icone-escolher-imagem {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    width: 30px;
+}
+
+#icone-escolher-imagem svg {
+    width: 24px;
+    height: 24px;
+}
+
+#input-imagem {
+    display: none;
+}
+
+#imagem-preview {
+    max-width: 300px;
+    max-height: 300px;
+    margin-left: 150px;
+    margin-bottom: 30px;
+    border-radius: 20px;
+}
+
+.remover-foto {
+    display: none;
+    width: auto;
+    height: 50px;
+    position: relative;
+}
+
+.remover-foto:hover {
+    cursor: pointer;
+}
+
+.imgPreview {
+    display: flex;
+}
+
+.ver-comunidades img {
+    width: 30px;
+    position: absolute;
+    right: 80px;
+}
+
+.icone-caret-right {
+    width: 40px;
+    height: 65px;
+    background-image: url("../images/caret-right-solid.svg");
+    background-size: 35px;
+    filter: invert(1);
+    margin-left: -90px;
+    margin-top: 5px;
+}
+
+.resultados-pesquisa-comunidade {
+    display: flex;
+    flex-direction: row;
+    background-color: var(--COR-03);
+    transition: 0.5s;
+    border-top: 2px solid var(--COR-04);
+}
+
+.lista-pesquisa-comunidade {
+    background-color: var(--COR-03);
+}
+
+.nome-comunidade {
+    margin-bottom: 0px;
+    margin-left: 3rem;
+    font-size: 1.7rem;
+    color: #DDF2FD;
 }

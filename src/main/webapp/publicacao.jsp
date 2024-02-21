@@ -37,134 +37,147 @@
 </head>
 <body>
 <main>
-    <div class="principal">
-        <div class="cabecalho-post">
-            <div class="icone-voltar">
-                <img src="images/ri_arrow-up-line.svg" alt="imagem de setinha para voltar a página anterior">
+    <div class="container">
+        <div class="principal">
+            <div class="cabecalho-post">
+                <div class="icone-voltar">
+                    <img src="images/ri_arrow-up-line.svg" alt="imagem de setinha para voltar a página anterior">
+                </div>
+                <span class="txtPost">POST</span>
             </div>
-            <h3>POST</h3>
-        </div>
-        <div class="publicacao" id="publicacao">
-            <div class="img-foto-perfil">
-                <%
-                    String urlFtPer = publicacao.getAutor().getFotoPerfil();
-                    if (urlFtPer == null) {
-                        urlFtPer = "images/person_foto.svg";
-                    }
-                %>
-                <img src="<%=urlFtPer%>" alt="Foto de perfil de <%=publicacao.getAutor().getNome()%>">
-            </div>
-            <div class="informacoes-publicacao">
-                <div class="nome-autor">
-                    <h3><%=publicacao.getAutor().getNome()%>
-                    </h3>
+            <div class="publicacao" id="publicacao">
+                <div class="img-foto-perfil">
+                    <%
+                        String urlFtPer = publicacao.getAutor().getFotoPerfil();
+                        if (urlFtPer == null) {
+                            urlFtPer = "images/person_foto.svg";
+                        }
+                    %>
+                    <img src="<%=urlFtPer%>" alt="Foto de perfil de <%=publicacao.getAutor().getNome()%>">
                 </div>
-                <div class="texto-publicacao">
-                    <%=publicacao.getTexto()%>
-                </div>
-                <%
-                    if (publicacao.getMidia() != null) {
-                %>
-                <div class="midia-publicacao">
-                    <img src="<%=publicacao.getMidia()%>" alt="Foto da publicação">
-                </div>
-                <%}%>
-                <div class="data-hora">
-                    <div class="data"><%=publicacao.getData()%>
+                <div class="informacoes-publicacao">
+                    <div class="nome-autor">
+                        <h3><%=publicacao.getAutor().getNome()%>
+                        </h3>
                     </div>
-                    <div class="hora"><%=publicacao.getHora()%>
+                    <div class="texto-publicacao">
+                        <%=publicacao.getTexto()%>
                     </div>
-                </div>
-                <div class="inshights-publicacao">
-                    <div class="curtida-publicacao" id="curtida-publicacao">
-                        <%
-                            String urlCurt = "images/iconamoon_heart-bold.svg";
-                            for (int membroCurtiu : publicacao.getCurtidas()) {
-                                if (membroCurtiu == membro.getIdPessoa()) {
-                                    urlCurt = "images/iconamoon_heart-fill.svg";
-                                    break;
+                    <%
+                        if (publicacao.getMidia() != null) {
+                    %>
+                    <div class="midia-publicacao">
+                        <img src="<%=publicacao.getMidia()%>" alt="Foto da publicação">
+                    </div>
+                    <%}%>
+                    <div class="data-hora">
+                        <div class="data"><%=publicacao.getData()%>
+                        </div>
+                        <div class="hora"><%=publicacao.getHora()%>
+                        </div>
+                    </div>
+                    <div class="inshights-publicacao">
+                        <div class="curtida-publicacao" id="curtida-publicacao">
+                            <%
+                                String urlCurt = "images/iconamoon_heart-bold.svg";
+                                for (int membroCurtiu : publicacao.getCurtidas()) {
+                                    if (membroCurtiu == membro.getIdPessoa()) {
+                                        urlCurt = "images/iconamoon_heart-fill.svg";
+                                        break;
+                                    }
                                 }
+                            %>
+                            <img src="<%=urlCurt%>" alt="Ícone de curtida" class="icone-curtida"
+                                 onclick="curtirPublicacao(<%=publicacao.getIdPublicacao()%>)">
+                        </div>
+                        <div class="comentarios-publicacao" id="comentarios-publicacao">
+                            <img src="images/majesticons_comment-line.svg" alt="Ícone de comentário"
+                                 class="icone-comentario">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="adicionar-comentario">
+                <form action="novoComentario" method="post" id="formNovoComentario">
+                    <div class="foto-perfil">
+                        <%
+                            String urlFtPerUsu = membro.getFotoPerfil();
+                            if (urlFtPerUsu == null) {
+                                urlFtPerUsu = "images/person_foto.svg";
                             }
                         %>
-                        <img src="<%=urlCurt%>" alt="Ícone de curtida" class="icone-curtida"
-                             onclick="curtirPublicacao(<%=publicacao.getIdPublicacao()%>)">
+                        <img src="<%=urlFtPerUsu%>" alt="Foto do perfil de <%=membro.getNome()%>">
                     </div>
-                    <div class="comentarios-publicacao" id="comentarios-publicacao">
-                        <img src="images/majesticons_comment-line.svg" alt="Ícone de comentário"
-                             class="icone-comentario">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="adicionar-comentario">
-            <form action="novoComentario" method="post" id="formNovoComentario">
-                <div class="foto-perfil">
-                    <img src="<%=urlFtPer%>" alt="Foto do perfil de <%=membro.getNome()%>">
-                </div>
-                <div class="area-input">
-                    <label for="textoNovaPublicacao">
+                    <div class="area-input">
+                        <label for="textoNovaPublicacao">
                         <textarea name="inputTexto" id="textoNovaPublicacao" placeholder="Digite sua resposta"
                                   rows="1" maxlength="200"></textarea>
-                    </label>
-                    <div id="contagemCaracteresPublicacao">200</div>
-                    <span id="linhaAreaInput"></span>
-                </div>
-                <div class="btnPostar">
-                    <button type="submit" id="btnPostar">POSTAR</button>
-                </div>
-            </form>
+                        </label>
+                        <div id="contagemCaracteresPublicacao">200</div>
+                        <span id="linhaAreaInput"></span>
+                    </div>
+                    <div class="btnPostar">
+                        <button type="submit" id="btnPostar">POSTAR</button>
+                    </div>
+                </form>
+            </div>
+            <div class="comentarios-publicacao" id="comentarios"></div>
         </div>
-        <div class="comentarios-publicacao" id="comentarios"></div>
     </div>
-    <div class="pesquisar-amigo">
-        <label>
-            <img src="images/search.svg" alt="search">
-            <input type="search" placeholder="PESQUISAR PERFIL" id="pesquisarPerfil">
-        </label>
-        <div class="lista-pesquisa-perfil" id="listaPesquisaPerfil"></div>
-    </div>
-    <div class="perfis-sugeridos" id="perfisSugeridos">
-        <%
-            for (Membro membroSugerido : membrosRede) {
-                if (!membroSugerido.getMembrosSeguidores().contains(membro.getIdPessoa())) {
-        %>
-        <div class="caixa-usuario" id="caixa-usuario">
+    <div class="containerSide">
+        <div class="pesquisar-amigo">
+            <label>
+                <img src="images/search.svg" alt="search">
+                <input type="search" placeholder="PESQUISAR PERFIL" id="pesquisarPerfil">
+            </label>
+            <div class="lista-pesquisa-perfil" id="listaPesquisaPerfil"></div>
+        </div>
+        <div class="perfis-sugeridos" id="perfisSugeridos">
             <%
-                if (membroSugerido.getFotoPerfil() == null) {
-                    membroSugerido.setFotoPerfil("images/person_foto.svg");
+                for (Membro membroSugerido : membrosRede) {
+                    if (!membroSugerido.getMembrosSeguidores().contains(membro.getIdPessoa())) {
+            %>
+            <div class="caixa-usuario" id="caixa-usuario">
+                <a href="perfil?nome_usuario=<%=membroSugerido.getNomeUsuario()%>">
+                    <%
+                        if (membroSugerido.getFotoPerfil() == null) {
+                            membroSugerido.setFotoPerfil("images/person_foto.svg");
+                        }
+                    %>
+                    <img src="<%=membroSugerido.getFotoPerfil()%>"
+                         alt="Foto de perfil de <%=membroSugerido.getNome()%>">
+                    <p class="nomeUsuario"><%=membroSugerido.getNome()%>
+                    </p>
+                </a>
+                <button onclick="seguirUsuario(<%=membro.getIdPessoa()%>, <%=membroSugerido.getIdPessoa()%>, <%=membrosRede.indexOf(membroSugerido) + 1%>)"
+                        class="botaoSeguir" id="botaoSeguir<%=membrosRede.indexOf(membroSugerido) + 1%>">
+                    SEGUIR
+                </button>
+            </div>
+            <%
+                    }
                 }
             %>
-            <img src="<%=membroSugerido.getFotoPerfil()%>" alt="Foto de perfil de <%=membroSugerido.getNome()%>">
-            <p class="nomeUsuario"><%=membroSugerido.getNome()%>
-            </p>
-            <button onclick="seguirUsuario(<%=membro.getIdPessoa()%>, <%=membroSugerido.getIdPessoa()%>, <%=membrosRede.indexOf(membroSugerido)%>)"
-                    class="botaoSeguir" id="botaoSeguir<%=membrosRede.indexOf(membroSugerido)%>">
-                SEGUIR
-            </button>
         </div>
-        <%
-                }
-            }
-        %>
-    </div>
-    <div class="pesquisar-comunidade">
-        <label>
-            <img src="images/search.svg" alt="search">
-            <input type="search" placeholder="PESQUISAR COMUNIDADE" id="pesquisarComunidade">
-        </label>
-        <div class="lista-pesquisa-comunidade" id="lista-pesquisa-comunidade"></div>
-    </div>
-    <div class="comunidades-sugeridas" id="comunidades-sugeridas">
-        <div class="criar-comunidade" id="criar-comunidade">
-            <button id="botaoCriarNovaComunidade">
-                <div class="imagem"><img src="images/gravity-ui_circle-plus-fill.svg" alt=""></div>
-                CRIAR NOVA COMUNIDADE
-            </button>
+        <div class="pesquisar-comunidade" id="pesqComunidade">
+            <label>
+                <img src="images/search.svg" alt="search">
+                <input type="search" placeholder="PESQUISAR COMUNIDADE" id="pesquisarComunidade">
+            </label>
+            <div class="lista-pesquisa-comunidade" id="lista-pesquisa-comunidade"></div>
         </div>
-        <span id="linhaCriarComunidade"></span>
-        <div class="ver-comunidades" id="ver-comunidades">
-            <a href="verComunidades">VER COMUNIDADES PARTICIPANTES</a>
-            <div class="icone-caret-right"></div>
+        <div class="comunidades-sugeridas" id="comunidades-sugeridas">
+            <div class="criar-comunidade" id="criar-comunidade">
+                <button id="botaoCriarNovaComunidade">
+                    <div class="imagem"><img src="images/gravity-ui_circle-plus-fill.svg" alt=""></div>
+                    CRIAR NOVA COMUNIDADE
+                </button>
+            </div>
+            <span id="linhaCriarComunidade"></span>
+            <div class="ver-comunidades" id="ver-comunidades">
+                <a href="verComunidades">VER COMUNIDADES PARTICIPANTES</a>
+                <div class="icone-caret-right"></div>
+            </div>
         </div>
     </div>
     <div class="fundo-escuro" id="fundo-escuro-comunidade">
@@ -177,7 +190,7 @@
                     </button>
                 </div>
                 <div class="foto-fundo" id="foto-fundo">
-                    <img id="img-foto-fundo" src="images/img-foto-fundo.png" alt="foto fundo da comunidade">
+                    <img id="img-foto-fundo" src="images/DefaultFundoPerfil.png.png" alt="foto fundo da comunidade">
                     <div class="icone-editar-foto" id="icone-editar-foto-fundo">
                         <img src="images/ri_edit-fill.svg" id="img-icone-editar-foto-fundo"
                              alt="Ícone de alterar foto-fundo">

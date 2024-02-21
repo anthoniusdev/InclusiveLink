@@ -38,6 +38,7 @@ html, body, footer {
     margin-top: 20px;
     border-radius: 20px;
     margin-right: 30px;
+    height: fit-content;
 }
 
 .cabecalho-post {
@@ -66,6 +67,16 @@ html, body, footer {
 
 .publicacao .img-foto-perfil {
     margin: 20px;
+}
+.img-foto-perfil img{
+    border-radius: 100%;
+    height: 83px;
+    width: 83px;
+}
+.foto-perfil img{
+    border-radius: 100%;
+    height: 83px;
+    width: 83px;
 }
 
 .informacoes-publicacao {
@@ -182,15 +193,21 @@ html, body, footer {
     cursor: pointer;
     box-shadow: 0 0 20px 5px #FC6E6E;
 }
+.txtPost{
+    margin-bottom: 3px;
+    color: var(--COR-TEXTO-04);
+    font-size: 25px;
+    margin-left: 5px;
+}
 
 .icone-voltar {
-    width: 40px;
+    width: 30px;
     transition: 0.5s;
 }
 
 .icone-voltar:hover {
     cursor: pointer;
-    width: 55px;
+    width: 33px;
 }
 .adicionar-comentario{
     border-top: 2px solid var(--COR-04)
@@ -281,7 +298,14 @@ html, body, footer {
 .caixa-comentario .foto-perfil-autor{
     padding-left: 35px;
     padding-right: 35px;
-    align-self: center;
+
+}
+.foto-perfil-autor img{
+    margin-top: 15px;
+    border-radius: 100%;
+    height: 83px;
+    width: 83px;
+    margin-bottom: 20px;
 }
 .informacoes-comentario{
     color: var(--COR-TEXTO-04);
@@ -300,4 +324,19 @@ html, body, footer {
 .curtida-comentario{
     display: flex;
     margin-bottom: 10px;
+}
+
+.container{
+    display: flex;
+    height: 100%;
+}
+.containerSide{
+    display: flex;
+    flex-direction: column;
+}
+#popup-nova-comunidade .cabecalho {
+    padding: 20px;
+    border-bottom: 0;
+    display: flex;
+    align-items: center;
 }

@@ -2,7 +2,6 @@ package controller;
 
 import com.google.gson.JsonObject;
 import model.Membro;
-import model.Pessoa;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,7 +32,7 @@ public class UnicidadeController extends HttpServlet {
                 jsonObject.addProperty("valor", valor);
                 jsonObject.addProperty("unico", unico);
             } else if (tipo.equals("email")) {
-                unico = new Pessoa().isEmailUnique(valor);
+                unico = new Membro().isEmailUnique(valor);
                 jsonObject.addProperty("tipo", "email");
                 jsonObject.addProperty("valor", valor);
                 jsonObject.addProperty("unico", unico);

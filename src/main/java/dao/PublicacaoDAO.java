@@ -137,7 +137,7 @@ public class PublicacaoDAO {
 
     public ArrayList<Publicacao> feed(int idUsuario, int indice_inicial, int quantidade_publicacoes) {
         try (Connection con = conectar()) {
-            String read = "SELECT idPublicacao FROM publicacao WHERE id_autor IN (SELECT idSeguindo FROM membro_seguindo WHERE idMembro = ?) OR id_autor = ? ORDER BY data DESC, hora DESC LIMIT ?, ?";
+            String read = "SELECT idPublicacao FROM publicacao WHERE id_autor IN (SELECT idSeguindo FROM membro_seguindo WHERE idMembro = ?) OR id_autor = ? AND idPublicacao NOT IN (SELECT idPublicacao FROM publicacao_comunidade) ORDER BY data DESC, hora DESC LIMIT ?, ?";
             try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
                 preparedStatement.setInt(1, idUsuario);
                 preparedStatement.setInt(2, idUsuario);
@@ -202,6 +202,7 @@ public class PublicacaoDAO {
             throw new RuntimeException(e);
         }
     }
+
     public ArrayList<Publicacao> perfilMembro(int idMebro, int indice_inicial, int quantidade_publicacoes) {
         try (Connection con = conectar()) {
             String read = "SELECT idPublicacao FROM publicacao WHERE id_autor = ? ORDER BY data DESC, hora DESC LIMIT ?, ?";
@@ -219,4 +220,24 @@ public class PublicacaoDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }}
+    }
+
+    public ArrayList<Publicacao> feedComunidade(int idComunidade, int indice_inicial, int quantidade_publicacoes) {
+        try (Connection con = conectar()) {
+            String read = "SELECT idPublicacao FROM publicacao_comunidade WHERE idComunidade = ? ORDER BY idPublicacao DESC LIMIT ?, ?";
+            try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
+                preparedStatement.setInt(1, idComunidade);
+                preparedStatement.setInt(2, indice_inicial);
+                preparedStatement.setInt(3, quantidade_publicacoes);
+                ResultSet rs = preparedStatement.executeQuery();
+                ArrayList<Publicacao> feed = new ArrayList<>();
+                while (rs.next()) {
+                    feed.add(retornaPublicacao(rs.getInt(1)));
+                }
+                return feed;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}

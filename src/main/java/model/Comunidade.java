@@ -1,9 +1,15 @@
 package model;
 
 import dao.ComunidadeDAO;
+import org.apache.commons.fileupload.FileItem;
+import util.ObterData;
+import util.ObterExtensaoArquivo;
+import util.ObterURL;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class Comunidade implements Serializable {
     private int idComunidade;
@@ -15,9 +21,8 @@ public class Comunidade implements Serializable {
     private ArrayList<Integer> idPublicacoes = new ArrayList<>();
     private ArrayList<Integer> idModeradores = new ArrayList<>();
     private ArrayList<Integer> idParticipantes = new ArrayList<>();
-    private ArrayList<Integer> idSeguidores = new ArrayList<>();
 
-    public Comunidade(int idComunidade, String nome, int idCriador, String fotoPerfil, String fotoFundo, String descricao, ArrayList<Integer> idPublicacoes, ArrayList<Integer> idModeradores, ArrayList<Integer> idParticipantes, ArrayList<Integer> idSeguidores) {
+    public Comunidade(int idComunidade, String nome, int idCriador, String fotoPerfil, String fotoFundo, String descricao, ArrayList<Integer> idPublicacoes, ArrayList<Integer> idModeradores, ArrayList<Integer> idParticipantes) {
         this.idComunidade = idComunidade;
         this.nome = nome;
         this.idCriador = idCriador;
@@ -27,13 +32,15 @@ public class Comunidade implements Serializable {
         this.idPublicacoes = idPublicacoes;
         this.idModeradores = idModeradores;
         this.idParticipantes = idParticipantes;
-        this.idSeguidores = idSeguidores;
     }
 
     public Comunidade() {
     }
-    public Comunidade(int idComunidade){
+
+    public Comunidade(int idComunidade) {
         Comunidade comunidade = new ComunidadeDAO().retornaComunidade(idComunidade);
+        System.out.println("Id comunidade:");
+        System.out.println(comunidade.getIdComunidade());
         this.setIdComunidade(idComunidade);
         this.nome = comunidade.getNome();
         this.idCriador = comunidade.getIdCriador();
@@ -43,31 +50,6 @@ public class Comunidade implements Serializable {
         this.idPublicacoes = comunidade.getIdPublicacoes();
         this.idModeradores = comunidade.getIdModeradores();
         this.idParticipantes = comunidade.getIdParticipantes();
-        this.idSeguidores = comunidade.getIdSeguidores();
-    }
-    public ParticipanteComunidade participarComunidade(Membro membro) {
-        if (membro.isSeguidor(this)) {
-            ParticipanteComunidade novoParticipante = new ParticipanteComunidade((SeguidorComunidade) membro);
-            idParticipantes.add(novoParticipante.getIdPessoa());
-            return novoParticipante;
-        } else {
-            return null;
-        }
-
-    }
-
-    public ModeradorComunidade definirModerador(ParticipanteComunidade participanteComunidade) {
-        ModeradorComunidade novoModerador = null;
-        try {
-            novoModerador = new ModeradorComunidade(participanteComunidade);
-            idModeradores.add(novoModerador.getIdPessoa());
-        } catch (Exception e) {
-            System.out.println(e);
-            novoModerador = null;
-        }
-
-        return novoModerador;
-
     }
 
 
@@ -139,16 +121,12 @@ public class Comunidade implements Serializable {
         return idParticipantes;
     }
 
+    public void setIdParticipantes(ArrayList<Integer> participantes) {
+        this.idParticipantes = participantes;
+    }
+
     public void setParticipantes(ArrayList<Integer> idParticipantes) {
         this.idParticipantes = idParticipantes;
-    }
-
-    public ArrayList<Integer> getIdSeguidores() {
-        return idSeguidores;
-    }
-
-    public void setSeguidor(ArrayList<Integer> seguidor) {
-        this.idSeguidores = seguidor;
     }
 
     public boolean criarComunidade() {
@@ -160,32 +138,12 @@ public class Comunidade implements Serializable {
                 System.out.println("id do autor: " + this.getIdCriador());
                 novaComunidade = comunidadeDAO.criarComunidade(this);
                 this.setIdComunidade(novaComunidade.getIdComunidade());
-                System.out.println("TUDO CERTO");
                 return true;
-            } else {
-                System.out.println("comunidade ja existe");
             }
-            // ALterar logica para retornar caso a comunidade já exista
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         return false;
-    }
-
-    public boolean seguirComunidade(Membro membroSeguir) {
-        boolean verificacaoSeguindo = true;
-        for (int idMembroSeguindo : idSeguidores) {
-            if (idMembroSeguindo == membroSeguir.getIdPessoa()) {
-                verificacaoSeguindo = false;
-                break;
-            }
-        }
-        if (verificacaoSeguindo) {
-            idSeguidores.add(membroSeguir.getIdPessoa());
-            return true;
-        }
-        return false;
-
     }
 
     public ArrayList<Comunidade> listarComunidadesParticipantes(int idMembro) {
@@ -196,36 +154,68 @@ public class Comunidade implements Serializable {
         return new ComunidadeDAO().listarComunidades(limit);
     }
 
-    public void excluirComunidade(model.Comunidade comunidade) {
-        comunidade = null;
-    }
-
-    public void removerParticipanteComunidade(ParticipanteComunidade participante) {
-        idParticipantes.remove(participante.getIdPessoa());
-    }
-
-    public void excluirPublicacao(Publicacao publicacao) {
-        idPublicacoes.remove(publicacao.getIdPublicacao());
-    }
-
-    public void criarPublicacao(Publicacao publicacao) {
-        Publicacao novaPublicacao = null;
-
-        try {
-            novaPublicacao = new Publicacao();
-            idPublicacoes.add(novaPublicacao.getIdPublicacao());
-        } catch (Exception e) {
-            System.out.println(e);
-            novaPublicacao = null;
-        }
-
-    }
-
-    public void removerSeguidorComunidade(SeguidorComunidade seguidor) {
-        idSeguidores.remove(seguidor.getIdPessoa());
-    }
-
     public ArrayList<Comunidade> pesquisarComunidade(String query) {
         return new ComunidadeDAO().pesquisarComunidade(query);
+    }
+
+    public ArrayList<Comunidade> obterTodasComunidades() {
+        return new ComunidadeDAO().comunidades();
+    }
+    public boolean editarComunidade(ArrayList<FileItem> items) {
+        try {
+            String nome = null;
+            String descricao = null;
+            int idComunidade = 0;
+            FileItem fotoPerfil = null;
+            FileItem fotoFundo = null;
+            for (FileItem item : items) {
+                if (item.isFormField()) {
+                    switch (item.getFieldName()) {
+                        case "nome" -> nome = item.getString("UTF-8");
+                        case "descricao" -> descricao = item.getString("UTF-8");
+                        case "idComunidade" -> idComunidade = Integer.parseInt(item.getString());
+                    }
+                } else {
+                    switch (item.getFieldName()) {
+                        case "fotoPerfil" -> fotoPerfil = item;
+                        case "fotoFundo" -> fotoFundo = item;
+                    }
+                }
+            }
+            Comunidade comunidade = new Comunidade(idComunidade);
+            comunidade.setNome(nome);
+            comunidade.setDescricao(descricao);
+            ObterData obterData = new ObterData();
+            int anoAtual = obterData.getAnoAtual();
+            int mesAtual = obterData.getMesAtual();
+            int diaAtual = obterData.getDiaAtual();
+            String urlCaminho = new ObterURL().getUrl();
+            String urlFotoPerfil = "arquivosEstaticos" + File.separator + "fotoPerfilComunidade" + File.separator + anoAtual + File.separator + mesAtual + File.separator + diaAtual + File.separator;
+            String urlFotoFundo = "arquivosEstaticos" + File.separator + "fotoFundoComunidade" + File.separator + anoAtual + File.separator + mesAtual + File.separator + diaAtual + File.separator;
+            String diretorioFotoPerfil = urlCaminho + File.separator + urlFotoPerfil;
+            String diretorioFotoFundo = urlCaminho + File.separator + urlFotoFundo;
+            File diretorioFileFotoPerfil = new File(diretorioFotoPerfil);
+            if (!diretorioFileFotoPerfil.exists()) diretorioFileFotoPerfil.mkdirs();
+            if (diretorioFileFotoPerfil.exists()) {
+                UUID randomName = UUID.randomUUID();
+                if (fotoPerfil != null) {
+                    fotoPerfil.write(new File(diretorioFotoPerfil, ("img-fotoperfil" + comunidade.getIdComunidade() + randomName + "." + new ObterExtensaoArquivo().get(fotoPerfil.getName()))));
+                    comunidade.setFotoPerfil(urlFotoPerfil + "img-fotoperfil" + comunidade.getIdComunidade() + randomName + "." + new ObterExtensaoArquivo().get(fotoPerfil.getName()));
+                }
+            }
+            File diretorioFileFotoFundo = new File(diretorioFotoFundo);
+            if (!diretorioFileFotoFundo.exists()) diretorioFileFotoFundo.mkdirs();
+            if (diretorioFileFotoFundo.exists()) {
+                UUID randomName = UUID.randomUUID();
+                if (fotoFundo != null) {
+                    fotoFundo.write(new File(diretorioFotoFundo, ("img-fotofundo" + comunidade.getIdComunidade() + randomName + "." + new ObterExtensaoArquivo().get(fotoFundo.getName()))));
+                    comunidade.setFotoFundo(urlFotoFundo + "img-fotofundo" + comunidade.getIdComunidade() + randomName + "." + new ObterExtensaoArquivo().get(fotoFundo.getName()));
+                }
+            }
+            return new ComunidadeDAO().editar(comunidade.getIdComunidade(), comunidade.getNome(), comunidade.getDescricao(), comunidade.getFotoPerfil(), comunidade.getFotoFundo());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 }

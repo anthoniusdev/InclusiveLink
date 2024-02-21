@@ -8,29 +8,37 @@ function carregarPublicacoes(tipo) {
     } else {
         proximo_intervalo = 0;
     }
-    let dados, perfil;
+    let dados, perfil, comunidade;
     try {
         let parametrosURL = new URL(window.location.href);
-        perfil = parametrosURL.searchParams.get("nome_usuario");
-        console.log("perfil: " + perfil);
+        if (tipo === "perfil") {
+            perfil = parametrosURL.searchParams.get("nome_usuario");
+            console.log("perfil: " + perfil);
+        } else if (tipo === "comunidade") {
+            comunidade = parametrosURL.searchParams.get("idComunidade");
+            console.log("comunidade: " + comunidade);
+        }
     } catch (error) {
         console.error("Erro ao analisar a URL:", error);
     }
-
+    let url = 'verPublicacoes';
     if (tipo === "perfil" && perfil !== null) {
-        dados = { intervalo: parseInt(proximo_intervalo), nomeUsuario: perfil };
+        dados = {intervalo: parseInt(proximo_intervalo), nomeUsuario: perfil};
+    } else if (tipo === "comunidade" && comunidade !== null) {
+        dados = {intervalo: parseInt(proximo_intervalo), idComunidade: comunidade};
+        url = 'verPublicacoesComunidade';
     } else {
-        dados = { intervalo: parseInt(proximo_intervalo) };
+        dados = {intervalo: parseInt(proximo_intervalo)};
     }
 
     $.ajax({
         type: 'GET',
-        url: 'verPublicacoes',
+        url: url,
         data: dados,
         dataType: "json",
         cache: false,
         success: function (publicacoesEncontradas) {
-            proximo_intervalo += 5;
+            proximo_intervalo += 4;
             let confirmacao = $('<div>', {
                 class: 'confirmacao-exclusao',
             });
@@ -162,7 +170,18 @@ function carregarPublicacoes(tipo) {
                         text: 'EXCLUIR',
                     })
                     botaoApagar.on('click', function () {
-                        excluirPublicacao(publicacao.idPublicacao, classe_caixa_publicacao, confirmacao, false);
+                        excluirPublicacao(publicacao.idPublicacao, confirmacao, false);
+                        classe_caixa_publicacao.css({
+                            display: 'none'
+                        })
+                        confirmacao.css({
+                            display: 'block'
+                        })
+                        setTimeout(function () {
+                            confirmacao.css({
+                                display: 'none'
+                            });
+                        }, 3000);
                     })
                     classe_caixa_publicacao.append(botaoApagar);
                 }
