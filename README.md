@@ -43,4 +43,4 @@ O projeto utiliza o Maven para gerenciar suas dependências. Certifique-se de te
 ## Importante
 1. Certifique-se de ter o Java JDK, Apache Tomcat e MySQL configurados corretamente antes de iniciar o projeto. Consulte a documentação específica dessas ferramentas para obter ajuda na configuração.
 2. Mude as credenciais do banco de dados na classe **Conexao** `/src/main/java/dao/Conexao.java`.
-3. Mude a URL do caminho que leva até o o `/webapp` no seu computador, faça isso na classe **ObterURL** `/src/main/java/util/ObterURL.java`.
+3. Mude a URL do caminho que leva até o `/webapp` no seu computador, faça isso na classe **ObterURL** `/src/main/java/util/ObterURL.java`.
