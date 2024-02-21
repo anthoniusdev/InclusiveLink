@@ -255,7 +255,12 @@ function editarComunidade() {
     });
     alteracaoSalva = true;
 }
-function removerParticipante(i){
+function removerParticipante(i, ii){
+    let classeParticipante = '#' + ii;
+    classeParticipante = $(classeParticipante);
+    classeParticipante.css({
+        display: 'none'
+    })
     $.ajax({
         type: 'POST',
         url: 'excluirParticipante',

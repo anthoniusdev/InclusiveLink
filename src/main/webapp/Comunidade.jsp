@@ -276,7 +276,7 @@
                             if (comunidade.getIdModeradores().contains(usuario.getIdPessoa()) && participante.getIdPessoa() != usuario.getIdPessoa()) {
                         %>
                         <button class="remover"
-                                onclick="removerParticipante(<%=participante.getIdPessoa()%>); this.parentNode.style='none'">
+                                onclick="removerParticipante(<%=participante.getIdPessoa()%>, '<%=participante.getNomeUsuario()%>'); this.parentNode.style='none'">
                             REMOVER
                         </button>
                         <%}%>
