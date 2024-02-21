@@ -13,36 +13,25 @@ public class MembroDAO {
         Conexao conexao = new Conexao();
         return conexao.conectar();
     }
-    public boolean isEmailUnique(String email){
+
+    public boolean isEmailUnique(String email) {
         return !emails().contains(email);
     }
-//    public Pessoa retornaPessoa(int idPessoa){
-//        try (Connection con = conectar()){
-//            String read = "SELECT * FROM pessoa WHERE idPessoa = ?";
-//            try (PreparedStatement preparedStatement = con.prepareStatement(read)){
-//                preparedStatement.setInt(1, idPessoa);
-//                ResultSet rs = preparedStatement.executeQuery();
-//                if (rs.next()){
-//                    return new Pessoa(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5));
-//                }
-//            }
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//        return null;
-//    }
-    public ArrayList<String> emails(){
+
+    // READ - - - CREATE - - -
+    // <-- Retornando uma array com os emails das pessoas do sistema-->
+    public ArrayList<String> emails() {
         String read = "select email from pessoa";
         ArrayList<String> emails = new ArrayList<>();
-        try(Connection con = conectar()){
-            try(PreparedStatement preparedStatement = con.prepareStatement(read)) {
+        try (Connection con = conectar()) {
+            try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
                 ResultSet resultSet = preparedStatement.executeQuery();
                 while (resultSet.next()) {
                     emails.add(resultSet.getString(1));
                 }
                 return emails;
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
@@ -52,7 +41,7 @@ public class MembroDAO {
     public Membro realizarCadastro(Membro membro) {
 
         String createPessoa = "insert into pessoa(nome, dataNascimento, email, senha) values (?,STR_TO_DATE(?, '%d-%m-%Y'),?,?)";
-        String createMembro = "insert into membro(idPessoa, fotoPerfil, fotoFundo, nomeUsuario, descricao, perfilVisivel) values (?, ?, ?, ?, ?, ?)";
+        String createMembro = "insert into membro(idPessoa, fotoPerfil, fotoFundo, nomeUsuario, descricao) values (?, ?, ?, ?, ?)";
         try (Connection con = conectar()) {
             con.setAutoCommit(false);  // Desabilita o commit automático para gerenciar transações manualmente
 
@@ -79,34 +68,19 @@ public class MembroDAO {
                     preparedStatementMembro.setString(3, membro.getFotoFundo());
                     preparedStatementMembro.setString(4, membro.getNomeUsuario());
                     preparedStatementMembro.setString(5, membro.getDescricao());
-                    preparedStatementMembro.setBoolean(6, membro.isPerfilVisivel());
 
                     preparedStatementMembro.executeUpdate();
                 }
 
-                con.commit();  // Confirma a transação
-                con.setAutoCommit(true);  // Restaura o modo de commit automático
+                con.commit();
+                con.setAutoCommit(true);
 
                 return new Membro(idPessoa, membro.getNome(), membro.getDataNascimento(), membro.getNomeUsuario(), membro.getEmail(), membro.getSenha(), membro.getFotoPerfil(), membro.getFotoFundo(), membro.getDescricao(), membro.getCurtidas());
             } catch (Exception e) {
-                con.rollback();  // Desfaz a transação em caso de erro
+                con.rollback();
                 throw new RuntimeException(e);
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    // CRUD - - - READ - - -
-    // <-- Verificando se um membro existe -->
-    public boolean verificaMembro(Membro membro) {
-        String read = "select * from membro where idpessoa = ?";
-        try (Connection con = conectar()) {
-            PreparedStatement preparedStatement = con.prepareStatement(read);
-            preparedStatement.setInt(1, membro.getIdPessoa());
-            ResultSet rs = preparedStatement.executeQuery();
-            return rs.next();
-        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -116,7 +90,6 @@ public class MembroDAO {
     public Membro retornaMembro(int id) {
         int idPessoa;
         String nome, dataNascimento, email, senha, fotoPerfil, fotoFundo, nomeUsuario, descricao;
-        boolean perfilVisivel = false;
         String read = "select * FROM pessoa p INNER JOIN membro m ON p.idPessoa = m.idPessoa WHERE p.idPessoa = ?";
         try (Connection con = conectar()) {
             try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
@@ -132,7 +105,7 @@ public class MembroDAO {
                     fotoFundo = rs.getString(9);
                     nomeUsuario = rs.getString(10);
                     descricao = rs.getString(11);
-                    return new Membro(idPessoa, nome, dataNascimento, email, senha, fotoPerfil, fotoFundo, nomeUsuario, membrosSeguidores(idPessoa), membrosSeguindos(idPessoa), comunidadesParticipantes(idPessoa), descricao, publicacoesCurtidas(idPessoa), publicacoes(idPessoa), perfilVisivel, comentarios(idPessoa));
+                    return new Membro(idPessoa, nome, dataNascimento, email, senha, fotoPerfil, fotoFundo, nomeUsuario, membrosSeguidores(idPessoa), membrosSeguindos(idPessoa), comunidadesParticipantes(idPessoa), descricao, publicacoesCurtidas(idPessoa), publicacoes(idPessoa), comentarios(idPessoa));
                 } else {
                     return null;
                 }
@@ -161,6 +134,8 @@ public class MembroDAO {
         }
     }
 
+    // CRUD - - - READ - - -
+    // <-- retorna o hash da senha de uma pessoa especifica -->
     public String retornaHashSenha(String string) {
         String read = "select pessoa.senha from pessoa inner join membro on pessoa.idpessoa = membro.idpessoa where pessoa.email = ? or membro.nomeUsuario = ?";
         try (Connection con = conectar()) {
@@ -181,6 +156,8 @@ public class MembroDAO {
         }
     }
 
+    // CRUD - - - READ - - -
+    // <-- retorna uma arraylist dos seguidores de uma pessoa especifica -->
     public ArrayList<Integer> membrosSeguidores(int idPessoa) {
         try (Connection con = conectar()) {
             String read = "select membro_seguidor.idSeguidor from membro_seguidor inner join membro m on membro_seguidor.idMembro = m.idPessoa where m.idPessoa = ?";
@@ -307,39 +284,6 @@ public class MembroDAO {
         return !nomesUsuario().contains(nomeUsuario);
     }
 
-    public ArrayList<Membro> listarMembros() {
-        try (Connection con = conectar()) {
-            String read = "select idPessoa from membro order by dataCriacao desc";
-            try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
-                ResultSet rs = preparedStatement.executeQuery();
-                ArrayList<Membro> membros = new ArrayList<>();
-                while (rs.next()) {
-                    membros.add(retornaMembro(rs.getInt(1)));
-                }
-                return membros;
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public ArrayList<Membro> listarMembros(int quantidade) {
-        try (Connection con = conectar()) {
-            String read = "select idPessoa from membro order by dataCriacao desc limit ?";
-            try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
-                preparedStatement.setInt(1, quantidade);
-                ResultSet rs = preparedStatement.executeQuery();
-                ArrayList<Membro> membros = new ArrayList<>();
-                while (rs.next()) {
-                    membros.add(retornaMembro(rs.getInt(1)));
-                }
-                return membros;
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public ArrayList<Membro> listarMembros(int quantidade, int idPessoa) {
         try (Connection con = conectar()) {
             String read = "select idPessoa from membro where idPessoa <> ? and idPessoa not in (SELECT idMembro from membro_seguidor where idSeguidor = ?) order by dataCriacao desc limit ?";
@@ -359,7 +303,7 @@ public class MembroDAO {
         }
     }
 
-    public boolean seguirMembro(int idMembro, int idSeguindo) {
+    public void seguirMembro(int idMembro, int idSeguindo) {
         try (Connection con = conectar()) {
             String create = "INSERT INTO membro_seguindo(idMembro, idSeguindo) VALUES (?,?)";
             try (PreparedStatement preparedStatement = con.prepareStatement(create)) {
@@ -371,7 +315,6 @@ public class MembroDAO {
                     preparedStatement1.setInt(1, idSeguindo);
                     preparedStatement1.setInt(2, idMembro);
                     preparedStatement1.executeUpdate();
-                    return true;
                 }
             }
         } catch (SQLException e) {

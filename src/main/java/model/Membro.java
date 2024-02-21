@@ -5,6 +5,7 @@ import org.apache.commons.fileupload.FileItem;
 import util.ObterData;
 import util.ObterExtensaoArquivo;
 import util.ObterURL;
+import util.ServicoAutenticacao;
 
 import java.io.File;
 import java.io.Serializable;
@@ -21,7 +22,6 @@ public class Membro extends Pessoa implements Serializable {
     private String descricao;
     private ArrayList<Integer> idPublicacaoCurtidas;
     private ArrayList<Integer> idPublicacoes;
-    private boolean perfilVisivel;
     private ArrayList<Integer> idComentarios;
 
     public Membro(int idPessoa, String nome, String dataNascimento, String nomeUsuario, String email, String senha, String fotoPerfil, String fotoFundo, String descricao, ArrayList<Integer> curtidas) {
@@ -33,7 +33,6 @@ public class Membro extends Pessoa implements Serializable {
         this.fotoPerfil = fotoPerfil;
         this.fotoFundo = fotoFundo;
         this.descricao = descricao;
-        this.perfilVisivel = true;
         this.nomeUsuario = nomeUsuario;
         this.idPublicacaoCurtidas = curtidas;
         this.idPublicacoes = null;
@@ -43,7 +42,7 @@ public class Membro extends Pessoa implements Serializable {
         this.idComentarios = null;
     }
 
-    public Membro(int idPessoa, String nome, String dataNascimento, String email, String senha, String fotoPerfil, String fotoFundo, String nomeUsuario, ArrayList<Integer> idMembrosSeguidores, ArrayList<Integer> idMembrosSeguindos, ArrayList<Integer> idComunidadesParticipantes, String descricao, ArrayList<Integer> idPublicacaoCurtidas, ArrayList<Integer> idPublicacoes, boolean perfilVisivel, ArrayList<Integer> idComentarios) {
+    public Membro(int idPessoa, String nome, String dataNascimento, String email, String senha, String fotoPerfil, String fotoFundo, String nomeUsuario, ArrayList<Integer> idMembrosSeguidores, ArrayList<Integer> idMembrosSeguindos, ArrayList<Integer> idComunidadesParticipantes, String descricao, ArrayList<Integer> idPublicacaoCurtidas, ArrayList<Integer> idPublicacoes, ArrayList<Integer> idComentarios) {
         this.setIdPessoa(idPessoa);
         this.setNome(nome);
         this.setSenha(senha);
@@ -58,26 +57,7 @@ public class Membro extends Pessoa implements Serializable {
         this.descricao = descricao;
         this.idPublicacaoCurtidas = idPublicacaoCurtidas;
         this.idPublicacoes = idPublicacoes;
-        this.perfilVisivel = perfilVisivel;
         this.idComentarios = idComentarios;
-    }
-
-    public Membro(String nome, String dataNascimento, String nomeUsuario, String email, String senha) {
-        this.setNome(nome);
-        this.setSenha(senha);
-        this.setDataNascimento(dataNascimento);
-        this.setEmail(email);
-        setNomeUsuario(nomeUsuario);
-        setFotoPerfil(null);
-        setFotoFundo(null);
-        setDescricao(null);
-        setPerfilVisivel(true);
-        setCurtidas(null);
-        setPublicacoes(null);
-        setMembrosSeguidores(null);
-        setMembrosSeguindo(null);
-        setComunidadesParticipantes(null);
-        setComentarios(null);
     }
 
     public Membro(Membro membro) {
@@ -88,7 +68,6 @@ public class Membro extends Pessoa implements Serializable {
         this.fotoPerfil = membro.getFotoPerfil();
         this.fotoFundo = membro.getFotoFundo();
         this.descricao = membro.getDescricao();
-        this.perfilVisivel = membro.isPerfilVisivel();
         this.nomeUsuario = membro.getNomeUsuario();
         this.idPublicacaoCurtidas = membro.getCurtidas();
         this.idPublicacoes = membro.getPublicacoes();
@@ -127,11 +106,6 @@ public class Membro extends Pessoa implements Serializable {
         this.idMembrosSeguidores = membro.getMembrosSeguidores();
         this.idComunidadesParticipantes = membro.getComunidadesParticipantes();
         this.idComentarios = membro.getComentarios();
-    }
-
-    @Override
-    public boolean isEmailUnique(String email) {
-        return new MembroDAO().isEmailUnique(email);
     }
 
     public Membro(String nomeUsuario) {
@@ -182,20 +156,8 @@ public class Membro extends Pessoa implements Serializable {
         return idMembrosSeguidores;
     }
 
-    public void setMembrosSeguidores(ArrayList<Integer> membrosSeguidores) {
-        this.idMembrosSeguidores = membrosSeguidores;
-    }
-
-    public void setMembrosSeguindo(ArrayList<Integer> membrosSeguindos) {
-        this.idMembrosSeguindos = membrosSeguindos;
-    }
-
     public ArrayList<Integer> getComunidadesParticipantes() {
         return idComunidadesParticipantes;
-    }
-
-    public void setComunidadesParticipantes(ArrayList<Integer> comunidadesParticipantes) {
-        this.idComunidadesParticipantes = comunidadesParticipantes;
     }
 
     public String getDescricao() {
@@ -210,24 +172,8 @@ public class Membro extends Pessoa implements Serializable {
         return idPublicacaoCurtidas;
     }
 
-    public void setCurtidas(ArrayList<Integer> curtidas) {
-        this.idPublicacaoCurtidas = curtidas;
-    }
-
     public ArrayList<Integer> getPublicacoes() {
         return idPublicacoes;
-    }
-
-    public void setPublicacoes(ArrayList<Integer> publicacoes) {
-        this.idPublicacoes = publicacoes;
-    }
-
-    public boolean isPerfilVisivel() {
-        return perfilVisivel;
-    }
-
-    public void setPerfilVisivel(boolean perfilVisivel) {
-        this.perfilVisivel = perfilVisivel;
     }
 
     public ArrayList<Integer> getComentarios() {
@@ -238,19 +184,69 @@ public class Membro extends Pessoa implements Serializable {
         this.idComentarios = comentarios;
     }
 
-    public boolean realizarCadastro() {
-        Membro novoMembro;
+    public Membro realizarCadastro(String nome, String mes, String dia, String ano, String nomeUsuario, String email, String senha) {
         try {
+            Membro novoMembro;
+            this.setNome(nome);
+            this.setEmail(email);
+            this.setDataNascimento(dataNascimentoToString(mes, dia, ano));
+            this.setNomeUsuario(nomeUsuario);
+            this.setSenha(senha);
             MembroDAO membroDAO = new MembroDAO();
-            if (!membroDAO.verificaMembro(this)) {
-                novoMembro = membroDAO.realizarCadastro(this);
-                this.setIdPessoa(novoMembro.getIdPessoa());
-            }
-            return membroDAO.verificaMembro(this);
+            novoMembro = membroDAO.realizarCadastro(this);
+            this.setIdPessoa(novoMembro.getIdPessoa());
+            return this;
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
+    }
+
+    private String dataNascimentoToString(String mes, String dia, String ano) {
+        int numeroMes = switch (mes) {
+            case "Janeiro" -> 1;
+            case "Fevereiro" -> 2;
+            case "Março" -> 3;
+            case "Abril" -> 4;
+            case "Maio" -> 5;
+            case "Junho" -> 6;
+            case "Julho" -> 7;
+            case "Agosto" -> 8;
+            case "Setembro" -> 9;
+            case "Outubro" -> 10;
+            case "Novembro" -> 11;
+            case "Dezembro" -> 12;
+            default -> 0;
+        };
+        return dia + "-" + numeroMes + "-" + ano;
+    }
+
+    // Metodo para realizar login e retorna se o login é válido
+    public boolean realizarLogin(String nomeUsuario, String senha) {
+        try {
+            Membro membro = new Membro(nomeUsuario);
+            membro.setEmail(nomeUsuario);
+            String senhaArmazenada = membro.getHashSenha();
+            int id = membro.verificaId(nomeUsuario);
+            if (id != 0) {
+                if (senhaArmazenada != null) {
+                    return ServicoAutenticacao.autentica(senha, senhaArmazenada);
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    // Metodo que retorna se o email é único
+    @Override
+    public boolean isEmailUnique(String email) {
+        return new MembroDAO().isEmailUnique(email);
     }
 
     public ArrayList<Integer> getMembrosSeguindo() {
@@ -265,10 +261,6 @@ public class Membro extends Pessoa implements Serializable {
             hash = membroDAO.retornaHashSenha(this.getEmail());
         }
         return hash;
-    }
-
-    public int retornaIdPorNomeUser() {
-        return new MembroDAO().verificaId(this.nomeUsuario);
     }
 
     public void pararSeguir(int idSeguindo) {
@@ -429,9 +421,17 @@ public class Membro extends Pessoa implements Serializable {
     }
 
     public void removerSeguidor(int idSeguidor) {
-        new MembroDAO().pararSeguir(idSeguidor, this.getIdPessoa());
+        try {
+            if (this.getMembrosSeguidores().contains(idSeguidor)) {
+                new MembroDAO().pararSeguir(idSeguidor, this.getIdPessoa());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 
+    // Metodo para verificar se o usuario existe, se ele existir, retorna o Id, senão, retorna 0
     public int verificaId(String nomeUsuario) {
         return new MembroDAO().verificaId(nomeUsuario);
     }

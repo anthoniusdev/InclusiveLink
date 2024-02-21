@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
             caixa_comunidade.append(imgPerfil, nome);
             listaPesquisaComunidade.append(caixa_comunidade);
             caixa_comunidade.on('click', function (){
-                window.location.href = "minhasComunidades?idComunidade=" + comunidade.idComunidade;
+                window.location.href = "comunidade?idComunidade=" + comunidade.idComunidade;
             })
         })
     }

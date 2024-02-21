@@ -58,7 +58,7 @@
                             }
                 %>
                 <div class="caixa-comunidade" id="caixa-comunidade<%=comunidades.indexOf(comunidade) + 1%>">
-                    <a href="minhasComunidades?idComunidade=<%= comunidade.getIdComunidade()%>">
+                    <a href="comunidade?idComunidade=<%= comunidade.getIdComunidade()%>">
                         <div class="imagem-foto-perfil-comunidade">
                             <img src="<%=comunidade.getFotoPerfil()%>" alt="Foto de perfil de <%=comunidade.getNome()%>">
                         </div>

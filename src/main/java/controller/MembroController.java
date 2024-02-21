@@ -7,7 +7,6 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.json.JSONObject;
-import util.ServicoAutenticacao;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,7 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
-@WebServlet(urlPatterns = {"/RealizarCadastro", "/Cadastrar", "/Login", "/logout", "/home", "/perfil", "/seguirMembro", "/pesquisarPerfil", "/paginaInicial", "/curtirPublicacao", "/obterUsuarioAutenticado", "/curtirComentario", "/editarPerfil", "/removerSeguidor"})
+@WebServlet(urlPatterns = {"/Cadastrar", "/Login", "/logout", "/home", "/perfil", "/seguirMembro", "/pesquisarPerfil", "/paginaInicial", "/curtirPublicacao", "/obterUsuarioAutenticado", "/curtirComentario", "/editarPerfil", "/removerSeguidor"})
 public class MembroController extends HttpServlet {
 
 
@@ -33,9 +32,7 @@ public class MembroController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("Served at: " + request.getContextPath() + request.getServletPath());
         String action = request.getServletPath();
-        System.out.println(action);
         switch (action) {
             case "/Cadastrar" -> realizarCadastro(request, response);
             case "/Login" -> realizarLogin(request, response);
@@ -49,9 +46,7 @@ public class MembroController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("Served at: " + request.getContextPath() + request.getServletPath());
         String action = request.getServletPath();
-        System.out.println(action);
         switch (action) {
             case "/home", "/paginaInicial" -> paginaInicial(request, response);
             case "/perfil" -> perfil(request, response);
@@ -70,46 +65,27 @@ public class MembroController extends HttpServlet {
             String nomeUsuario = request.getParameter("nomeUsuario");
             String senha = request.getParameter("senha");
             Membro membro = new Membro(nomeUsuario);
-            membro.setEmail(nomeUsuario);
-            String senhaArmazenada = membro.getHashSenha();
-            int id = membro.retornaIdPorNomeUser();
-            if (id != 0) {
-                System.out.println(id);
-                membro = new Membro(id);
-                System.out.println("Nome: " + membro.getNome());
-                System.out.println("Nome de usuário: " + membro.getNomeUsuario());
-                System.out.println("Email: " + membro.getEmail());
-                if (senhaArmazenada != null) {
-                    if (ServicoAutenticacao.autentica(senha, senhaArmazenada)) {
-                        boolean remember = request.getParameter("remember") != null;
-
-                        String sessionID = gerarTokenSessao();
-
-                        int maxAge = 24 * 60 * 60;
-                        if (remember) {
-                            maxAge *= 30;
-                        }
-
-                        Cookie cookie = new Cookie("sessionID", sessionID);
-                        cookie.setMaxAge(maxAge);
-                        response.addCookie(cookie);
-                        HttpSession session = request.getSession();
-                        session.setAttribute("authenticated", true);
-                        session.setAttribute("usuario", membro);
-                        session.setAttribute("perfis", membro.listarMembros(3));
-                        response.sendRedirect("home");
-                    } else {
-                        response.sendRedirect(request.getContextPath() + "/index.html?erro=1");
-                    }
-
-                } else {
-                    response.sendRedirect(request.getContextPath() + "/index.html?erro=1");
+            if (membro.realizarLogin(nomeUsuario, senha)) {
+                boolean remember = request.getParameter("remember") != null;
+                String sessionID = gerarTokenSessao();
+                int maxAge = 24 * 60 * 60;
+                if (remember) {
+                    maxAge *= 30;
                 }
+                Cookie cookie = new Cookie("sessionID", sessionID);
+                cookie.setMaxAge(maxAge);
+                response.addCookie(cookie);
+                HttpSession session = request.getSession();
+                session.setAttribute("authenticated", true);
+                session.setAttribute("usuario", membro);
+                session.setAttribute("perfis", membro.listarMembros(3));
+                response.sendRedirect("home");
             } else {
                 response.sendRedirect(request.getContextPath() + "/index.html?erro=1");
             }
         } catch (Exception e) {
             e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
     }
@@ -122,9 +98,8 @@ public class MembroController extends HttpServlet {
         String dia = request.getParameter("dia");
         String mes = request.getParameter("mes");
         String ano = request.getParameter("ano");
-        String dataNascimento = dataNascimentoToString(mes, dia, ano);
-        Membro membro = new Membro(nome, dataNascimento, nomeUsuario, email, senha);
-        if (membro.realizarCadastro()) {
+        Membro membro = new Membro().realizarCadastro(nome, mes, dia, ano, nomeUsuario, email, senha);
+        if (membro != null) {
             String sessionID = gerarTokenSessao();
             int maxAge = 24 * 60 * 60;
             Cookie cookie = new Cookie("sessionID", sessionID);
@@ -134,7 +109,7 @@ public class MembroController extends HttpServlet {
             session.setAttribute("authenticated", true);
             session.setAttribute("usuario", membro);
             session.setAttribute("perfis", membro.listarMembros(3));
-            response.sendRedirect("perfil?nome_usuario="+membro.getNomeUsuario());
+            response.sendRedirect("perfil?nome_usuario=" + membro.getNomeUsuario());
         }
     }
 
@@ -143,30 +118,12 @@ public class MembroController extends HttpServlet {
             HttpSession httpSession = request.getSession(false);
             Membro membro = (Membro) httpSession.getAttribute("usuario");
             membro.seguirMembro(Integer.parseInt(request.getParameter("idSeguindo")));
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private String dataNascimentoToString(String mes, String dia, String ano) {
-        int numeroMes = switch (mes) {
-            case "Janeiro" -> 1;
-            case "Fevereiro" -> 2;
-            case "Março" -> 3;
-            case "Abril" -> 4;
-            case "Maio" -> 5;
-            case "Junho" -> 6;
-            case "Julho" -> 7;
-            case "Agosto" -> 8;
-            case "Setembro" -> 9;
-            case "Outubro" -> 10;
-            case "Novembro" -> 11;
-            case "Dezembro" -> 12;
-            default -> 0;
-        };
-        return dia + "-" + numeroMes + "-" + ano;
-    }
+
 
     private void pesquisarPerfil(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String query = request.getParameter("query");
@@ -201,8 +158,6 @@ public class MembroController extends HttpServlet {
         HttpSession session = request.getSession(false);
         Membro membro = (Membro) session.getAttribute("usuario");
         String jsonResponse;
-        System.out.println("membro autenticado:");
-        System.out.println(membro.getNome());
         jsonResponse = new Gson().toJson(membro);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
@@ -218,8 +173,6 @@ public class MembroController extends HttpServlet {
     private void perfil(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Membro membro = new Membro(request.getParameter("nome_usuario"));
         request.setAttribute("perfilVisitado", membro);
-        System.out.println(membro.getIdPessoa());
-        System.out.println(membro.getNome());
         RequestDispatcher rd = request.getRequestDispatcher("perfil.jsp");
         rd.forward(request, response);
     }

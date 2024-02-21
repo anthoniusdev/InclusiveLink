@@ -68,9 +68,7 @@ public class ParticipanteComunidade extends Membro{
                 String diretorioFotosPublicacao = urlCaminho + File.separator + urlFotosPublicacao;
                 File diretorioFile = new File(diretorioFotosPublicacao);
                 if (!diretorioFile.exists()) {
-                    if (diretorioFile.mkdirs()) {
-                        System.out.println("CRIOU A PASTA DE DIRETORIO DE FOTOS");
-                    }
+                    diretorioFile.mkdirs();
                 }
                 if (diretorioFile.exists()) {
                     UUID randomName = UUID.randomUUID();

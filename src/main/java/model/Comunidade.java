@@ -39,8 +39,6 @@ public class Comunidade implements Serializable {
 
     public Comunidade(int idComunidade) {
         Comunidade comunidade = new ComunidadeDAO().retornaComunidade(idComunidade);
-        System.out.println("Id comunidade:");
-        System.out.println(comunidade.getIdComunidade());
         this.setIdComunidade(idComunidade);
         this.nome = comunidade.getNome();
         this.idCriador = comunidade.getIdCriador();
@@ -105,41 +103,73 @@ public class Comunidade implements Serializable {
         return idPublicacoes;
     }
 
-    public void setPublicacoes(ArrayList<Integer> publicacoes) {
-        this.idPublicacoes = publicacoes;
-    }
-
     public ArrayList<Integer> getIdModeradores() {
         return idModeradores;
-    }
-
-    public void setModeradores(ArrayList<Integer> moderadores) {
-        this.idModeradores = moderadores;
     }
 
     public ArrayList<Integer> getIdParticipantes() {
         return idParticipantes;
     }
 
-    public void setIdParticipantes(ArrayList<Integer> participantes) {
-        this.idParticipantes = participantes;
-    }
-
     public void setParticipantes(ArrayList<Integer> idParticipantes) {
         this.idParticipantes = idParticipantes;
     }
 
-    public boolean criarComunidade() {
-        Comunidade novaComunidade;
+    public boolean criarComunidade(ArrayList<FileItem> items) throws Exception {
         try {
-            ComunidadeDAO comunidadeDAO = new ComunidadeDAO();
-            if (!comunidadeDAO.verificaComunidade(this.getIdComunidade())) {
-                System.out.println("verificou que a comunidade nao existe");
-                System.out.println("id do autor: " + this.getIdCriador());
-                novaComunidade = comunidadeDAO.criarComunidade(this);
-                this.setIdComunidade(novaComunidade.getIdComunidade());
-                return true;
+            Comunidade comunidade = new Comunidade();
+            String nomeComunidade = null;
+            String descricaoComunidade = null;
+            int idAutor = 0;
+            FileItem fotoPerfil = null;
+            FileItem fotoFundo = null;
+            for (FileItem item : items) {
+                if (item.isFormField()) {
+                    switch (item.getFieldName()) {
+                        case "nomeComunidade" -> nomeComunidade = item.getString();
+                        case "descricaoComunidade" -> descricaoComunidade = item.getString();
+                        case "idAutor" -> idAutor = Integer.parseInt(item.getString());
+                    }
+                } else {
+                    switch (item.getFieldName()) {
+                        case "fotoPerfil" -> fotoPerfil = item;
+                        case "fotoFundo" -> fotoFundo = item;
+                    }
+                }
             }
+            comunidade.setIdCriador(idAutor);
+            comunidade.setNome(nomeComunidade);
+            comunidade.setDescricao(descricaoComunidade);
+            ObterData obterData = new ObterData();
+            int anoAtual = obterData.getAnoAtual();
+            int mesAtual = obterData.getMesAtual();
+            int diaAtual = obterData.getDiaAtual();
+            String urlCaminho = new ObterURL().getUrl();
+            String urlFotoPerfil = "arquivosEstaticos" + File.separator + "fotoPerfilComunidade" + File.separator + anoAtual + File.separator + mesAtual + File.separator + diaAtual + File.separator;
+            String urlFotoFundo = "arquivosEstaticos" + File.separator + "fotoFundoComunidade" + File.separator + anoAtual + File.separator + mesAtual + File.separator + diaAtual + File.separator;
+            String diretorioFotoPerfil = urlCaminho + File.separator + urlFotoPerfil;
+            String diretorioFotoFundo = urlCaminho + File.separator + urlFotoFundo;
+            File diretorioFileFotoPerfil = new File(diretorioFotoPerfil);
+            if (!diretorioFileFotoPerfil.exists()) diretorioFileFotoPerfil.mkdirs();
+            if (diretorioFileFotoPerfil.exists()) {
+                UUID randomName = UUID.randomUUID();
+                if (fotoPerfil != null) {
+                    fotoPerfil.write(new File(diretorioFotoPerfil, ("img-fotoperfil" + nomeComunidade + randomName + "." + new ObterExtensaoArquivo().get(fotoPerfil.getName()))));
+                    comunidade.setFotoPerfil(urlFotoPerfil + "img-fotoperfil" + nomeComunidade + randomName + "." + new ObterExtensaoArquivo().get(fotoPerfil.getName()));
+                }
+            }
+            File diretorioFileFotoFundo = new File(diretorioFotoFundo);
+            if (!diretorioFileFotoFundo.exists()) diretorioFileFotoFundo.mkdirs();
+            if (diretorioFileFotoFundo.exists()) {
+                UUID randomName = UUID.randomUUID();
+                if (fotoFundo != null) {
+                    fotoFundo.write(new File(diretorioFotoFundo, ("img-fotofundo" + nomeComunidade + randomName + "." + new ObterExtensaoArquivo().get(fotoFundo.getName()))));
+                    comunidade.setFotoFundo(urlFotoFundo + "img-fotofundo" + nomeComunidade + randomName + "." + new ObterExtensaoArquivo().get(fotoFundo.getName()));
+                }
+            }
+            ComunidadeDAO comunidadeDAO = new ComunidadeDAO();
+            Comunidade novaComunidade = comunidadeDAO.criarComunidade(comunidade);
+            this.setIdComunidade(novaComunidade.getIdComunidade());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -150,10 +180,6 @@ public class Comunidade implements Serializable {
         return new ComunidadeDAO().listarComunidadesUsuario(idMembro);
     }
 
-    public ArrayList<Comunidade> listarComunidadesParticipantes(int idMembro, int limit) {
-        return new ComunidadeDAO().listarComunidades(limit);
-    }
-
     public ArrayList<Comunidade> pesquisarComunidade(String query) {
         return new ComunidadeDAO().pesquisarComunidade(query);
     }
@@ -161,6 +187,7 @@ public class Comunidade implements Serializable {
     public ArrayList<Comunidade> obterTodasComunidades() {
         return new ComunidadeDAO().comunidades();
     }
+
     public boolean editarComunidade(ArrayList<FileItem> items) {
         try {
             String nome = null;
@@ -218,7 +245,8 @@ public class Comunidade implements Serializable {
             throw new RuntimeException(e);
         }
     }
-    public boolean verificaId(int idComunidade){
+
+    public boolean verificaId(int idComunidade) {
         return new ComunidadeDAO().verificaComunidade(idComunidade);
     }
 }
