@@ -745,7 +745,7 @@ body {
     transition: 0.5s;
 }
 .pop-up-answer button:hover{
-    background-color: var(--COR-05);
+    background-color: var(--COR-02);
 }
 .botoes{
     padding-top: 20px;
