@@ -88,12 +88,13 @@ body {
     border-radius: 100%;
     width: 150px;
     height: 150px;
-    margin-top: -9rem;
+    margin-top: -14rem;
     margin-left: 3rem;
     border: 6px solid #427D9D;
 }
 
 .nome-usuario {
+    max-width: 20rem;
     margin-bottom: 0px;
     margin-left: 3rem;
     font-size: 1.7rem;
@@ -103,7 +104,7 @@ body {
 .profile-description {
     margin-right: 9.5rem;
     min-width: 700px;
-    max-width: 700px;
+    max-width: 900px;
     text-align: justify;
     text-justify: distribute-all-lines;
     line-height: 1.5;
@@ -111,6 +112,7 @@ body {
 }
 
 .descricao {
+    word-wrap: break-word;
     margin-bottom: 0px;
     margin-left: 3rem;
     font-size: 1.4rem;
@@ -501,4 +503,9 @@ body {
 .containerSide{
     display: flex;
     flex-direction: column;
+}
+
+#popup-nova-comunidade .cabecalho {
+    padding: 10px;
+    border-bottom: 0;
 }

@@ -38,44 +38,11 @@ body {
 }
 
 .header {
-    margin-right: 44rem;
-    width: 250px;
-    height: 40px;
+    padding-top: 10px;
+    padding-left: 10px;
     display: flex;
+    flex-direction: row;
     color: var(--COR-TEXTO-04);
-    margin-bottom: 1rem;
-    margin-left: 2rem;
-}
-
-.header a {
-    text-decoration: none;
-    height: 40px;
-}
-
-.homePage {
-    font-size: 16px;
-    color: rgba(221, 242, 253, 0.60);
-    cursor: pointer;
-    margin-right: 70px;
-    margin-top: 0.5rem;
-    margin-left: 3rem;
-    text-decoration: none;
-}
-
-.perfil {
-    margin-top: 0.5rem;
-    font-size: 16px;
-    color: #DDF2FD;
-    cursor: default;
-}
-
-.perfil::after {
-    content: '';
-    display: block;
-    width: 100%;
-    height: 6px;
-    background-color: #DDF2FD;
-    border-radius: 20px;
 }
 
 .fundoPerfil {
@@ -91,12 +58,13 @@ body {
     border-radius: 100%;
     width: 150px;
     height: 150px;
-    margin-top: -12rem;
+    margin-top: -14rem;
     margin-left: 3rem;
     border: 6px solid #427D9D;
 }
 
 .nome-comunidade {
+    max-width: 20rem;
     margin-bottom: 0;
     margin-left: 3rem;
     font-size: 1.7rem;
@@ -374,10 +342,10 @@ body {
     margin-top: 1rem;
 }
 
+
 .botao-acao-perfil button {
-    margin-left: 50rem;
-    font-size: 1.2rem;
-    padding: 13px;
+    font-size: 1rem;
+    padding: 5px 13px 8px 13px;
     background-color: var(--COR-04);
     border: none;
     cursor: pointer;
@@ -389,6 +357,22 @@ body {
 
 .botao-acao-perfil button:hover {
     background-color: var(--COR-05);
+}
+
+.adicionar-moderador {
+    margin-left: 48rem;
+    white-space: nowrap;
+    margin-bottom: 0.5rem;
+}
+
+.excluir-comunidade {
+    margin-left: 48.7rem;
+    white-space: nowrap;
+    margin-bottom: 0.5rem;
+}
+
+.editar-perfil {
+    margin-left: 51.5rem;
 }
 
 #numSeguidores:hover, #numSeguindos:hover {
@@ -549,14 +533,6 @@ body {
     text-decoration: underline;
 }
 
-.voltar {
-    display: flex;
-    font-size: 1.4rem;
-    position: absolute;
-    left: 9rem;
-    top: 1rem;
-}
-
 #img-icone-editar-foto-perfil-comunidade {
     left: 0;
     top: 0;
@@ -698,10 +674,18 @@ body {
 .imgPreview {
     display: flex;
 }
-.icone-voltar:hover{
+
+.voltar {
+    margin: 0px;
+    padding-left: 10px;
+    font-size: 25px;
+}
+
+.icone-voltar:hover {
     cursor: pointer;
 }
-.pop-up-ver-participantes{
+
+.pop-up-ver-participantes {
     display: flex;
     background-color: var(--COR-04);
     width: 700px;
@@ -712,4 +696,27 @@ body {
     border-radius: 20px;
     flex-direction: column;
 }
-.po
+
+.icone-voltar img {
+    width: 40px;
+    height: 40px;
+}
+.pop-up-adicionar-moderador {
+    display: flex;
+    background-color: var(--COR-04);
+    width: 700px;
+    height: auto;
+    position: absolute;
+    top: 2rem;
+    left: 18rem;
+    border-radius: 20px;
+    flex-direction: column;
+}
+.pop-up-answer {
+    background-color: var(--COR-04);
+    width: 450px;
+    top: 40%;
+    position: absolute;
+    left: 40%;
+    border-radius: 20px;
+}

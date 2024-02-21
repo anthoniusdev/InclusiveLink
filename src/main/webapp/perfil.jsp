@@ -65,6 +65,9 @@
             <div class="botao-acao-perfil">
                 <button class="btn-editar-perfil" id="editar-perfil">EDITAR PERFIL</button>
             </div>
+            <div class="botao-acao-perfil">
+                <button style="margin-left: 53rem" id="logout">LOGOUT</button>
+            </div>
             <%
             } else {
                 String txt = "SEGUIR";
@@ -73,7 +76,7 @@
                 }
             %>
             <div class="botao-acao-perfil">
-                <button id="botao-seguir-perfil"
+                <button style="margin-left: 54rem;" id="botao-seguir-perfil"
                         onclick="seguirUsuario(<%=usuario.getIdPessoa()%>, <%=perfilVisitado.getIdPessoa()%>, false)"><%=txt%>
                 </button>
             </div>

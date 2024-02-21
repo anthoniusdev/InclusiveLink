@@ -1,5 +1,5 @@
 let carregando = false, usuarioAutenticado, alteracaoSalva = false, ftFunURL, ftPerURL, ftPerCom, ftFunCom;
-let p = new URLSearchParams(new URL(window.location).search), alteracaoParticipante = false;
+let p = new URLSearchParams(new URL(window.location).search), alteracaoParticipante = false, novoModerador = false;
 let idComunidade = p.get("idComunidade");
 
 obterUsuarioAutenticado().then(function (usuario) {
@@ -86,6 +86,7 @@ document.addEventListener('DOMContentLoaded', function () {
             botaoPostar.style.cursor = "default";
         }
     });
+
     function submeterFormulario() {
         let formData = new FormData(formNovaPublicacao);
         formData.append("idComunidade", idComunidade);
@@ -115,10 +116,12 @@ document.addEventListener('DOMContentLoaded', function () {
             imagemPreview.src = '';
         })
     }
+
     function abrirSeletorArquivo() {
         const inputImagem = document.getElementById('input-imagem');
         inputImagem.click();
     }
+
     carregarPublicacoes("comunidade");
     $(window).scroll(function () {
         if (!carregando && $(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
@@ -208,7 +211,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // --------------------- POP-UP PARTICIPANTES ----------------------------
     let fundoEscuroParticipantes = $('#fundo-escuro-participantes');
     // abrir pop-up
-    $('#numParticipantes').on('click', function (){
+    $('#numParticipantes').on('click', function () {
         fundoEscuroParticipantes.css({
             display: 'block'
         });
@@ -217,10 +220,10 @@ document.addEventListener('DOMContentLoaded', function () {
         })
     })
     // fechar pop-up
-    $('#close-participantes').on('click', function (){
-        if (alteracaoParticipante === true){
+    $('#close-participantes').on('click', function () {
+        if (alteracaoParticipante === true) {
             window.location.reload();
-        }else{
+        } else {
             fundoEscuroParticipantes.css({
                 display: 'none'
             });
@@ -229,7 +232,84 @@ document.addEventListener('DOMContentLoaded', function () {
             })
         }
     })
+    // --------------------- POP-UP ADICIONAR MODERADOR ----------------------------
+    $('#adicionar-moderador').on('click', function () {
+        abrirPopUpAM();
+    });
+    $('#close-adicionar-moderador').on('click', function () {
+        fecharPopUpAM();
+    });
+
+    function abrirPopUpAM() {
+        $('#body').css({
+            overflow: 'hidden'
+        });
+        $('#fundo-escuro-adicionar-moderador').css({
+            display: 'block',
+            overflow: 'auto'
+        });
+    }
+
+    function fecharPopUpAM() {
+        if (novoModerador === true) {
+            window.location.reload();
+        } else {
+            $('#fundo-escuro-adicionar-moderador').css({
+                display: 'none',
+                overflow: 'hidden'
+            });
+            $('#body').css({
+                overflow: 'auto'
+            });
+        }
+    }
+    $('#excluir-comunidade').on('click', function (){
+        abrirPopUpA();
+    });
+    $('#answer-no').on('click', function (){
+        fecharPopUpA();
+    });
+    $('#answer-yes').on('click', function (){
+        $.ajax({
+            url: 'excluirComunidade',
+            type: 'POST',
+            data: {idComunidade: idComunidade}
+        });
+        window.location.href = 'home';
+    })
+    function abrirPopUpA(){
+        $('#body').css({
+            overflow: 'hidden'
+        });
+        $('#fundo-escuro-answer').css({
+            display: 'block',
+            overflow: 'auto'
+        });
+    }
+    function fecharPopUpA(){
+        $('#fundo-escuro-answer').css({
+            display: 'none',
+            overflow: 'hidden'
+        });
+        $('#body').css({
+            overflow: 'auto'
+        });
+    }
 });
+
+function adicionarModerador(i) {
+    let btn = $('#btn-am' + i);
+    btn.text('MODERADOR');
+    btn.css({
+        border: '1px solid #fff'
+    })
+    $.ajax({
+        url: 'adicionarModerador',
+        type: 'POST',
+        data: {idModerador: i, idComunidade: idComunidade}
+    })
+    novoModerador = true;
+}
 
 function editarComunidade() {
     let formData = new FormData();
@@ -255,7 +335,8 @@ function editarComunidade() {
     });
     alteracaoSalva = true;
 }
-function removerParticipante(i, ii){
+
+function removerParticipante(i, ii) {
     let classeParticipante = '#' + ii;
     classeParticipante = $(classeParticipante);
     classeParticipante.css({

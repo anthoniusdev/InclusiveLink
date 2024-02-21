@@ -50,8 +50,9 @@
             <img src="<%=comunidade.getFotoFundo()%>" class="fundoPerfil"
                  alt="Foto de fundo da comunidade <%=comunidade.getNome()%>">
             <div class="botao-acao-perfil">
-                <button id="editar-perfil">EDITAR PERFIL</button>
-                <button id="">AÇÕES</button>
+                <button class="adicionar-moderador" id="adicionar-moderador">ADICIONAR MODERADOR</button>
+                <button class="excluir-comunidade" id="excluir-comunidade">EXCLUIR COMUNIDADE</button>
+                <button class="editar-perfil" id="editar-perfil">EDITAR PERFIL</button>
             </div>
             <% if (comunidade.getFotoPerfil() == null) {
                 comunidade.setFotoPerfil("images/DefaultFundoPerfil.png");
@@ -75,7 +76,7 @@
                 <form action="novaPublicacao" method="post" id="formNovaPublicacao" enctype="multipart/form-data">
                     <div class="foto-perfil">
                         <%
-                            if(usuario.getFotoPerfil() == null) {
+                            if (usuario.getFotoPerfil() == null) {
                                 usuario.setFotoPerfil("images/person_foto.svg");
                             }
                         %>
@@ -285,6 +286,53 @@
                 </div>
             </div>
         </div>
+        <%if (comunidade.getIdModeradores().contains(usuario.getIdPessoa())) {%>
+        <%-- Fundo escuro para adicionar moderador--%>
+        <div class="fundo-escuro" id="fundo-escuro-adicionar-moderador">
+            <div class="pop-up-adicionar-moderador">
+                <div class="cabecalho">
+                        <span class="close" id="close-adicionar-moderador"><img src="images/octicon_x-12.svg"
+                                                                                alt=""></span>
+                    <p>ADICIONAR MODERADOR</p>
+                </div>
+                <div class="lista-participantes">
+                    <%
+                        for (int id : comunidade.getIdParticipantes()) {
+                            if (id != usuario.getIdPessoa() && !comunidade.getIdModeradores().contains(id)) {
+                                Membro membro = new Membro(id);
+                                if (membro.getFotoPerfil() == null) {
+                                    membro.setFotoPerfil("images/person_foto.svg");
+                                }
+                    %>
+                    <div class="caixa-perfil" id="<%=membro.getNomeUsuario()%>">
+                        <div class="foto-perfil">
+                            <img src="<%=membro.getFotoPerfil()%>" alt="foto de perfil de <%=membro.getNome()%>">
+                        </div>
+                        <p class="nome"><%=membro.getNome()%>
+                        </p>
+                        <button id="btn-am<%=membro.getIdPessoa()%>" class="btn-adicionar-moderador"
+                                onclick="adicionarModerador(<%=membro.getIdPessoa()%>);">PROMOVER
+                        </button>
+                    </div>
+                    <%
+                            }
+                        }
+                    %>
+                </div>
+            </div>
+        </div>
+        <div class="fundo-escuro" id="fundo-escuro-answer">
+            <div class="pop-up-answer">
+                <div class="pergunta">
+                    <small>DESEJA REALMENTE EXCLUIR A COMUNIDADE <%=comunidade.getNome()%>?</small>
+                </div>
+                <div class="botoes">
+                    <button id="answer-yes">SIM</button>
+                    <button id="answer-no">NÃO</button>
+                </div>
+            </div>
+        </div>
+        <%}%>
     </div>
 </main>
 </body>

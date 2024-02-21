@@ -51,6 +51,9 @@
             <%
                 if (!comunidadesParticipantes.isEmpty()) {
                     for (Comunidade comunidade : comunidadesParticipantes) {
+                        if (comunidade.getFotoPerfil() == null){
+                            comunidade.setFotoPerfil("images/people-group-solid.svg");
+                        }
             %>
             <div class="caixa-comunidade" id="caixa-comunidade<%=comunidadesParticipantes.indexOf(comunidade)%>">
                 <a href="minhasComunidades?idComunidade=<%= comunidade.getIdComunidade()%>">
