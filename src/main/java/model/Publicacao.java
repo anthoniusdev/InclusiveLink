@@ -226,7 +226,9 @@ public class Publicacao implements Serializable {
     public ArrayList<Publicacao> feedMembro(int idMembro, int intervalo_inicial, int quantidade_publicacoes) {
         return new PublicacaoDAO().feed(idMembro, intervalo_inicial, quantidade_publicacoes);
     }
-
+    public ArrayList<Publicacao> feedComunidade(int idComunidade, int intervalo_inicial, int quantidade_publicacoes) {
+        return new PublicacaoDAO().feedComunidade(idComunidade, intervalo_inicial, quantidade_publicacoes);
+    }
     public void excluirPublicacao() {
         new PublicacaoDAO().excluirPublicacao(this.idPublicacao);
     }

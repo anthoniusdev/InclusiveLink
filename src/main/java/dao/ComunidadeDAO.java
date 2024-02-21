@@ -253,21 +253,6 @@ public class ComunidadeDAO {
         }
     }
 
-
-
-    public void sairComunidade(int idComunidade, int idParticipante) {
-        try (Connection con = conectar()) {
-            String delete = "DELETE FROM participante_comunidade WHERE idComunidade = ? AND idParticipante = ?";
-            try (PreparedStatement preparedStatement = con.prepareStatement(delete)) {
-                preparedStatement.setInt(1, idComunidade);
-                preparedStatement.setInt(2, idParticipante);
-                preparedStatement.executeUpdate();
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public void excluirComunidade(int idComunidade) {
         try (Connection con = conectar()) {
             String delete = "DELETE FROM comunidade WHERE idComunidade = ?";
@@ -278,6 +263,21 @@ public class ComunidadeDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
+    }
+    public boolean editar(int idComunidade, String nome, String descricao, String urlFotoPerfil, String urlFotoFundo){
+        try (Connection con = conectar()) {
+            String update = "UPDATE comunidade SET nome = ?, descricao = ?, fotoPerfil = ?, fotoFundo = ? WHERE idComunidade = ?";
+            try (PreparedStatement preparedStatement = con.prepareStatement(update)){
+                preparedStatement.setString(1, nome);
+                preparedStatement.setString(2, descricao);
+                preparedStatement.setString(3, urlFotoPerfil);
+                preparedStatement.setString(4, urlFotoFundo);
+                preparedStatement.setInt(5, idComunidade);
+                preparedStatement.executeUpdate();
+                return true;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

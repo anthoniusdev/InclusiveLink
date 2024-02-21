@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
-@WebServlet(urlPatterns = {"/obterComunidades", "/verComunidades", "/criarComunidade", "/pesquisarComunidade", "/minhasComunidades", "/comunidades", "/novaPublicacaoController"})
+@WebServlet(urlPatterns = {"/obterComunidades", "/verComunidades", "/criarComunidade", "/pesquisarComunidade", "/minhasComunidades", "/comunidades", "/editarComunidade"})
 public class ComunidadeController extends HttpServlet {
 
     @Override
@@ -38,6 +38,7 @@ public class ComunidadeController extends HttpServlet {
         System.out.println(action);
         switch (action) {
             case "/criarComunidade" -> criarComunidade(request, response);
+            case "/editarComunidade" -> editarComunidade(request, response);
         }
     }
 
@@ -185,9 +186,7 @@ public class ComunidadeController extends HttpServlet {
         try {
             Comunidade comunidade = new Comunidade(Integer.parseInt(request.getParameter("idComunidade")));
             request.setAttribute("comunidade", comunidade);
-            HttpSession httpSession = request.getSession(false);
-            httpSession.setAttribute("previousPage", request.getHeader("referer"));
-            RequestDispatcher rd = request.getRequestDispatcher("DonoComunidade.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("Comunidade.jsp");
             rd.forward(request, response);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -205,4 +204,25 @@ public class ComunidadeController extends HttpServlet {
         }
     }
 
+    private void editarComunidade(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            ServletFileUpload upload = new ServletFileUpload(new DiskFileItemFactory());
+            ArrayList<FileItem> items = (ArrayList<FileItem>) upload.parseRequest(request);
+            int idComunidade = Integer.parseInt(request.getParameter("idComunidade"));
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            JSONObject jsonResponse = new JSONObject();
+            if (new Comunidade(idComunidade).editarComunidade(items)) {
+                jsonResponse.put("success", true);
+                jsonResponse.put("message", "Comunidade editada com sucesso.");
+            } else {
+                jsonResponse.put("success", false);
+                jsonResponse.put("message", "Erro ao editar a comunidade.");
+            }
+            response.getWriter().write(jsonResponse.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
 }
