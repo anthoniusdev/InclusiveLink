@@ -64,6 +64,7 @@ body {
 }
 
 .nome-comunidade {
+    max-width: 20rem;
     margin-bottom: 0;
     margin-left: 3rem;
     font-size: 1.7rem;

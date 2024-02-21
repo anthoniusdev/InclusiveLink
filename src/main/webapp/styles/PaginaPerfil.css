@@ -94,6 +94,7 @@ body {
 }
 
 .nome-usuario {
+    max-width: 20rem;
     margin-bottom: 0px;
     margin-left: 3rem;
     font-size: 1.7rem;
