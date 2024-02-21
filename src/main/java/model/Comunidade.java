@@ -39,8 +39,6 @@ public class Comunidade implements Serializable {
 
     public Comunidade(int idComunidade) {
         Comunidade comunidade = new ComunidadeDAO().retornaComunidade(idComunidade);
-        System.out.println("Id comunidade:");
-        System.out.println(comunidade.getIdComunidade());
         this.setIdComunidade(idComunidade);
         this.nome = comunidade.getNome();
         this.idCriador = comunidade.getIdCriador();

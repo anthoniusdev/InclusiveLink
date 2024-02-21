@@ -19,9 +19,7 @@ import java.util.ArrayList;
 public class ParticipanteComunidadeController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("Served at: " + request.getContextPath() + request.getServletPath());
         String action = request.getServletPath();
-        System.out.println(action);
         switch (action) {
             case "/sairComunidade" -> sairComunidade(request, response);
             case "/participarComunidade" -> participarComunidade(request, response);

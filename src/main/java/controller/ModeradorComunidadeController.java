@@ -15,9 +15,7 @@ import java.io.IOException;
 public class ModeradorComunidadeController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("Served at: " + request.getContextPath() + request.getServletPath());
         String action = request.getServletPath();
-        System.out.println(action);
         switch (action) {
             case "/adicionarModerador" -> adicionarModerador(request, response);
             case "/excluirComunidade" -> excluirComunidade(request, response);

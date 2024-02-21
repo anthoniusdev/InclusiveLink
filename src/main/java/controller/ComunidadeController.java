@@ -89,7 +89,6 @@ public class ComunidadeController extends HttpServlet {
             JSONObject jsonResponse = new JSONObject();
             Membro membro = (Membro) httpSession.getAttribute("usuario");
             if (comunidade.criarComunidade(items)) {
-                System.out.println("retornou");
                 jsonResponse.put("success", true);
                 jsonResponse.put("message", "Comunidade criada com sucesso.");
                 ArrayList<Comunidade> comunidades_usuario = comunidade.listarComunidadesParticipantes(membro.getIdPessoa());

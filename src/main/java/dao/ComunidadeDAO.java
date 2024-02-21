@@ -147,39 +147,6 @@ public class ComunidadeDAO {
         return false;
     }
 
-    public ArrayList<Comunidade> listarComunidades(int limite) {
-        try (Connection con = conectar()) {
-            String read = "SELECT idComunidade FROM comunidade ORDER BY comunidade.idComunidade DESC LIMIT ?";
-            try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
-                preparedStatement.setInt(1, limite);
-                ResultSet rs = preparedStatement.executeQuery();
-                ArrayList<Comunidade> comunidades = new ArrayList<>();
-                while (rs.next()) {
-                    comunidades.add(retornaComunidade(rs.getInt(1)));
-                }
-                return comunidades;
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public ArrayList<Comunidade> listarComunidades() {
-        try (Connection con = conectar()) {
-            String read = "SELECT idComunidade FROM comunidade ORDER BY comunidade.idComunidade DESC";
-            try (PreparedStatement preparedStatement = con.prepareStatement(read)) {
-                ResultSet rs = preparedStatement.executeQuery();
-                ArrayList<Comunidade> comunidades = new ArrayList<>();
-                while (rs.next()) {
-                    comunidades.add(retornaComunidade(rs.getInt(1)));
-                }
-                return comunidades;
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public ArrayList<Comunidade> listarComunidadesUsuario(int idUsuario) {
         try (Connection con = conectar()) {
             String read = "SELECT idComunidade FROM participante_comunidade WHERE idParticipante = ? ORDER BY idComunidade DESC";
@@ -189,7 +156,6 @@ public class ComunidadeDAO {
                 ArrayList<Comunidade> comunidades = new ArrayList<>();
                 while (rs.next()) {
                     int idComunidade = rs.getInt(1);
-                    System.out.println(idComunidade);
                     comunidades.add(retornaComunidade(idComunidade));
                 }
                 return comunidades;
@@ -212,26 +178,6 @@ public class ComunidadeDAO {
                     return comunidades;
                 }
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void selecionarComunidade(Comunidade comunidade) {
-        String read = "select * from comunidade where idComunidade = ?";
-        try (Connection con = conectar()) {
-            PreparedStatement preparedStatement = con.prepareStatement(read);
-            preparedStatement.setString(1, String.valueOf(comunidade.getIdComunidade()));
-            ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()) {
-                comunidade.setIdComunidade(Integer.parseInt(rs.getString(1)));
-                comunidade.setNome(rs.getString(2));
-                comunidade.setIdCriador(Integer.parseInt(rs.getString(3)));
-                comunidade.setFotoPerfil(rs.getString(4));
-                comunidade.setFotoFundo(rs.getString(5));
-                comunidade.setDescricao(rs.getString(6));
-            }
-            con.close();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

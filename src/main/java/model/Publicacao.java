@@ -1,11 +1,17 @@
 package model;
 
 import dao.PublicacaoDAO;
+import org.apache.commons.fileupload.FileItem;
+import util.ObterData;
+import util.ObterExtensaoArquivo;
+import util.ObterURL;
 
+import java.io.File;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.UUID;
 
 public class Publicacao implements Serializable {
     private int idPublicacao;
@@ -33,49 +39,27 @@ public class Publicacao implements Serializable {
     }
 
     public Publicacao(String texto, String midia, Membro autor) {
-        Publicacao novaPublicacao;
-        setTexto(texto);
-        setMidia(midia);
-        numeroCurtidas = 0;
-        curtidas = new ArrayList<>();
-        numeroComentarios = 0;
-        idComentarios = new ArrayList<Integer>();
-        setAutor(autor);
         try {
+            Publicacao novaPublicacao;
+            setTexto(texto);
+            setMidia(midia);
+            numeroCurtidas = 0;
+            curtidas = new ArrayList<>();
+            numeroComentarios = 0;
+            idComentarios = new ArrayList<Integer>();
+            setAutor(autor);
             PublicacaoDAO publicacaoDAO = new PublicacaoDAO();
             novaPublicacao = publicacaoDAO.novaPublicacao(this);
             this.setIdPublicacao(novaPublicacao.getIdPublicacao());
             this.setData(novaPublicacao.getData());
             this.setHora(novaPublicacao.getHora());
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
-//    public Publicacao(String texto, String midia, ParticipanteComunidade autor, Comunidade comunidade) {
-//        Publicacao novaPublicacao;
-//        if (autor.isParticipante(comunidade) || autor.isParticipante(comunidade)) {
-//            try {
-//                autor = new ParticipanteComunidade(autor);
-//                setTexto(texto);
-//                setMidia(midia);
-//                setAutor(autor);
-//                PublicacaoDAO publicacaoDAO = new PublicacaoDAO();
-//                comunidade.criarPublicacao(this);
-//                novaPublicacao = publicacaoDAO.novaPublicacao(this);
-//                if (novaPublicacao != null) {
-//                    this.setIdPublicacao(novaPublicacao.getIdPublicacao());
-//                    this.setData(novaPublicacao.getData());
-//                    this.setHora(novaPublicacao.getHora());
-//                }
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//                throw new RuntimeException(e);
-//            }
-//        }
-//    }
-
-    public Publicacao(int idPublicacao){
+    public Publicacao(int idPublicacao) {
         try {
             Publicacao publicacao = new PublicacaoDAO().retornaPublicacao(idPublicacao);
             this.setIdPublicacao(idPublicacao);
@@ -113,7 +97,45 @@ public class Publicacao implements Serializable {
 
     public Publicacao() {
     }
-
+    public void novaPublicacao(ArrayList<FileItem> items, Membro autor) throws Exception {
+        String inputTexto = null;
+        FileItem inputMidia = null;
+        for (FileItem item : items) {
+            if (item.isFormField() && "inputTexto".equals(item.getFieldName())) {
+                inputTexto = item.getString("UTF-8");
+            } else {
+                inputMidia = item;
+            }
+        }
+        if (inputMidia != null) {
+            String urlCaminho = new ObterURL().getUrl();
+            ObterData obterData = new ObterData();
+            int anoAtual = obterData.getAnoAtual();
+            int mesAtual = obterData.getMesAtual();
+            int diaAtual = obterData.getDiaAtual();
+            String urlFotosPublicacao = "arquivosEstaticos" + File.separator + "fotosPublicacoes" + File.separator + anoAtual + File.separator + mesAtual + File.separator + diaAtual + File.separator;
+            String diretorioFotosPublicacao = urlCaminho + File.separator + urlFotosPublicacao;
+            File diretorioFile = new File(diretorioFotosPublicacao);
+            if (!diretorioFile.exists()) {
+                diretorioFile.mkdirs();
+            }
+            if (diretorioFile.exists()) {
+                UUID randomName = UUID.randomUUID();
+                String caminho = null;
+                if (new ObterExtensaoArquivo().get(inputMidia.getName()) != null) {
+                    String nomeArquivo = randomName.toString() + "." + new ObterExtensaoArquivo().get(inputMidia.getName());
+                    File arquivoImagem = new File(diretorioFile, nomeArquivo);
+                    inputMidia.write(arquivoImagem);
+                    caminho = urlFotosPublicacao + nomeArquivo;
+                    this.setMidia(caminho);
+                }
+            }
+        }
+        this.setTexto(inputTexto);
+        this.setAutor(autor);
+        new PublicacaoDAO().novaPublicacao(this);
+        this.setIdPublicacao(new PublicacaoDAO().novaPublicacao(this).getIdPublicacao());
+    }
     public void setIdPublicacao(int idPublicacao) {
         this.idPublicacao = idPublicacao;
     }
@@ -226,9 +248,11 @@ public class Publicacao implements Serializable {
     public ArrayList<Publicacao> feedMembro(int idMembro, int intervalo_inicial, int quantidade_publicacoes) {
         return new PublicacaoDAO().feed(idMembro, intervalo_inicial, quantidade_publicacoes);
     }
+
     public ArrayList<Publicacao> feedComunidade(int idComunidade, int intervalo_inicial, int quantidade_publicacoes) {
         return new PublicacaoDAO().feedComunidade(idComunidade, intervalo_inicial, quantidade_publicacoes);
     }
+
     public void excluirPublicacao() {
         new PublicacaoDAO().excluirPublicacao(this.idPublicacao);
     }
@@ -236,7 +260,8 @@ public class Publicacao implements Serializable {
     public int getNumeroComentarios() {
         return numeroComentarios;
     }
-    public ArrayList<Publicacao> perfilUsuario(int idUsuario, int intervalo, int quantidade){
+
+    public ArrayList<Publicacao> perfilUsuario(int idUsuario, int intervalo, int quantidade) {
         return new PublicacaoDAO().perfilMembro(idUsuario, intervalo, quantidade);
     }
 }
