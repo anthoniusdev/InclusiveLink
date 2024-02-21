@@ -19,9 +19,7 @@ import java.util.ArrayList;
 public class ComentarioController extends HttpServlet implements Serializable {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("Served at: " + request.getContextPath() + request.getServletPath());
         String action = request.getServletPath();
-        System.out.println(action);
         switch (action) {
             case "/novoComentario" -> novoComentario(request, response);
         }
@@ -29,9 +27,7 @@ public class ComentarioController extends HttpServlet implements Serializable {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("Served at: " + request.getContextPath() + request.getServletPath());
         String action = request.getServletPath();
-        System.out.println(action);
         switch (action) {
             case "/obterComentarios" -> obterComentarios(request, response);
         }
