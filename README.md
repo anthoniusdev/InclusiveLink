@@ -9,7 +9,7 @@ Certifique-se de ter o seguinte instalado em seu ambiente de desenvolvimento:
 
 - **Java JDK**: Baixe e instale o [Java SE Development Kit](https://www.oracle.com/br/java/technologies/downloads/).
 - **Apache Tomcat**: Faça o download e instalação do [Apache Tomcat](https://tomcat.apache.org/).
-- **MySQL Server**: Instale o MySQL Server e execute o script SQL fornecido em `/scripts` para criar o banco de dados e tabelas necessários.
+- **MySQL Server**: Instale o [MySQL](https://www.mysql.com/downloads/) e execute o script SQL fornecido em `/scripts` para criar o banco de dados e tabelas necessários.
 
 ### Configuração do Banco de Dados
 Execute o script SQL fornecido em `/scripts` para criar o banco de dados e tabelas necessários.
@@ -41,4 +41,4 @@ O projeto utiliza o Maven para gerenciar suas dependências. Certifique-se de te
 - MySQL Connector/J 8.0.33
 
 ## Importante
-Certifique-se de ter o Java JDK, Apache Tomcat e MySQL Server configurados corretamente antes de iniciar o projeto. Consulte a documentação específica dessas ferramentas para obter ajuda na configuração.
+Certifique-se de ter o Java JDK, Apache Tomcat e MySQL configurados corretamente antes de iniciar o projeto. Consulte a documentação específica dessas ferramentas para obter ajuda na configuração.
