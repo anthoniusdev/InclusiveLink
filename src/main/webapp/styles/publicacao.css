@@ -42,16 +42,14 @@ html, body, footer {
 }
 
 .cabecalho-post {
+    padding: 10px;
     display: flex;
-    flex-direction: row;
-    height: 50px;
-    align-items: center;
-    padding-left: 30px;
     border-bottom: 3px solid var(--COR-04);
 }
 
 .cabecalho-post img {
-    width: 100%;
+    width: 40px;
+    height: 40px;
 }
 
 .cabecalho-post h3 {
@@ -194,20 +192,15 @@ html, body, footer {
     box-shadow: 0 0 20px 5px #FC6E6E;
 }
 .txtPost{
+    padding-left: 10px;
     margin-bottom: 3px;
     color: var(--COR-TEXTO-04);
     font-size: 25px;
     margin-left: 5px;
 }
-
 .icone-voltar {
     width: 30px;
     transition: 0.5s;
-}
-
-.icone-voltar:hover {
-    cursor: pointer;
-    width: 33px;
 }
 .adicionar-comentario{
     border-top: 2px solid var(--COR-04)

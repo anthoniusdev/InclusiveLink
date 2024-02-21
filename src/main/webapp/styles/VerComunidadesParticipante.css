@@ -96,6 +96,7 @@ html, body, footer {
 }
 
 .caixa-comunidade h3 {
+    font-synthesis: none;
     width: 500px;
     margin-left: 50px;
     margin-right: 50px;
