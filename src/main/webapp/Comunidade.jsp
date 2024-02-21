@@ -32,7 +32,7 @@
     <script src="scripts/comunidade.js"></script>
     <script src="scripts/seguirUsuario.js"></script>
     <script src="scripts/verificaSeguindo.js"></script>
-    <title></title>
+    <title><%=comunidade.getNome()%> - Inclusive Link</title>
 </head>
 <body id="body">
 <main>

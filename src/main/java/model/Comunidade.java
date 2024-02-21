@@ -134,12 +134,8 @@ public class Comunidade implements Serializable {
                 System.out.println("id do autor: " + this.getIdCriador());
                 novaComunidade = comunidadeDAO.criarComunidade(this);
                 this.setIdComunidade(novaComunidade.getIdComunidade());
-                System.out.println("TUDO CERTO");
                 return true;
-            } else {
-                System.out.println("comunidade ja existe");
             }
-            // ALterar logica para retornar caso a comunidade já exista
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
