@@ -5,6 +5,9 @@ function seguirUsuario(idMembro, idSeguindo, i) {
         let s = '#botaoSeguir' + i;
         botaoSeguir = $(s);
         botaoSeguir.text('SEGUINDO');
+        botaoSeguir.css({
+            marginLeft: '53rem'
+        })
     } else {
         botaoSeguir = $('#botao-seguir-perfil');
         reload = true;

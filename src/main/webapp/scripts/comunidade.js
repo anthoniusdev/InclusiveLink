@@ -1,5 +1,5 @@
 let carregando = false, usuarioAutenticado, alteracaoSalva = false, ftFunURL, ftPerURL, ftPerCom, ftFunCom;
-let p = new URLSearchParams(new URL(window.location).search);
+let p = new URLSearchParams(new URL(window.location).search), alteracaoParticipante = false, novoModerador = false;
 let idComunidade = p.get("idComunidade");
 
 obterUsuarioAutenticado().then(function (usuario) {
@@ -75,7 +75,6 @@ document.addEventListener('DOMContentLoaded', function () {
             botaoPostar.style.backgroundColor = "#164863";
             botaoPostar.style.cursor = "pointer";
         }
-        console.log('Arquivo selecionado:', this.files[0]);
     });
     xFt.addEventListener('click', function () {
         file = null;
@@ -87,6 +86,7 @@ document.addEventListener('DOMContentLoaded', function () {
             botaoPostar.style.cursor = "default";
         }
     });
+
     function submeterFormulario() {
         let formData = new FormData(formNovaPublicacao);
         formData.append("idComunidade", idComunidade);
@@ -116,10 +116,12 @@ document.addEventListener('DOMContentLoaded', function () {
             imagemPreview.src = '';
         })
     }
+
     function abrirSeletorArquivo() {
         const inputImagem = document.getElementById('input-imagem');
         inputImagem.click();
     }
+
     carregarPublicacoes("comunidade");
     $(window).scroll(function () {
         if (!carregando && $(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
@@ -141,30 +143,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     botaoFecharEditarComunidade.on('click', function () {
         window.location.reload();
-        // if (alteracaoSalva === true) {
-        //     window.location.reload();
-        // } else if (alteracaoSalva === false) {
-        //     if (ftpChange) {
-        //         let fp = 'images/person_foto.svg';
-        //         if (usuarioAutenticado.fotoPerfil !== undefined && usuarioAutenticado.fotoPerfil !== '') {
-        //             fp = usuarioAutenticado.fotoPerfil;
-        //         }
-        //         $('#foto-perfil-usuario').attr('src', fp);
-        //     }
-        //     if (ftfChange) {
-        //         let ff = 'images/DefaultFundoPerfil.png';
-        //         if (usuarioAutenticado.fotoFundo !== undefined && usuarioAutenticado.fotoFundo !== '') {
-        //             ff = usuarioAutenticado.fotoFundo;
-        //         }
-        //         $('#foto-fundo-usuario').attr('src', ff);
-        //     }
-        //     if (usuarioAutenticado.descricao !== null) {
-        //         inputDescricao.text(usuarioAutenticado.descricao);
-        //     } else {
-        //         inputDescricao.text('');
-        //     }
-        //     inputNomeUsuario.val(usuarioAutenticado.nome);
-        // }
         $('#fundo-escuro-editar-perfil').css({
             display: 'none',
             overflow: 'hidden'
@@ -220,7 +198,6 @@ document.addEventListener('DOMContentLoaded', function () {
             ftFunCom = file;
             ftfChange = true;
         }
-        console.log('Arquivo selecionado:', this.files[0]);
     })
     editarFtPer.on('change', function () {
         const file = this.files[0];
@@ -230,9 +207,109 @@ document.addEventListener('DOMContentLoaded', function () {
             ftPerCom = file;
             ftpChange = true;
         }
-        console.log('Arquivo selecionado:', this.files[0]);
     });
+    // --------------------- POP-UP PARTICIPANTES ----------------------------
+    let fundoEscuroParticipantes = $('#fundo-escuro-participantes');
+    // abrir pop-up
+    $('#numParticipantes').on('click', function () {
+        fundoEscuroParticipantes.css({
+            display: 'block'
+        });
+        $('#body').css({
+            overflow: 'hidden'
+        })
+    })
+    // fechar pop-up
+    $('#close-participantes').on('click', function () {
+        if (alteracaoParticipante === true) {
+            window.location.reload();
+        } else {
+            fundoEscuroParticipantes.css({
+                display: 'none'
+            });
+            $('#body').css({
+                overflow: 'auto'
+            })
+        }
+    })
+    // --------------------- POP-UP ADICIONAR MODERADOR ----------------------------
+    $('#adicionar-moderador').on('click', function () {
+        abrirPopUpAM();
+    });
+    $('#close-adicionar-moderador').on('click', function () {
+        fecharPopUpAM();
+    });
+
+    function abrirPopUpAM() {
+        $('#body').css({
+            overflow: 'hidden'
+        });
+        $('#fundo-escuro-adicionar-moderador').css({
+            display: 'block',
+            overflow: 'auto'
+        });
+    }
+
+    function fecharPopUpAM() {
+        if (novoModerador === true) {
+            window.location.reload();
+        } else {
+            $('#fundo-escuro-adicionar-moderador').css({
+                display: 'none',
+                overflow: 'hidden'
+            });
+            $('#body').css({
+                overflow: 'auto'
+            });
+        }
+    }
+    $('#excluir-comunidade').on('click', function (){
+        abrirPopUpA();
+    });
+    $('#answer-no').on('click', function (){
+        fecharPopUpA();
+    });
+    $('#answer-yes').on('click', function (){
+        $.ajax({
+            url: 'excluirComunidade',
+            type: 'POST',
+            data: {idComunidade: idComunidade}
+        });
+        window.location.href = 'home';
+    })
+    function abrirPopUpA(){
+        $('#body').css({
+            overflow: 'hidden'
+        });
+        $('#fundo-escuro-answer').css({
+            display: 'block',
+            overflow: 'auto'
+        });
+    }
+    function fecharPopUpA(){
+        $('#fundo-escuro-answer').css({
+            display: 'none',
+            overflow: 'hidden'
+        });
+        $('#body').css({
+            overflow: 'auto'
+        });
+    }
 });
+
+function adicionarModerador(i) {
+    let btn = $('#btn-am' + i);
+    btn.text('MODERADOR');
+    btn.css({
+        border: '1px solid #fff'
+    })
+    $.ajax({
+        url: 'adicionarModerador',
+        type: 'POST',
+        data: {idModerador: i, idComunidade: idComunidade}
+    })
+    novoModerador = true;
+}
 
 function editarComunidade() {
     let formData = new FormData();
@@ -257,4 +334,18 @@ function editarComunidade() {
         transition: '0.5s'
     });
     alteracaoSalva = true;
+}
+
+function removerParticipante(i, ii) {
+    let classeParticipante = '#' + ii;
+    classeParticipante = $(classeParticipante);
+    classeParticipante.css({
+        display: 'none'
+    })
+    $.ajax({
+        type: 'POST',
+        url: 'excluirParticipante',
+        data: {idParticipante: i, idComunidade: idComunidade}
+    });
+    alteracaoParticipante = true;
 }

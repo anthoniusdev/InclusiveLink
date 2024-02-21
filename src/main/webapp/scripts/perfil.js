@@ -16,6 +16,29 @@ document.addEventListener("DOMContentLoaded", function () {
     let inputDescricao = $('#descricao-usuario');
     let iconeEditarFtFundo = $('#icone-editar-foto-fundo-usuario');
     let iconeEditarFtPerfil = $('#icone-editar-foto-perfil-usuario');
+    let botaoSeguirPerfil = $('#botao-seguir-perfil');
+    botaoSeguirPerfil.on('mouseenter', function (){
+        if (botaoSeguirPerfil.class('SEGUINDO')){
+            botaoSeguirPerfil.text('PARAR DE SEGUIR');
+            botaoSeguirPerfil.css({
+                marginLeft: '48rem',
+                backgroundColor: 'var(--COR-03)',
+                border: '1px solid #ff5e5e',
+                color: '#ff5e5e'
+            })
+        }
+    });
+    botaoSeguirPerfil.on('mouseleave', function (){
+        if (botaoSeguirPerfil.class('SEGUINDO')){
+            botaoSeguirPerfil.text('SEGUINDO');
+            botaoSeguirPerfil.css({
+                marginLeft: '52rem',
+                backgroundColor: 'var(--COR-04)',
+                border: 'none',
+                color: 'var(--COR-TEXTO-04)'
+            })
+        }
+    })
     botaoEditarPerfil.on('click', function () {
         $('#fundo-escuro-editar-perfil').css({
             display: 'block',

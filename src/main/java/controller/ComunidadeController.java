@@ -184,10 +184,15 @@ public class ComunidadeController extends HttpServlet {
 
     private void minhasComunidades(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            Comunidade comunidade = new Comunidade(Integer.parseInt(request.getParameter("idComunidade")));
-            request.setAttribute("comunidade", comunidade);
-            RequestDispatcher rd = request.getRequestDispatcher("Comunidade.jsp");
-            rd.forward(request, response);
+            int idComunidade = Integer.parseInt(request.getParameter("idComunidade"));
+            if (new Comunidade().verificaId(idComunidade)) {
+                Comunidade comunidade = new Comunidade(Integer.parseInt(request.getParameter("idComunidade")));
+                request.setAttribute("comunidade", comunidade);
+                RequestDispatcher rd = request.getRequestDispatcher("Comunidade.jsp");
+                rd.forward(request, response);
+            }else{
+                response.sendRedirect("verComunidades");
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

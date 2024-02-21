@@ -142,7 +142,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             img.alt = "Imagem de erro!";
                             img.style.visibility = "visible";
                             if (senhaFormControl === formControl) {
-                                img.style.paddingBottom = "75px";
+                                img.style.paddingBottom = "5px";
                             } else {
                                 img.style.paddingBottom = "0px";
                             }

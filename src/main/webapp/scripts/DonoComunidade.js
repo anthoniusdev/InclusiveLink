@@ -26,44 +26,8 @@ function ocultarDiv(event) {
         minhaDiv.classList.add("d-none");
     }
 }
-$('#excluir-comunidade').on('click', function (){
-    abrirPopUpA();
-});
-$('#answer-no').on('click', function (){
-    fecharPopUpA();
-});
-$('#answer-yes').on('click', function (){
-    $.ajax({
-        url: 'excluirComunidade',
-        type: 'POST',
-        data: {idComunidade: idComunidade}
-    });
-    window.location.href = 'home';
-})
-function abrirPopUpA(){
-    $('#body').css({
-        overflow: 'hidden'
-    });
-    $('#fundo-escuro-answer').css({
-        display: 'block',
-        overflow: 'auto'
-    });
-}
-function fecharPopUpA(){
-    $('#fundo-escuro-answer').css({
-        display: 'none',
-        overflow: 'hidden'
-    });
-    $('#body').css({
-        overflow: 'auto'
-    });
-}
-$('#adicionar-moderador').on('click', function (){
-    abrirPopUpAM();
-})
-$('#close-adicionar-moderador').on('click', function (){
-    fecharPopUpAM();
-})
+
+
 function abrirPopUpAM(){
     $('#body').css({
         overflow: 'hidden'
