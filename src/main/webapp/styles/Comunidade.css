@@ -46,12 +46,11 @@ body {
     margin-top: 8px;
     margin-left: 20px;
     height: 45px;
-    width: 45px;
+    width: 35px;
     transition: 0.5s;
 }
 .icone-voltar img:hover {
     cursor: pointer;
-    width: 48px;
 }
 
 .voltar {
