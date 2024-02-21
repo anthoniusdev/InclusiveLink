@@ -77,7 +77,7 @@
                 <div class="imgPreview">
                     <img id="imagem-preview" alt="" src="">
                     <div class="remover-foto" id="remover-foto">
-                        <img src="images/octicon_x-12.svg" alt="ícone de remover a foto da publicação">
+                        <img id="imgP" src="images/octicon_x-12.svg" alt="ícone de remover a foto da publicação">
                     </div>
                 </div>
             </div>

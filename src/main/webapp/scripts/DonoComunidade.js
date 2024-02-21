@@ -1,6 +1,9 @@
 let novoModerador = false;
 let p = new URLSearchParams(new URL(window.location).search);
 let idComunidade = p.get("idComunidade");
+
+let labelNomeComunidade = $('#label-nome-comunidade');
+let inputNomeComunidade = $('#nome-comunidade');
 function ativarOpcoes(event) {
     console.log("Função ativarOpcoes() chamada.");
     var minhaDiv = document.getElementById("opcoes");
@@ -114,10 +117,10 @@ function ativarEditarPerfil(event) {
     event.stopPropagation();
 }
 
-let botaoEditarPerfil = $('#editar-perfil');
-let botaoFecharEditarPerfil = $('#close-editar-perfil');
+let botaoEditarPerfil = $('#editar-comunidade');
+let botaoFecharEditarPerfil = $('#close-comunidade');
 botaoEditarPerfil.on('click', function () {
-    $('#fundo-escuro-editar-perfil').css({
+    $('#fundo-escuro-editar-comunidade').css({
         display: 'block',
         overflow: 'auto'
     });
@@ -138,14 +141,14 @@ botaoFecharEditarPerfil.on('click', function () {
             if (usuarioAutenticado.fotoPerfil !== undefined && usuarioAutenticado.fotoPerfil !== '') {
                 fp = usuarioAutenticado.fotoPerfil;
             }
-            $('#foto-perfil-usuario').attr('src', fp);
+            $('#foto-perfil-comunidade').attr('src', fp);
         }
         if (ftfChange) {
             let ff = 'images/DefaultFundoPerfil.png';
             if (usuarioAutenticado.fotoFundo !== undefined && usuarioAutenticado.fotoFundo !== '') {
                 ff = usuarioAutenticado.fotoFundo;
             }
-            $('#foto-fundo-usuario').attr('src', ff);
+            $('#foto-fundo-comunidade').attr('src', ff);
         }
         if (usuarioAutenticado.descricao !== null) {
             inputDescricao.text(usuarioAutenticado.descricao);
@@ -154,7 +157,7 @@ botaoFecharEditarPerfil.on('click', function () {
         }
         inputNomeUsuario.val(usuarioAutenticado.nome);
     }
-    $('#fundo-escuro-editar-perfil').css({
+    $('#fundo-escuro-editar-comunidade').css({
         display: 'none',
         overflow: 'hidden'
     });
@@ -168,11 +171,11 @@ botaoFecharEditarPerfil.on('click', function () {
 
 function editarPerfil() {
     let formData = new FormData();
-    formData.append('idUsuario', usuarioAutenticado.idComunidade);
-    formData.append('nome', $('#nome-usuario').val());
-    formData.append('descricao', $('#descricao-usuario').val());
-    formData.append('fotoPerfil', ftPerUsuario);
-    formData.append('fotoFundo', ftFunUsuario);
+    formData.append('idComunidade', usuarioAutenticado.idComunidade);
+    formData.append('nome', $('#nome-comunidade').val());
+    formData.append('descricao', $('#descricao-comunidade').val());
+    formData.append('fotoPerfil', ftPerComunidade);
+    formData.append('fotoFundo', ftFunComunidade);
     $.ajax({
         url: 'editarPerfil',
         type: 'POST',
@@ -181,7 +184,7 @@ function editarPerfil() {
         contentType: false,
         dataType: "json",
         success: function () {
-            $('#btnSave').text('SALVO').css({
+            $('#btnSave-2').text('SALVO').css({
                 border: "4px solid #427D9D",
                 backgroundColor: "#164863",
                 transition: '0.5s'
@@ -262,35 +265,34 @@ xFt.addEventListener('click', function () {
         botaoPostar.style.cursor = "default";
     }
 })
-function submeterFormulario() {
-    let formData = new FormData(formNovaPublicacao);
-    formData.append("idComunidade", idComunidade);
-    textoPublicacao.value = "";
-    imagemPreview.src = "";
-    elementoContagemPublicacao.textContent = (200).toString();
-    elementoContagemPublicacao.style.display = "none";
-    botaoPostar.style.backgroundColor = "#0c202a1f"
-    botaoPostar.style.cursor = "default";
-    xFt.style.display = 'none';
-    fetch("novaPublicacaoComunidade", {
-        method: "POST",
-        body: formData
-    }).then(response => {
-        if (!response.ok) {
-            throw new Error("Erro na requisicição: " + response.status);
-        }
-        return response.text();
-    }).then(data => {
-        console.log(data);
-        location.reload();
-    }).catch(error => {
-        console.error("Erro na requisição:", error)
-    }).finally(() => {
-        textoPublicacao.value = "";
-        imageURL = null;
-        imagemPreview.src = '';
-    })
+
+
+function abrirPopUpE(){
+    $('#body').css({
+        overflow: 'hidden'
+    });
+    $('#fundo-escuro-editar-comunidade').css({
+        display: 'block',
+        overflow: 'auto'
+    });
 }
+function fecharPopUpE(){
+    $('#fundo-escuro-editar-comunidade').css({
+        display: 'none',
+        overflow: 'hidden'
+    });
+    $('#body').css({
+        overflow: 'auto'
+    });
+}
+
+$('#editar-comunidade').on('click', function (){
+    abrirPopUpE();
+})
+$('#close-editar-comunidade').on('click', function (){
+    fecharPopUpE();
+})
+
 
 function abrirSeletorArquivo() {
     const inputImagem = document.getElementById('input-imagem');

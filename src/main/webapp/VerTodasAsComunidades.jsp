@@ -137,7 +137,7 @@
                 </div>
                 <span id="linhaCriarComunidade"></span>
                 <div class="ver-comunidades" id="ver-comunidades">
-                    <a href="verComunidades">VER COMUNIDADES PARTICIPANTES</a>
+                    <a href="home">PÁGINA INICIAL</a>
                     <div class="icone-caret-right"></div>
                 </div>
             </div>

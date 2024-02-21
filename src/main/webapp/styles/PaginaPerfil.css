@@ -435,7 +435,7 @@ body {
     background-color: var(--COR-05);
 }
 .caixa-publicacao{
- border-top: 4px solid #164863;
+    border-top: 4px solid #164863;
 }
 .texto-publicacao p{
     margin-bottom: 5px;

@@ -18,6 +18,7 @@
         String fotoFundo = comunidade.getFotoFundo();
         String nome = comunidade.getNome();
         String descricao = comunidade.getDescricao();
+
 %>
 <!doctype html>
 <html lang="pt-br">
@@ -406,37 +407,37 @@
                                             <div class="foto-fundo-usuario">
                                                 <img id="foto-fundo-usuario" src="<%=fotoFundo%>"
                                                      alt="Foto de fundo de <%=comunidade.getNome()%>">
-                                                <div class="icone-editar-foto" id="icone-editar-foto-fundo-usuario">
+                                                <div class="icone-editar-foto" id="icone-editar-foto-fundo-usuario-2">
                                                     <img src="images/ri_edit-fill.svg"
-                                                         id="img-icone-editar-foto-fundo-usuario"
+                                                         id="img-icone-editar-foto-fundo-usuario-2"
                                                          alt="Ícone de alterar foto perfil">
                                                 </div>
-                                                <input type="file" id="editarFotoFundoUsuario" name="fotoFundoUsuario"
+                                                <input type="file" id="editarFotoFundoUsuario-2" name="fotoFundoUsuario"
                                                        accept="image/*">
                                             </div>
                                             <div class="foto-perfil-usuario">
-                                                <img id="foto-perfil-usuario" src="<%=fotoPerfil%>"
+                                                <img id="foto-perfil-usuario-2" src="<%=fotoPerfil%>"
                                                      alt="Foto do perfil de <%=comunidade.getNome()%>">
-                                                <div class="icone-editar-foto" id="icone-editar-foto-perfil-usuario">
+                                                <div class="icone-editar-foto" id="icone-editar-foto-perfil-usuario-2">
                                                     <img src="images/ri_edit-fill.svg"
-                                                         id="img-icone-editar-foto-perfil-usuario"
+                                                         id="img-icone-editar-foto-perfil-usuario-2"
                                                          alt="Ícone de alterar foto perfil">
                                                 </div>
-                                                <input type="file" id="editarFotoPerfilUsuario" name="fotoPerfilUsuario"
+                                                <input type="file" id="editarFotoPerfilUsuario-2" name="fotoPerfilUsuario"
                                                        accept="image/*">
                                             </div>
                                             <div class="inputs">
-                                                <label for="nome-usuario" id="label-nome-usuario">
+                                                <label for="nome-comunidade" id="label-nome-usuario-2">
                                                     <small>Nome</small>
-                                                    <input type="text" id="nome-usuario" name="nome-usuario"
+                                                    <input type="text" id="nome-usuario-2" name="nome-usuario"
                                                            value="<%=comunidade.getNome()%>"
                                                            required>
                                                 </label>
-                                                <label for="descricao-usuario" id="label-descricao-usuario">
+                                                <label for="descricao-comunidade" id="label-descricao-usuario-2">
                                                     <small>Descrição</small>
-                                                    <textarea id="descricao-usuario" name="descricao-usuario" rows="1"
+                                                    <textarea id="descricao-usuario-2" name="descricao-usuario" rows="1"
                                                               maxlength="200"><%if (comunidade.getDescricao() != null) {%><%=comunidade.getDescricao()%><%}%></textarea>
-                                                    <div id="contagem-caracteres-descricao-usuario">200</div>
+                                                    <div id="contagem-caracteres-descricao-usuario-2">200</div>
                                                 </label>
                                             </div>
                                         </div>
@@ -670,11 +671,50 @@
         </div>
     </div>
 </div>
+<div class="fundo-escuro" id="fundo-escuro-editar-comunidade">
+    <div class="pop-up-editar-comunidade">
+        <div class="cabecalho">
+            <span class="close" id="close-editar-comunida"><img src="images/octicon_x-12.svg" alt=""></span>
+            <p>EDITANDO COMUNIDADE</p>
+            <button onclick="editarPerfil()" id="btnSave-2">SALVAR ALTERAÇÕES</button>
+        </div>
+        <div class="foto-fundo-comunidade">
+            <img id="foto-fundo-comunidade" src="<%=fotoFundo%>" alt="Foto de fundo de <%=usuario.getNome()%>">
+            <div class="icone-editar-foto" id="icone-editar-foto-fundo-comunidade">
+                <img src="images/ri_edit-fill.svg" id="img-icone-editar-foto-fundo-comunidade"
+                     alt="Ícone de alterar foto comunidade">
+            </div>
+            <input type="file" id="editarFotoFundoComunidade" name="fotoFundoComunidade" accept="image/*">
+        </div>
+        <div class="foto-perfil-comunidade">
+            <img id="foto-perfil-comunidade" src="<%=fotoPerfil%>" alt="Foto do perfil de <%=usuario.getNome()%>">
+            <div class="icone-editar-foto" id="icone-editar-foto-perfil-comunidade">
+                <img src="images/ri_edit-fill.svg" id="img-icone-editar-foto-perfil-comunidade"
+                     alt="Ícone de alterar foto comunidade">
+            </div>
+            <input type="file" id="editarFotoPerfilComunidade" name="fotoPerfilComunidade" accept="image/*">
+        </div>
+        <div class="inputs">
+            <label for="nome-usuario-2" id="label-nome-comunidade">
+                <small>Nome</small>
+                <input type="text" id="nome-comunidade" name="nome-comunidade value="<%=comunidade.getNome()%>"
+                       required>
+            </label>
+            <label for="descricao-usuario-2" id="label-descricao-comunidade">
+                <small>Descrição</small>
+                <textarea id="descricao-comunidade" name="descricao-comunidade" rows="1"
+                          maxlength="200"><%if (comunidade.getDescricao() != null) {%><%=comunidade.getDescricao()%><%}%></textarea>
+                <div id="contagem-caracteres-descricao-usuario">200</div>
+            </label>
+        </div>
+    </div>
+</div>
 <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
 <script src="scripts/DonoComunidade.js"></script>
+<<<<<<< HEAD
 <script>
     function ativarEditarPerfil() {
         console.log("Função ativarEditarPerfil() chamada.");
@@ -687,5 +727,8 @@
     }
 </script>
 </body>-->
+=======
+</body>
+>>>>>>> da4e84a21652f8a2fb6e9c3be1185ba385e4c3ae
 </html>
 <%}%>
