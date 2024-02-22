@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eclipse-userlibraries>
+  <library name="Maven: jakarta.platform:jakarta.jakartaee-api:8.0.0">
+    <archive path="C:/Users/antho/.m2/repository/jakarta/platform/jakarta.jakartaee-api/8.0.0/jakarta.jakartaee-api-8.0.0.jar" />
+  </library>
+  <library name="Maven: com.fasterxml.jackson.core:jackson-databind:2.14.0-rc1">
+    <archive path="C:/Users/antho/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.14.0-rc1/jackson-databind-2.14.0-rc1.jar" />
+  </library>
+  <library name="Maven: org.mindrot:jbcrypt:0.4">
+    <archive path="C:/Users/antho/.m2/repository/org/mindrot/jbcrypt/0.4/jbcrypt-0.4.jar" />
+  </library>
+  <library name="Maven: com.google.code.gson:gson:2.10.1">
+    <archive path="C:/Users/antho/.m2/repository/com/google/code/gson/gson/2.10.1/gson-2.10.1.jar" />
+  </library>
+  <library name="Maven: commons-fileupload:commons-fileupload:1.5">
+    <archive path="C:/Users/antho/.m2/repository/commons-fileupload/commons-fileupload/1.5/commons-fileupload-1.5.jar" />
+  </library>
+  <library name="Maven: commons-io:commons-io:2.15.0">
+    <archive path="C:/Users/antho/.m2/repository/commons-io/commons-io/2.15.0/commons-io-2.15.0.jar" />
+  </library>
+  <library name="Maven: org.json:json:20231013">
+    <archive path="C:/Users/antho/.m2/repository/org/json/json/20231013/json-20231013.jar" />
+  </library>
+  <library name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.14.0-rc1">
+    <archive path="C:/Users/antho/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.14.0-rc1/jackson-annotations-2.14.0-rc1.jar" />
+  </library>
+  <library name="Maven: com.fasterxml.jackson.core:jackson-core:2.14.0-rc1">
+    <archive path="C:/Users/antho/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.14.0-rc1/jackson-core-2.14.0-rc1.jar" />
+  </library>
+  <library name="Maven: javax.servlet:javax.servlet-api:3.1.0">
+    <archive path="C:/Users/antho/.m2/repository/javax/servlet/javax.servlet-api/3.1.0/javax.servlet-api-3.1.0.jar" />
+  </library>
+  <library name="Maven: com.mysql:mysql-connector-j:8.0.33">
+    <archive path="C:/Users/antho/.m2/repository/com/mysql/mysql-connector-j/8.0.33/mysql-connector-j-8.0.33.jar" />
+  </library>
+  <library name="Maven: com.google.protobuf:protobuf-java:3.21.9">
+    <archive path="C:/Users/antho/.m2/repository/com/google/protobuf/protobuf-java/3.21.9/protobuf-java-3.21.9.jar" />
+  </library>
+  <library name="bootstrap-icons">
+    <archive path="C:/Users/antho/AppData/Roaming/JetBrains/IntelliJIdea2023.3/javascript/extLibs/http_cdn.jsdelivr.net_npm_bootstrap-icons_font_bootstrap-icons.css" />
+  </library>
+  <library name="bootstrap">
+    <archive path="C:/Users/antho/AppData/Roaming/JetBrains/IntelliJIdea2023.3/javascript/extLibs/http_cdn.jsdelivr.net_npm_bootstrap@5.3.2_dist_css_bootstrap.css" />
+    <archive path="C:/Users/antho/AppData/Roaming/JetBrains/IntelliJIdea2023.3/javascript/extLibs/http_cdn.jsdelivr.net_npm_bootstrap@5.3.2_dist_js_bootstrap.bundle.js" />
+  </library>
+</eclipse-userlibraries>
+
