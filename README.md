@@ -60,4 +60,4 @@ Caso tenha dado algum erro desconhecido, nos informe via email:
 # Observações
 - Embora seja fortemente recomendado o uso do Intellij Idea, nós também testamos e comprovamos que outras IDEs do mercado, como o `Eclipse IDE`, também conseguem executar o projeto sem problemas.
 ## Importante
-- Certifique-se de ter o Java JDK, Apache Tomcat e MySQL configurados corretamente antes de iniciar o projeto. Consulte a documentação específica dessas ferramentas para obter ajuda na configuração.
+
