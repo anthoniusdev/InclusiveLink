@@ -1,3 +1,5 @@
+<img src="https://i.ibb.co/7V0btfH/IL-LOGO-login.png" alt="IL-LOGO-login" border="0" />
+
 # InclusiveLink: Plataforma de comunidade para responsáveis de crianças com necessidades específicas
 
 Este projeto é uma aplicação Java EE que segue a metodologia de Programação Orientada a Objetos (POO) e utiliza tecnologias como JSP (Java Server Pages), MVC (Model View Controller), e DAO (Data Access Object) para implementar operações CRUD (Create, Read, Update, Delete) em um banco de dados MySQL.
